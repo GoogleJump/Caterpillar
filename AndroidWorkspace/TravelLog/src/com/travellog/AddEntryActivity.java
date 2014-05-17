@@ -1,40 +1,20 @@
 package com.travellog;
 
-import java.util.Locale;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.SearchManager;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.LayoutInflater;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.Toast;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.view.GravityCompat;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-public class ViewEntriesActivity extends DrawerActivity {
+import com.travellog.DrawerActivity.DrawerItemClickListener;
 
+public class AddEntryActivity extends DrawerActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -50,7 +30,6 @@ public class ViewEntriesActivity extends DrawerActivity {
 		setContentView(R.layout.activity_main);
 
 		getLayoutContent();
-		loadEntries();
 
 		mTitle = mDrawerTitle = getTitle();
 		mMenuTitles = getResources().getStringArray(R.array.menu_options);
@@ -97,7 +76,7 @@ public class ViewEntriesActivity extends DrawerActivity {
 	public void getLayoutContent() {
 		content = (RelativeLayout) findViewById(R.id.content_homepage);
 		content.removeAllViews();
-		getLayoutInflater().inflate(R.layout.activity_view_entries, content);
+		getLayoutInflater().inflate(R.layout.activity_add_entry, content);
 	}
 
 	@Override
@@ -138,21 +117,5 @@ public class ViewEntriesActivity extends DrawerActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	public void loadEntries() {
-		// TODO: load entries into the layout
-		LinearLayout layout = (LinearLayout) content
-				.findViewById(R.id.view_entries_content);
-		// as a test load a few sample entries:
-		for (int i = 0; i < 3; i++) {
-			layout.addView(new EntryView(this));
-
-		}
-		EntryView entry = new EntryView(this);
-		((ImageView) entry.findViewById(R.id.entry_photo))
-				.setImageResource(R.drawable.hiking_sample_photo);
-		System.out.println("child count is: " + content.getChildCount());
-		layout.addView(entry);
 	}
 }

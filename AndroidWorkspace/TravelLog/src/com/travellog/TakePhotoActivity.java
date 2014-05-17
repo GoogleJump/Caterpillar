@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-
 public class TakePhotoActivity extends DrawerActivity {
 
 	private static final int ACTION_TAKE_PHOTO = 1;
@@ -48,50 +47,53 @@ public class TakePhotoActivity extends DrawerActivity {
 
 	private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
-	
 	/* Photo album for this application */
 	private String getAlbumName() {
 		return "TravelLog Photos";
 	}
 
-	
 	private File getAlbumDir() {
 		File storageDir = null;
 
-		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-			
-			storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
+		if (Environment.MEDIA_MOUNTED.equals(Environment
+				.getExternalStorageState())) {
+
+			storageDir = mAlbumStorageDirFactory
+					.getAlbumStorageDir(getAlbumName());
 
 			if (storageDir != null) {
-				if (! storageDir.mkdirs()) {
-					if (! storageDir.exists()){
+				if (!storageDir.mkdirs()) {
+					if (!storageDir.exists()) {
 						Log.d("CameraSample", "failed to create directory");
 						return null;
 					}
 				}
 			}
-			
+
 		} else {
-			Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
+			Log.v(getString(R.string.app_name),
+					"External storage is not mounted READ/WRITE.");
 		}
-		
+
 		return storageDir;
 	}
 
 	private File createImageFile() throws IOException {
 		// Create an image file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+				.format(new Date());
 		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
 		File albumF = getAlbumDir();
-		File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);
+		File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX,
+				albumF);
 		return imageF;
 	}
 
 	private File setUpPhotoFile() throws IOException {
-		
+
 		File f = createImageFile();
 		mCurrentPhotoPath = f.getAbsolutePath();
-		
+
 		return f;
 	}
 
@@ -110,11 +112,11 @@ public class TakePhotoActivity extends DrawerActivity {
 		BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 		int photoW = bmOptions.outWidth;
 		int photoH = bmOptions.outHeight;
-		
+
 		/* Figure out which way needs to be reduced less */
 		int scaleFactor = 1;
 		if ((targetW > 0) || (targetH > 0)) {
-			scaleFactor = Math.min(photoW/targetW, photoH/targetH);	
+			scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 		}
 
 		/* Set bitmap options to scale the image decode target */
@@ -124,7 +126,7 @@ public class TakePhotoActivity extends DrawerActivity {
 
 		/* Decode the JPEG file into a Bitmap */
 		Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-		
+
 		/* Associate the Bitmap to the ImageView */
 		mImageView.setImageBitmap(bitmap);
 		mVideoUri = null;
@@ -133,25 +135,27 @@ public class TakePhotoActivity extends DrawerActivity {
 	}
 
 	private void galleryAddPic() {
-		    Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
-			File f = new File(mCurrentPhotoPath);
-		    Uri contentUri = Uri.fromFile(f);
-		    mediaScanIntent.setData(contentUri);
-		    this.sendBroadcast(mediaScanIntent);
+		Intent mediaScanIntent = new Intent(
+				"android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+		File f = new File(mCurrentPhotoPath);
+		Uri contentUri = Uri.fromFile(f);
+		mediaScanIntent.setData(contentUri);
+		this.sendBroadcast(mediaScanIntent);
 	}
 
 	private void dispatchTakePictureIntent(int actionCode) {
 
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-		switch(actionCode) {
+		switch (actionCode) {
 		case ACTION_TAKE_PHOTO:
 			File f = null;
-			
+
 			try {
 				f = setUpPhotoFile();
 				mCurrentPhotoPath = f.getAbsolutePath();
-				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+						Uri.fromFile(f));
 			} catch (IOException e) {
 				e.printStackTrace();
 				f = null;
@@ -160,7 +164,7 @@ public class TakePhotoActivity extends DrawerActivity {
 			break;
 
 		default:
-			break;			
+			break;
 		} // switch
 
 		startActivityForResult(takePictureIntent, actionCode);
@@ -198,78 +202,69 @@ public class TakePhotoActivity extends DrawerActivity {
 		mImageView.setVisibility(View.INVISIBLE);
 	}
 
-	Button.OnClickListener mTakePicOnClickListener = 
-		new Button.OnClickListener() {
+	Button.OnClickListener mTakePicOnClickListener = new Button.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			dispatchTakePictureIntent(ACTION_TAKE_PHOTO);
 		}
 	};
 
-	Button.OnClickListener mTakePicSOnClickListener = 
-		new Button.OnClickListener() {
+	Button.OnClickListener mTakePicSOnClickListener = new Button.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			dispatchTakePictureIntent(ACTION_TAKE_PHOTO);
 		}
 	};
 
-	Button.OnClickListener mTakeVidOnClickListener = 
-		new Button.OnClickListener() {
+	Button.OnClickListener mTakeVidOnClickListener = new Button.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			dispatchTakeVideoIntent();
 		}
 	};
-	
+
 	public void setLayoutContent() {
-		//set the content for the layout
-				RelativeLayout new_content = (RelativeLayout) findViewById(R.id.content_take_photo);
-				RelativeLayout content = (RelativeLayout) findViewById(R.id.content_homepage);
-				content.removeAllViews();
-				getLayoutInflater().inflate(R.layout.activity_take_photo, content);
+		// set the content for the layout
+		RelativeLayout content = (RelativeLayout) findViewById(R.id.content_homepage);
+		content.removeAllViews();
+		getLayoutInflater().inflate(R.layout.activity_take_photo, content);
 	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setLayoutContent();
-		
-		mImageView = (ImageView) findViewById(R.id.imageView1);
+
+		mImageView = (ImageView) findViewById(R.id.photo_preview);
 		mVideoView = (VideoView) findViewById(R.id.videoView1);
 		mImageBitmap = null;
 		mVideoUri = null;
 
-		/*Button picBtn = (Button) findViewById(R.id.btnIntend);
-		setBtnListenerOrDisable( 
-				picBtn, 
-				mTakePicOnClickListener,
-				MediaStore.ACTION_IMAGE_CAPTURE
-		);*/
+		/*
+		 * Button picBtn = (Button) findViewById(R.id.btnIntend);
+		 * setBtnListenerOrDisable( picBtn, mTakePicOnClickListener,
+		 * MediaStore.ACTION_IMAGE_CAPTURE );
+		 */
 
 		Button picSBtn = (Button) findViewById(R.id.btnIntendPhoto);
-		setBtnListenerOrDisable( 
-				picSBtn, 
-				mTakePicSOnClickListener,
-				MediaStore.ACTION_IMAGE_CAPTURE
-		);
+		setBtnListenerOrDisable(picSBtn, mTakePicSOnClickListener,
+				MediaStore.ACTION_IMAGE_CAPTURE);
 
-		/*Button vidBtn = (Button) findViewById(R.id.btnIntendV);
-		setBtnListenerOrDisable( 
-				vidBtn, 
-				mTakeVidOnClickListener,
-				MediaStore.ACTION_VIDEO_CAPTURE
-		);*/
-		
+		/*
+		 * Button vidBtn = (Button) findViewById(R.id.btnIntendV);
+		 * setBtnListenerOrDisable( vidBtn, mTakeVidOnClickListener,
+		 * MediaStore.ACTION_VIDEO_CAPTURE );
+		 */
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
 			mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
 		} else {
 			mAlbumStorageDirFactory = new BaseAlbumDirFactory();
 		}
-		
-		//open camera right away
+
+		// open camera right away
 		this.dispatchTakePictureIntent(ACTION_TAKE_PHOTO);
 	}
 
@@ -297,8 +292,10 @@ public class TakePhotoActivity extends DrawerActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
 		outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
-		outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null) );
-		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY, (mVideoUri != null) );
+		outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY,
+				(mImageBitmap != null));
+		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY,
+				(mVideoUri != null));
 		super.onSaveInstanceState(outState);
 	}
 
@@ -308,15 +305,15 @@ public class TakePhotoActivity extends DrawerActivity {
 		mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
 		mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
 		mImageView.setImageBitmap(mImageBitmap);
-		mImageView.setVisibility(
-				savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? 
-						ImageView.VISIBLE : ImageView.INVISIBLE
-		);
+		mImageView
+				.setVisibility(savedInstanceState
+						.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? ImageView.VISIBLE
+						: ImageView.INVISIBLE);
 		mVideoView.setVideoURI(mVideoUri);
-		mVideoView.setVisibility(
-				savedInstanceState.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ? 
-						ImageView.VISIBLE : ImageView.INVISIBLE
-		);
+		mVideoView
+				.setVisibility(savedInstanceState
+						.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ? ImageView.VISIBLE
+						: ImageView.INVISIBLE);
 	}
 
 	/**
@@ -325,32 +322,29 @@ public class TakePhotoActivity extends DrawerActivity {
 	 * respond to an intent with the specified action. If no suitable package is
 	 * found, this method returns false.
 	 * http://android-developers.blogspot.com/2009/01/can-i-use-this-intent.html
-	 *
-	 * @param context The application's environment.
-	 * @param action The Intent action to check for availability.
-	 *
+	 * 
+	 * @param context
+	 *            The application's environment.
+	 * @param action
+	 *            The Intent action to check for availability.
+	 * 
 	 * @return True if an Intent with the specified action can be sent and
 	 *         responded to, false otherwise.
 	 */
 	public static boolean isIntentAvailable(Context context, String action) {
 		final PackageManager packageManager = context.getPackageManager();
 		final Intent intent = new Intent(action);
-		List<ResolveInfo> list =
-			packageManager.queryIntentActivities(intent,
-					PackageManager.MATCH_DEFAULT_ONLY);
+		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+				PackageManager.MATCH_DEFAULT_ONLY);
 		return list.size() > 0;
 	}
 
-	private void setBtnListenerOrDisable( 
-			Button btn, 
-			Button.OnClickListener onClickListener,
-			String intentName
-	) {
+	private void setBtnListenerOrDisable(Button btn,
+			Button.OnClickListener onClickListener, String intentName) {
 		if (isIntentAvailable(this, intentName)) {
-			btn.setOnClickListener(onClickListener);        	
+			btn.setOnClickListener(onClickListener);
 		} else {
-			btn.setText( 
-				"cannot" + " " + btn.getText());
+			btn.setText("cannot" + " " + btn.getText());
 			btn.setClickable(false);
 		}
 	}

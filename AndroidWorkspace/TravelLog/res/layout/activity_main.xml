@@ -24,7 +24,9 @@
          The drawer is given a fixed width in dp and extends the full height of
          the container. A solid background is used for contrast
          with the content view. -->
-    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -95,7 +97,8 @@
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/add_entry_btn"/>
+                    android:background="@drawable/add_entry_btn"
+                    android:onClick="onAddEntryIconClick"/>
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -107,6 +110,7 @@
             </TableRow>
         </TableLayout>
     </RelativeLayout>
+    </ScrollView>
 
     <ListView
         android:id="@+id/left_drawer"

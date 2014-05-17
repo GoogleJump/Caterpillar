@@ -31,7 +31,7 @@
 
   </LinearLayout>
   
-     <LinearLayout
+   <!--  <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:orientation="horizontal"
@@ -42,7 +42,34 @@
       android:id="@+id/imageView1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:visibility="visible" />
+      android:visibility="visible" />  --> 
+  
+  
+   <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="50dp" >
+
+            <ImageView
+                android:id="@+id/photo_preview"
+                android:layout_width="125dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:paddingBottom="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/camera_stamp_icon"
+                />
+
+            <ImageView
+                android:id="@+id/entry_polaroid"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignRight="@+id/photo_preview"
+                android:layout_alignTop="@+id/photo_preview"
+                android:paddingBottom="0dp"
+                android:src="@drawable/polaroid_blank" />
+        </RelativeLayout>
 
   <VideoView
       android:id="@+id/videoView1"
@@ -50,7 +77,7 @@
       android:layout_height="108dp"
       android:visibility="invisible" />
 
-  </LinearLayout>
+  <!-- </LinearLayout> -->
 
         <LinearLayout
             android:layout_width="match_parent"
