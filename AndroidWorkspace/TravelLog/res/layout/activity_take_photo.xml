@@ -142,7 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Add To New Entry" 
-                android:textColor="@color/aqua"/>
+                android:textColor="@color/aqua"
+                android:onClick="onAddPhotoToEntryClick"/>
         </LinearLayout>
 
 </LinearLayout>

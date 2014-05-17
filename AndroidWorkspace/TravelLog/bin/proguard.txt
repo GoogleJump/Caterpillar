@@ -31,6 +31,9 @@
 # onClick res/layout/activity_add_entry.xml #generated:28
 -keepclassmembers class * { *** onAddPhotoClick(...); }
 
+# onClick res/layout/activity_take_photo.xml #generated:140
+-keepclassmembers class * { *** onAddPhotoToEntryClick(...); }
+
 # onClick res/layout/activity_main.xml #generated:71
 -keepclassmembers class * { *** onCameraIconClick(...); }
 

@@ -91,7 +91,7 @@
         <TextView
             android:id="@+id/location_label"
             android:layout_width="63dp"
-            android:layout_height="72dp"
+            android:layout_height="76dp"
             android:text="Location" />
 
         <EditText

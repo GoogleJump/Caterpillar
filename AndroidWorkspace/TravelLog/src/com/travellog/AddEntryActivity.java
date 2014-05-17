@@ -1,5 +1,9 @@
 package com.travellog;
 
+import java.io.File;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -30,6 +35,14 @@ public class AddEntryActivity extends DrawerActivity {
 		setContentView(R.layout.activity_main);
 
 		getLayoutContent();
+		
+		//retrieve photo if one was already taken
+		Bundle b = getIntent().getExtras();
+		String photo_path = (String) b.get("photo_path");
+		Bitmap myBitmap = BitmapFactory.decodeFile(photo_path);
+
+         ImageView photoView = (ImageView) findViewById(R.id.entry_photo);
+    	 photoView.setImageBitmap(myBitmap);
 
 		mTitle = mDrawerTitle = getTitle();
 		mMenuTitles = getResources().getStringArray(R.array.menu_options);

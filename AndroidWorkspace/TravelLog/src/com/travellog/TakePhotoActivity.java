@@ -189,7 +189,7 @@ public class TakePhotoActivity extends DrawerActivity {
 		if (mCurrentPhotoPath != null) {
 			setPic();
 			galleryAddPic();
-			mCurrentPhotoPath = null;
+		//	mCurrentPhotoPath = null;
 		}
 
 	}
@@ -347,6 +347,15 @@ public class TakePhotoActivity extends DrawerActivity {
 			btn.setText("cannot" + " " + btn.getText());
 			btn.setClickable(false);
 		}
+	}
+	
+	public boolean onAddPhotoToEntryClick(View v) {
+		Intent i = new Intent(this, AddEntryActivity.class);
+		System.out.println("current path: "+mCurrentPhotoPath);
+		i.putExtra("photo_path", mCurrentPhotoPath); //give it the photo to include in new entry
+		startActivity(i);
+		//TODO: save the photo and info somewhere before starting intent
+		return true;
 	}
 
 }
