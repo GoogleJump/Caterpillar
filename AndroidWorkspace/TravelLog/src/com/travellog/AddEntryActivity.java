@@ -2,6 +2,7 @@ package com.travellog;
 
 import java.io.File;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -38,12 +39,16 @@ public class AddEntryActivity extends DrawerActivity {
 		
 		//retrieve photo if one was already taken
 		Bundle b = getIntent().getExtras();
+		if(b!= null && b.containsKey("photo_path")) {
 		String photo_path = (String) b.get("photo_path");
+		
+		if(photo_path != null) {
 		Bitmap myBitmap = BitmapFactory.decodeFile(photo_path);
 
          ImageView photoView = (ImageView) findViewById(R.id.entry_photo);
     	 photoView.setImageBitmap(myBitmap);
-
+		}
+		}
 		mTitle = mDrawerTitle = getTitle();
 		mMenuTitles = getResources().getStringArray(R.array.menu_options);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -84,6 +89,12 @@ public class AddEntryActivity extends DrawerActivity {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+	}
+	
+	public boolean onAddPhotoClick(View v) {
+		Intent i = new Intent(this, TakePhotoActivity.class);
+		startActivity(i);
+		return true;
 	}
 
 	public void getLayoutContent() {
