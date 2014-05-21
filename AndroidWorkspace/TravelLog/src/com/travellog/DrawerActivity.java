@@ -1,4 +1,8 @@
 package com.travellog;
+/*
+ * sliding drawer menu
+ * 
+ */
 
 import java.util.Locale;
 
@@ -24,9 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.view.GravityCompat;
-public class DrawerActivity extends Activity {
+public class DrawerActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -37,8 +42,7 @@ public class DrawerActivity extends Activity {
  //   protected LinearLayout fullLayout;
     protected FrameLayout actContent;
     
-    	@Override
-		protected void onCreate(Bundle savedInstanceState) {
+    	protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_main);
 			setTitle("");
@@ -129,12 +133,14 @@ public class DrawerActivity extends Activity {
 				            mDrawerLayout.closeDrawers();
 				            }
 				        if ( position == 1 ) {
-				        	Intent intent = new Intent(DrawerActivity.this, ViewEntriesActivity.class);
+				        	Intent intent = new Intent(DrawerActivity.this, ViewTripsActivity.class);
 				            startActivity(intent);
 				            mDrawerLayout.closeDrawers();
 				            }
 				        if ( position == 2 ) {
-					           //TODO
+				        	Intent intent = new Intent(DrawerActivity.this, TakePhotoActivity.class);
+				            startActivity(intent);
+				            mDrawerLayout.closeDrawers();
 					     }
 		        }
 		    }
@@ -144,7 +150,7 @@ public class DrawerActivity extends Activity {
 		    	// update the main content by replacing fragments
 		        Fragment fragment = new MenuFragment();
 		        Bundle args = new Bundle();
-		        args.putInt(MenuFragment.ARG_PLANET_NUMBER, position);
+		        args.putInt(MenuFragment.ARG_MENU_NUMBER, position);
 		        fragment.setArguments(args);
 
 		        FragmentManager fragmentManager = getFragmentManager();
@@ -195,7 +201,7 @@ public class DrawerActivity extends Activity {
 		    }
 
 		    public static class MenuFragment extends Fragment {
-		        public static final String ARG_PLANET_NUMBER = "menu_number";
+		        public static final String ARG_MENU_NUMBER = "menu_number";
 
 		        public MenuFragment() {
 		            // Empty constructor required for fragment subclasses

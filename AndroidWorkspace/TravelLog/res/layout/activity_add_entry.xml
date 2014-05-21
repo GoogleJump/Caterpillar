@@ -136,7 +136,6 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/dark_purple"
         android:gravity="right"
         android:layout_gravity="right"
         android:padding="0dp" >
@@ -145,8 +144,9 @@
             android:id="@+id/add_entry_to_trip"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Add Entry to Trip"
-            android:textColor="@color/aqua" />
+            android:text="Add Entry"
+            android:onClick="onAddEntryClick"
+            style="@style/ButtonTheme" />
     </LinearLayout>
 
 </LinearLayout>
