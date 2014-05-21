@@ -32,7 +32,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.view.GravityCompat;
 
-
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class ViewEntriesActivity extends DrawerActivity {
 
@@ -96,7 +95,6 @@ public class ViewEntriesActivity extends DrawerActivity {
 	}
 
 	public void getLayoutContent() {
-		RelativeLayout new_content = (RelativeLayout) findViewById(R.id.content_search);
 		content = (RelativeLayout) findViewById(R.id.content_homepage);
 		content.removeAllViews();
 		getLayoutInflater().inflate(R.layout.activity_view_entries, content);
@@ -143,16 +141,18 @@ public class ViewEntriesActivity extends DrawerActivity {
 	}
 
 	public void loadEntries() {
-		//TODO: load entries into the layout
-		LinearLayout layout = (LinearLayout) content.findViewById(R.id.view_entries_content);
-		//as a test load a few sample entries:
-		for(int i = 0; i < 3; i++) {
-		layout.addView(new EntryView(this));
-		
+		// TODO: load entries into the layout
+		LinearLayout layout = (LinearLayout) content
+				.findViewById(R.id.view_entries_content);
+		// as a test load a few sample entries:
+		for (int i = 0; i < 3; i++) {
+			layout.addView(new EntryView(this));
+
 		}
 		EntryView entry = new EntryView(this);
-		((ImageView) entry.findViewById(R.id.entry_photo)).setImageResource(R.drawable.hiking_sample_photo);
-		System.out.println("child count is: "+content.getChildCount());
+		((ImageView) entry.findViewById(R.id.entry_photo))
+				.setImageResource(R.drawable.hiking_sample_photo);
+		System.out.println("child count is: " + content.getChildCount());
 		layout.addView(entry);
 	}
 }

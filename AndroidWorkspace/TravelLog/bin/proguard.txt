@@ -4,6 +4,9 @@
 # view AndroidManifest.xml #generated:25
 -keep class com.google.android.gcm.GCMBroadcastReceiver { <init>(...); }
 
+# view AndroidManifest.xml #generated:40
+-keep class com.travellog.AddEntryActivity { <init>(...); }
+
 # view AndroidManifest.xml #generated:24
 -keep class com.travellog.GCMIntentService { <init>(...); }
 
@@ -22,12 +25,21 @@
 # view AndroidManifest.xml #generated:39
 -keep class com.travellog.ViewEntriesActivity { <init>(...); }
 
-# onClick res/layout/activity_main.xml #generated:69
+# onClick res/layout/activity_main.xml #generated:95
+-keepclassmembers class * { *** onAddEntryIconClick(...); }
+
+# onClick res/layout/activity_add_entry.xml #generated:28
+-keepclassmembers class * { *** onAddPhotoClick(...); }
+
+# onClick res/layout/activity_take_photo.xml #generated:140
+-keepclassmembers class * { *** onAddPhotoToEntryClick(...); }
+
+# onClick res/layout/activity_main.xml #generated:71
 -keepclassmembers class * { *** onCameraIconClick(...); }
 
-# onClick res/layout/activity_main.xml #generated:77
+# onClick res/layout/activity_main.xml #generated:79
 -keepclassmembers class * { *** onSearchIconClick(...); }
 
-# onClick res/layout/activity_main.xml #generated:100
+# onClick res/layout/activity_main.xml #generated:103
 -keepclassmembers class * { *** onSeeLogIconClick(...); }
 

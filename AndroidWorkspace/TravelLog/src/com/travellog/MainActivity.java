@@ -200,6 +200,12 @@ public class MainActivity extends DrawerActivity {
 	    	return true;
 	    }
 	    
+	    public boolean onAddEntryIconClick(View v) {
+	    	Intent i = new Intent(this, AddEntryActivity.class);
+	    	startActivity(i);
+	    	return true;
+	    }
+	    
 
 	    /**
 	     * Fragment that appears in the "content_frame", shows a planet
