@@ -26,26 +26,17 @@
   "ownerDomain" : "travellog.com",
   "ownerName" : "travellog.com",
   "methods" : {
-    "deviceinfoendpoint.listDeviceInfo" : {
+    "deviceinfoendpoint.updateDeviceInfo" : {
       "path" : "deviceinfo",
-      "httpMethod" : "GET",
+      "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.DeviceInfoEndpoint.listDeviceInfo",
+      "rosyMethod" : "com.travellog.DeviceInfoEndpoint.updateDeviceInfo",
       "request" : {
-        "parameters" : {
-          "cursor" : {
-            "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
-          }
-        },
-        "body" : "empty"
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -88,22 +79,6 @@
         "body" : "empty"
       }
     },
-    "deviceinfoendpoint.updateDeviceInfo" : {
-      "path" : "deviceinfo",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.DeviceInfoEndpoint.updateDeviceInfo",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "deviceinfoendpoint.getDeviceInfo" : {
       "path" : "deviceinfo/{id}",
       "httpMethod" : "GET",
@@ -124,25 +99,35 @@
       "response" : {
         "body" : "autoTemplate(backendResponse)"
       }
+    },
+    "deviceinfoendpoint.listDeviceInfo" : {
+      "path" : "deviceinfo",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.travellog.DeviceInfoEndpoint.listDeviceInfo",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
     }
   },
   "descriptor" : {
     "schemas" : {
-      "CollectionResponse_DeviceInfo" : {
-        "id" : "CollectionResponse_DeviceInfo",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "DeviceInfo"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
       "DeviceInfo" : {
         "id" : "DeviceInfo",
         "type" : "object",
@@ -158,12 +143,30 @@
             "format" : "int64"
           }
         }
+      },
+      "CollectionResponse_DeviceInfo" : {
+        "id" : "CollectionResponse_DeviceInfo",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "DeviceInfo"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
-      "com.travellog.DeviceInfoEndpoint.listDeviceInfo" : {
+      "com.travellog.DeviceInfoEndpoint.updateDeviceInfo" : {
+        "request" : {
+          "$ref" : "DeviceInfo"
+        },
         "response" : {
-          "$ref" : "CollectionResponse_DeviceInfo"
+          "$ref" : "DeviceInfo"
         }
       },
       "com.travellog.DeviceInfoEndpoint.insertDeviceInfo" : {
@@ -176,17 +179,14 @@
       },
       "com.travellog.DeviceInfoEndpoint.removeDeviceInfo" : {
       },
-      "com.travellog.DeviceInfoEndpoint.updateDeviceInfo" : {
-        "request" : {
-          "$ref" : "DeviceInfo"
-        },
+      "com.travellog.DeviceInfoEndpoint.getDeviceInfo" : {
         "response" : {
           "$ref" : "DeviceInfo"
         }
       },
-      "com.travellog.DeviceInfoEndpoint.getDeviceInfo" : {
+      "com.travellog.DeviceInfoEndpoint.listDeviceInfo" : {
         "response" : {
-          "$ref" : "DeviceInfo"
+          "$ref" : "CollectionResponse_DeviceInfo"
         }
       }
     }

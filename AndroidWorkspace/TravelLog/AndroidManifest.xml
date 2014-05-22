@@ -39,6 +39,7 @@
         <activity android:launchMode="singleTop" android:name=".ViewTripsActivity"/>
         <activity android:launchMode="singleTop" android:name=".AddEntryActivity"/>
         <activity android:launchMode="singleTop" android:name=".AddEditTripActivity"/>
+        <activity android:launchMode="singleTop" android:name=".UploadToServer"/>
 </application>
 
 </manifest>

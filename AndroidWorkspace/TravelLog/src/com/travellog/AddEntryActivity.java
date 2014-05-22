@@ -119,6 +119,11 @@ public class AddEntryActivity extends DrawerActivity {
 		// menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
+	
+	public boolean onAddEntryClick(View v) {
+		return true;
+		//TODO
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

@@ -28,6 +28,9 @@
 # view AndroidManifest.xml #generated:37
 -keep class com.travellog.TakePhotoActivity { <init>(...); }
 
+# view AndroidManifest.xml #generated:42
+-keep class com.travellog.UploadToServer { <init>(...); }
+
 # view AndroidManifest.xml #generated:39
 -keep class com.travellog.ViewTripsActivity { <init>(...); }
 
@@ -36,9 +39,6 @@
 
 # onClick res/layout/activity_main.xml #generated:95
 -keepclassmembers class * { *** onAddEntryIconClick(...); }
-
-# onClick res/layout/activity_add_entry.xml #generated:28
--keepclassmembers class * { *** onAddPhotoClick(...); }
 
 # onClick res/layout/activity_take_photo.xml #generated:142
 -keepclassmembers class * { *** onAddPhotoToEntryClick(...); }
@@ -78,4 +78,7 @@
 
 # onClick res/layout/trip_view.xml #generated:19
 -keepclassmembers class * { *** onTripViewClick(...); }
+
+# onClick res/layout/activity_add_entry.xml #generated:28
+-keepclassmembers class * { *** onUploadPhotoClick(...); }
 

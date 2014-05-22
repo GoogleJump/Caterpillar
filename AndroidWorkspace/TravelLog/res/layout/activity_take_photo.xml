@@ -109,8 +109,8 @@
         <TextView
             android:id="@+id/label_photo_tags"
             android:layout_width="54dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.13"
+            android:layout_height="42dp"
+            android:layout_weight="0.90"
             android:text="Tags (separate with commas)" />
 
         <EditText
@@ -129,7 +129,7 @@
         android:gravity="center"
         android:padding="10dp" >
 
-        <Button
+       <!--  <Button
             android:id="@+id/button1"
             style="@style/ButtonTheme"
             android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="Add To Existing Entry" />
+            android:text="Add To Existing Entry" /> -->
 
         <Button
             android:id="@+id/button1"

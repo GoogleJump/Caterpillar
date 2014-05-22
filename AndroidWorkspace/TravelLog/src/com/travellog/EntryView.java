@@ -114,6 +114,9 @@ public class EntryView extends LinearLayout {
 		entryDateLocation.setText(new_string);
 	}
 
+	public String getDescription() {
+		return entryText_long;
+	}
 	public String getLocation() {
 		int split = ((String) entryDateLocation.getText()).indexOf(',');
 		String new_string = ((String) entryDateLocation.getText())

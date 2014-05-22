@@ -1,3 +1,4 @@
+
 package com.travellog;
 
 import java.text.SimpleDateFormat;
@@ -21,12 +22,15 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -83,6 +87,9 @@ public class ViewTripsActivity extends DrawerActivity implements
 	static boolean edit_dep;
 	static Button depart;
 	static Button ret;
+	
+	private static final int SELECT_PICTURE = 1;
+	private String selectedImagePath;
 
 	// static boolean edit; // determines whether edit mode or new trip mode
 
@@ -267,13 +274,6 @@ public class ViewTripsActivity extends DrawerActivity implements
 		entry.toggleShortenedText();
 		return true;
 	}
-	
-	//part of adding entries - upload photos from device
-	public boolean onAddPhotoClick(View v) {
-		
-		return true;
-	}
-
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -425,7 +425,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	public boolean onEditEntryClick(View v) {
 		removeAllFromLayout();
-		EntryView entry = (EntryView) v.getParent().getParent();
+		EntryView entry = (EntryView) v.getParent().getParent().getParent();;
 		selectedEntry = entry;
 		Fragment fragment = new EditEntryFragment();
 		FragmentManager fragmentManager = getFragmentManager();
@@ -454,9 +454,10 @@ public class ViewTripsActivity extends DrawerActivity implements
 		return true;
 	}
 
-	public boolean onAddPhotoClick(View v) {
-		// TODO
-		return true;
+	public boolean onUploadPhotoClick(View v) {
+		 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		 startActivityForResult(intent, SELECT_PICTURE);
+		 return true;
 	}
 
 	public static class EditEntryFragment extends Fragment {
@@ -470,7 +471,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 			((EditText) view.findViewById(R.id.edit_text_title))
 					.setText(entry.entryTitle.getText());
 			((EditText) view.findViewById(R.id.edit_text_entry_description))
-					.setText(entry.entryText.getText());
+					.setText(entry.getDescription());
 			((EditText) view.findViewById(R.id.edit_text_location))
 					.setText(entry.getLocation());
 			// TODO: tags ((EditText)
@@ -578,4 +579,36 @@ public class ViewTripsActivity extends DrawerActivity implements
 		}
 	}
 
+	//retrieve the photo:
+	 public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        if (resultCode == RESULT_OK) {
+	            if (requestCode == SELECT_PICTURE) {
+	                Uri selectedImageUri = data.getData();
+	                selectedImagePath = getPath(selectedImageUri);
+	            }
+	        }
+	    }
+
+	    /**
+	     * helper to retrieve the path of an image URI
+	     */
+	    public String getPath(Uri uri) {
+	            // just some safety built in 
+	            if( uri == null ) {
+	                // TODO perform some logging or show user feedback
+	                return null;
+	            }
+	            // try to retrieve the image from the media store first
+	            // this will only work for images selected from gallery
+	            String[] projection = { MediaStore.Images.Media.DATA };
+	            Cursor cursor = managedQuery(uri, projection, null, null, null);
+	            if( cursor != null ){
+	                int column_index = cursor
+	                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+	                cursor.moveToFirst();
+	                return cursor.getString(column_index);
+	            }
+	            // this is our fallback here
+	            return uri.getPath();
+	    }
 }

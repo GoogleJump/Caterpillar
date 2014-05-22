@@ -56,7 +56,7 @@ public class MainActivity extends DrawerActivity {
 		setContentView(R.layout.activity_main);
 		setTitle("");
 
-		//Intent i = new Intent(this, RegisterActivity.class);
+	  //  Intent i = new Intent(this, RegisterActivity.class);
 		//startActivity(i);
 		
 		//TODO: if the person is already logged in, start next activity
