@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class EntryView extends LinearLayout {
 	ImageButton photoPreview;
-	String title;
+	//String title;
 	Context context;
 	View entryLayout;
 	TextView entryText;
@@ -58,4 +58,40 @@ public class EntryView extends LinearLayout {
 		//TODO - how are we storing images?
 	}
 	
+	public void setImgResource(int imgRes) {
+		entryPhoto.setImageResource(imgRes);
+	}
+	
+	
+	public void setTitle(String title) {
+		entryTitle.setText(title);
+	}
+
+	public void setDescription(String string) {
+		entryText.setText(string);
+	}
+	
+	
+	//Date, Location
+	public void setLocation(String location) {
+		int split = ((String) entryDateLocation.getText()).indexOf(',');
+		System.out.println(entryDateLocation.getText());
+		String new_string = ((String) entryDateLocation.getText()).substring(0, split);
+		new_string = new_string + ", " + location;
+		entryDateLocation.setText(new_string);
+	}
+	
+	//Date, Location
+	public void setDate(String date) {
+		int split = ((String) entryDateLocation.getText()).indexOf(',');
+		String new_string = ((String) entryDateLocation.getText()).substring(split+1);
+		new_string = date +", "+ new_string;
+		entryDateLocation.setText(new_string);
+	}
+	
+	public String getLocation() {
+		int split = ((String) entryDateLocation.getText()).indexOf(',');
+		String new_string = ((String) entryDateLocation.getText()).substring(split+1);
+		return new_string;
+	}
 }

@@ -8,6 +8,7 @@
     <string-array name="menu_options">
         <item>Home</item>
         <item>View Log</item>
+        <item>Take Photo</item>
       
     </string-array>
     <string-array name="menu_array">

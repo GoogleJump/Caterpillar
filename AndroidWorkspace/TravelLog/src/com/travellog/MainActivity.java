@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
@@ -55,13 +56,16 @@ public class MainActivity extends DrawerActivity {
 		setContentView(R.layout.activity_main);
 		setTitle("");
 
-	
+		//Intent i = new Intent(this, RegisterActivity.class);
+		//startActivity(i);
 		
+		//TODO: if the person is already logged in, start next activity
+		setLayoutContent();
 		Display display = getWindowManager().getDefaultDisplay(); 
 		SCREEN_WIDTH = display.getWidth();
 		SCREEN_HEIGHT = display.getHeight();
-			resizeIcons();
-			resizeLogo();
+			//resizeIcons();
+			//resizeLogo();
 			
 		    mTitle = mDrawerTitle = getTitle();
 	        mPlanetTitles = getResources().getStringArray(R.array.menu_options);
@@ -182,7 +186,9 @@ public class MainActivity extends DrawerActivity {
 	        }
 	    }
 
-	    public boolean onCameraIconClick(View v) {
+	    //the following is for the original homepage.  No longer relevant because
+	    //homepage is same as viewentriesactivity
+	  /*  public boolean onCameraIconClick(View v) {
 	    	Intent i = new Intent(this, TakePhotoActivity.class);
 	    	startActivity(i);
 	    	return true;
@@ -204,33 +210,27 @@ public class MainActivity extends DrawerActivity {
 	    	Intent i = new Intent(this, AddEntryActivity.class);
 	    	startActivity(i);
 	    	return true;
-	    }
+	    }*/
+	  
+		public void setLayoutContent() {
+			// set the content for the layout
+			RelativeLayout content = (RelativeLayout) findViewById(R.id.content_homepage);
+			content.removeAllViews();
+			getLayoutInflater().inflate(R.layout.login_signup, content);
+		}
 	    
 
-	    /**
-	     * Fragment that appears in the "content_frame", shows a planet
-	     */
-	 /*   public static class PlanetFragment extends Fragment {
-	        public static final String ARG_PLANET_NUMBER = "planet_number";
-
-	        public PlanetFragment() {
-	            // Empty constructor required for fragment subclasses
-	        }*/
-
-	      /*  @Override
-	        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                Bundle savedInstanceState) {
-	            View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
-	            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-	            String planet = getResources().getStringArray(R.array.planets_array)[i];
-
-	            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-	                            "drawable", getActivity().getPackageName());
-	            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-	            getActivity().setTitle(planet);
-	            return rootView;
-	        }*/
-	//    }
+	   public boolean onSignUpClick(View v) {
+		   //TODO
+		   return true;
+	   }
+	   
+	   public boolean onSignInClick(View v) {
+		   //TODO: check if sign in is successful
+		   Intent i = new Intent(this, ViewTripsActivity.class);
+	       startActivity(i);
+		   return true;
+	   }
 	}
 
 

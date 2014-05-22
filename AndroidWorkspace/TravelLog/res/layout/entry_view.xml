@@ -15,6 +15,15 @@
         android:textColor="@color/aqua" >
     </TextView>
 
+    <Button
+        android:id="@+id/button1"
+        style="@style/ButtonTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="edit" 
+        android:layout_gravity="right"
+        android:onClick="onEditEntryClick"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

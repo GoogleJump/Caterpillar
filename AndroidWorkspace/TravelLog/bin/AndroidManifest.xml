@@ -36,8 +36,9 @@
         <activity android:launchMode="singleTop" android:name=".RegisterActivity"/>
         <activity android:launchMode="singleTop" android:name=".TakePhotoActivity"/>
         <activity android:launchMode="singleTop" android:name=".SearchActivity"/>
-        <activity android:launchMode="singleTop" android:name=".ViewEntriesActivity"/>
+        <activity android:launchMode="singleTop" android:name=".ViewTripsActivity"/>
         <activity android:launchMode="singleTop" android:name=".AddEntryActivity"/>
+        <activity android:launchMode="singleTop" android:name=".AddEditTripActivity"/>
 </application>
 
 </manifest>

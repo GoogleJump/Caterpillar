@@ -142,17 +142,30 @@ signinDiv.append(signinbtn);
 signinDiv.append(signupbtn);
 
 description= $(document.createElement('div'));
+description.addClass('container');
 description.css({
 	'position':'absolute',
 	'top':'150px',
-	'left':'60px',
-	'height':'400px',
-	'width':'400px',
+	'left':'10%',
+	'height':'60%',
+	'width':'30%',
 	'background-color':'#FFFCD4',
 	'border':'solid 2px gray',
 	'border-radius':'5px'
 
 });
 overlay.append(description);
+
+androidDiv = $(document.createElement('div'));
+androidDiv.addClass('container');
+androidDiv.css({
+	'position':'absolute',
+	'top':'150px',
+	'left':'50%',
+	'height':'60%',
+	'width':'40%',
+	'background-image':'url(../images/android.png)'
+});
+overlay.append(androidDiv);
 
 
