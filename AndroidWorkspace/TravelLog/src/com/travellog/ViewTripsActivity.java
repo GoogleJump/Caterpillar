@@ -246,7 +246,9 @@ public class ViewTripsActivity extends DrawerActivity implements
 		ArrayList<EntryView> entry = new ArrayList<EntryView>();
 		entry.add(new EntryView(this));
 		entry.add(new EntryView(this));
-		entry.add(new EntryView(this));
+		EntryView long_text_ex = new EntryView(this);
+		long_text_ex.setDescription(getString(R.string.lorem_ipsum_long));
+		entry.add(long_text_ex);
 		trip.getTrip().setEntries(entry);
 		tr1.addView(trip);
 		tableOfTrips.addView(tr1);
@@ -257,6 +259,19 @@ public class ViewTripsActivity extends DrawerActivity implements
 				.findViewById(R.id.view_entries_content);
 		layout.removeAllViews();
 		tableOfTrips.removeAllViews();
+	}
+	
+	//part of viewing entries.  if text is too long, clicking this button will show more/less
+	public boolean onSeeMoreClick(View v) {
+		EntryView entry = (EntryView) v.getParent().getParent();
+		entry.toggleShortenedText();
+		return true;
+	}
+	
+	//part of adding entries - upload photos from device
+	public boolean onAddPhotoClick(View v) {
+		
+		return true;
 	}
 
 

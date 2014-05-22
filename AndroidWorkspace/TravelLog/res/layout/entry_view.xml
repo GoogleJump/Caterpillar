@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="20dp" >
 
     <TextView
         android:id="@+id/entry_date_location"
@@ -68,5 +69,16 @@
         android:text="Entry text"
         android:textColor="@color/dark_purple" >
     </TextView>
+
+    <Button
+        android:id="@+id/see_more_text"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="See More >>"
+        style="@style/ButtonTheme"
+        android:onClick="onSeeMoreClick"
+        android:textSize="10dp"
+        android:padding="0dp"
+         />
 
 </LinearLayout>

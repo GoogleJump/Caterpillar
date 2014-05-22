@@ -85,14 +85,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/label_photo_caption"
             android:layout_width="54dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.49"
-            android:text="Title" />
+            android:text="Caption" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/edit_photo_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10" >
@@ -107,14 +107,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/label_photo_tags"
             android:layout_width="54dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.13"
-            android:text="Location" />
+            android:text="Tags (separate with commas)" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/edit_photo_tags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10" >
