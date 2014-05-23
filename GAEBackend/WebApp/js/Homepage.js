@@ -1,5 +1,3 @@
-var root;
-
 body = $(document.getElementById("body"));//root.find("div");
 
 tripGrid = $(document.createElement('div'));
@@ -15,12 +13,10 @@ tripGrid.css({
 addTrip=createThumbnail("../images/plus.jpeg");
 tripGrid.append(addTrip);
 addTrip.attr('data-toggle','modal');
-// addTrip.attr('href','#myModal');
-addTrip.click(function(evt){
-	addNewTrip();
+addTrip.attr('data-target','#addTrip');
+addNewTrip();
 
-});
-
+//TODO: Should get thumbnails of each trip later from backend
 
 trip1 = createThumbnail("../images/1.JPG");
 tripGrid.append(trip1);
@@ -63,74 +59,13 @@ this.createThumbnail=createThumbnail;
 
 
 /***
-
+add a trip modal. 
 **/
 function addNewTrip(){
-    console.log("fsadfsadfsag");
-    modal = $(document.createElement('div'));
-    modal.addClass('modal fade');
-    modal.attr('id','myModal');
-    modal.attr('tabindex','-1');
-    modal.attr('role','dialog');
-    modal.attr('aria-labelledby',"myModalLabel");
-    modal.attr('aria-hidden','true');
-    modal.css({
-        'height':'100%',
-        'width':'100%'
-    });
-
+    modal = Util.makeModal('addTrip', "Add Trip");
     body.append(modal);
-    dialogmodal = $(document.createElement('div'));
-    dialogmodal.addClass('modal-dialog');
-    modal.append(dialogmodal);
-    tripContainer=$(document.createElement('div'));
-    tripContainer.addClass('modal-content');
-    // tripContainer.addClass("panel panel-default");
-    dialogmodal.append(tripContainer);
-    tripContainer.css({
-		'border':'10px black solid',
-		// 'height':'auto',
-		// 'width':'80%',
-		'top':'80px',
-		// 'left':'25%',
-		// 'z-index':'100000001',
-		// 'position':'absolute',
-		'min-height':'300px',
-		'min-width':'250px',
-		'border-radius':'15px',
-		'background-color':'#B1F2EF'
-    });
-    headingDiv=$(document.createElement('div'));
-    // headingDiv.addClass('panel-heading text-center');
-    headingDiv.addClass('modal-header');
-    headingDiv.css({
-    	'background-color':'#2F4F4F',
-    	'font-family':'Serif',
-		'color':'#FFFCD4',
-		'height':'60px',
-    });
-    tripContainer.append(headingDiv);
-    heading = $(document.createElement('h3'));
-    // heading.addClass('panel-title');
-    heading.addClass('modal-title');
-    heading.text("Add Trip");
-    headingDiv.append(heading);
-    heading.css({
-    	// 'font-size':'40px'
-    });
-    panelBody= $(document.createElement('div'));
-    tripContainer.append(panelBody);
-    // panelBody.addClass("panel-body");
-    panelBody.addClass("modal-body");
-    // panelBody.css({
-    //     // 'padding-top':'9px',
-    //     // 'top':'5%',
-    //     // 'left':'0%',
-    //     // 'position':'absolute',
-    //     // 'width':'100%'
-    // });
-
 	rowwrapper = $(document.createElement('div'));
+    $("#modalBody").append(rowwrapper);
 	rowwrapper.addClass('row');
 	rowwrapper.css({
 		'padding-top':'9px',
@@ -139,14 +74,13 @@ function addNewTrip(){
     	'position':'relative',
     	'width':'80%'
     });
-    panelBody.append(rowwrapper);
-    titleWrapper = inputGroup('Title: ', 'Untitled');
+    titleWrapper = Util.inputGroup('Title: ', 'Untitled');
     rowwrapper.append(titleWrapper);
     
-    locationWrapper = inputGroup('Where: ','Location');
+    locationWrapper = Util.inputGroup('Where: ','Location');
     rowwrapper.append(locationWrapper);
 
-    timeWrapper = inputGroup('When: ','Today');
+    timeWrapper = Util.inputGroup('When: ','Today');
     rowwrapper.append(timeWrapper);
     description = $(document.createElement('textarea'));
     description.attr('placeholder','Description');
@@ -158,11 +92,9 @@ function addNewTrip(){
 
     })
     rowwrapper.append(description);
-    //TODO: tags and submit and cancel button
     addTags = $(document.createElement('input'));
     addTags.attr('type','text');
     addTags.addClass('tags');
-    // addTags.attr('placeholder','Add Tags');
     addTags.css({
         'padding-bottom':'5px',
 
@@ -175,61 +107,5 @@ function addNewTrip(){
         //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
         // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
     });
-
-    footer=$(document.createElement('div'));
-    tripContainer.append(footer);
-    footer.addClass('modal-footer');
-    closebtn = $(document.createElement('btn'));
-    closebtn.attr('type','button');
-    closebtn.addClass('btn btn-default');
-    closebtn.attr('data-dismiss','modal');
-    closebtn.text("Close");
-    savebtn = $(document.createElement('btn'));
-    savebtn.attr('type','button');
-    savebtn.addClass('btn btn-primary');
-    // savebtn.attr('data-dismiss','modal');
-    savebtn.text("Add");
-    savebtn.css({
-        'background-color':'#504552'
-    });
-    footer.append(closebtn);
-    footer.append(savebtn);
-    modal.modal({show:true});
 }
 this.addNewTrip= addNewTrip;
-
-/**
-Customized function for input group
-including a divwrapper, title and input box..
-@param: the tilte
-**/
-function inputGroup(name, placeholder){
-	wrapper = $(document.createElement('div'));
-    wrapper.addClass('input-group');
-    wrapper.css({
-    	// 'top':'5%',
-    	// 'left':'10%',
-    	// 'position':'relative',
-    	// 'width':'80%'
-    	'padding-bottom':'5px'
-    })
-    title = $(document.createElement('span'));
-    title.addClass('input-group-addon');
-    title.text(name);
-    title.css({
-    	'height':'15px',
-    	'background-color':'#504552',
-    	'color':'white',
-    	'font-weight':'bold'
-    });
-    wrapper.append(title);
-    titleInput = $(document.createElement('input'));
-    titleInput.attr('type','text');
-    titleInput.addClass('form-control');
-    titleInput.attr('placeholder',placeholder);
-    wrapper.append(titleInput);
-
-    return wrapper;
-}
-this.inputGroup=inputGroup;
-
