@@ -1,34 +1,60 @@
 body = $(document.getElementById("body"));//root.find("div");
 
-tripGrid = $(document.createElement('div'));
-body.append(tripGrid);
-tripGrid.addClass("row");
-tripGrid.css({
-	'top':'200px',
-	'left':'10%',
-	'position':'absolute',
-	'height':'auto',
-	'width':'80%'
+main = $(document.getElementById("main"));
+contentDiv = $(document.createElement('div'));
+main.append(contentDiv);
+contentDiv.addClass("row");
+contentDiv.css('padding-top','50px');
+addbtnDiv = $(document.createElement('div'));
+// addbtnDiv.addClass("col-md-offset5");
+addbtnDiv.css({
+    'padding-left':'15px',
+    'padding-bottom':'8px'
 });
-addTrip=createThumbnail("../images/plus.jpeg");
-tripGrid.append(addTrip);
-addTrip.attr('data-toggle','modal');
-addTrip.attr('data-target','#addTrip');
+contentDiv.append(addbtnDiv);
+addbtn = $(document.createElement('button'));
+addbtn.addClass('btn btn-primary');
+addbtn.text("Add a Trip");
+addbtnDiv.append(addbtn);
+addbtn.attr({
+    'data-target':"#addTrip",
+    'data-toggle':"modal",
+    // 'left':'10px',
+    // 'position':'absolute'
+});
+addbtn.css({
+    'background-color':'#00868B',
+});
+
+tripGrid = $(document.createElement('div'));
+contentDiv.append(tripGrid);
+tripGrid.addClass("row col-md-offset3 col-md-10");
+tripGrid.css({
+	// 'top':'100px',
+	// 'left':'10%',
+	// 'posit ion':'absolute',
+	// 'height':'auto',
+	// 'width':'80%'
+});
+// addTrip=createThumbnail("../images/plus.jpeg");
+// tripGrid.append(addTrip);
+// addTrip.attr('data-toggle','modal');
+// addTrip.attr('data-target','#addTrip');
 addNewTrip();
 
 //TODO: Should get thumbnails of each trip later from backend
 
-trip1 = createThumbnail("../images/1.JPG");
+trip1 = Util.photoPreview(true);//createThumbnail("../images/1.JPG");
 tripGrid.append(trip1);
-trip2 = createThumbnail("../images/2.jpg");
+trip2 = Util.photoPreview(true);//createThumbnail("../images/2.jpg");
 tripGrid.append(trip2);
-trip3 = createThumbnail("../images/3.jpg");
+trip3 = Util.photoPreview(true);//createThumbnail("../images/3.jpg");
 tripGrid.append(trip3);
-trip4 = createThumbnail("../images/4.jpg");
+trip4 = Util.photoPreview(true);//createThumbnail("../images/4.jpg");
 tripGrid.append(trip4);
-trip5 = createThumbnail("../images/5.JPG");
+trip5 = Util.photoPreview(true);//createThumbnail("../images/5.JPG");
 tripGrid.append(trip5);
-trip6 = createThumbnail("../images/6.JPG");
+trip6 = Util.photoPreview(true);//createThumbnail("../images/6.JPG");
 tripGrid.append(trip6);
 
 
@@ -41,10 +67,21 @@ the thumbnails and the picture stands for text should be the same ratio.
 @param: path: the path to the thumbnail image.
 **/
 function createThumbnail(path){
+//     <div class="row">
+//   <div class="col-sm-6 col-md-4">
+//     <div class="thumbnail">
+//       <img data-src="holder.js/300x200" alt="...">
+//       <div class="caption">
+//         <h3>Thumbnail label</h3>
+//         <p>...</p>
+//         <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+//       </div>
+//     </div>
+//   </div>
+// </div>
 	colDiv = $(document.createElement('div'));
 	
-	colDiv.addClass('col-xs-6 col-md-3');
-	// grid.append(colDiv);
+	colDiv.addClass('col-sm-6 col-md-4');
 	thumba=$(document.createElement('a'));
 	thumba.attr("href","#");//TODO: href would be the trip's url later
 	thumba.addClass("thumbnail");

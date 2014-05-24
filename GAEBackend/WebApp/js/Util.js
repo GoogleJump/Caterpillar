@@ -16,6 +16,7 @@ Util = (function(){
         makeModal: makeModal,
         inputGroup : inputGroup,
         makePost: makePost,
+        photoPreview: photoPreview,
     };
 	/**
      * make a Modal when a button is clicked. 
@@ -308,4 +309,57 @@ Util = (function(){
         return item;
     }
     this.carouselItem = carouselItem;
+
+    /**
+    function to create a thumbnail div with caption and description
+    */
+    function photoPreview(isTrip){
+        var colDiv = $(document.createElement('div'));
+    
+        colDiv.addClass('col-sm-6 col-md-4');
+        var thumbDiv = $(document.createElement('div'));
+        thumbDiv.addClass('thumbnail');
+        colDiv.append(thumbDiv);
+        var thumbnail=$(document.createElement('img'));
+        thumbnail.attr("src","../images/1.jpg");
+        thumbnail.attr("alt","No image for the trip available")
+        thumbDiv.append(thumbnail);
+        var captionDiv = $(document.createElement('div'));
+        captionDiv.addClass("caption");
+        thumbDiv.append(captionDiv);
+        var caption = $(document.createElement('h3'));
+        captionDiv.append(caption);
+        caption.text("Thumbnail Label");
+        var description = $(document.createElement('p'));
+        description.text("This is a long and meaningless description for the thumbnail");
+        captionDiv.append(description);
+        var btngroup = $(document.createElement('div'));
+        btngroup.addClass('row');
+        captionDiv.append(btngroup);
+        
+        var editbtn = $(document.createElement('button'));
+        if(isTrip){
+            editbtn.text("View");
+        }else{
+            editbtn.text("Edit");
+        }
+        editbtn.addClass("btn btn-default col-sm-offset-1");
+        editbtn.attr({
+            'href':"#",//would be the link to open the modal for editing the photo
+            // 'role':'button',
+
+        });
+        btngroup.append(editbtn);
+        var deletebtn = $(document.createElement('button'));
+        deletebtn.text("Delete");
+        deletebtn.addClass("btn btn-default col-sm-offset-4");
+        deletebtn.attr({
+            'href':"#",//would delete the photo from thumbnails collection
+            // 'role':'button',
+            // 'right':'10px',
+            // 'position':'absolute'
+        });
+        btngroup.append(deletebtn);
+        return colDiv;
+    }
 })();

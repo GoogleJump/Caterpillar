@@ -1,17 +1,19 @@
 body = $(document.getElementById("body"));
-
-contentDiv = $(document.createElement('div'));
-body.append(contentDiv);
-contentDiv.addClass("row");
-contentDiv.css({
-	'top':'150px',
-	'left':'5%',
+main = $(document.createElement("div"));
+main.addClass("container-fluid");
+body.append(main);
+main.css({
 	'position':'absolute',
-	'height':'auto',
+	'top':'100px',
+	'paddingLeft':'35px'
 });
+contentDiv = $(document.createElement('div'));
+main.append(contentDiv);
+contentDiv.addClass("row");
+
 titleDiv = $(document.createElement('div'));
 	
-titleDiv.addClass('row');
+titleDiv.addClass('page-header col-md-12');
 contentDiv.append(titleDiv);
 title = $(document.createElement('h1'));
 title.text('Trip to Wonderland');
@@ -68,7 +70,7 @@ pager.css({
  	'text-align': 'left',
  	'width':'100%',
 });
-contentDiv.append(pager);
+main.append(pager);
 prev = $(document.createElement('li'));
 pager.append(prev);
 prev.addClass('previous');
