@@ -128,15 +128,32 @@ Util = (function(){
         return wrapper;
     }
     
-
-    function makePost(imgPosition, toEntry, content){
+    /**
+    function to make a post in trip view, it can be with img only, or text only, or both.
+    probably, later add videos too. toEntry is the link to the post's main page.
+    */
+    function makePost(hasText, hasImg, toEntry, content){
         var postDiv = $(document.createElement('div'));
+        postDiv.addClass('blog-post');
         var title = $(document.createElement('h2'));
+        
+        title.hover(function() {
+            $(this).css({
+                'cursor':'pointer',
+                'text-decoration':'underline',                
+            });
+        }, function() {
+            $(this).css({
+                'cursor':'auto',
+                'text-decoration':'none',
+            });
+        });
         title.text("This is a Post");
         title.css({
             'font-family':'Arial Black", Gadget, sans-serif',
         });
-        date = $(document.createElement('p'));
+
+        var date = $(document.createElement('p'));
         date.addClass('blog-post-meta');
         date.text("1min before the end of the world");
         date.css({
@@ -145,29 +162,58 @@ Util = (function(){
         
         postDiv.append(title);
         postDiv.append(date);
-        // var content = $(document.createElement('div'));
-        // content.addClass("row");
-        // postDiv.append(content);
-        var carousel = makeCarousel("myCarousel",3);
-        var carouselDiv = $(document.createElement('div'));
-        // carouselDiv.addClass("span3");
-        carouselDiv.append(carousel);
-        carouselDiv.css({
-            'width':'30%',
-            'position':'absolute',
-        })
-        postDiv.append(carouselDiv);
+        var content = $(document.createElement('div'));
+        content.addClass("row");
+        content.css({
+            'height':'auto',
+            'width':'100%%'
+        });        
+        if(hasImg===true){
+            var carouselDiv = $(document.createElement('div'));
+            carouselDiv.addClass("col-xs-6 col-md-4");
+            content.append(carouselDiv);
+            carouselDiv.css({
+                'padding-bottom':'5px',
+            })
+            var carousel = makeCarousel("myCarousel",3);
+            carouselDiv.append(carousel);
+        }
+        if(hasText===true){
+            var textDiv = $(document.createElement("div"));
+            content.append(textDiv);
+            textDiv.addClass("col-xs-12 col-sm-6 col-md-8");
+            var block = $(document.createElement("blockquote"));
+            block.css({
+                'color':'black',
+            });
+            textDiv.append(block);
+            textDiv.css({
+                'height':'auto',
+                'padding-bottom':'5px',
+            });
+            var text=$(document.createElement('p'));
+            text.text("Scientists have for the first time ever solved a 150-year-old evolutionary mystery - the iconic kiwi actually once flew. ")
+            block.append(text);            
+        }
+        postDiv.append(content);
+        
         return postDiv;
     }
 
+    /**
+    function to create carousel, given a unique id for it, and number of pictures. 
+    and data(including info for pics.)
+    */
     function makeCarousel(id, picNum, data){        
         var carousel = $(document.createElement('div'));
+        // carouselDiv.
         carousel.attr({
             'id':id,
             'data-ride':'carousel',
         });
         carousel.css({
             'height':'100%',
+            'width':'100%',
         });
         carousel.addClass('carousel slide');
         //carousel indicators:
@@ -222,6 +268,10 @@ Util = (function(){
         carousel.append(right);
         return carousel;
     }
+    /**function to create a single slide in carousel., given thumbnail, 
+    boolean for checking active(first slide)
+    picture's caption and description
+    */
     function carouselItem(isActive,picCaption,description){
         var item = $(document.createElement('div'));
         item.addClass('item');
@@ -232,7 +282,7 @@ Util = (function(){
             'height':'auto',
             // 'position':'absolute',
             'display':'block',
-            'margin':'auto'
+            // 'margin':'auto'
         })
         thumb.attr('src','../images/3.jpg');
         item.append(thumb);

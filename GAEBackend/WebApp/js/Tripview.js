@@ -8,17 +8,16 @@ contentDiv.css({
 	'left':'5%',
 	'position':'absolute',
 	'height':'auto',
-	'width':'100%%'
 });
 titleDiv = $(document.createElement('div'));
 	
-titleDiv.addClass('span5 offset2');
+titleDiv.addClass('row');
 contentDiv.append(titleDiv);
-// contentDiv.append(titleDiv);
 title = $(document.createElement('h1'));
 title.text('Trip to Wonderland');
 title.addClass('font-effect-fragile');
 title.css({
+	'padding-top':'5px',
 	'font-family':"Rancho', serif",
 	'font-size':'100px'
 })
@@ -29,15 +28,7 @@ title.append(date);
 titleDiv.css({
 	'padding-top':'10px'
 });
-// <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
 
-// <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-//   <div class="modal-dialog modal-lg">
-//     <div class="modal-content">
-//       ...
-//     </div>
-//   </div>
-// </div>/
 addbtn = $(document.createElement('button'));
 addbtn.addClass('btn btn-primary');
 addbtn.attr({
@@ -52,18 +43,52 @@ addbtn.css({
 });
 
 contentDiv.append(addbtn);
-
+postsWrapper = $(document.createElement('div'));
+postsWrapper.addClass('row');
+contentDiv.append(postsWrapper);
 allEntries = $(document.createElement('div'));
-allEntries.addClass('col-md-8 blog-main');
-contentDiv.append(allEntries);
+allEntries.addClass('col-md-12 blog-main');
+postsWrapper.append(allEntries);
 allEntries.css({
 	'padding-top':'5px',
 	'height':'auto',
-	'width':'80%',
+	// 'width':'80%',
 	// 'background-color':'background-color'
 });
 
-allEntries.append(Util.makePost());
+allEntries.append(Util.makePost(true, false));
+allEntries.append(Util.makePost(true, true));
+allEntries.append(Util.makePost(false, true));
+
+
+pager = $(document.createElement('ul'));
+pager.addClass('pager');
+pager.css({
+	'margin-bottom': '60px',
+ 	'text-align': 'left',
+ 	'width':'100%',
+});
+contentDiv.append(pager);
+prev = $(document.createElement('li'));
+pager.append(prev);
+prev.addClass('previous');
+preva = $(document.createElement('a'));
+preva.attr('href','#');
+prev.append(preva)
+preva.text("Previous");
+preva.css({
+	'color':Util.teal,
+});
+next = $(document.createElement('li'));
+pager.append(next);
+next.addClass('next');
+nexta = $(document.createElement('a'));
+next.append(nexta);
+nexta.attr('href','#');
+nexta.text("Next");
+nexta.css({
+	'color':Util.teal,
+});
 
 // addEntry();
 /*****create the modal for adding entry*****/
