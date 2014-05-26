@@ -47,6 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.travellog.DrawerActivity.DrawerItemClickListener;
@@ -65,10 +66,11 @@ public class ViewPhotosActivity extends DrawerActivity {
 	ImageAdapter myTaskAdapter;
 	AsyncTaskLoadFiles myAsyncTaskLoadFiles;
 	static GridView gridview;
-	Fragment viewPhotoFragment;
+	static Fragment viewPhotoFragment;
+	protected static Fragment editPhotoFragment;
 	static ArrayList<Photo> photoList;
 	static int currentSelectedPhoto;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,7 +78,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 
 		getLayoutContent();
 		viewPhotoFragment = new PhotoFragment();
-		
+		editPhotoFragment = new EditPhotoFragment();
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -133,19 +135,18 @@ public class ViewPhotosActivity extends DrawerActivity {
 		myAsyncTaskLoadFiles.execute();
 
 		gridview.setOnItemClickListener(myOnItemClickListener);
-		
-		//close fragment
-		gridview.setOnTouchListener(new OnTouchListener() {
 
+		// close fragment
+		gridview.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				System.out.println("removing");
-				getFragmentManager().beginTransaction().remove(viewPhotoFragment).commit();
-            return false;
+				getFragmentManager().beginTransaction()
+						.remove(viewPhotoFragment).commit();
+				return false;
 			}
-        });
-			
+		});
 
 		Button buttonAddPhoto = (Button) findViewById(R.id.add_photo_viewphotos_btn);
 		buttonAddPhoto.setOnClickListener(new OnClickListener() {
@@ -169,11 +170,14 @@ public class ViewPhotosActivity extends DrawerActivity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			currentSelectedPhoto = position;
-			getFragmentManager().beginTransaction().remove(viewPhotoFragment).commit();
+			getFragmentManager().beginTransaction().remove(viewPhotoFragment)
+					.commit();
+			getFragmentManager().beginTransaction().remove(editPhotoFragment)
+			.commit();
 			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction().replace(R.id.content_homepage, viewPhotoFragment).commit();
-			
-					
+			fragmentManager.beginTransaction()
+					.replace(R.id.content_homepage, viewPhotoFragment).commit();
+
 		}
 	};
 
@@ -227,9 +231,10 @@ public class ViewPhotosActivity extends DrawerActivity {
 	public static class PhotoFragment extends Fragment {
 		ImageView photoView;
 		View v;
-		
+		Photo selectedPhoto;
+
 		public PhotoFragment() {
-			
+
 		}
 
 		@Override
@@ -242,60 +247,147 @@ public class ViewPhotosActivity extends DrawerActivity {
 			LayoutParams params = (LayoutParams) v.getLayoutParams();
 			params.setMargins(20, 20, 20, 20);
 			v.setLayoutParams(params);
-			v.setClickable(true); //so view underneath can't be clicked
+			v.setClickable(true); // so view underneath can't be clicked
 			photoView = (ImageView) v.findViewById(R.id.photo_view_imgview);
-			setImageAsCurrent();
+			selectedPhoto = photoList.get(currentSelectedPhoto);
+			setPhotoInfoAsCurrent();
+
+			// edit this photo button
+			Button editButton = (Button) v.findViewById(R.id.edit_photo_btn);
+			editButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					getActivity()
+							.getFragmentManager()
+							.beginTransaction()
+							.replace(R.id.content_homepage,
+									editPhotoFragment).commit();
+					getActivity().getFragmentManager().beginTransaction()
+							.remove(PhotoFragment.this).commit();
+				}
+			});
+			
+			//clicking on the photo should go to the next one in the gallery
+			photoView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					System.out.println("next photo");
+					if(currentSelectedPhoto == photoList.size()-1) {
+						return;
+					}
+					else {
+					currentSelectedPhoto++;
+					selectedPhoto = photoList.get(currentSelectedPhoto);
+					setPhotoInfoAsCurrent();
+					}
+				}
+			});
+
 			return v;
 		}
-		
-		public void setImageAsCurrent() {
-			Photo selectedPhoto = photoList.get(currentSelectedPhoto);
-			Bitmap selectedImage = selectedPhoto.getImage();
-			photoView.setImageBitmap(photoList.get(currentSelectedPhoto).getImage());
-			if(selectedImage.getHeight() > selectedImage.getWidth()) {
-			photoView.getLayoutParams().height = (int) (.8*MainActivity.SCREEN_HEIGHT);
-			}
-			else {
-				photoView.getLayoutParams().width = (int) (.8*MainActivity.SCREEN_WIDTH);
-			}
+
+		public void setPhotoInfoAsCurrent() {
 			
-			//check for title/location and set visible/invisible if they exist/don't exist
-			if(selectedPhoto.getTitle().equals("")) {
+			Bitmap selectedImage = selectedPhoto.getImage();
+			photoView.setImageBitmap(photoList.get(currentSelectedPhoto)
+					.getImage());
+			if (selectedImage.getHeight() > selectedImage.getWidth()) {
+				photoView.getLayoutParams().height = (int) (.8 * MainActivity.SCREEN_HEIGHT);
+			} else {
+				photoView.getLayoutParams().width = (int) (.8 * MainActivity.SCREEN_WIDTH);
+			}
+
+			// check for title/location and set visible/invisible if they
+			// exist/don't exist
+			if (selectedPhoto.getTitle().equals("")) {
 				setVisibility(false, R.id.photo_title_label);
 				setVisibility(false, R.id.photo_title_textview);
-			}
-			else {
+			} else {
 				setVisibility(true, R.id.photo_title_label);
 				setVisibility(true, R.id.photo_title_textview);
+				((TextView) v.findViewById(R.id.photo_title_textview)).setText(selectedPhoto.getTitle());
+				
 			}
-			
-			if(selectedPhoto.getLocation().equals("")) {
+
+			if (selectedPhoto.getLocation().equals("")) {
 				setVisibility(false, R.id.photo_location_label);
 				setVisibility(false, R.id.photo_location_textview);
-			}
-			else {
+			} else {
 				setVisibility(true, R.id.photo_location_label);
 				setVisibility(true, R.id.photo_location_textview);
+				((TextView) v.findViewById(R.id.photo_title_textview)).setText(selectedPhoto.getLocation());
 			}
 		}
-		
+
 		private void setVisibility(boolean visible, int resource) {
-			if(visible) {
+			if (visible) {
 				v.findViewById(resource).setVisibility(v.VISIBLE);
-			}
-			else {
+			} else {
 				v.findViewById(resource).setVisibility(v.GONE);
 			}
 		}
-		
-		public boolean onGetNextPhotoClick(View v) {
-			//TODO - connect this to clicking photo
-			currentSelectedPhoto++;
-			setImageAsCurrent();
-			return true;
+
+	}
+
+	// viewing an individual photo:
+	public static class EditPhotoFragment extends Fragment {
+		ImageView photoView;
+		Photo selectedPhoto;
+		View view;
+
+		public EditPhotoFragment() {
+
 		}
-		
-		
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			// load entries from database
+
+			// Inflate the layout for this fragment
+			view = inflater.inflate(R.layout.edit_photo, container, false);
+			LayoutParams params = (LayoutParams) view.getLayoutParams();
+			params.setMargins(20, 20, 20, 20);
+			view.setLayoutParams(params);
+			view.setClickable(true); // so view underneath can't be clicked
+			photoView = (ImageView) view.findViewById(R.id.photo_edit_imgview);
+			selectedPhoto = photoList.get(currentSelectedPhoto);
+			setPhotoInfoAsCurrent();
+
+			Button submitButton = (Button) view
+					.findViewById(R.id.submit_edit_photo_btn);
+			submitButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					//change photo title/location
+					EditText titleEdit = ((EditText) view.findViewById(R.id.photo_title_edittext));
+					EditText locationEdit = ((EditText) view.findViewById(R.id.photo_location_edittext));
+					selectedPhoto.setTitle(titleEdit.getText().toString());
+					selectedPhoto.setLocation(locationEdit.getText().toString());
+					
+					//end this fragment and bring up the view photo fragment
+					getActivity().getFragmentManager().beginTransaction()
+							.replace(R.id.content_homepage, viewPhotoFragment)
+							.commit();
+					getActivity().getFragmentManager().beginTransaction()
+							.remove(EditPhotoFragment.this).commit();
+
+					// TODO update database
+				}
+			});
+
+			return view;
+		}
+
+		public void setPhotoInfoAsCurrent() {
+			Bitmap selectedImage = selectedPhoto.getImage();
+			photoView.setImageBitmap(photoList.get(currentSelectedPhoto).getImage());
+			if (selectedImage.getHeight() > selectedImage.getWidth()) {
+				photoView.getLayoutParams().height = (int) (.8 * MainActivity.SCREEN_HEIGHT);
+			} else {
+				photoView.getLayoutParams().width = (int) (.8 * MainActivity.SCREEN_WIDTH);
+			}
+		}
 	}
 
 	// taken from:
@@ -348,21 +440,20 @@ public class ViewPhotosActivity extends DrawerActivity {
 	public class ImageAdapter extends BaseAdapter {
 
 		private Context mContext;
+
 		// ArrayList<String> itemList = new ArrayList<String>(); //example -
 		// loading from url
-		
-		
 
 		public ImageAdapter(Context c) {
 			mContext = c;
 			// test images:
-			 photoList = new ArrayList<Photo>(); 
+			photoList = new ArrayList<Photo>();
 			for (int i = 0; i < 10; i++) {
 				Photo samplePhoto = new Photo();
-				samplePhoto.setImage((BitmapFactory.decodeResource(getResources(),
-						R.drawable.eiffel_tower_samplepic)));
+				samplePhoto.setImage((BitmapFactory.decodeResource(
+						getResources(), R.drawable.eiffel_tower_samplepic)));
 				photoList.add(samplePhoto);
-				
+
 			}
 		}
 
