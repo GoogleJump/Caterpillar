@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import android.content.Context;
 
+
 public class Trip {
 	private String tripTitle;
 	private String tripLocation;

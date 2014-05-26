@@ -9,6 +9,7 @@
         <item>Home</item>
         <item>View Log</item>
         <item>Take Photo</item>
+        <item>Search</item>
       
     </string-array>
     <string-array name="menu_array">

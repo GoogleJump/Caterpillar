@@ -49,7 +49,7 @@
 # onClick res/layout/activity_add_trip.xml #generated:77
 -keepclassmembers class * { *** onDepartDateClick(...); }
 
-# onClick res/layout/entry_view.xml #generated:19
+# onClick res/layout/entry_view.xml #generated:25
 -keepclassmembers class * { *** onEditEntryClick(...); }
 
 # onClick res/layout/trip_view.xml #generated:39
@@ -64,7 +64,7 @@
 # onClick res/layout/activity_main.xml #generated:103
 -keepclassmembers class * { *** onSeeLogIconClick(...); }
 
-# onClick res/layout/entry_view.xml #generated:73
+# onClick res/layout/entry_view.xml #generated:80
 -keepclassmembers class * { *** onSeeMoreClick(...); }
 
 # onClick res/layout/login_signup.xml #generated:74

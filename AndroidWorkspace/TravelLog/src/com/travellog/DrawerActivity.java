@@ -142,6 +142,12 @@ public class DrawerActivity extends FragmentActivity {
 				            startActivity(intent);
 				            mDrawerLayout.closeDrawers();
 					     }
+				        
+				        if ( position == 3 ) {
+				        	Intent intent = new Intent(DrawerActivity.this, SearchActivity.class);
+				            startActivity(intent);
+				            mDrawerLayout.closeDrawers();
+					     }
 		        }
 		    }
 
