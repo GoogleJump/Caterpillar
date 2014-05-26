@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * TripView
+ * for viewing trips - consists of the trip title and a photo
+ *
+ */
 public class TripView extends LinearLayout {
 	//ImageButton tripPhoto;
 	//String title;

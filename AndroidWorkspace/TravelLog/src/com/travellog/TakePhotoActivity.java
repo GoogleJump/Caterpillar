@@ -24,7 +24,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
-
+/*
+ * TakePhotoActivity
+ * starts camera
+ * saves bitmap
+ * TODO:
+ * store image in the backend
+ */
 public class TakePhotoActivity extends DrawerActivity {
 
 	private static final int ACTION_TAKE_PHOTO = 1;

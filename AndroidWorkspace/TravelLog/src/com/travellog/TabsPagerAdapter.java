@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+/**
+ * TabsPagerAdapter
+ * adapter for tabs that are found in ViewPhotosActivity
+ **/
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	public TabsPagerAdapter(FragmentManager fragmentManager) {

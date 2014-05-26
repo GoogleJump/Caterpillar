@@ -32,11 +32,9 @@ import android.support.v4.view.GravityCompat;
 /**
  * The Main Activity.
  * 
- * This activity starts up the RegisterActivity immediately, which communicates
- * with your App Engine backend using Cloud Endpoints. It also receives push
- * notifications from backend via Google Cloud Messaging (GCM).
- * 
- * Check out RegisterActivity.java for more details.
+ * sign in/sign up buttons
+ * TODO
+ * implement sign up and connect button
  */
 public class MainActivity extends DrawerActivity {
 	

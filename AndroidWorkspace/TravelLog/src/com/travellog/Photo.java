@@ -1,7 +1,13 @@
 package com.travellog;
 
 import android.graphics.Bitmap;
-
+/**
+ * 
+ * Photo
+ * holds image, title, description, and location for a photo
+ *TODO
+ * do we need tags or a photo id?
+ */
 public class Photo {
 	Bitmap image;
 	String title;

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -52,7 +51,23 @@ import android.widget.Toast;
 
 import com.travellog.DrawerActivity.DrawerItemClickListener;
 
+/**
+ * ViewPhotosActivity 
+ * View all photos from an entry in a GridView
+ * Select a photo to open a photoFragment - shows the photo along with title and location
+ * Edit a selected photo
+ * TODO: 
+ * get photos from database based on an inputed entry id
+ * update edited photos in database
+ * connect add photo button
+ *
+ */
+
 public class ViewPhotosActivity extends DrawerActivity {
+
+	/*
+	 * DrawerActivity fields
+	 */
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -62,30 +77,91 @@ public class ViewPhotosActivity extends DrawerActivity {
 	private String[] mMenuTitles;
 	RelativeLayout content;
 
-	File targetDirector;
-	ImageAdapter myTaskAdapter;
-	AsyncTaskLoadFiles myAsyncTaskLoadFiles;
-	static GridView gridview;
-	static Fragment viewPhotoFragment;
-	protected static Fragment editPhotoFragment;
-	static ArrayList<Photo> photoList;
-	static int currentSelectedPhoto;
+	/*
+	 * ViewPhotosActivity fields
+	 */
+
+	private ImageAdapter myTaskAdapter; // image adapter that uses photoList to
+										// load the gridview with bitmaps
+	private AsyncTaskLoadFiles myAsyncTaskLoadFiles; // async task that will
+														// load photos from
+														// database (TODO)
+	static GridView gridview; // view that holds all the photos
+	protected static Fragment viewPhotoFragment; // fragment that views the
+													// selected photo
+	protected static Fragment editPhotoFragment; // fragment that edits the
+													// selected photo
+	private static ArrayList<Photo> photoList; // list of photos
+	private static int currentSelectedPhoto; // keeps track of the photo the
+												// user is currently viewing or
+												// editing
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		getLayoutContent();
+		getLayoutContent(); // replaces the content view from activity main with
+							// the content view for ViewPhotosActivity
+
+		// initialize the two fragments that will be used in this activity -
+		// viewing and editing photos
 		viewPhotoFragment = new PhotoFragment();
 		editPhotoFragment = new EditPhotoFragment();
 
+		// get extras from previous activity
+		// TODO: use the extras to put/get the id of the entry so we can load
+		// photos of that entry
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// edit = extras.getBoolean("id"); //get the entry of which to load
 			// photos from
 		}
 
+		/* view photo activity specific stuff */
+		gridview = (GridView) findViewById(R.id.gridview);
+		gridview.getLayoutParams().height = MainActivity.SCREEN_HEIGHT;
+		myImageAdapter = new ImageAdapter(this);
+		gridview.setAdapter(myImageAdapter);
+
+		myAsyncTaskLoadFiles = new AsyncTaskLoadFiles(myImageAdapter);
+		myAsyncTaskLoadFiles.execute();
+
+		// when the user clicks one of the images in the gridview, open the view
+		// photo fragment
+		gridview.setOnItemClickListener(myOnItemClickListener);
+
+		// when the user clicks anywhere on the gridview, close any open
+		// fragments
+		gridview.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				getFragmentManager().beginTransaction()
+						.remove(viewPhotoFragment).commit();
+				getFragmentManager().beginTransaction()
+						.remove(editPhotoFragment).commit();
+				return false;
+			}
+		});
+
+		// add photo button - top of view photos page
+		Button buttonAddPhoto = (Button) findViewById(R.id.add_photo_viewphotos_btn);
+		// add another photo to this activity
+		buttonAddPhoto.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// Cancel the previous running task, if exist.
+				myAsyncTaskLoadFiles.cancel(true);
+
+				// TODO open up add photo/take photo page
+
+			}
+		});
+
+		/* initialize sliding drawer activity fields */
 		mTitle = mDrawerTitle = getTitle();
 		mMenuTitles = getResources().getStringArray(R.array.menu_options);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -125,47 +201,10 @@ public class ViewPhotosActivity extends DrawerActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		gridview = (GridView) findViewById(R.id.gridview);
-		gridview.getLayoutParams().height = MainActivity.SCREEN_HEIGHT;
-		myImageAdapter = new ImageAdapter(this);
-		gridview.setAdapter(myImageAdapter);
-
-		myAsyncTaskLoadFiles = new AsyncTaskLoadFiles(myImageAdapter);
-		myAsyncTaskLoadFiles.execute();
-
-		gridview.setOnItemClickListener(myOnItemClickListener);
-
-		// close fragment
-		gridview.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				System.out.println("removing");
-				getFragmentManager().beginTransaction()
-						.remove(viewPhotoFragment).commit();
-				return false;
-			}
-		});
-
-		Button buttonAddPhoto = (Button) findViewById(R.id.add_photo_viewphotos_btn);
-		buttonAddPhoto.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-
-				// Cancel the previous running task, if exist.
-				myAsyncTaskLoadFiles.cancel(true);
-
-				// TODO open up add photo/take photo page
-
-			}
-		});
-
 	}
 
+	// listener for clicking on any image in the gridview
 	OnItemClickListener myOnItemClickListener = new OnItemClickListener() {
-
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
@@ -173,7 +212,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 			getFragmentManager().beginTransaction().remove(viewPhotoFragment)
 					.commit();
 			getFragmentManager().beginTransaction().remove(editPhotoFragment)
-			.commit();
+					.commit();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.content_homepage, viewPhotoFragment).commit();
@@ -181,6 +220,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 		}
 	};
 
+	// set the content in this activity
 	public void getLayoutContent() {
 		content = (RelativeLayout) findViewById(R.id.content_homepage);
 		content.removeAllViews();
@@ -194,6 +234,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	/* for sliding drawer */
 	/* Called whenever we call invalidateOptionsMenu() */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
@@ -204,6 +245,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
+	/* for sliding drawer */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// The action bar home/up action should open or close the drawer.
@@ -227,11 +269,11 @@ public class ViewPhotosActivity extends DrawerActivity {
 		}
 	}
 
-	// viewing an individual photo:
+	// fragment viewing an individual photo:
 	public static class PhotoFragment extends Fragment {
-		ImageView photoView;
-		View v;
-		Photo selectedPhoto;
+		ImageView photoView; // image view for the current photo being viewed
+		View v; // view for this fragment
+		Photo selectedPhoto; // current photo that is being viewed
 
 		public PhotoFragment() {
 
@@ -240,45 +282,46 @@ public class ViewPhotosActivity extends DrawerActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			// load entries from database
 
 			// Inflate the layout for this fragment
 			v = inflater.inflate(R.layout.view_photo, container, false);
 			LayoutParams params = (LayoutParams) v.getLayoutParams();
 			params.setMargins(20, 20, 20, 20);
 			v.setLayoutParams(params);
-			v.setClickable(true); // so view underneath can't be clicked
+			v.setClickable(true); // so view underneath can't be clicked through
+									// this view
+			// get the current photo and image view:
 			photoView = (ImageView) v.findViewById(R.id.photo_view_imgview);
 			selectedPhoto = photoList.get(currentSelectedPhoto);
-			setPhotoInfoAsCurrent();
+			setPhotoInfoAsCurrent(); // load the bitmap, title, and location of
+										// photo into view
 
-			// edit this photo button
+			// edit current photo button listener - opens the editPhotoFragment
+			// and closes this one
 			Button editButton = (Button) v.findViewById(R.id.edit_photo_btn);
 			editButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					getActivity()
-							.getFragmentManager()
-							.beginTransaction()
-							.replace(R.id.content_homepage,
-									editPhotoFragment).commit();
+					getActivity().getFragmentManager().beginTransaction()
+							.replace(R.id.content_homepage, editPhotoFragment)
+							.commit();
 					getActivity().getFragmentManager().beginTransaction()
 							.remove(PhotoFragment.this).commit();
 				}
 			});
-			
-			//clicking on the photo should go to the next one in the gallery
+
+			// current photo image view listener - clicking on the photo should
+			// go to the next one in the gallery
 			photoView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					System.out.println("next photo");
-					if(currentSelectedPhoto == photoList.size()-1) {
+					if (currentSelectedPhoto == photoList.size() - 1) {
 						return;
-					}
-					else {
-					currentSelectedPhoto++;
-					selectedPhoto = photoList.get(currentSelectedPhoto);
-					setPhotoInfoAsCurrent();
+					} else {
+						currentSelectedPhoto++;
+						selectedPhoto = photoList.get(currentSelectedPhoto);
+						setPhotoInfoAsCurrent();
 					}
 				}
 			});
@@ -287,7 +330,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 		}
 
 		public void setPhotoInfoAsCurrent() {
-			
+
 			Bitmap selectedImage = selectedPhoto.getImage();
 			photoView.setImageBitmap(photoList.get(currentSelectedPhoto)
 					.getImage());
@@ -305,8 +348,9 @@ public class ViewPhotosActivity extends DrawerActivity {
 			} else {
 				setVisibility(true, R.id.photo_title_label);
 				setVisibility(true, R.id.photo_title_textview);
-				((TextView) v.findViewById(R.id.photo_title_textview)).setText(selectedPhoto.getTitle());
-				
+				((TextView) v.findViewById(R.id.photo_title_textview))
+						.setText(selectedPhoto.getTitle());
+
 			}
 
 			if (selectedPhoto.getLocation().equals("")) {
@@ -315,10 +359,12 @@ public class ViewPhotosActivity extends DrawerActivity {
 			} else {
 				setVisibility(true, R.id.photo_location_label);
 				setVisibility(true, R.id.photo_location_textview);
-				((TextView) v.findViewById(R.id.photo_title_textview)).setText(selectedPhoto.getLocation());
+				((TextView) v.findViewById(R.id.photo_title_textview))
+						.setText(selectedPhoto.getLocation());
 			}
 		}
 
+		// helper function that sets visibility of given resource
 		private void setVisibility(boolean visible, int resource) {
 			if (visible) {
 				v.findViewById(resource).setVisibility(v.VISIBLE);
@@ -329,11 +375,11 @@ public class ViewPhotosActivity extends DrawerActivity {
 
 	}
 
-	// viewing an individual photo:
+	// fragment for viewing an individual photo:
 	public static class EditPhotoFragment extends Fragment {
-		ImageView photoView;
-		Photo selectedPhoto;
-		View view;
+		ImageView photoView; // image view for the current photo being viewed
+		View view; // view for this fragment
+		Photo selectedPhoto; // current photo that is being viewed
 
 		public EditPhotoFragment() {
 
@@ -350,22 +396,30 @@ public class ViewPhotosActivity extends DrawerActivity {
 			params.setMargins(20, 20, 20, 20);
 			view.setLayoutParams(params);
 			view.setClickable(true); // so view underneath can't be clicked
+										// through this view
+			// get the current photo and image view:
 			photoView = (ImageView) view.findViewById(R.id.photo_edit_imgview);
 			selectedPhoto = photoList.get(currentSelectedPhoto);
-			setPhotoInfoAsCurrent();
+			setPhotoInfoAsCurrent(); // load the bitmap, title, and location of
+										// photo into view
 
+			// submit button listener - done editing photo so get the text from
+			// the EditText views and set for current photo
 			Button submitButton = (Button) view
 					.findViewById(R.id.submit_edit_photo_btn);
 			submitButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					//change photo title/location
-					EditText titleEdit = ((EditText) view.findViewById(R.id.photo_title_edittext));
-					EditText locationEdit = ((EditText) view.findViewById(R.id.photo_location_edittext));
+					// change photo title/location
+					EditText titleEdit = ((EditText) view
+							.findViewById(R.id.photo_title_edittext));
+					EditText locationEdit = ((EditText) view
+							.findViewById(R.id.photo_location_edittext));
 					selectedPhoto.setTitle(titleEdit.getText().toString());
-					selectedPhoto.setLocation(locationEdit.getText().toString());
-					
-					//end this fragment and bring up the view photo fragment
+					selectedPhoto
+							.setLocation(locationEdit.getText().toString());
+
+					// end this fragment and bring up the view photo fragment
 					getActivity().getFragmentManager().beginTransaction()
 							.replace(R.id.content_homepage, viewPhotoFragment)
 							.commit();
@@ -381,7 +435,8 @@ public class ViewPhotosActivity extends DrawerActivity {
 
 		public void setPhotoInfoAsCurrent() {
 			Bitmap selectedImage = selectedPhoto.getImage();
-			photoView.setImageBitmap(photoList.get(currentSelectedPhoto).getImage());
+			photoView.setImageBitmap(photoList.get(currentSelectedPhoto)
+					.getImage());
 			if (selectedImage.getHeight() > selectedImage.getWidth()) {
 				photoView.getLayoutParams().height = (int) (.8 * MainActivity.SCREEN_HEIGHT);
 			} else {
@@ -392,7 +447,8 @@ public class ViewPhotosActivity extends DrawerActivity {
 
 	// taken from:
 	// http://android-er.blogspot.com/2013/10/gridview-example-load-images-to.html
-	// loads image files --TODO load from database
+	//original loaded from external storage, adjusted to load from arraylist of photos, 
+	// TODO: adjust further to get images from database and put into photoList
 	public class AsyncTaskLoadFiles extends AsyncTask<Void, String, Void> {
 
 		public AsyncTaskLoadFiles(ImageAdapter adapter) {
@@ -441,13 +497,12 @@ public class ViewPhotosActivity extends DrawerActivity {
 
 		private Context mContext;
 
-		// ArrayList<String> itemList = new ArrayList<String>(); //example -
-		// loading from url
-
 		public ImageAdapter(Context c) {
 			mContext = c;
 			// test images:
 			photoList = new ArrayList<Photo>();
+			
+			//add sample images to photoList
 			for (int i = 0; i < 10; i++) {
 				Photo samplePhoto = new Photo();
 				samplePhoto.setImage((BitmapFactory.decodeResource(
@@ -467,19 +522,16 @@ public class ViewPhotosActivity extends DrawerActivity {
 		}
 
 		/*
-		 * void remove(int index){ itemList.remove(index); }
+		 * void remove(int index){ photoList.remove(index); }
 		 */
 
 		@Override
 		public int getCount() {
-			// return itemList.size();
 			return photoList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			// return itemList.get(position);
 			return photoList.get(position);
 		}
 
@@ -502,10 +554,6 @@ public class ViewPhotosActivity extends DrawerActivity {
 				imageView = (ImageView) convertView;
 			}
 
-			/*
-			 * Bitmap bm = decodeSampledBitmapFromUri(itemList.get(position),
-			 * 220, 220);
-			 */
 			Bitmap img = photoList.get(position).getImage();
 			img = img.createScaledBitmap(img, 220, 220, true);
 
