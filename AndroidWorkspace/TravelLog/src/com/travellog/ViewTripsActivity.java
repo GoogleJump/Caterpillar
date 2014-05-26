@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
-import com.travellog.AddEditTripActivity.DatePickerFragment;
 import com.travellog.DrawerActivity.MenuFragment;
 
 import android.annotation.TargetApi;
@@ -401,6 +399,13 @@ public class ViewTripsActivity extends DrawerActivity implements
 			// this.loadEntriesExample();
 			loadEntriesFromTrip(trip);
 		}
+		return true;
+	}
+	
+	public boolean onPhotoViewClick(View v) {
+		//TODO: which entry was clicked?
+		Intent i = new Intent(this, ViewPhotosActivity.class);
+		startActivity(i);
 		return true;
 	}
 

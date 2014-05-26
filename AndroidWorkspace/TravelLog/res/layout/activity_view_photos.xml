@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical"
+    android:clickable="true"
+    android:id="@+id/view_photos_layout">
+    
+    <Button
+        android:id="@+id/add_photo_viewphotos_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Photo(s)"
+        style="@style/ButtonTheme"/>
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent" 
+        android:layout_height="match_parent"
+        android:columnWidth="125dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+
+</LinearLayout>

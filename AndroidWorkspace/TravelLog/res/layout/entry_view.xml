@@ -45,7 +45,8 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/eiffel_tower_sample_pic" />
+            android:src="@drawable/eiffel_tower_sample_pic"
+            android:onClick="onPhotoViewClick" />
 
         <ImageView
             android:id="@+id/entry_polaroid"
