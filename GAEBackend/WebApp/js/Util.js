@@ -17,6 +17,7 @@ Util = (function(){
         inputGroup : inputGroup,
         makePost: makePost,
         photoPreview: photoPreview,
+        uploadPhotos:uploadPhotos,
     };
 	/**
      * make a Modal when a button is clicked. 
@@ -72,8 +73,8 @@ Util = (function(){
         
         var modalBody= $(document.createElement('div'));
         modalBody.attr({
-            'id':'modalBody',
-        })
+            'id':modalId+'modalBody',
+        });
         content.append(modalBody);
         modalBody.addClass("modal-body");
 
@@ -89,7 +90,7 @@ Util = (function(){
         savebtn.attr('type','button');
         savebtn.addClass('btn btn-primary');
         // savebtn.attr('data-dismiss','modal');
-        savebtn.text("Add");
+        savebtn.text("Submit");
         savebtn.css({
             'background-color':'#504552'
         });
@@ -97,14 +98,14 @@ Util = (function(){
         footer.append(savebtn);
         return modal;
     }
-
+    this.makeModal = makeModal;
     /**
     Customized function for input group
     including a divwrapper, title and input box..
     @param: the tilte
     **/
 
-    function inputGroup(name, placeholder){
+    function inputGroup(name, placeholder,value,type){
         var wrapper = $(document.createElement('div'));
         wrapper.addClass('input-group');
         wrapper.css({
@@ -122,8 +123,14 @@ Util = (function(){
         wrapper.append(title);
         var titleInput = $(document.createElement('input'));
         titleInput.attr('type','text');
+        if(type===1){
+            titleInput.datepicker();
+        }
         titleInput.addClass('form-control');
         titleInput.attr('placeholder',placeholder);
+        if(value){
+            titleInput.attr('value',value);
+        }
         wrapper.append(titleInput);
 
         return wrapper;
@@ -191,6 +198,8 @@ Util = (function(){
             textDiv.css({
                 'height':'auto',
                 'padding-bottom':'5px',
+                'text-overflow':'ellipsis',
+                'overflow':'hidden',
             });
             var text=$(document.createElement('p'));
             text.text("Scientists have for the first time ever solved a 150-year-old evolutionary mystery - the iconic kiwi actually once flew. ")
@@ -312,27 +321,63 @@ Util = (function(){
 
     /**
     function to create a thumbnail div with caption and description
+    isTrip: boolean to decide what buttons to put.
+    path: path to img src
+    file: file to img.(for file picker preview)
     */
-    function photoPreview(isTrip){
+    function photoPreview(isTrip, path, file, cap,desc){
         var colDiv = $(document.createElement('div'));
-    
+        var descript=desc;
+        // var path;
+        var spec={
+                imgsrc: path,
+                title: cap,
+                description: desc,
+        };
+        var modal = editPhoto(spec);
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
         colDiv.append(thumbDiv);
         var thumbnail=$(document.createElement('img'));
-        thumbnail.attr("src","../images/1.jpg");
+        if(path){
+            thumbnail.attr("src","../images/1.jpg");            
+        }
+        if(file){
+            //probably need to crop them/resize them later if the photos are not in standard size
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var p = e.target.result;
+                $(document.getElementById(cap+"modal")).attr('src',p);
+                thumbnail.attr('src', p);
+            }
+            
+            reader.readAsDataURL(file);
+        }
         thumbnail.attr("alt","No image for the trip available")
         thumbDiv.append(thumbnail);
         var captionDiv = $(document.createElement('div'));
         captionDiv.addClass("caption");
         thumbDiv.append(captionDiv);
-        var caption = $(document.createElement('h3'));
+        var caption = $(document.createElement('label'));
         captionDiv.append(caption);
-        caption.text("Thumbnail Label");
-        var description = $(document.createElement('p'));
-        description.text("This is a long and meaningless description for the thumbnail");
-        captionDiv.append(description);
+        captionDiv.css('width','100%');
+        caption.css({
+            'width':'100%',
+            'overflow':'hidden',
+            'white-space': 'nowrap',
+            'text-overflow': 'ellipsis',
+        });
+        caption.text(cap);
+        var descDiv = $(document.createElement('div'));
+        descDiv.css({
+            'height':'60px',
+            'overflow':'hidden',
+            // 'white-space': 'nowrap',
+            'text-overflow': 'ellipsis',
+        });
+        // description.text("This is a long and meaningless sdaf sd faskdfgwe;gjegkjew fjsdakljf;description for the thumbnail");
+        captionDiv.append(descDiv);
         var btngroup = $(document.createElement('div'));
         btngroup.addClass('row');
         captionDiv.append(btngroup);
@@ -341,25 +386,103 @@ Util = (function(){
         if(isTrip){
             editbtn.text("View");
         }else{
+            descDiv.text(descript);
             editbtn.text("Edit");
         }
         editbtn.addClass("btn btn-default col-sm-offset-1");
-        editbtn.attr({
-            'href':"#",//would be the link to open the modal for editing the photo
-            // 'role':'button',
+        // editbtn.attr({
+        //     'href':"#",//would be the link to open the modal for editing the photo
+        //     // 'role':'button',
+
+        // });
+        editbtn.click(function(){
+            modal.modal({show:true});
+            //open a modal to edit info about the photo
 
         });
         btngroup.append(editbtn);
         var deletebtn = $(document.createElement('button'));
         deletebtn.text("Delete");
-        deletebtn.addClass("btn btn-default col-sm-offset-4");
-        deletebtn.attr({
-            'href':"#",//would delete the photo from thumbnails collection
-            // 'role':'button',
-            // 'right':'10px',
-            // 'position':'absolute'
+        deletebtn.addClass("btn btn-default delete col-sm-offset-4");
+        // deletebtn.attr({
+            
+        // });
+        deletebtn.click(function(){
+            colDiv.remove(); 
+            modal.remove();   
         });
         btngroup.append(deletebtn);
         return colDiv;
     }
+    this.photoPreview=photoPreview;
+
+    function editPhoto(spec){
+        var title = spec.title,
+            thumb = spec.img,
+            description = spec.description;
+        var modal = makeModal(title, "Edit Photo", false);
+        var body = $(document.getElementById("body"));
+        body.append(modal); 
+        var modalBody = $(document.getElementById(title+"modalBody"));
+        var contentRow = $(document.createElement('div'));
+        contentRow.addClass('row');
+        modalBody.append(contentRow);
+        var thumbRow = $(document.createElement('div'));
+        thumbRow.addClass('row');
+        contentRow.append(thumbRow);
+        var thumbDiv = $(document.createElement('div'));
+        thumbDiv.addClass('thumbnail col-md-6 col-sm-offset-3');
+        thumbRow.append(thumbDiv);
+        var thumbnail=$(document.createElement('img'));
+        thumbnail.attr('id',title+"modal");
+        thumbDiv.append(thumbnail);
+        thumbnail.attr('src',thumb);
+        var titleRow =$(document.createElement('div'));
+        titleRow.addClass("row col-md-10 col-sm-offset-1");
+        var titleInput = inputGroup("Title: ", null, title);
+        titleRow.append(titleInput);    
+        contentRow.append(titleRow);
+        var descriRow = $(document.createElement('div'));
+        descriRow.addClass('row col-md-10 col-sm-offset-1');
+        contentRow.append(descriRow);
+        descriRow.css('padding-top','5px');
+        descriRow.css('padding-bottom','10px');
+        var desLabel = $(document.createElement('span'));
+        desLabel.addClass('label label-default');
+        desLabel.text("Description");
+        desLabel.css({
+            'zoom':'1.5',
+            "background-color":Util.dark_purple,
+        });
+        descriRow.append(desLabel);
+
+        var textWrapper= $(document.createElement('div'));
+        textWrapper.addClass('row col-md-10 col-sm-offset-1');
+        textWrapper.css('padding-bottom','5px');
+        contentRow.append(textWrapper);
+        // var textDiv = $(document.createElement('div'));
+        // textWrapper.append(textDiv);
+
+        var text = $(document.createElement('textarea'));
+        text.css({
+            'height':'60px',
+            'overflow-y':'auto',
+            'width':'100%',
+            'resize':'none',
+        });
+        text.val(description);
+        textWrapper.append(text);
+        return modal;
+    }
+
+    function uploadPhotos(selector, toDiv){
+        var files = selector.files;
+        var num= files.length;
+        for (var i=0;i<num;i++){
+            var file = files[i];
+            var filename = file.name;
+            toDiv.append(photoPreview(false,null,file,filename,"Edit to add Description"));
+        }
+    }
+
 })();
