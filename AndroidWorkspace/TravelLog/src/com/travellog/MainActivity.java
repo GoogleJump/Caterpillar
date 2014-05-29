@@ -123,7 +123,7 @@ public class MainActivity extends DrawerActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		new SampleEndpointsTask().execute(getApplicationContext());
+		//new SampleEndpointsTask().execute(getApplicationContext());
 		
 	}
 

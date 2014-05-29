@@ -1,4 +1,5 @@
 # view res/layout/activity_view_entries.xml #generated:26
+# view res/layout/activity_view_trips.xml #generated:28
 -keep class android.support.v4.view.ViewPager { <init>(...); }
 
 # view res/layout/activity_main.xml #generated:3
@@ -31,13 +32,16 @@
 # view AndroidManifest.xml #generated:42
 -keep class com.travellog.UploadToServer { <init>(...); }
 
+# view AndroidManifest.xml #generated:44
+-keep class com.travellog.ViewEntriesActivity { <init>(...); }
+
 # view AndroidManifest.xml #generated:43
 -keep class com.travellog.ViewPhotosActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:39
 -keep class com.travellog.ViewTripsActivity { <init>(...); }
 
-# onClick res/layout/activity_add_entry.xml #generated:143
+# onClick res/layout/activity_add_entry.xml #generated:112
 -keepclassmembers class * { *** onAddEntryClick(...); }
 
 # onClick res/layout/activity_main.xml #generated:95
@@ -85,6 +89,6 @@
 # onClick res/layout/trip_view.xml #generated:19
 -keepclassmembers class * { *** onTripViewClick(...); }
 
-# onClick res/layout/activity_add_entry.xml #generated:28
+# onClick res/layout/activity_add_entry.xml #generated:23
 -keepclassmembers class * { *** onUploadPhotoClick(...); }
 

@@ -1,5 +1,9 @@
 package com.travellog;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +46,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,12 +62,13 @@ import android.support.v4.view.ViewPager;
 
 /**
  * ViewTripsActivity
- * View all trips as a photo preview
- * Edit the information of trips
  * View entries for a trip
  * Edit entries
  * TODO:
- * major refactoring has to happen asap - too many fragments and confusing/hacky ways of doing things
+ * some refactoring
+ * make clicking photo -> view photos more obvious for the user
+ * fix the add photo to entry button
+ * fix photo preview for adding photo to entry (nothing shows up right now not sure why?)
  * loading/updating backend
  * 
  */
@@ -109,6 +115,9 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		setContentView(R.layout.activity_main);
 
 		getLayoutContent(); //replace activity main content with content for this activity
+		
+		//retreive trip, but for now just make a new one
+		selectedTrip = new TripView(this);
 
 		// for sliding drawer menu:
 		mTitle = mDrawerTitle = getTitle();
@@ -150,7 +159,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+		this.loadEntriesExample();
 	}
 	
 	public void getLayoutContent() {
@@ -224,7 +233,6 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		LinearLayout layout = (LinearLayout) content
 				.findViewById(R.id.view_entries_content);
 		layout.removeAllViews();
-		tableOfTrips.removeAllViews();
 	}
 
 	// part of viewing entries. if text is too long, clicking this button will
@@ -260,35 +268,6 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		return false;
 	}
 
-	//editing a new trip - replaces fragment with entries for that trip
-	public boolean onSubmitTripClick(View v) {
-		Fragment fragment = new Fragment();
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.view_entries_content, fragment).commit();
-
-		// update trip
-		Trip editedTrip = selectedTrip.getTrip();
-		editedTrip
-				.setDescription(((EditText) findViewById(R.id.edit_trip_description))
-						.getText().toString());
-		editedTrip.setTitle(((EditText) findViewById(R.id.edit_trip_title))
-				.getText().toString());
-		editedTrip
-				.setLocation(((EditText) findViewById(R.id.edit_trip_location))
-						.getText().toString());
-		// editedTrip.setTags(((EditText)findViewById(R.id.edit_trip_tags)).getText().toString()));
-		// TODO
-		// editedTrip.setReturnDate(year, monthOfYear, dayOfMonth); TODO and
-		// depart date
-		// update trip view
-		selectedTrip.setTrip(editedTrip);
-
-		// update DB
-
-		return true;
-	}
-	
 	
 	public void loadEntriesFromTrip(Trip trip) {
 		LinearLayout layout = (LinearLayout) content
@@ -299,54 +278,10 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		}
 	}
 
-	//clicking a trip view will load the entries from that trip
-	//unless it is the very first trip view - the "addTripView"
-	//this will open an editTripFragment to add a new trip
-	public boolean onTripViewClick(View v) {
-		Trip trip = ((TripView) v.getParent().getParent()).getTrip();
-		this.removeAllFromLayout();
-
-		if (((TripView) v.getParent().getParent()).isAddTripView()) {
-			// create new trip, add it to list of trips to display
-			selectedTrip = new TripView(this);
-			this.allTripViews.add(selectedTrip);
-			// open edit trip fragment
-			Fragment fragment = new EditTripFragment();
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.view_entries_content, fragment).commit();
-			// open the empty entries page for the created trip
-			// this.loadEntriesExample();
-			loadEntriesFromTrip(selectedTrip.getTrip());
-
-			// TODO add trip to database
-		}
-
-		// get trip, get entries, load entries
-		else {
-			selectedTrip = (TripView) v.getParent().getParent();
-			// this.loadEntriesExample();
-			loadEntriesFromTrip(trip);
-		}
-		return true;
-	}
-
 	public boolean onPhotoViewClick(View v) {
 		// TODO: which entry was clicked? - send over the id of the entry to the next activity
 		Intent i = new Intent(this, ViewPhotosActivity.class);
 		startActivity(i);
-		return true;
-	}
-
-	
-	public boolean onEditTripClick(View v) {
-		this.removeAllFromLayout(); // clear the page and start the fragment
-		TripView trip = (TripView) v.getParent().getParent();
-		selectedTrip = trip;
-		Fragment fragment = new EditTripFragment();
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.view_entries_content, fragment).commit();
 		return true;
 	}
 
@@ -420,43 +355,6 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		}
 	}
 
-	public static class EditTripFragment extends Fragment {
-		View view;
-
-		public EditTripFragment() {
-
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-
-			// Inflate the layout for this fragment
-			view = inflater.inflate(R.layout.activity_add_trip, container,
-					false);
-			depart = (Button) view.findViewById(R.id.button_date_depart);
-			ret = (Button) view.findViewById(R.id.button_date_return);
-			fillWithCurrentTrip(selectedTrip.getTrip());
-			return view;
-		}
-
-		private void fillWithCurrentTrip(Trip selectedTrip) {
-			((EditText) view.findViewById(R.id.edit_trip_title))
-					.setText(selectedTrip.getTitle());
-			((EditText) view.findViewById(R.id.edit_trip_description))
-					.setText(selectedTrip.getDescription());
-			((EditText) view.findViewById(R.id.edit_trip_tags))
-					.setText(selectedTrip.getTags().toString().replace("[", "")
-							.replace("]", ""));
-			((EditText) view.findViewById(R.id.edit_trip_location))
-					.setText(selectedTrip.getLocation());
-			depart.setText((CharSequence) selectedTrip.getDepartDateAsString());
-			ret.setText((CharSequence) selectedTrip.getReturnDateAsString());
-
-		}
-
-	}
-
 	public static class DatePickerFragment extends DialogFragment implements
 			DatePickerDialog.OnDateSetListener {
 
@@ -514,6 +412,18 @@ public class ViewEntriesActivity extends DrawerActivity  {
 			if (requestCode == SELECT_PICTURE) {
 				Uri selectedImageUri = data.getData();
 				selectedImagePath = getPath(selectedImageUri);
+				System.out.println("trying to get preview");
+				File imgFile = new  File(selectedImagePath);
+				/*InputStream input = this.getContentResolver()
+						.openInputStream(selectedImageUri);
+				Bitmap img_preview = getThumbnail(selectedImageUri, input);*/
+				//Bitmap img_preview = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+				Bitmap img_preview = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+				//TODO: this doesn't work - getting null pointer for the bitmap
+				//img_preview = img_preview.createScaledBitmap(img_preview, 220, 220, true);
+				ImageView imgview_preview = new ImageView(this);
+				imgview_preview.setImageBitmap(img_preview);
+				((LinearLayout) findViewById(R.id.add_photo_grid)).addView(imgview_preview);
 			}
 		}
 	}
@@ -540,4 +450,36 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		// this is our fallback here
 		return uri.getPath();
 	}
+	
+	 public static Bitmap getThumbnail(Uri uri, InputStream input) throws FileNotFoundException, IOException{
+
+	        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+	        onlyBoundsOptions.inJustDecodeBounds = true;
+	        onlyBoundsOptions.inDither=true;//optional
+	        onlyBoundsOptions.inPreferredConfig=Bitmap.Config.ARGB_8888;//optional
+	        BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+	        input.close();
+	        if ((onlyBoundsOptions.outWidth == -1) || (onlyBoundsOptions.outHeight == -1))
+	            return null;
+
+	        int originalSize = (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) ? onlyBoundsOptions.outHeight : onlyBoundsOptions.outWidth;
+
+	        //where 50 is the thumbnail size
+	        double ratio = (originalSize > 50) ? (originalSize / 50) : 1.0;
+
+	        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+	        bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
+	        bitmapOptions.inDither=true;//optional
+	        bitmapOptions.inPreferredConfig=Bitmap.Config.ARGB_8888;//optional
+	       // input = this.getContentResolver().openInputStream(uri);
+	        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+	        input.close();
+	        return bitmap;
+	    }
+
+	    private static int getPowerOfTwoForSampleRatio(double ratio){
+	        int k = Integer.highestOneBit((int)Math.floor(ratio));
+	        if(k==0) return 1;
+	        else return k;
+	    }
 }

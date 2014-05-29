@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical"
+    android:clickable="true"
+    android:id="@+id/view_trips_layout">
+    
+    <Button
+        android:id="@+id/add_trip_viewtrips_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Trip"
+        android:onClick="onAddTripClick"
+        style="@style/ButtonTheme"/>
+    
+    <GridView
+        android:id="@+id/gridview_trips"
+        android:layout_width="match_parent" 
+        android:layout_height="match_parent"
+        android:columnWidth="125dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+    
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+</android.support.v4.view.ViewPager>
+
+</LinearLayout>
