@@ -2,6 +2,7 @@ package com.travellog;
 
 import java.io.IOException;
 import java.sql.Driver;
+import java.util.Date;
 import java.util.Locale;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -11,6 +12,8 @@ import com.google.api.client.json.jackson.JacksonFactory;
 import com.travellog.userendpoint.Userendpoint;
 import com.travellog.userendpoint.model.Email;
 import com.travellog.userendpoint.model.User;
+import com.travellog.noteendpoint.Noteendpoint;
+import com.travellog.noteendpoint.model.Note;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -39,6 +42,13 @@ import android.widget.Toast;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.view.GravityCompat;
+import android.os.AsyncTask;
+import android.content.Context;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.json.jackson.JacksonFactory;
 
 /**
  * The Main Activity.
@@ -113,7 +123,8 @@ public class MainActivity extends DrawerActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		new EndpointsTask().execute(getApplicationContext());
+		new SampleEndpointsTask().execute(getApplicationContext());
+		
 	}
 
 	public void resizeIcons() {
@@ -145,7 +156,7 @@ public class MainActivity extends DrawerActivity {
 			// tablerow1.getChildAt(i).getLayoutParams().height = table_height;
 		}
 		
-		new EndpointsTask().execute(getApplicationContext());
+		
 	}
 
 	// logo should be a square with sides half the screen
@@ -221,6 +232,34 @@ public class MainActivity extends DrawerActivity {
 		return true;
 	}
 
+	
+	public class SampleEndpointsTask extends AsyncTask<Context, Integer, Long> {
+        protected Long doInBackground(Context... contexts) {
+
+               Noteendpoint.Builder endpointBuilder = new Noteendpoint.Builder(
+              AndroidHttp.newCompatibleTransport(),
+              new JacksonFactory(),
+              new HttpRequestInitializer() {
+              public void initialize(HttpRequest httpRequest) { }
+              });
+      Noteendpoint endpoint = CloudEndpointUtils.updateBuilder(
+      endpointBuilder).build();
+      try {
+    	  System.out.println("trycatch");
+          Note note = new Note().setDescription("Note Description");
+          String noteID = new Date().toString();
+          note.setId(noteID);
+
+          note.setEmailAddress("E-Mail Address");          
+          Note result = endpoint.insertNote(note).execute();
+          System.out.println("stored note");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+          return (long) 0;
+        }
+    }
+	
 	public class EndpointsTask extends AsyncTask<Context, Integer, Long> {
 		protected Long doInBackground(Context... contexts) {
 
@@ -232,7 +271,6 @@ public class MainActivity extends DrawerActivity {
 							System.out.println("initializing http");
 							// httpRequest.setConnectTimeout(5*20000);
 						}
-						System.out.println("initialized http! :)");
 					});
 			
 			
@@ -243,16 +281,20 @@ public class MainActivity extends DrawerActivity {
 			System.out.println("built user endpoint starting");
 			try {
 				System.out.println("try block");
+				Date d = new Date();
 				User user = new User();
+				//User user = new User();
 				System.out.println("new user");
-				int UserID = (int) System.currentTimeMillis();
-				user.setUserId(UserID);
+				//Long UserID = System.currentTimeMillis();
 				Email email = new Email();
-				email.setEmail("email@email.com");
+				email.setEmail("emailll@yespleasework.plz");
 				user.setEmail(email);
 				user.setFirstName("Chuck");
 				user.setLastName("Norris");
 				user.setPassword("password123");
+				user.setUserId(Long.valueOf(1));
+				 //Integer userID = Integer.valueOf(new Date().getSeconds());
+		          
 				// user.setDateCreated(new DateTime(new Date()));
 				System.out.println("about to insert user");
 				User result = endpoint.insertUser(user).execute();

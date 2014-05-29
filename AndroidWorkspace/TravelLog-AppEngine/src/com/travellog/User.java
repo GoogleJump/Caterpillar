@@ -1,16 +1,19 @@
 package com.travellog;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
 import com.google.appengine.api.datastore.Email;
-import com.google.appengine.api.datastore.Key;
 
 @Entity
 public class User {
+
 	@Id
-	Integer userId;
-	
+    private Long Id;
+
 	String firstName;
 	String lastName;
 	Email email;
@@ -18,20 +21,17 @@ public class User {
 	String password;
 	Date dateCreated;
 	
-	public User(int id, String fname, String lname, Email email, String uname, String pword, Date d){
-		this.userId = new Integer(id);
-		this.firstName = fname;
-		this.lastName = lname;
-		this.email = email;
-		this.username = uname;
-		this.password = pword;
-		this.dateCreated = d;
+	@PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	Long userId;
+
+	public User() {
 	}
 	
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getFirstName() {
@@ -71,4 +71,7 @@ public class User {
 		this.dateCreated = dateCreated;
 	}
 
+	public Object getId() {
+		return Id;
+	}
 }

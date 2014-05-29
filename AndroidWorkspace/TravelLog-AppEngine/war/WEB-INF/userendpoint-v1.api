@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://myapp.appspot.com/_ah/api",
+  "root" : "https://gjtravellog.appspot.com/_ah/api",
   "name" : "userendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "bns" : "https://gjtravellog.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -132,9 +132,6 @@
         "id" : "User",
         "type" : "object",
         "properties" : {
-          "userId" : {
-            "type" : "integer"
-          },
           "firstName" : {
             "type" : "string"
           },
@@ -153,6 +150,13 @@
           "dateCreated" : {
             "type" : "string",
             "format" : "date-time"
+          },
+          "userId" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "id" : {
+            "$ref" : "_any"
           }
         }
       },
@@ -164,6 +168,10 @@
             "type" : "string"
           }
         }
+      },
+      "_any" : {
+        "id" : "_any",
+        "type" : "any"
       },
       "CollectionResponse_User" : {
         "id" : "CollectionResponse_User",

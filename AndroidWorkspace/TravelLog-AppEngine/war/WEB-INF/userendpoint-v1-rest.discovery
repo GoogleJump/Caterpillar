@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0NZZm4UuLZgEQBhMTwnFS1XIMrM/J7Nbp_nU4SYg4JfS5dQmWZY5PK4\"",
+ "etag": "\"0NZZm4UuLZgEQBhMTwnFS1XIMrM/LVmlaZOJmtXwcX6ZcBV088CDWkQ\"",
  "discoveryVersion": "v1",
  "id": "userendpoint:v1",
  "name": "userendpoint",
@@ -13,9 +13,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://myapp.appspot.com/_ah/api/userendpoint/v1/",
+ "baseUrl": "https://gjtravellog.appspot.com/_ah/api/userendpoint/v1/",
  "basePath": "/_ah/api/userendpoint/v1/",
- "rootUrl": "https://myapp.appspot.com/_ah/api/",
+ "rootUrl": "https://gjtravellog.appspot.com/_ah/api/",
  "servicePath": "userendpoint/v1/",
  "batchPath": "batch",
  "parameters": {
@@ -111,6 +111,9 @@
     "firstName": {
      "type": "string"
     },
+    "id": {
+     "$ref": "_any"
+    },
     "lastName": {
      "type": "string"
     },
@@ -118,13 +121,17 @@
      "type": "string"
     },
     "userId": {
-     "type": "integer",
-     "format": "int32"
+     "type": "string",
+     "format": "int64"
     },
     "username": {
      "type": "string"
     }
    }
+  },
+  "_any": {
+   "id": "_any",
+   "type": "any"
   }
  },
  "methods": {
