@@ -118,6 +118,9 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		
 		//retreive trip, but for now just make a new one
 		selectedTrip = new TripView(this);
+		setTitle(selectedTrip.getTrip().getTitle());
+		((LinearLayout) content
+				.findViewById(R.id.view_entries_content)).addView(selectedTrip.getTripInfoView(this));
 
 		// for sliding drawer menu:
 		mTitle = mDrawerTitle = getTitle();
@@ -228,7 +231,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 	}
 
 
-	//clears the layout - keeps table, but removes its children
+	//clears the layout
 	public void removeAllFromLayout() {
 		LinearLayout layout = (LinearLayout) content
 				.findViewById(R.id.view_entries_content);

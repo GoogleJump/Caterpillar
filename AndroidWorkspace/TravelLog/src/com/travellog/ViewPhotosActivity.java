@@ -312,20 +312,32 @@ public class ViewPhotosActivity extends DrawerActivity {
 				}
 			});
 
-			// current photo image view listener - clicking on the photo should
+			Button exitBtn = (Button) v.findViewById(R.id.exit_photo_btn);
+			exitBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					getFragmentManager().beginTransaction()
+					.remove(viewPhotoFragment).commit();
+			getFragmentManager().beginTransaction()
+					.remove(editPhotoFragment).commit();
+				}
+			});
+					
+			// current photo image view listener - clicking on the photo/view should
 			// go to the next one in the gallery
-			photoView.setOnClickListener(new OnClickListener() {
+			v.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					System.out.println("next photo");
 					if (currentSelectedPhoto == photoList.size() - 1) {
-						return;
+						currentSelectedPhoto = 0;
 					} else {
-						currentSelectedPhoto++;
-						selectedPhoto = photoList.get(currentSelectedPhoto);
-						setPhotoInfoAsCurrent();
-					}
+						currentSelectedPhoto++;					
+						}
+					selectedPhoto = photoList.get(currentSelectedPhoto);
+					setPhotoInfoAsCurrent();
 				}
+
 			});
 
 			return v;

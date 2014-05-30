@@ -1,5 +1,5 @@
 # view res/layout/activity_view_entries.xml #generated:26
-# view res/layout/activity_view_trips.xml #generated:28
+# view res/layout/activity_view_trips.xml #generated:29
 -keep class android.support.v4.view.ViewPager { <init>(...); }
 
 # view res/layout/activity_main.xml #generated:3
@@ -26,6 +26,9 @@
 # view AndroidManifest.xml #generated:38
 -keep class com.travellog.SearchActivity { <init>(...); }
 
+# view AndroidManifest.xml #generated:45
+-keep class com.travellog.SignUpActivity { <init>(...); }
+
 # view AndroidManifest.xml #generated:37
 -keep class com.travellog.TakePhotoActivity { <init>(...); }
 
@@ -49,6 +52,9 @@
 
 # onClick res/layout/activity_take_photo.xml #generated:142
 -keepclassmembers class * { *** onAddPhotoToEntryClick(...); }
+
+# onClick res/layout/activity_view_trips.xml #generated:10
+-keepclassmembers class * { *** onAddTripClick(...); }
 
 # onClick res/layout/activity_main.xml #generated:71
 -keepclassmembers class * { *** onCameraIconClick(...); }
@@ -80,6 +86,7 @@
 # onClick res/layout/login_signup.xml #generated:74
 -keepclassmembers class * { *** onSignInClick(...); }
 
+# onClick res/layout/activity_signup.xml #generated:101
 # onClick res/layout/login_signup.xml #generated:87
 -keepclassmembers class * { *** onSignUpClick(...); }
 

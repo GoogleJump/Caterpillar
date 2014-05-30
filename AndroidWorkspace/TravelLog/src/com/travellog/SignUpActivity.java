@@ -51,12 +51,12 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
 
 /**
- * The Main Activity.
+ * The Sign Up Activity.
  * 
  * sign in/sign up buttons 
  * TODO check if sign in was successful and store the user id somewhere
  */
-public class MainActivity extends DrawerActivity {
+public class SignUpActivity extends DrawerActivity {
 
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
@@ -128,37 +128,7 @@ public class MainActivity extends DrawerActivity {
 		
 	}
 
-	public void resizeIcons() {
-		TableRow tablerow1 = (TableRow) findViewById(R.id.tableRow1);
-		TableRow tablerow2 = (TableRow) findViewById(R.id.tableRow2);
-		int row_count = 2;
-
-		TableLayout icon_table = (TableLayout) findViewById(R.id.icon_table);
-		int row1_children_count = tablerow1.getChildCount();
-		int row2_children_count = tablerow2.getChildCount();
-		int table_width = icon_table.getWidth();
-		int table_height = icon_table.getHeight();
-		/*
-		 * if(table_width >= table_height){ System.out.println("width>height");
-		 * }
-		 */
-
-		int target_image_width = (table_width) * (row_count)
-				/ (row1_children_count + row2_children_count);
-		int target_image_height = (table_height) * (row_count)
-				/ (row1_children_count + row2_children_count);
-		for (int i = 0; i < row1_children_count; i++) {
-			tablerow1.getChildAt(i).getLayoutParams().width = target_image_height;
-			// tablerow1.getChildAt(i).getLayoutParams().height = table_height;
-		}
-
-		for (int i = 0; i < row2_children_count; i++) {
-			tablerow2.getChildAt(i).getLayoutParams().width = target_image_width;
-			// tablerow1.getChildAt(i).getLayoutParams().height = table_height;
-		}
-		
-		
-	}
+	
 
 	// logo should be a square with sides half the screen
 	public void resizeLogo() {
@@ -218,17 +188,11 @@ public class MainActivity extends DrawerActivity {
 		// set the content for the layout
 		RelativeLayout content = (RelativeLayout) findViewById(R.id.content_homepage);
 		content.removeAllViews();
-		getLayoutInflater().inflate(R.layout.login_signup, content);
+		getLayoutInflater().inflate(R.layout.activity_signup, content);
 	}
 
 	public boolean onSignUpClick(View v) {
-		Intent i = new Intent(this, SignUpActivity.class);
-		startActivity(i);
-		return true;
-	}
-
-	public boolean onSignInClick(View v) {
-		// TODO: check if sign in is successful
+		//TODO - create new user in database
 		Intent i = new Intent(this, ViewTripsActivity.class);
 		startActivity(i);
 		return true;
