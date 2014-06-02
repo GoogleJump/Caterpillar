@@ -1,6 +1,7 @@
 {
   "files": [
     {
+<<<<<<< HEAD
       "downloadUrl": "/downloads/deviceinfoendpoint/v1/20140602144318/java/1.16.0-rc/travellog.com-deviceinfoendpoint-v1-20140602144318-java-1.16.0-rc-sources.jar", 
       "path": "travellog.com-deviceinfoendpoint-v1-20140602144318-java-1.16.0-rc-sources.jar", 
       "type": "source", 
@@ -8,6 +9,15 @@
     }, 
     {
       "path": "travellog.com-deviceinfoendpoint-v1-20140602144318-java-1.16.0-rc.jar.properties", 
+=======
+      "downloadUrl": "/downloads/deviceinfoendpoint/v1/20140529170904/java/1.16.0-rc/travellog.com-deviceinfoendpoint-v1-20140529170904-java-1.16.0-rc-sources.jar", 
+      "path": "travellog.com-deviceinfoendpoint-v1-20140529170904-java-1.16.0-rc-sources.jar", 
+      "type": "source", 
+      "timestamp": "2014-05-29 17:09"
+    }, 
+    {
+      "path": "travellog.com-deviceinfoendpoint-v1-20140529170904-java-1.16.0-rc.jar.properties", 
+>>>>>>> 3dcd2465fa1b0ccf19d0c52e5ab4c78015324544
       "type": "android.properties"
     }
   ], 
@@ -701,5 +711,9 @@
   "version": "v1", 
   "language_version": "1.16.0-rc", 
   "id": "deviceinfoendpoint:v1", 
+<<<<<<< HEAD
   "revision": 20140602144318
+=======
+  "revision": 20140529170904
+>>>>>>> 3dcd2465fa1b0ccf19d0c52e5ab4c78015324544
 }

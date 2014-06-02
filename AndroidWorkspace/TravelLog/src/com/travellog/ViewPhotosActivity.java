@@ -86,6 +86,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 	private AsyncTaskLoadFiles myAsyncTaskLoadFiles; // async task that will
 														// load photos from
 														// database (TODO)
+	ImageAdapter myImageAdapter;
 	static GridView gridview; // view that holds all the photos
 	protected static Fragment viewPhotoFragment; // fragment that views the
 													// selected photo
@@ -121,6 +122,7 @@ public class ViewPhotosActivity extends DrawerActivity {
 		/* view photo activity specific stuff */
 		gridview = (GridView) findViewById(R.id.gridview);
 		gridview.getLayoutParams().height = MainActivity.SCREEN_HEIGHT;
+		gridview.setColumnWidth(MainActivity.SCREEN_HEIGHT/6); //3 pictures per row
 		myImageAdapter = new ImageAdapter(this);
 		gridview.setAdapter(myImageAdapter);
 
@@ -310,20 +312,32 @@ public class ViewPhotosActivity extends DrawerActivity {
 				}
 			});
 
-			// current photo image view listener - clicking on the photo should
+			Button exitBtn = (Button) v.findViewById(R.id.exit_photo_btn);
+			exitBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					getFragmentManager().beginTransaction()
+					.remove(viewPhotoFragment).commit();
+			getFragmentManager().beginTransaction()
+					.remove(editPhotoFragment).commit();
+				}
+			});
+					
+			// current photo image view listener - clicking on the photo/view should
 			// go to the next one in the gallery
-			photoView.setOnClickListener(new OnClickListener() {
+			v.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					System.out.println("next photo");
 					if (currentSelectedPhoto == photoList.size() - 1) {
-						return;
+						currentSelectedPhoto = 0;
 					} else {
-						currentSelectedPhoto++;
-						selectedPhoto = photoList.get(currentSelectedPhoto);
-						setPhotoInfoAsCurrent();
-					}
+						currentSelectedPhoto++;					
+						}
+					selectedPhoto = photoList.get(currentSelectedPhoto);
+					setPhotoInfoAsCurrent();
 				}
+
 			});
 
 			return v;
@@ -563,5 +577,5 @@ public class ViewPhotosActivity extends DrawerActivity {
 		}
 	}
 
-	ImageAdapter myImageAdapter;
+
 }
