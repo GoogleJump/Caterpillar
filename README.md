@@ -18,9 +18,7 @@ a) first name - String
 b) last name - String
 c) email - String
 d) username - String
-e) password - String (will be hashed by SHA1 or another encryption algorithm)
-f) user id - int
-g) date created - int/String
+e) password - String (will be hashed by SHA1 or another encryption algorithm)g) date created - Date
 
 2) Post kind
 

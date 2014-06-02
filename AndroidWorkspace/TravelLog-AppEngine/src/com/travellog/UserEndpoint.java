@@ -98,9 +98,6 @@ public class UserEndpoint {
 	public User insertUser(User user) {
 		EntityManager mgr = getEntityManager();
 		try {
-			if (containsUser(user)) {
-				throw new EntityExistsException("Object already exists");
-			}
 			mgr.persist(user);
 		} finally {
 			mgr.close();
@@ -120,9 +117,6 @@ public class UserEndpoint {
 	public User updateUser(User user) {
 		EntityManager mgr = getEntityManager();
 		try {
-			if (!containsUser(user)) {
-				throw new EntityNotFoundException("Object does not exist");
-			}
 			mgr.persist(user);
 		} finally {
 			mgr.close();
@@ -151,7 +145,7 @@ public class UserEndpoint {
 		EntityManager mgr = getEntityManager();
 		boolean contains = true;
 		try {
-			User item = mgr.find(User.class, user.getUserId());
+			User item = mgr.find(User.class, user.getKey());
 			if (item == null) {
 				contains = false;
 			}
