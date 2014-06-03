@@ -18,17 +18,20 @@ Util = (function(){
         makePost: makePost,
         photoPreview: photoPreview,
         uploadPhotos:uploadPhotos,
+        userSignup: userSignup,
     };
 	/**
      * make a Modal when a button is clicked. 
      * @param modalId: assign a unique id to the modal so that the btn knows which to trigger
      @param title: the title of the modal.
      @param: islarge: if true, the modal is the large one, else, regular size
+     TODO: submit function for the button?
      */
 
     function makeModal(modalId,title, islarge) {
         var modal = $(document.createElement('div'));
         modal.addClass('modal fade');
+        modal.attr('data-backdrop','false');
         modal.attr('id',modalId);
         modal.attr('tabindex','-1');
         modal.attr('role','dialog');
@@ -85,7 +88,9 @@ Util = (function(){
         closebtn.attr('type','button');
         closebtn.addClass('btn btn-default');
         closebtn.attr('data-dismiss','modal');
+        closebtn.attr('id',modalId+'closebtn');
         closebtn.text("Close");
+        // console.log(modalId+'closebtn');
         var savebtn = $(document.createElement('btn'));
         savebtn.attr('type','button');
         savebtn.addClass('btn btn-primary');
@@ -103,6 +108,10 @@ Util = (function(){
     Customized function for input group
     including a divwrapper, title and input box..
     @param: the tilte
+    type1: date
+    type2: email
+    type3: password
+    type4: location
     **/
 
     function inputGroup(name, placeholder,value,type){
@@ -124,7 +133,16 @@ Util = (function(){
         var titleInput = $(document.createElement('input'));
         titleInput.attr('type','text');
         if(type===1){
-            titleInput.datepicker();
+            // debugger;
+            // titleInput.datepicker();
+            // console.log("datepicker");
+        }
+        if(type===2){
+            titleInput.attr('name','email');
+        }
+        if(type===3){
+            titleInput.attr('name','pwd');
+            titleInput.attr('type','password');
         }
         titleInput.addClass('form-control');
         titleInput.attr('placeholder',placeholder);
@@ -135,7 +153,49 @@ Util = (function(){
 
         return wrapper;
     }
-    
+    /*
+
+    */
+    function userSignup(){
+        var id = "signup";
+        var modal = makeModal(id,'Sign Up',false);
+        var body = $(document.getElementById("body"));
+        body.append(modal);
+        // var contentDiv= $(document.createElement('div'));
+        console.log(id+"modalBody");
+        var modalBody = $(document.getElementById(id+"modalBody"));
+        var contentRow = $(document.createElement('div'));
+        contentRow.addClass('row');
+        contentRow.css('width','80%');
+        modalBody.append(contentRow);
+        var registration = $(document.createElement('form'));
+        registration.addClass('form-horizontal');
+        contentRow.append(registration);
+        registration.attr('method','post');
+
+        registration.attr('id','registration');
+        // var username = $(document)
+        var username = inputGroup('Username','Please enter your email address',null,2);
+        registration.append(username);
+        var pwd = inputGroup('Password',null, null,3);
+        registration.append(pwd);
+        $("#registration").validate({
+            rules:{
+                email: {required:true,email: true},
+                pwd:{required:true},
+            }
+        });
+
+        var closebtn = $(document.getElementById(id+'closebtn'));
+        console.log(id+'closebtn');
+        closebtn.click(function(){
+            console.log("clicked");
+            registration.find('input:text, input:password, input:file, select, textarea').val('');
+
+            // $(this).closest('form').find("input[type=text], textarea").val("");
+        });
+        return modal;
+    }
     /**
     function to make a post in trip view, it can be with img only, or text only, or both.
     probably, later add videos too. toEntry is the link to the post's main page.
@@ -319,30 +379,20 @@ Util = (function(){
     }
     this.carouselItem = carouselItem;
 
-    /**
-    function to create a thumbnail div with caption and description
-    isTrip: boolean to decide what buttons to put.
-    path: path to img src
-    file: file to img.(for file picker preview)
-    */
-    function photoPreview(isTrip, path, file, cap,desc){
+    function tripPreview(file,title,desc){
         var colDiv = $(document.createElement('div'));
         var descript=desc;
-        // var path;
         var spec={
-                imgsrc: path,
+                // imgsrc: path,
                 title: cap,
                 description: desc,
         };
-        var modal = editPhoto(spec);
+        var modal = editBtn(spec);
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
         colDiv.append(thumbDiv);
         var thumbnail=$(document.createElement('img'));
-        if(path){
-            thumbnail.attr("src","../images/1.jpg");            
-        }
         if(file){
             //probably need to crop them/resize them later if the photos are not in standard size
             var reader = new FileReader();
@@ -376,6 +426,93 @@ Util = (function(){
             // 'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
         });
+        captionDiv.append(descDiv);
+        var btngroup = $(document.createElement('div'));
+        btngroup.addClass('row');
+        captionDiv.append(btngroup);
+
+        var editbtn = $(document.createElement('button'));
+        descDiv.text(descript);
+        editbtn.text("Edit");
+        editbtn.addClass("btn btn-default col-sm-offset-1");
+        editbtn.click(function(){
+            modal.modal({show:true});
+            //open a modal to edit info about the photo
+
+        });
+        var viewbtn = $(document.createElement('button'));
+        viewbtn.text("View");
+        viewbtn.addClass('btn btn-default col-sm-offset-1');
+        //TODO: lead to the trip's page when clicked
+        viewbtn.click(function(){});
+
+        var deletebtn = $(document.createElement('button'));
+        deletebtn.text("Delete");
+        deletebtn.addClass("btn btn-default delete col-sm-offset-4");
+        deletebtn.click(function(){
+            colDiv.remove(); 
+            modal.remove();   
+        });
+        btngroup.append(editbtn);
+        btngroup.append(viewbtn);
+        btngroup.append(deletebtn);
+        return colDiv;
+    }
+    /**
+    function to create a thumbnail div with caption and description
+    isTrip: boolean to decide what buttons to put.
+    path: path to img src
+    file: file to img.(for file picker preview)
+    */
+    function photoPreview(file,cap,desc, isTrip){
+        var colDiv = $(document.createElement('div'));
+        var descript=desc;
+        // var path;
+        var spec={
+                // imgsrc: path,
+                title: cap,
+                description: desc,
+        };
+        var modal = editBtn(null,spec);
+        colDiv.addClass('col-sm-6 col-md-4');
+        var thumbDiv = $(document.createElement('div'));
+        thumbDiv.addClass('thumbnail');
+        colDiv.append(thumbDiv);
+        var thumbnail=$(document.createElement('img'));
+        //get the thumbnail from the upload file. Sync the thumbnail in corresponding modal as well
+        if(file){
+            //probably need to crop them/resize them later if the photos are not in standard size
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var p = e.target.result;
+                $(document.getElementById(cap+"modal")).attr('src',p);
+                thumbnail.attr('src', p);
+            }
+            
+            reader.readAsDataURL(file);
+        }
+        thumbnail.attr("alt","Oops, there is an error with the image")
+        thumbDiv.append(thumbnail);
+        var captionDiv = $(document.createElement('div'));
+        captionDiv.addClass("caption");
+        thumbDiv.append(captionDiv);
+        var caption = $(document.createElement('label'));
+        captionDiv.append(caption);
+        captionDiv.css('width','100%');
+        caption.css({
+            'width':'100%',
+            'overflow':'hidden',
+            'white-space': 'nowrap',
+            'text-overflow': 'ellipsis',
+        });
+        caption.text(cap);
+        var descDiv = $(document.createElement('div'));
+        descDiv.css({
+            'height':'60px',
+            'overflow':'hidden',
+            // 'white-space': 'nowrap',
+            'text-overflow': 'ellipsis',
+        });
         // description.text("This is a long and meaningless sdaf sd faskdfgwe;gjegkjew fjsdakljf;description for the thumbnail");
         captionDiv.append(descDiv);
         var btngroup = $(document.createElement('div'));
@@ -384,17 +521,17 @@ Util = (function(){
         
         var editbtn = $(document.createElement('button'));
         if(isTrip){
-            editbtn.text("View");
-        }else{
-            descDiv.text(descript);
-            editbtn.text("Edit");
+            var viewbtn = $(document.createElement('button'));
+            viewbtn.text("View");
+            viewbtn.addClass('btn btn-default col-sm-offset-1');
+            //TODO: lead to the trip's page when clicked
+            viewbtn.click(function(){});
+            btngroup.append(viewbtn);
         }
+        descDiv.text(descript);
+        editbtn.text("Edit");
+        // }
         editbtn.addClass("btn btn-default col-sm-offset-1");
-        // editbtn.attr({
-        //     'href':"#",//would be the link to open the modal for editing the photo
-        //     // 'role':'button',
-
-        // });
         editbtn.click(function(){
             modal.modal({show:true});
             //open a modal to edit info about the photo
@@ -404,9 +541,7 @@ Util = (function(){
         var deletebtn = $(document.createElement('button'));
         deletebtn.text("Delete");
         deletebtn.addClass("btn btn-default delete col-sm-offset-4");
-        // deletebtn.attr({
-            
-        // });
+
         deletebtn.click(function(){
             colDiv.remove(); 
             modal.remove();   
@@ -415,11 +550,18 @@ Util = (function(){
         return colDiv;
     }
     this.photoPreview=photoPreview;
-
-    function editPhoto(spec){
+    /**
+    this is the function for editBtn for both thumbnail div for tripview and addEntry.
+    @param: type: indicates which kind of edit button this is for
+    @param: spec: includes title, description,date,loc and image. 
+    */
+    function editBtn(type, spec){
+        console.log(spec);
         var title = spec.title,
             thumb = spec.img,
-            description = spec.description;
+            description = spec.description,
+            date=spec.date,
+            loc = spec.loc;
         var modal = makeModal(title, "Edit Photo", false);
         var body = $(document.getElementById("body"));
         body.append(modal); 
@@ -442,6 +584,21 @@ Util = (function(){
         var titleInput = inputGroup("Title: ", null, title);
         titleRow.append(titleInput);    
         contentRow.append(titleRow);
+
+        
+        if(type==="Trip"){
+            var dateRow =$(document.createElement('div'));
+            dateRow.addClass("row col-md-10 col-sm-offset-1");
+            var dateInput = inputGroup("When: ", null, date);
+            dateRow.append(dateInput);    
+            contentRow.append(dateRow);
+            var locRow =$(document.createElement('div'));
+            locRow.addClass("row col-md-10 col-sm-offset-1");
+            var locInput = inputGroup("Title: ", null, location);
+            locRow.append(locInput);    
+            contentRow.append(locRow);
+        }
+        
         var descriRow = $(document.createElement('div'));
         descriRow.addClass('row col-md-10 col-sm-offset-1');
         contentRow.append(descriRow);
@@ -474,14 +631,16 @@ Util = (function(){
         textWrapper.append(text);
         return modal;
     }
+    this.editbtn = editbtn;
 
+    /*function for uploading photo button, called in addEntry.**/
     function uploadPhotos(selector, toDiv){
         var files = selector.files;
         var num= files.length;
         for (var i=0;i<num;i++){
             var file = files[i];
             var filename = file.name;
-            toDiv.append(photoPreview(false,null,file,filename,"Edit to add Description"));
+            toDiv.append(photoPreview(file,filename,"Edit to add Description"));
         }
     }
 

@@ -2,13 +2,7 @@ addEntry = (function(){
 	"use strict";
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
-	// main.addClass("container-fluid");
-	// body.append(main);
-	// main.css({
-	// 	'position':'absolute',
-	// 	'top':'100px',
-	// 	// 'paddingLeft':'35px'
-	// });
+
 	var contentDiv = $(document.createElement('div'));
 	main.append(contentDiv);
 	contentDiv.addClass("row");
@@ -25,7 +19,7 @@ addEntry = (function(){
 	contentDiv.append(title);
 
 	//TODO: get the current date and set datepicker
-	var when = Util.inputGroup('When: ',"Today");
+	var when = Util.inputGroup('When: ',"Today",null,1);
 	when.addClass('col-md-6 col-sm-offset-1');
 	contentDiv.append(when);
 	var where = Util.inputGroup('Where: ',"Current Location");

@@ -124,7 +124,11 @@ signinPage=(function(){
 	});
 	signinDiv.append(signinbtn);
 	signinDiv.append(signupbtn);
-
+	var signupModal = Util.userSignup();
+	signupbtn.click(function(){
+		// console.log(signupModal);
+		signupModal.modal({show:true});
+	});
 	var description= $(document.createElement('div'));
 	description.addClass('container');
 	description.css({
