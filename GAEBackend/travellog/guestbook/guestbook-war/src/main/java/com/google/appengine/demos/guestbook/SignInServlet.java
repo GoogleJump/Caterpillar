@@ -61,10 +61,15 @@ public class SignInServlet extends HttpServlet {
         System.out.println("success! password matches! :D");
 
          //if successful sign up, send over the user's key and redirect to tripview page:
-        req.setAttribute("key", user.getProperty("key"));
+       /* req.setAttribute("key", user.getProperty("key"));
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/signin.jsp");
         rd.forward(req, resp);
-        resp.sendRedirect("/tripview.jsp"); 
+        resp.sendRedirect("tripview.jsp"); */
+         resp.sendRedirect("/tripview.jsp?key="+user.getProperty("key"));
+         return;
+
+        //or possibly put key this way instead:
+        //resp.sendRedirect("/guestbook.jsp?key=" + key);
       }
       //incorrect password
       else {

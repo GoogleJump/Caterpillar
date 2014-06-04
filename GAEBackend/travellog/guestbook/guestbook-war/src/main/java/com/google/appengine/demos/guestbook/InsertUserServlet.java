@@ -87,10 +87,11 @@ public class InsertUserServlet extends HttpServlet {
 
 
       //if successful sign up, send over the user's key and redirect to tripview page:
-         req.setAttribute("key", userKey);
+        /* req.setAttribute("key", userKey);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/signin.jsp");
-        rd.forward(req, resp);
-        resp.sendRedirect("/tripview.jsp"); 
+        rd.forward(req, resp);*/
+        resp.sendRedirect("/tripview.jsp?key="+userKey);
+          //resp.sendRedirect("/signin.jsp");
 
             //TODO: redirect
    // resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);*/
