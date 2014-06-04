@@ -18,13 +18,18 @@ public class InsertUserServlet extends HttpServlet {
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
 
-       /* String firstname = req.getParameter("firstname");
+        System.out.println("Hello insert user servlet");
+
+        String firstname = req.getParameter("firstname");
         String lastname = req.getParameter("lastname");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         Date date = new Date();
-        Key userKey = KeyFactory.createKey("User", System.currentTimeMillis().toString()); //**for now generate key using seconds, but figure out how to autogenerate
+        Key userKey = KeyFactory.createKey("User", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
+
+
+         System.out.println("input information:"+firstname+ " "+lastname+ " "+username + " "+ password+ " " + email);
 
         Entity user = new Entity("User", userKey);
         user.setProperty("firstName", firstname);
@@ -41,6 +46,16 @@ public class InsertUserServlet extends HttpServlet {
     //TODO: redirect
    // resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);*/
 
+   
+    /*String firstname = req.getParameter("firstname");
+        String lastname = req.getParameter("lastname");
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        Date date = new Date();
+
+        System.out.println("input information:"+firstname+ " "+lastname+ " "+username + " "+ password+ " " + email);
+
        Key userKey = KeyFactory.createKey("User", (System.currentTimeMillis()+ ""));
        System.out.println("creating user:");
        Entity user = new Entity("User", userKey);
@@ -54,7 +69,7 @@ public class InsertUserServlet extends HttpServlet {
         System.out.println("about to insert");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(user);
-        System.out.println("success! Inserted a user!");
+        System.out.println("success! Inserted a user!");*/
 
         resp.sendRedirect("/signin.jsp");
 

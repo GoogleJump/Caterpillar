@@ -117,7 +117,19 @@ signinPage=(function(){
 		'width':'65px',
 	});
 	
-	/*var signupbtn = $(document.createElement('button'));
+		// signup option:
+	var signupDiv = $(document.createElement('div'));
+	$navbar.append(signupDiv);
+	signupDiv.css({
+		'height':'100%',
+		'max-width':'600px',
+		'left':'0%',
+		'top':'0%',
+		'position':'absolute',
+		'padding-left':'5px',
+	});
+
+	var signupbtn = $(document.createElement('button'));
 	signupbtn.addClass('btn btn-default btn-primary btn-block');
 	signupbtn.text('Sign Up');
 	signupbtn.css({
@@ -126,14 +138,16 @@ signinPage=(function(){
 		'bottom':'20px',
 		'position':'absolute',
 		'width':'65px',
-	});*/
+	});
+	
 	signinDiv.append(signinbtn);
-	//signinDiv.append(signupbtn); //commented out the signup button entirely for right now
-	/*var signupModal = Util.userSignup();
+	signupDiv.append(signupbtn); 
+	var signupModal = Util.userSignup();
 	signupbtn.click(function(){
 		// console.log(signupModal);
 		signupModal.modal({show:true});
-	});*/
+	});
+
 	var description= $(document.createElement('div'));
 	description.addClass('container');
 	description.css({

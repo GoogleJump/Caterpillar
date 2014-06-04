@@ -96,6 +96,7 @@ Util = (function(){
         savebtn.addClass('btn btn-primary');
         // savebtn.attr('data-dismiss','modal');
         savebtn.text("Submit");
+        savebtn.attr('id',modalId+'savebtn');
         savebtn.css({
             'background-color':'#504552'
         });
@@ -138,10 +139,10 @@ Util = (function(){
             // console.log("datepicker");
         }
         if(type===2){
-            titleInput.attr('name','email');
+           // titleInput.attr('name','username');
         }
         if(type===3){
-            titleInput.attr('name','pwd');
+            titleInput.attr('name','password');
             titleInput.attr('type','password');
         }
         titleInput.addClass('form-control');
@@ -172,17 +173,61 @@ Util = (function(){
         registration.addClass('form-horizontal');
         contentRow.append(registration);
         registration.attr('method','post');
-
+        registration.attr('action', '/insertUser');
         registration.attr('id','registration');
         // var username = $(document)
-        var username = inputGroup('Username','Please enter your email address',null,2);
+        var username = inputGroup('Username','Pick a Username',null,2);
+        username.children('input').eq(0).attr('name', 'username');
         registration.append(username);
-        var pwd = inputGroup('Password',null, null,3);
+         
+       
+        var pwd = inputGroup('Password',null, null, 3);
+        pwd.children('input').eq(0).attr('name', 'password');
         registration.append(pwd);
+       
+        var email = inputGroup('Email', 'Please enter your email address', null, 1);
+        email.children('input').eq(0).attr('name', 'email');
+        registration.append(email);
+
+        var firstname = inputGroup('First Name', null, null, 1);
+        firstname.children('input').eq(0).attr('name', 'firstname');
+        registration.append(firstname);
+
+        var lastname = inputGroup('Last Name', null, null, 1);
+        lastname.children('input').eq(0).attr('name', 'lastname');
+        registration.append(lastname);
+
+        var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
+        submit_input.attr('type', 'submit');
+        submit_input.css({
+            /*'height':'100px',
+            'width': '100px',
+            'position':'absolute',
+            'z-index': '1000'*/
+            'display' : 'none'
+        });
+
+        registration.append(submit_input);
+
+
+
+        var submitbtn = $(document.getElementById(id+'savebtn')); //triggers the button that will actually call servlet
+        submitbtn.click(function() {
+            //which one of these will work??
+            submit_input.submit();
+            submit_input.click();
+            //submit_input.toggle();
+        });
+
+
         $("#registration").validate({
             rules:{
                 email: {required:true,email: true},
                 pwd:{required:true},
+                firstname:{required:true},
+                lastname:{required:true},
+                username:{required:true},
+
             }
         });
 
