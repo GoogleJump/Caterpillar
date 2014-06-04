@@ -12,7 +12,7 @@ Todo: make it so we can actually get to this page, make sure it works for just t
 
 InsertTripServlet.java
 inserts a trip given the parameters.  
-TODO: figure out how to do a list of integers as a parameter (wasn’t compiling for me, and I don’t have it in eclipse so I can’t view suggestions).  make sure everything is correct and consistent with what the trip entity is supposed to look like.  Then connect this to the form for adding a trip (same way as for signing up)
+TODO: make sure everything is correct and consistent with what the trip entity is supposed to look like.  Then connect this to the form for adding a trip (same way as for signing up), get the return and depart date parameters and turn them into a Date object and pass them in (depends on how they’re inputed with the date picker), do checking on parameters so nothing is set to null/if no dates picked it defaults to either “” or current date
 
 Entries: didn’t start this.  do same thing for as for trips basically.
 
