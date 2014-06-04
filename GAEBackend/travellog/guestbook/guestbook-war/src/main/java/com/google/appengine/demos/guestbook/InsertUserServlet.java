@@ -56,7 +56,7 @@ public class InsertUserServlet extends HttpServlet {
         datastore.put(user);
         System.out.println("success! Inserted a user!");
 
-        resp.sendRedirect("/guestbook.jsp?guestbookName=" + "default");
+        resp.sendRedirect("/signin.jsp");
 
   }
 }

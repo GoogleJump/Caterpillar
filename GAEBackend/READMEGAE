@@ -1,0 +1,36 @@
+Not really a read me - just letting xiaoyi know what I did and what she needs to do before I go to bed!
+
+Tutorial: https://developers.google.com/appengine/docs/java/gettingstarted/introduction
+All web backend stuff is located it the folder travellog -> guestbook
+By the way, it’s called guestbook because the tutorial I was following was called guestbook.  It made set up a lot easier, but it’s super hard to change the name so we’re sticking with guestbook (haha).
+
+The tutorial explains how to test it on your local server.  When you open it up, it should be the regular sign in page plus a button I made for testing that adds a test user (you might need to scroll to see it?)
+
+To view data while the local server is running go here: http://localhost:8080/_ah/admin/datastore
+(I think you have to be logged into the team gmail account first though)
+try inserting the test user and see if he shows up there
+
+.jsp files: eventually we need to convert all the html files to asp files.  For right now, we have signin.jsp.  I doubt we will need more pages before tomorrow.
+
+Java code:
+All are located in:
+GAEBackend/travellog/guesbook/guestbook-war/src/main/java/com/google/appengine/demos
+
+GuestbookServlet: the given example from the tutorial
+
+InsertUserServlet: for now, it makes a silly user named “Goofy Goober” (you can look in this file for all of his info).  The code that is commented out “should” work to insert a user based on the input fields.  Right now this code is called when you click the “Add Test User” button in signin.jsp Look at the example in the tutorial and how I connected this one to see how to set it up.  
+
+SignInServlet: Takes in the input info for email and password and checks if there is a user with that email and if the password matches.  This one seems to work, as I tested it with the made up user.  Right now, all it does is print out to the console though.
+
+TODO:
+-sign up page -> make sign up page into form (if it isn’t already) with method get and action /insertUser
+		 give all its input fields a “name” attribute that correspond to what they are (password should have name password, etc.)
+		make sure the button for sign up is actually connected to the java code
+		uncomment the code in InsertUserServlet so that it actually get’s the signup information
+
+if time: actually do stuff when sign in is successful/unsuccessful, lead user to trip view if successful, store user’s key somewhere after sign in so we can use it for getting posts and things
+		
+
+
+
+
