@@ -14,13 +14,15 @@ import java.util.Date;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 
 import java.util.List;
 
 public class SignInServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
-  throws IOException {
+  throws IOException, ServletException {
 
     System.out.println("signing in");
     String email = req.getParameter("email");
@@ -33,17 +35,17 @@ public class SignInServlet extends HttpServlet {
     }
 
 
-System.out.println("datastore service");
+    System.out.println("datastore service");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     System.out.println("about to make query with email");
     Query query = new Query("User").addFilter("email",
-                           Query.FilterOperator.EQUAL,
-                           email);
+     Query.FilterOperator.EQUAL,
+     email);
     System.out.println("about to prepare to query");
     List<Entity> users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1));
 
 
-   
+
      //nothing matches email
     if (users.isEmpty()) {
      // JOptionPane.showMessageDialog(frame, "email or password incorrect");
@@ -57,15 +59,20 @@ System.out.println("datastore service");
       //correct password
       if(user.getProperty("password").equals(password)) {
         System.out.println("success! password matches! :D");
-        resp.sendRedirect("/starter.jsp");
+
+         //if successful sign up, send over the user's key and redirect to tripview page:
+        req.setAttribute("key", user.getProperty("key"));
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/signin.jsp");
+        rd.forward(req, resp);
+        resp.sendRedirect("/tripview.jsp"); 
       }
       //incorrect password
       else {
         System.out.println("password doesn't match :(");
        // JOptionPane.showMessageDialog(frame, "email or password incorrect");
-        resp.sendRedirect("/signin.jsp");
+          resp.sendRedirect("/signin.jsp");
+        }
       }
-    }
 
     //TODO: redirect
    // resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);*/

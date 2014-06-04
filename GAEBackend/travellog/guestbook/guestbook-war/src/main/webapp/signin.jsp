@@ -33,9 +33,9 @@
   <body id='body'>
 
     <!--temporary for testing-->
- <form action="/insertUser" method="post" style="position: absolute; top: 300px; left: 500px; height:100px; width:100px">
+<!-- <form action="/insertUser" method="post" style="position: absolute; top: 300px; left: 500px; height:100px; width:100px">
     <div><input type="submit" value="Add Test User"/></div>
-</form>
+</form>-->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
