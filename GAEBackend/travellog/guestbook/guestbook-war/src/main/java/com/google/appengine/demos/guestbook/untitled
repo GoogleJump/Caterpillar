@@ -1,0 +1,66 @@
+package com.google.appengine.demos.guestbook;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
+import java.io.IOException;
+import java.util.Date;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class getUserByEmailServlet extends HttpServlet {
+  @Override
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+      throws IOException {
+
+
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("User", email);
+    List<Entity> users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1));
+    if (users.isEmpty()) {
+      JOptionPane.showMessageDialog(frame, "email or password incorrect");
+      resp.sendRedirect("/signin.jsp");
+    }
+
+    else {
+
+    if(user.getParameter("password").equals(password)) {
+      resp.sendRedirect("/starter.jsp");
+    }
+    else {
+      JOptionPane.showMessageDialog(frame, "email or password incorrect");
+      resp.sendRedirect("/signin.jsp");
+    }
+    }
+
+    //TODO: redirect
+   // resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);*/
+
+      /* Key userKey = KeyFactory.createKey("User", (System.currentTimeMillis()+ ""));
+       System.out.println("creating user:");
+       Entity user = new Entity("User", userKey);
+        user.setProperty("firstName", "Goofy");
+        user.setProperty("lastName", "Goober");
+        user.setProperty("username", "goober123");
+        user.setProperty("password", "goofy123");
+        user.setProperty("email", "peanuts@email.com");
+        user.setProperty("dateCreated", new Date());
+
+        System.out.println("about to insert");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(user);
+        System.out.println("success! Inserted a user!");*/
+
+        resp.sendRedirect("/guestbook.jsp?guestbookName=" + "default");
+
+  }
+}
