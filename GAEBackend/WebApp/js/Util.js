@@ -107,7 +107,7 @@ Util = (function(){
     /**
     Customized function for input group
     including a divwrapper, title and input box..
-    @param: the tilte
+    @param: the tilte, placeholder, and value
     type1: date
     type2: email
     type3: password
@@ -132,10 +132,20 @@ Util = (function(){
         wrapper.append(title);
         var titleInput = $(document.createElement('input'));
         titleInput.attr('type','text');
+        wrapper.append(titleInput);
         if(type===1){
-            // debugger;
-            // titleInput.datepicker();
-            // console.log("datepicker");
+            //add the button to show the calendar
+            wrapper.addClass('date');
+            var btn = $(document.createElement('span'));
+            btn.addClass('input-group-addon');
+            var icon = $(document.createElement('span'));
+            icon.addClass('glyphicon glyphicon-calendar');
+            btn.append(icon);
+            wrapper.append(btn);
+            titleInput.addClass('form-control');
+            wrapper.datetimepicker({
+                // pickTime: false,
+            });
         }
         if(type===2){
             titleInput.attr('name','email');
@@ -149,7 +159,6 @@ Util = (function(){
         if(value){
             titleInput.attr('value',value);
         }
-        wrapper.append(titleInput);
 
         return wrapper;
     }

@@ -101,14 +101,28 @@ Homepage = (function(){
         	'position':'relative',
         	'width':'80%'
         });
-        var titleWrapper = Util.inputGroup('Title: ', 'Untitled');
+        var titleWrapper = Util.inputGroup('Title: ', 'Untitled',null);
         rowwrapper.append(titleWrapper);
         
-        var locationWrapper = Util.inputGroup('Where: ','Location');
+        var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
         rowwrapper.append(locationWrapper);
 
-        var timeWrapper = Util.inputGroup('When: ','Today');
-        rowwrapper.append(timeWrapper);
+        // var timeWrapper = $(document.createElement('div'));
+        // timeWrapper.addClass()
+        // rowwrapper.append(timeWrapper);
+        var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
+        start.addClass('col-md-12');
+        rowwrapper.append(start);
+        var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+        end.addClass('col-md-12');
+        rowwrapper.append(end); 
+        //make sure the start date is always in front of the end date
+        start.on("dp.change",function (e) {
+            end.data("DateTimePicker").setMinDate(e.date);
+        });
+        end.on("dp.change",function (e) {
+            start.data("DateTimePicker").setMaxDate(e.date);
+        });
         var description = $(document.createElement('textarea'));
         description.attr('placeholder','Description');
         description.css({
