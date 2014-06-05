@@ -88,9 +88,17 @@ Homepage = (function(){
     add a trip modal. 
     **/
     function addNewTrip(){
-        var modal = Util.makeModal('addTrip', "Add Trip");
+        var modal = Util.makeModal('addTrip', "Add Trip",false);
         body.append(modal);
-    	var rowwrapper = $(document.createElement('div'));
+    	var rowwrapper = $(document.createElement('div'));        
+        //for submit purpose
+        addTripform = $(document.createElement('form'));
+        var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
+        submit_input.attr('type', 'submit');
+        submit_input.css({
+            'display' : 'none'
+        });
+        addTripform.append(submit_input);
         // var bodyid = 
         $("#addTripmodalBody").append(rowwrapper);
     	rowwrapper.addClass('row');
@@ -102,20 +110,20 @@ Homepage = (function(){
         	'width':'80%'
         });
         var titleWrapper = Util.inputGroup('Title: ', 'Untitled',null);
-        rowwrapper.append(titleWrapper);
+        addTripform.append(titleWrapper);
         
         var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
-        rowwrapper.append(locationWrapper);
+        addTripform.append(locationWrapper);
 
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
         // rowwrapper.append(timeWrapper);
         var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
         start.addClass('col-md-12');
-        rowwrapper.append(start);
+        addTripform.append(start);
         var end = Util.inputGroup('End: ',"Choose an end date",null,1);
         end.addClass('col-md-12');
-        rowwrapper.append(end); 
+        addTripform.append(end); 
         //make sure the start date is always in front of the end date
         start.on("dp.change",function (e) {
             end.data("DateTimePicker").setMinDate(e.date);
@@ -132,7 +140,7 @@ Homepage = (function(){
             'padding-bottom':'5px',
 
         })
-        rowwrapper.append(description);
+        addTripform.append(description);
         var addTags = $(document.createElement('input'));
         addTags.attr('type','text');
         addTags.addClass('tags');
@@ -140,13 +148,18 @@ Homepage = (function(){
             'padding-bottom':'5px',
 
         });
-        rowwrapper.append(addTags);
+        addTripform.append(addTags);
         addTags.tagsInput({
             'width': 'auto',
             'height':'5px',
             'padding-bottom':'5px',
             //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
             // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
+        });
+        var submitbtn = $(document.getElementById('addTripsavebtn'));
+        submitbtn.click(function(){
+            debugger;
+            console.log(start.data("DateTimePicker").getDate().format());
         });
     }
     this.addNewTrip= addNewTrip;

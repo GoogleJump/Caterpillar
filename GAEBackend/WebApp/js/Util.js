@@ -95,6 +95,7 @@ Util = (function(){
         savebtn.attr('type','button');
         savebtn.addClass('btn btn-primary');
         // savebtn.attr('data-dismiss','modal');
+        savebtn.attr('id',modalId+'savebtn');
         savebtn.text("Submit");
         savebtn.css({
             'background-color':'#504552'
@@ -171,7 +172,7 @@ Util = (function(){
         var body = $(document.getElementById("body"));
         body.append(modal);
         // var contentDiv= $(document.createElement('div'));
-        console.log(id+"modalBody");
+        // console.log(id+"modalBody");
         var modalBody = $(document.getElementById(id+"modalBody"));
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');

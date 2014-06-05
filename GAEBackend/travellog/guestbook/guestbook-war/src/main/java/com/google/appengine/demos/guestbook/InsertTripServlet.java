@@ -47,7 +47,7 @@ public class InsertTripServlet extends HttpServlet {
     trip.setProperty("description", description);
     trip.setProperty("dateCreated", date);
     trip.setProperty("location", location);
-
+    
     //format depart and return dates
     //TODO: figure out how date is being inputed to properly format dates
 

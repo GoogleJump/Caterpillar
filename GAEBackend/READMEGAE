@@ -1,10 +1,12 @@
 Not really a read me - just letting xiaoyi know what I did and what she needs to do before I go to bed!
 
 Note: I had to change the version to 1.9.3 for it work work, but you might have to change it to 1.9.5 on yours! (pom.xml)
+XM: lol, I am using v1.9.6…
 June 4, 2014:
 for sign in/sign up:
 sign in: works, but need to fix redirecting to tripview.jsp
 sign up: works, same issue as sign in. Some nice things to add: checking and warning the user about an invalid email address (without the @ sign), warning the user when not all of the fields are filled in
+XM: I do have checking in the frontend code. gonna double check and make sure the user can’t submit if inputs are invalid
 
 tripview.jsp and viewing trips:
 Can’t test this because I can’t get it to run (keep getting 404 errors).  Basically just followed the tutorial, but I don’t know if it’s working yet.  What it’s supposed to do is query the trips that belong that user and display all of their titles — not even getting into pictures yet, just trying to see if it works.  

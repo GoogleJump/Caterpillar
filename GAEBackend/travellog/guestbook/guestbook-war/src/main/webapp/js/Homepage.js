@@ -88,37 +88,60 @@ Homepage = (function(){
     add a trip modal. 
     **/
     function addNewTrip(){
-        var modal = Util.makeModal('addTrip', "Add Trip");
+        var modal = Util.makeModal('addTrip', "Add Trip",false);
         body.append(modal);
-    	var rowwrapper = $(document.createElement('div'));
+        var rowwrapper = $(document.createElement('div'));
+        //for submit purpose
+        addTripform = $(document.createElement('form'));
+        var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
+        submit_input.attr('type', 'submit');
+        submit_input.css({
+            'display' : 'none'
+        });
+        addTripform.append(submit_input);
+        rowwrapper.append(addTripform);
         // var bodyid = 
         $("#addTripmodalBody").append(rowwrapper);
-    	rowwrapper.addClass('row');
-    	rowwrapper.css({
-    		'padding-top':'9px',
-    		'top':'5%',
-        	'left':'10%',
-        	'position':'relative',
-        	'width':'80%'
+        rowwrapper.addClass('row');
+        rowwrapper.css({
+            'padding-top':'9px',
+            'top':'5%',
+            'left':'10%',
+            'position':'relative',
+            'width':'80%'
         });
-        var titleWrapper = Util.inputGroup('Title: ', 'Untitled');
-        rowwrapper.append(titleWrapper);
+        var titleWrapper = Util.inputGroup('Title: ', 'Untitled',null);
+        addTripform.append(titleWrapper);
         
-        var locationWrapper = Util.inputGroup('Where: ','Location');
-        rowwrapper.append(locationWrapper);
+        var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
+        addTripform.append(locationWrapper);
 
-        var timeWrapper = Util.inputGroup('When: ','Today');
-        rowwrapper.append(timeWrapper);
+        // var timeWrapper = $(document.createElement('div'));
+        // timeWrapper.addClass()
+        // rowwrapper.append(timeWrapper);
+        var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
+        start.addClass('col-md-12');
+        addTripform.append(start);
+        var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+        end.addClass('col-md-12');
+        addTripform.append(end); 
+        //make sure the start date is always in front of the end date
+        start.on("dp.change",function (e) {
+            end.data("DateTimePicker").setMinDate(e.date);
+        });
+        end.on("dp.change",function (e) {
+            start.data("DateTimePicker").setMaxDate(e.date);
+        });
         var description = $(document.createElement('textarea'));
         description.attr('placeholder','Description');
         description.css({
-        	'height':'200px',
-        	'width':'100%',
+            'height':'200px',
+            'width':'100%',
             'resize':'none',
             'padding-bottom':'5px',
 
         })
-        rowwrapper.append(description);
+        addTripform.append(description);
         var addTags = $(document.createElement('input'));
         addTags.attr('type','text');
         addTags.addClass('tags');
@@ -126,13 +149,17 @@ Homepage = (function(){
             'padding-bottom':'5px',
 
         });
-        rowwrapper.append(addTags);
+        addTripform.append(addTags);
         addTags.tagsInput({
             'width': 'auto',
             'height':'5px',
             'padding-bottom':'5px',
             //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
             // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
+        });
+        var submitbtn = $(document.getElementById('addTripsavebtn'));
+        submitbtn.click(function(){
+            console.log(start.data("DateTimePicker").getDate().format());
         });
     }
     this.addNewTrip= addNewTrip;
