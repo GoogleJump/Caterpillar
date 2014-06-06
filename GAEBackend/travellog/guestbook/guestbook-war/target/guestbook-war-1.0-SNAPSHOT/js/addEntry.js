@@ -18,10 +18,26 @@ addEntry = (function(){
 	title.addClass('col-md-6 col-sm-offset-1');
 	contentDiv.append(title);
 
-	//TODO: get the current date and set datepicker
-	var when = Util.inputGroup('When: ',"Today",null,1);
-	when.addClass('col-md-6 col-sm-offset-1');
-	contentDiv.append(when);
+	var duration = $(document.createElement('div'));
+	duration.addClass('col-md-6 col-sm-offset-1');
+	duration.css('padding-left','0px');
+	duration.css('padding-right','0px');
+	contentDiv.append(duration);
+	var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
+	start.addClass('col-md-12');
+	duration.append(start);
+	var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+	end.addClass('col-md-12');
+	duration.append(end); 
+	//make sure the start date is always in front of the end date
+	start.on("dp.change",function (e) {
+        end.data("DateTimePicker").setMinDate(e.date);
+    });
+    end.on("dp.change",function (e) {
+        start.data("DateTimePicker").setMaxDate(e.date);
+    });
+
+    //TODO: get PC's current location
 	var where = Util.inputGroup('Where: ',"Current Location");
 	contentDiv.append(where);
 	where.addClass('col-md-6 col-sm-offset-1');

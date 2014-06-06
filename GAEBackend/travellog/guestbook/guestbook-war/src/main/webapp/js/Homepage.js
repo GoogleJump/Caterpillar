@@ -93,6 +93,9 @@ Homepage = (function(){
         var rowwrapper = $(document.createElement('div'));
         //for submit purpose
         addTripform = $(document.createElement('form'));
+        addTripform.attr('method','post');
+        addTripform.attr('action', '/insertTrip');
+        addTripform.attr('id','addTripform');
         var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
         submit_input.attr('type', 'submit');
         submit_input.css({
@@ -112,17 +115,21 @@ Homepage = (function(){
         });
         var titleWrapper = Util.inputGroup('Title: ', 'Untitled',null);
         addTripform.append(titleWrapper);
-        
+        titleWrapper.children('input').eq(0).attr('name', 'title');
+
         var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
         addTripform.append(locationWrapper);
-
+        locationWrapper.children('input').eq(0).attr('name', 'location');
+       
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
         // rowwrapper.append(timeWrapper);
         var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
         start.addClass('col-md-12');
+        start.children('input').eq(0).attr('name', 'departDate');
         addTripform.append(start);
         var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+        end.children('input').eq(0).attr('name', 'retDate');
         end.addClass('col-md-12');
         addTripform.append(end); 
         //make sure the start date is always in front of the end date
@@ -140,7 +147,8 @@ Homepage = (function(){
             'resize':'none',
             'padding-bottom':'5px',
 
-        })
+        });
+        description.attr('name', 'description');
         addTripform.append(description);
         var addTags = $(document.createElement('input'));
         addTags.attr('type','text');
@@ -157,8 +165,21 @@ Homepage = (function(){
             //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
             // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
         });
+        $("#addTripform").validate({
+            rules:{
+                titleWrapper: {required:true},
+                locationWrapper:{required:true},
+                start:{required:true},
+                end:{required:true},
+                // description:{required:true},
+            }
+        });
         var submitbtn = $(document.getElementById('addTripsavebtn'));
         submitbtn.click(function(){
+            //which one of these will work??
+            submit_input.submit();
+            submit_input.click();
+            //For the format of date, check http://momentjs.com/
             console.log(start.data("DateTimePicker").getDate().format());
         });
     }

@@ -92,7 +92,7 @@ Util = (function(){
         closebtn.text("Close");
         // console.log(modalId+'closebtn');
         var savebtn = $(document.createElement('btn'));
-        savebtn.attr('type','button');
+        savebtn.attr('type','button submit');
         savebtn.addClass('btn btn-primary');
         // savebtn.attr('data-dismiss','modal');
         savebtn.text("Submit");
@@ -133,10 +133,20 @@ Util = (function(){
         wrapper.append(title);
         var titleInput = $(document.createElement('input'));
         titleInput.attr('type','text');
+        wrapper.append(titleInput);
         if(type===1){
-            // debugger;
-            // titleInput.datepicker();
-            // console.log("datepicker");
+            //add the button to show the calendar
+            wrapper.addClass('date');
+            var btn = $(document.createElement('span'));
+            btn.addClass('input-group-addon');
+            var icon = $(document.createElement('span'));
+            icon.addClass('glyphicon glyphicon-calendar');
+            btn.append(icon);
+            wrapper.append(btn);
+            titleInput.addClass('form-control');
+            wrapper.datetimepicker({
+                // pickTime: false,
+            });
         }
         if(type===2){
            // titleInput.attr('name','username');
@@ -150,7 +160,6 @@ Util = (function(){
         if(value){
             titleInput.attr('value',value);
         }
-        wrapper.append(titleInput);
 
         return wrapper;
     }
@@ -163,7 +172,7 @@ Util = (function(){
         var body = $(document.getElementById("body"));
         body.append(modal);
         // var contentDiv= $(document.createElement('div'));
-        console.log(id+"modalBody");
+        // console.log(id+"modalBody");
         var modalBody = $(document.getElementById(id+"modalBody"));
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');

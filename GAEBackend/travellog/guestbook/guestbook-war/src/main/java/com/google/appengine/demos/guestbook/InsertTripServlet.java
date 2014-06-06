@@ -39,7 +39,7 @@ public class InsertTripServlet extends HttpServlet {
     Date date = new Date();
     Key tripKey = KeyFactory.createKey("Trip", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
 
-
+    System.out.println("title: "+title+"  depDate: "+depDate);
    //create trip entitiy - TODO: also make sure these are correct and consistent
     Entity trip = new Entity("Trip", tripKey);
     trip.setProperty("owner", owner);
@@ -47,10 +47,11 @@ public class InsertTripServlet extends HttpServlet {
     trip.setProperty("description", description);
     trip.setProperty("dateCreated", date);
     trip.setProperty("location", location);
-    
+
     //format depart and return dates
     //TODO: figure out how date is being inputed to properly format dates
-
+    Date departDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(depDate);
+    Date returnDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(retDate);
 
     //create viewers and posters lists
     List<String> viewers = new ArrayList<String>();

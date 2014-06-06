@@ -133,6 +133,7 @@ Util = (function(){
         wrapper.append(title);
         var titleInput = $(document.createElement('input'));
         titleInput.attr('type','text');
+        wrapper.append(titleInput);
         if(type===1){
             //add the button to show the calendar
             wrapper.addClass('date');
@@ -159,7 +160,6 @@ Util = (function(){
         if(value){
             titleInput.attr('value',value);
         }
-        wrapper.append(titleInput);
 
         return wrapper;
     }

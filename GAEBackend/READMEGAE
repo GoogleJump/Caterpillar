@@ -1,5 +1,8 @@
 Not really a read me - just letting xiaoyi know what I did and what she needs to do before I go to bed!
 
+June 6: 
+To pass trip info, check function addTrip() in Homepage.js. And I did some changes in InsertTripServlet.java. There is SimpleDateFormat function http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html. I added it but haven’t tested it. Also, to change the format of date that passed from homepage.js, you can check momentjs.com. I am now using the default format. If we decide not to use time, we can set it false.
+
 Note: I had to change the version to 1.9.3 for it work work, but you might have to change it to 1.9.5 on yours! (pom.xml)
 XM: lol, I am using v1.9.6…
 June 4, 2014:

@@ -65,7 +65,7 @@ public class SignInServlet extends HttpServlet {
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/signin.jsp");
         rd.forward(req, resp);
         resp.sendRedirect("tripview.jsp"); */
-         resp.sendRedirect("/tripview.jsp?key="+user.getProperty("key"));
+         resp.sendRedirect("/homepage.jsp?key="+user.getProperty("key"));
          return;
 
         //or possibly put key this way instead:
