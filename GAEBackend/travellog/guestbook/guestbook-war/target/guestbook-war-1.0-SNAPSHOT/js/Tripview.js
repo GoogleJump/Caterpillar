@@ -45,7 +45,18 @@ Tripview = (function(){
 		'background-color':'#00868B',
 	});
 
-	contentDiv.append(addbtn);
+	//is this necessary?? because it really shouldn't be....
+	/*addbtn.click(function(){
+		addbtn.submit();
+	});*/
+
+	//get the form that this button needs to attach to
+	var addEntryForm = $(document.getElementById("addEntryForm"));
+	addEntryForm.append(addbtn);
+	console.log("action of form is: " + addEntryForm.attr("action"));
+
+	//contentDiv.append(addbtn);
+	contentDiv.append(addEntryForm);
 	var postsWrapper = $(document.createElement('div'));
 	postsWrapper.addClass('row');
 	contentDiv.append(postsWrapper);

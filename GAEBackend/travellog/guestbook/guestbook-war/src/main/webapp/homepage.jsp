@@ -88,7 +88,7 @@
 
  <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    String userKey = request.getParameter("userKey");
+    Key userKey = KeyFactory.stringToKey(request.getParameter("userKey"));
     Query query = new Query("Trip").addFilter("owner",
          Query.FilterOperator.EQUAL,
          userKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
@@ -110,7 +110,9 @@
 %>
 <p>Trip:</p>
   <script>console.log("trip here");</script>
+  <div class="trip">
 <p><b>${fn:escapeXml(trip_title)}</b></p>
+</div>
 <%
     }
 %>

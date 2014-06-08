@@ -44,7 +44,13 @@ Homepage = (function(){
     addNewTrip();
 
     //TODO: Should get thumbnails of each trip later from backend
-
+    var trips = document.getElementsByClassName('trip');
+    for(var i = 0; i < trips.length; ++i) {
+        var trip = Util.photoPreview(true);
+        //maybe set an attribute of trip[i] to be the thumbnail link or blob??  not sure how this is going to work
+        tripGrid.append(trip);
+    }
+    /*
     var trip1 = Util.photoPreview(true);//createThumbnail("../images/1.JPG");
     tripGrid.append(trip1);
     var trip2 = Util.photoPreview(true);//createThumbnail("../images/2.jpg");
@@ -57,7 +63,7 @@ Homepage = (function(){
     tripGrid.append(trip5);
     var trip6 = Util.photoPreview(true);//createThumbnail("../images/6.JPG");
     tripGrid.append(trip6);
-
+*/
 
     /**
     Function for create a div for a trip, 

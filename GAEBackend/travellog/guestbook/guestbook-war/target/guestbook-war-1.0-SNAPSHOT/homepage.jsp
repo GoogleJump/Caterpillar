@@ -88,7 +88,7 @@
 
  <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    String userKey = request.getParameter("key");
+    Key userKey = KeyFactory.stringToKey(request.getParameter("userKey"));
     Query query = new Query("Trip").addFilter("owner",
          Query.FilterOperator.EQUAL,
          userKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
@@ -106,12 +106,13 @@
     for (Entity trip : trips) {
         pageContext.setAttribute("trip_title",
                 trip.getProperty("title"));
-        /*if (trip.getProperty("user") == null) {*/
       
 %>
 <p>Trip:</p>
-  <script>console.log("no trips");</script>
+  <script>console.log("trip here");</script>
+  <div class="trip">
 <p><b>${fn:escapeXml(trip_title)}</b></p>
+</div>
 <%
     }
 %>

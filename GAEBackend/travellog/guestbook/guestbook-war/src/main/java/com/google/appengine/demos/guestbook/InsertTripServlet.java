@@ -42,6 +42,7 @@ public class InsertTripServlet extends HttpServlet {
     String depDate = req.getParameter("departDate");
     String retDate = req.getParameter("retDate");
     Date date = new Date();
+    String tags = req.getParameter("tags");
     Key tripKey = KeyFactory.createKey("Trip", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
     System.out.println(depDate+"________"+retDate);
     //format depart and return dates:
@@ -78,6 +79,7 @@ public class InsertTripServlet extends HttpServlet {
     trip.setProperty("depDate", depDate);
     trip.setProperty("viewer", viewers); 
     trip.setProperty("posters", posters);
+    trip.setProperty("tags", tags);
     
 
     //get the user that owns the post so that we can add friends/posters to the list of viewers/posters 
@@ -92,7 +94,7 @@ public class InsertTripServlet extends HttpServlet {
     datastore.put(trip);
     System.out.println("success!  Inserted trip! :D");
 
-        resp.sendRedirect("/tripview.jsp?key="+tripKey); //send the trip key parameter and redirect TODO: redirect to entry page
+        resp.sendRedirect("/tripview.jsp?tripKey="+KeyFactory.keyToString(trip.getKey())); //send the trip key parameter and redirect TODO: redirect to entry page
         
       }
     }

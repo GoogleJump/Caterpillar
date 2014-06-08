@@ -27,7 +27,7 @@ g) key - Key
 Each entity will either be a parent entity or a child entity. There will be one parent entity for every trip, and all children entities will be posts in a trip.
 
 Each Trip entity will have the following properties:
-a) owner - String
+a) owner - Key of user that created this trip
 b) posters - int collection of user keys of users who can post to the trip (for now just the owner)
 c) viewers - int collection of user keys of users who can views the posts of the trip (for now just the owner)
 d) title - String
@@ -43,11 +43,12 @@ a) title - String
 b) description - String
 c) hashtags - String collection
 d) location - String for city and country (or can be 2 properties for long and lat coordinates - easier to pin on a map with this info)
-e) poster - int (user key)
+e) poster - Key (user key) //do we need this??
 f) image key - blob key collection (of images on blob store) (??? Should there be descriptions associated with images and videos?)
 g) video key - blob key collection (of videos on blob store)
 h) key - Key
 i) dateCreated - Date
+j) tripPoster - Key of thrip it belongs to
 
 3) BlobInfo kind
 

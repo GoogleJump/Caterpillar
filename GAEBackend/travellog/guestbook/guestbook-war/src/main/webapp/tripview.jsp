@@ -2,6 +2,22 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.google.appengine.api.users.User" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%-- //[START imports]--%>
+<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
+<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.datastore.Entity" %>
+<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
+<%@ page import="com.google.appengine.api.datastore.Key" %>
+<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
+<%@ page import="com.google.appengine.api.datastore.Query" %>
+<%-- //[END imports]--%>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,7 +78,48 @@
     </div>
 
 
-   
+    <%
+   //upon every reload, generate an entry key and set as parameter
+    Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis()+"");
+    pageContext.setAttribute("entryKey", KeyFactory.keyToString(entryKey));
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Key tripKey = KeyFactory.stringToKey(request.getParameter("tripKey"));
+    Query query = new Query("Entry").addFilter("tripPoster",
+         Query.FilterOperator.EQUAL,
+         tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
+    List<Entity> entries = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
+    if (entries.isEmpty()) {
+%>
+   <p>No Entries to Display</p>
+  <script>console.log("no trips");</script>
+
+  <%
+} else { 
+%>
+
+<%
+    for (Entity entry : entries) {
+        pageContext.setAttribute("entry_title",
+                entry.getProperty("title"));
+      
+%>
+<p>Entry:</p>
+  <script>console.log("entry here");</script>
+  <div class="entry">
+<p><b>${fn:escapeXml(entry_title)}</b></p>
+</div>
+<%
+    }
+%>
+<blockquote></blockquote>
+<%
+    }
+%>
+<!--TODO: does this action do what it's supposed to because I doubt it-->
+<form action="/addentry.jsp?entryKey=${fn:escapeXml(entryKey)}" method="post" id="addEntryForm">
+  <!--In javascript, add "add entry" button as child to this form-->
+</form>
 
     <script src="../js/util/jquery-1.10.2.min.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.js"></script>
