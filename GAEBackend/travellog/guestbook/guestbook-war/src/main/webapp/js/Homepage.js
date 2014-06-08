@@ -99,7 +99,7 @@ Homepage = (function(){
         var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
         submit_input.attr('type', 'submit');
         submit_input.attr('name', 'submitbtn');
-        submit_input.attr('id', 'addTripsavebtn');
+        submit_input.attr('id', 'addTripInput');
         submit_input.css({
             'display' : 'none'
         });
@@ -203,20 +203,7 @@ Homepage = (function(){
                 }
         });
         var submitbtn = $(document.getElementById('addTripsavebtn'));
-        // $('body').on('click', '#addTripsavebtn', function () {
-        //     submitbtn.submit();
-        //     console.log("clicked");
-
-        //         //send request from local storage
-        //     var key = localStorage.getItem("userKey");
-        //     // insertParam("userKey", key);
-        //     console.log("inserted param");
-
-        //         //For the format of date, check http://momentjs.com/
-        //     console.log(start.data("DateTimePicker").getDate().format());        
-        // });
-        submitbtn.click(function(){
-                //which one of these will work??
+        $('body').on('click', '#addTripsavebtn', function () {
             submit_input.submit();
             console.log("clicked");
 
@@ -226,8 +213,21 @@ Homepage = (function(){
             console.log("inserted param");
 
                 //For the format of date, check http://momentjs.com/
-            console.log(start.data("DateTimePicker").getDate().format());
+            console.log(start.data("DateTimePicker").getDate().format());        
         });
+        // submitbtn.click(function(){
+        //         //which one of these will work??
+        //     submit_input.submit();
+        //     console.log("clicked");
+
+        //         //send request from local storage
+        //     var key = localStorage.getItem("userKey");
+        //     // insertParam("userKey", key);
+        //     console.log("inserted param");
+
+        //         //For the format of date, check http://momentjs.com/
+        //     console.log(start.data("DateTimePicker").getDate().format());
+        // });
     }
     this.addNewTrip= addNewTrip;
 })();
