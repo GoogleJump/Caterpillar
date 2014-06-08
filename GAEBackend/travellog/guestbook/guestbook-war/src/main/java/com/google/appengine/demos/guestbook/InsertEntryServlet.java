@@ -25,7 +25,7 @@ import java.util.List;
 
 public class InsertEntryServlet extends HttpServlet {
 	
-	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+//	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -47,21 +47,29 @@ public class InsertEntryServlet extends HttpServlet {
     String description = req.getParameter("description");
     String tags = req.getParameter("tags");
     String location = req.getParameter("location");
-    String poster = req.getParameter("userKey");
+    //unlike the other inserts, get entryKey as a parameter (because of blob id issues)
+    String entryKeyString = req.getParameter("entryKey");
+    System.out.println("entry key: "+entryKeyString);
+    Key entryKey = KeyFactory.stringToKey(entryKeyString);
+    
+    String poster = req.getParameter("userKey"); //user that posted the trip/entry
+    System.out.println("poster(user) key: " + poster);
+    
     Key posterKey = KeyFactory.stringToKey(poster);
-    String posterTrip = req.getParameter("tripKey");
+    String posterTrip = req.getParameter("tripKey"); //trip that this entry belongs to
+    System.out.println("trip key: " + posterTrip);
     Key posterTripKey = KeyFactory.stringToKey(posterTrip);
+    
     Date date = new Date();
  //   Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis()+"");
     
     // TODO: In order to have blobs attached to the correct entries, autogenerate the 
     //keys upon each refresh of the tripview page and set the name of the field for 
    //uploading to that key string
-    String entryKeyString = req.getParameter("entryKey");
-    Key entryKey = KeyFactory.stringToKey(entryKeyString);
+  
    
-    Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
-    BlobKey blobKey = blobs.get(entryKey); 
+    //Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
+    //BlobKey blobKey = blobs.get(entryKey); 
   
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
        
@@ -73,7 +81,7 @@ public class InsertEntryServlet extends HttpServlet {
         entry.setProperty("tags", tags);
         entry.setProperty("dateCreated", date);
         entry.setProperty("tripPoster", posterTripKey);
-        entry.setProperty("imageKey", blobKey); //TODO: multiple images (collection of blob keys)
+       // entry.setProperty("imageKey", blobKey); //TODO: multiple images (collection of blob keys)
       //  entry.setProperty("videoKey", value); TODO: videos
        
       
@@ -81,7 +89,8 @@ public class InsertEntryServlet extends HttpServlet {
            // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(entry);
 
-        resp.sendRedirect("/tripview.jsp?userKey="+ KeyFactory.keyToString(entry.getKey()));
+        resp.sendRedirect("/tripview.jsp?userKey="+ KeyFactory.keyToString(entry.getKey())
+        		+"tripKey=" + posterTrip);
 
 
       }

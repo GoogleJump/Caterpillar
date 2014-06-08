@@ -3,22 +3,27 @@ addEntry = (function(){
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
 
-	var contentDiv = $(document.createElement('div'));
+	var contentDiv = $(document.createElement('form'));
+	contentDiv.attr("id", "addEntry");
 	main.append(contentDiv);
 	contentDiv.addClass("row");
+	contentDiv.attr("method", "post");
+	contentDiv.attr("action", "/insertEntry");
 	main.css('padding-bottom','60px');
 	var pageheader = $(document.createElement('div'));
 	pageheader.addClass('page-header col-md-12');
-	contentDiv.append(pageheader);
+	contentDiv.append(pageheader); 
 	var header = $(document.createElement('h1'));
 	header.text("Add a Post");
 	pageheader.append(header);
 
 	var title = Util.inputGroup('Title: ', "Untitled");
 	title.addClass('col-md-6 col-sm-offset-1');
+	title.attr("name", "title");
 	contentDiv.append(title);
 
-	var duration = $(document.createElement('div'));
+//no start/end date for entries
+	/*var duration = $(document.createElement('div'));
 	duration.addClass('col-md-6 col-sm-offset-1');
 	duration.css('padding-left','0px');
 	duration.css('padding-right','0px');
@@ -35,7 +40,7 @@ addEntry = (function(){
     });
     end.on("dp.change",function (e) {
         start.data("DateTimePicker").setMaxDate(e.date);
-    });
+    });*/
 
     //TODO: get PC's current location
 	var where = Util.inputGroup('Where: ',"Current Location");
@@ -113,6 +118,7 @@ addEntry = (function(){
 	textWrapper.append(textDiv);
 
 	var text = $(document.createElement('textarea'));
+	text.attr("name", "description");
 	text.css({
 		'height':'300px',
 		'overflow-y':'auto',
@@ -130,6 +136,7 @@ addEntry = (function(){
 	tagsDiv.addClass('col-md-10 col-sm-offset-1');
 	tagsWrapper.append(tagsDiv);
 	var addTags = $(document.createElement('input'));
+	addTags.attr("name", "tags");
 	addTags.attr('type','text');
 	addTags.addClass('tags');
 	addTags.css({
@@ -143,6 +150,58 @@ addEntry = (function(){
 	        //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
 	        // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
 	});
+
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+  }
+} 
+alert('Query Variable ' + variable + ' not found');
+}
+
+//get value from local storage
+    function getFromLocalStorage(key) {
+     var item = localStorage.getItem(key);
+     if(item) { 
+        return item;
+    }
+    else {
+        console.log("could not store " + key);
+        return null;
+    }
+}
+
+
+	//invisible entry key input - get from url parameters and set
+	var entryKeyInput = $(document.createElement('input'));
+	entryKeyInput.css("display", "none");
+	var entryKey = getQueryVariable("entryKey");
+	entryKeyInput.attr("name", "entryKey");
+	entryKeyInput.attr("value", entryKey);
+	contentDiv.append(entryKeyInput);
+	console.log("entry key is:" + entryKey);
+
+	//invisible user key input - get from local storage and set
+	var userKeyInput = $(document.createElement('input'));
+	userKeyInput.css("display", "none");
+	var userKey = getFromLocalStorage("userKey");
+	console.log("user key is:" + userKey);
+	userKeyInput.attr("value", userKey);
+	userKeyInput.attr("name","userKey")
+	contentDiv.append(userKeyInput);
+
+	//invisible trip key input - get from url param and set
+	var tripKeyInput = $(document.createElement('input'));
+	tripKeyInput.css("display", "none");
+	var tripKey = getQueryVariable("tripKey");
+	console.log("trip key is:" + tripKey);
+	tripKeyInput.attr("value", tripKey);
+	tripKeyInput.attr("name","tripKey")
+	contentDiv.append(tripKeyInput);
 
 	var btnsDiv = $(document.createElement('div'));
 	btnsDiv.addClass('row col-sm-offset-1');
@@ -172,6 +231,11 @@ addEntry = (function(){
 	    // 'background-color':'#504552',
 	    'right':'9%',
 	    'position':'absolute',
+	});
+
+	//make sure this button submits the form (because there are two buttons it might not work):
+	savebtn.click(function(){
+		savebtn.submit();
 	});
 	btnsDiv.append(cancelbtn);
 	btnsDiv.append(savebtn);

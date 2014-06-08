@@ -8,6 +8,10 @@ Tripview = (function(){
 		'top':'100px',
 		'paddingLeft':'35px'
 	});
+	
+
+	//TODO: get rid of this sample stuff
+	//instead, make it so it gets the classes of the dynamically created entries and formats them
 	var contentDiv = $(document.createElement('div'));
 	main.append(contentDiv);
 	contentDiv.addClass("row");

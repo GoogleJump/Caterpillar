@@ -75,7 +75,7 @@
     <div id="main" class="container-fluid">
 
 <script>
-      // Store user key locally
+      // check if storage is available for this browser
 
       if(typeof(Storage) !== "undefined") {
         console.log("there is session storage");

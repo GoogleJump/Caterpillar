@@ -84,7 +84,9 @@
     pageContext.setAttribute("entryKey", KeyFactory.keyToString(entryKey));
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key tripKey = KeyFactory.stringToKey(request.getParameter("tripKey"));
+    String tripKeyString = request.getParameter("tripKey");
+    Key tripKey = KeyFactory.stringToKey(tripKeyString);
+    pageContext.setAttribute("tripKey", tripKeyString);
     Query query = new Query("Entry").addFilter("tripPoster",
          Query.FilterOperator.EQUAL,
          tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
@@ -117,7 +119,7 @@
     }
 %>
 <!--TODO: does this action do what it's supposed to because I doubt it-->
-<form action="/addentry.jsp?entryKey=${fn:escapeXml(entryKey)}" method="post" id="addEntryForm">
+<form action="/addentry.jsp?entryKey=${fn:escapeXml(entryKey)}&tripKey=${fn:escapeXml(tripKey)}" method="post" id="addEntryForm">
   <!--In javascript, add "add entry" button as child to this form-->
 </form>
 
