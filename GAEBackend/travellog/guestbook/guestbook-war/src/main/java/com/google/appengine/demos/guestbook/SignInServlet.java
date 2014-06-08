@@ -65,7 +65,12 @@ public class SignInServlet extends HttpServlet {
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/signin.jsp");
         rd.forward(req, resp);
         resp.sendRedirect("tripview.jsp"); */
-         resp.sendRedirect("/homepage.jsp?key="+user.getProperty("key"));
+        //creq.setAttribute("userKey", userKey);
+       // RequestDispatcher rd = getServletContext().getRequestDispatcher("/homepage.jsp?key="+user.getProperty("key"));;
+        //rd.forward(req, resp);
+        req.setAttribute("userKey", KeyFactory.keyToString(user.getKey()));
+        resp.sendRedirect("/homepage.jsp?userKey="+ KeyFactory.keyToString(user.getKey()));
+
          return;
 
         //or possibly put key this way instead:
@@ -74,7 +79,6 @@ public class SignInServlet extends HttpServlet {
       //incorrect password
       else {
         System.out.println("password doesn't match :(");
-       // JOptionPane.showMessageDialog(frame, "email or password incorrect");
           resp.sendRedirect("/signin.jsp");
         }
       }

@@ -144,9 +144,9 @@ Util = (function(){
             btn.append(icon);
             wrapper.append(btn);
             titleInput.addClass('form-control');
-            wrapper.datetimepicker({
+           /* wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
                 // pickTime: false,
-            });
+            });*/
         }
         if(type===2){
            // titleInput.attr('name','username');
@@ -194,15 +194,15 @@ Util = (function(){
         pwd.children('input').eq(0).attr('name', 'password');
         registration.append(pwd);
        
-        var email = inputGroup('Email', 'Please enter your email address', null, 1);
+        var email = inputGroup('Email', 'Please enter your email address', null, 2);
         email.children('input').eq(0).attr('name', 'email');
         registration.append(email);
 
-        var firstname = inputGroup('First Name', null, null, 1);
+        var firstname = inputGroup('First Name', null, null, 2);
         firstname.children('input').eq(0).attr('name', 'firstname');
         registration.append(firstname);
 
-        var lastname = inputGroup('Last Name', null, null, 1);
+        var lastname = inputGroup('Last Name', null, null, 2);
         lastname.children('input').eq(0).attr('name', 'lastname');
         registration.append(lastname);
 

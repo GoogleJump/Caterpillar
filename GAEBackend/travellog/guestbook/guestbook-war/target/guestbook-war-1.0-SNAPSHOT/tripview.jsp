@@ -62,8 +62,7 @@
     </div>
 
 
-
-
+   
 
     <script src="../js/util/jquery-1.10.2.min.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.js"></script>

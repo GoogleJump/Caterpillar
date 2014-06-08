@@ -98,6 +98,8 @@ Homepage = (function(){
         addTripform.attr('id','addTripform');
         var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
         submit_input.attr('type', 'submit');
+        submit_input.attr('name', 'submitbtn');
+        submit_input.attr('id', 'addTripsavebtn');
         submit_input.css({
             'display' : 'none'
         });
@@ -120,7 +122,7 @@ Homepage = (function(){
         var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
         addTripform.append(locationWrapper);
         locationWrapper.children('input').eq(0).attr('name', 'location');
-       
+
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
         // rowwrapper.append(timeWrapper);
@@ -165,23 +167,56 @@ Homepage = (function(){
             //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
             // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
         });
-        $("#addTripform").validate({
-            rules:{
-                titleWrapper: {required:true},
-                locationWrapper:{required:true},
-                start:{required:true},
-                end:{required:true},
+        function insertParam(key, value) {
+            key = escape(key); value = escape(value);
+
+            var kvp = document.location.search.substr(1).split('&');
+            if (kvp == '') {
+                document.location.search = '?' + key + '=' + value;
+            }
+            else {
+
+                var i = kvp.length; var x; while (i--) {
+                    x = kvp[i].split('=');
+
+                    if (x[0] == key) {
+                        x[1] = value;
+                        kvp[i] = x.join('=');
+                        break;
+                    }
+                }
+
+                if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
+
+            //this will reload the page, it's likely better to store this until finished
+            document.location.search = kvp.join('&');
+        }
+    }
+
+    $("#addTripform").validate({
+        rules:{
+            titleWrapper: {required:true},
+            locationWrapper:{required:true},
+            start:{required:true},
+            end:{required:true},
                 // description:{required:true},
             }
         });
-        var submitbtn = $(document.getElementById('addTripsavebtn'));
-        submitbtn.click(function(){
+    var submitbtn = $(document.getElementById('addTripsavebtn'));
+    submitbtn.click(function(){
             //which one of these will work??
-            submit_input.submit();
-            submit_input.click();
+            submitbtn.submit();
+            submitbtn.click();
+             console.log("clicked");
+
+            //send request from local storage
+            var key = localStorage.getItem("userKey");
+           // insertParam("userKey", key);
+            console.log("inserted param");
+
             //For the format of date, check http://momentjs.com/
             console.log(start.data("DateTimePicker").getDate().format());
         });
-    }
-    this.addNewTrip= addNewTrip;
+}
+this.addNewTrip= addNewTrip;
 })();

@@ -25,15 +25,13 @@ public class InsertUserServlet extends HttpServlet {
   throws IOException, ServletException {
 
     System.out.println("Hello insert user servlet");
-
     String firstname = req.getParameter("firstname");
     String lastname = req.getParameter("lastname");
     String username = req.getParameter("username");
     String password = req.getParameter("password");
     String email = req.getParameter("email");
     Date date = new Date();
-        Key userKey = KeyFactory.createKey("User", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
-
+    Key userKey = KeyFactory.createKey("User", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
 
       //first check if email and username are unique
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -50,14 +48,16 @@ public class InsertUserServlet extends HttpServlet {
         System.out.println("about to prepare to query");
         List<Entity> usersByUsername = datastore.prepare(namequery).asList(FetchOptions.Builder.withLimit(1));
 
-
+        Entity user;
         if(usersByEmail.isEmpty()) {
 
           if(usersByUsername.isEmpty()) {
 
             System.out.println("input information:"+firstname+ " "+lastname+ " "+username + " "+ password+ " " + email);
 
-            Entity user = new Entity("User", userKey);
+            user = new Entity("User", userKey);
+       
+            user.setProperty("key", userKey);
             user.setProperty("firstName", firstname);
             user.setProperty("lastName", lastname);
             user.setProperty("username", username);
@@ -83,43 +83,14 @@ public class InsertUserServlet extends HttpServlet {
         return;
       }
 
-
-
-
       //if successful sign up, send over the user's key and redirect to homepage page:
-        /* req.setAttribute("key", userKey);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/signin.jsp");
-        rd.forward(req, resp);*/
-        resp.sendRedirect("/homepage.jsp?key="+userKey);
+        req.setAttribute("userKey", KeyFactory.keyToString(user.getKey()));
+        //RequestDispatcher rd = getServletContext().getRequestDispatcher("/homepage.jsp?key="+user.getKey());
+        //rd.forward(req, resp);
+        resp.sendRedirect("/homepage.jsp?userKey="+ KeyFactory.keyToString(user.getKey()));
+        
           //resp.sendRedirect("/signin.jsp");
 
-            //TODO: redirect
-   // resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);*/
-
-
-    /*String firstname = req.getParameter("firstname");
-        String lastname = req.getParameter("lastname");
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        Date date = new Date();
-
-        System.out.println("input information:"+firstname+ " "+lastname+ " "+username + " "+ password+ " " + email);
-
-       Key userKey = KeyFactory.createKey("User", (System.currentTimeMillis()+ ""));
-       System.out.println("creating user:");
-       Entity user = new Entity("User", userKey);
-        user.setProperty("firstName", "Goofy");
-        user.setProperty("lastName", "Goober");
-        user.setProperty("username", "goober123");
-        user.setProperty("password", "goofy123");
-        user.setProperty("email", "peanuts@email.com");
-        user.setProperty("dateCreated", new Date());
-
-        System.out.println("about to insert");
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(user);
-        System.out.println("success! Inserted a user!");*/
 
       }
     }
