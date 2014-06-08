@@ -152,6 +152,16 @@ Homepage = (function(){
         });
         description.attr('name', 'description');
         addTripform.append(description);
+
+        //invisible input that gives the userKey as a parameter:
+        //(kind of hacky, but we'll see if it works... and it does! yay)
+        var keyUser = $(document.createElement('input'));
+        keyUser.attr('type, text');
+        keyUser.attr('name', 'userKey');
+        keyUser.css("display", "none");
+        setKey();
+        addTripform.append(keyUser);
+
         var addTags = $(document.createElement('input'));
         addTags.attr('type','text');
         addTags.addClass('tags');
@@ -159,6 +169,7 @@ Homepage = (function(){
             'padding-bottom':'5px',
 
         });
+
         addTripform.append(addTags);
         addTags.tagsInput({
             'width': 'auto',
@@ -167,55 +178,114 @@ Homepage = (function(){
             //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
             // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
         });
-        function insertParam(key, value) {
-            key = escape(key); value = escape(value);
 
-            var kvp = document.location.search.substr(1).split('&');
-            if (kvp == '') {
-                document.location.search = '?' + key + '=' + value;
-            }
-            else {
 
-                var i = kvp.length; var x; while (i--) {
-                    x = kvp[i].split('=');
 
-                    if (x[0] == key) {
-                        x[1] = value;
-                        kvp[i] = x.join('=');
-                        break;
-                    }
-                }
+        function setKey() {
+        //store user key:
+        if(typeof(Storage) !== "undefined") {
+        console.log("there is session storage");
+        } else {
+        console.log("browser does not support storage");
+        }
 
-                if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
+        var key = getQueryVariable("userKey");
+        keyUser.attr('value', key);
+        putToLocalStorage("userKey", key);
+        console.log("set key user attribute as:" + key);
+}
 
-            //this will reload the page, it's likely better to store this until finished
-                document.location.search = kvp.join('&');
+
+//insert url parameter
+function insertParam(key, value) {
+    key = escape(key); value = escape(value);
+
+    var kvp = document.location.search.substr(1).split('&');
+    if (kvp == '') {
+        document.location.search = '?' + key + '=' + value;
+    }
+    else {
+
+        var i = kvp.length; var x; while (i--) {
+            x = kvp[i].split('=');
+
+            if (x[0] == key) {
+                x[1] = value;
+                kvp[i] = x.join('=');
+                break;
             }
         }
 
-        $("#addTripform").validate({
-            rules:{
-                titleWrapper: {required:true},
-                locationWrapper:{required:true},
-                start:{required:true},
-                end:{required:true},
+        if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
+
+            //this will reload the page, it's likely better to store this until finished
+            document.location.search = kvp.join('&');
+        }
+    }
+
+//get value from local storage
+    function getFromLocalStorage(key) {
+     var item = localStorage.getItem(key);
+     if(item) { 
+        return item;
+    }
+    else {
+        console.log("could not store " + key);
+        return null;
+    }
+}
+
+//put key value pair into local storage
+function putToLocalStorage(key, value) {
+    localStorage.setItem(key, value);
+}
+
+//gets parameter either from url or local storage
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+  }
+} 
+//if it's not a parameter, check if it's in local storage
+return getFromLocalStorage(variable);
+//alert('Query Variable ' + variable + ' not found');
+}
+
+$("#addTripform").validate({
+    rules:{
+        titleWrapper: {required:true},
+        locationWrapper:{required:true},
+        start:{required:true},
+        end:{required:true},
                     // description:{required:true},
                 }
-        });
-        var submitbtn = $(document.getElementById('addTripsavebtn'));
-        $('body').on('click', '#addTripsavebtn', function () {
-            submit_input.submit();
-            submit_input.click();
-            console.log("clicked");
+            });
+var submitbtn = $(document.getElementById('addTripsavebtn'));
+$('body').on('click', '#addTripsavebtn', function () {
+
+    submit_input.submit();
+    submit_input.click();
+    console.log("clicked");
+
+        //insert key
+      //  insertParam("userKey", key);
+       // console.log("set param");
+
+
+
 
                 //send request from local storage
-            var key = localStorage.getItem("userKey");
+            //var key = localStorage.getItem("userKey");
             // insertParam("userKey", key);
-            console.log("inserted param");
+           // console.log("inserted param");
 
                 //For the format of date, check http://momentjs.com/
-            console.log(start.data("DateTimePicker").getDate().format());        
-        });
+                console.log(start.data("DateTimePicker").getDate().format());        
+            });
         // submitbtn.click(function(){
         //         //which one of these will work??
         //     submit_input.submit();
@@ -229,6 +299,6 @@ Homepage = (function(){
         //         //For the format of date, check http://momentjs.com/
         //     console.log(start.data("DateTimePicker").getDate().format());
         // });
-    }
-    this.addNewTrip= addNewTrip;
+}
+this.addNewTrip= addNewTrip;
 })();

@@ -33,9 +33,7 @@ public class InsertTripServlet extends HttpServlet {
 
   //fields of a trip -- TODO: make sure these are correct and match the android entities
     //TODO: posters and viewers
-    String owner = (String) req.getAttribute("userKey"); //owner key
-    if(owner == null) { System.out.println("was null key"); }
-    owner = req.getParameter("userKey");
+    String owner = req.getParameter("userKey");
     if(owner == null) { System.out.println("was still null key"); }
     Key ownerKey = KeyFactory.stringToKey(owner);
     String title = req.getParameter("title");

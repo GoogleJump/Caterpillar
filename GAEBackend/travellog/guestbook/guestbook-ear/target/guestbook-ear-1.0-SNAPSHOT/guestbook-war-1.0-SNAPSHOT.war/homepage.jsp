@@ -77,7 +77,11 @@
 <script>
       // Store user key locally
 
-
+      if(typeof(Storage) !== "undefined") {
+        console.log("there is session storage");
+} else {
+    console.log("browser does not support storage");
+}
 
 
 </script>

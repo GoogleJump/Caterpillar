@@ -77,14 +77,18 @@
 <script>
       // Store user key locally
 
-
+      if(typeof(Storage) !== "undefined") {
+        console.log("there is session storage");
+} else {
+    console.log("browser does not support storage");
+}
 
 
 </script>
 
  <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    String userKey = request.getParameter("key");
+    String userKey = request.getParameter("userKey");
     Query query = new Query("Trip").addFilter("owner",
          Query.FilterOperator.EQUAL,
          userKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
@@ -102,11 +106,10 @@
     for (Entity trip : trips) {
         pageContext.setAttribute("trip_title",
                 trip.getProperty("title"));
-        /*if (trip.getProperty("user") == null) {*/
       
 %>
 <p>Trip:</p>
-  <script>console.log("no trips");</script>
+  <script>console.log("trip here");</script>
 <p><b>${fn:escapeXml(trip_title)}</b></p>
 <%
     }
