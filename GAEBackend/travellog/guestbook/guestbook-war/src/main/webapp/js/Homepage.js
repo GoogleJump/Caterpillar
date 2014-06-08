@@ -193,15 +193,15 @@ Homepage = (function(){
             }
         }
 
-        // $("#addTripform").validate({
-        //     rules:{
-        //         titleWrapper: {required:true},
-        //         locationWrapper:{required:true},
-        //         start:{required:true},
-        //         end:{required:true},
-        //             // description:{required:true},
-        //         }
-        // });
+        $("#addTripform").validate({
+            rules:{
+                titleWrapper: {required:true},
+                locationWrapper:{required:true},
+                start:{required:true},
+                end:{required:true},
+                    // description:{required:true},
+                }
+        });
         var submitbtn = $(document.getElementById('addTripsavebtn'));
         // $('body').on('click', '#addTripsavebtn', function () {
         //     submitbtn.submit();
@@ -217,8 +217,7 @@ Homepage = (function(){
         // });
         submitbtn.click(function(){
                 //which one of these will work??
-            submitbtn.submit();
-            // submitbtn.click();
+            submit_input.submit();
             console.log("clicked");
 
                 //send request from local storage
