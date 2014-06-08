@@ -144,9 +144,9 @@ Util = (function(){
             btn.append(icon);
             wrapper.append(btn);
             titleInput.addClass('form-control');
-           /* wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
+            wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
                 // pickTime: false,
-            });*/
+            });
         }
         if(type===2){
            // titleInput.attr('name','username');

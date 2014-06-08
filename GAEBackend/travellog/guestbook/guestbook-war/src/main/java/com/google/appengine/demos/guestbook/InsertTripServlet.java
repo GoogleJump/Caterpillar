@@ -45,7 +45,7 @@ public class InsertTripServlet extends HttpServlet {
     String retDate = req.getParameter("retDate");
     Date date = new Date();
     Key tripKey = KeyFactory.createKey("Trip", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
-    
+    System.out.println(depDate+"________"+retDate);
     //format depart and return dates:
     try {
 		Date departDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(depDate);

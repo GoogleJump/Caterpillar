@@ -129,11 +129,11 @@ Homepage = (function(){
         var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
         start.addClass('col-md-12');
         start.children('input').eq(0).attr('name', 'departDate');
-        addTripform.append(start);
         var end = Util.inputGroup('End: ',"Choose an end date",null,1);
         end.children('input').eq(0).attr('name', 'retDate');
         end.addClass('col-md-12');
-        addTripform.append(end); 
+        addTripform.append(start); 
+        addTripform.append(end);
         //make sure the start date is always in front of the end date
         start.on("dp.change",function (e) {
             end.data("DateTimePicker").setMinDate(e.date);
@@ -189,34 +189,34 @@ Homepage = (function(){
                 if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
 
             //this will reload the page, it's likely better to store this until finished
-            document.location.search = kvp.join('&');
-        }
-    }
-
-    $("#addTripform").validate({
-        rules:{
-            titleWrapper: {required:true},
-            locationWrapper:{required:true},
-            start:{required:true},
-            end:{required:true},
-                // description:{required:true},
+                document.location.search = kvp.join('&');
             }
-        });
-    var submitbtn = $(document.getElementById('addTripsavebtn'));
-    submitbtn.click(function(){
-            //which one of these will work??
+        }
+
+        // $("#addTripform").validate({
+        //     rules:{
+        //         titleWrapper: {required:true},
+        //         locationWrapper:{required:true},
+        //         start:{required:true},
+        //         end:{required:true},
+        //             // description:{required:true},
+        //         }
+        // });
+        var submitbtn = $(document.getElementById('addTripsavebtn'));
+        submitbtn.click(function(){
+                //which one of these will work??
             submitbtn.submit();
             submitbtn.click();
-             console.log("clicked");
+            console.log("clicked");
 
-            //send request from local storage
+                //send request from local storage
             var key = localStorage.getItem("userKey");
-           // insertParam("userKey", key);
+            // insertParam("userKey", key);
             console.log("inserted param");
 
-            //For the format of date, check http://momentjs.com/
+                //For the format of date, check http://momentjs.com/
             console.log(start.data("DateTimePicker").getDate().format());
         });
-}
-this.addNewTrip= addNewTrip;
+    }
+    this.addNewTrip= addNewTrip;
 })();

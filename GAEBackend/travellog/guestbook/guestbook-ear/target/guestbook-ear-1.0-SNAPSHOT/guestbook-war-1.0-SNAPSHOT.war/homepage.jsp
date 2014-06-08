@@ -123,18 +123,16 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
    <!--  // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
-    <script src="../js/util/jquery-1.10.2.min.js"></script>
-    <script src="../js/util/jquery.tagsinput.js"></script>
+   <script src="../js/util/jquery-1.10.2.min.js"></script>
+    <script src="../js/util/tagsinputs/jquery.tagsinput.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../js/util/jquery.tagsinput.css"/>
-
-    <!-- rich text editor required doc -->
-    <!-- // <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script> -->
-    <!-- <link href="../js/util/bootstrap-wysiwyg-master/summernote.css" /> -->
-    <script src="../js/util/bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
-    <script src="../js/util/bootstrap-wysiwyg-master/external/jquery.hotkeys.js"></script>
-    
+    <link rel="stylesheet" type="text/css" href="../js/util/tagsinputs/jquery.tagsinput.css" />
+        <!-- src for datepicker -->
+    <script type="text/javascript" src="../js/util/node_modules/moment/moment.js"></script>
+    <link rel="stylesheet" href="../js/util/datepicker/css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="../js/util/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../js/jquery.validate.js"></script>
     <script src="../js/Util.js"></script>
     <script src="../js/Homepage.js"></script>
   </body>
