@@ -205,6 +205,7 @@ Homepage = (function(){
         var submitbtn = $(document.getElementById('addTripsavebtn'));
         $('body').on('click', '#addTripsavebtn', function () {
             submit_input.submit();
+            submit_input.click();
             console.log("clicked");
 
                 //send request from local storage

@@ -224,7 +224,7 @@ Util = (function(){
         submitbtn.click(function() {
             //which one of these will work??
             submit_input.submit();
-            // submit_input.click();
+            submit_input.click();
             //submit_input.toggle();
         });
 
