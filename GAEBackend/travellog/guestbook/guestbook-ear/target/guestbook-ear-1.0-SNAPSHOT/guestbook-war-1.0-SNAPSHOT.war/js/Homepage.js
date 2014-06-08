@@ -203,10 +203,22 @@ Homepage = (function(){
         //         }
         // });
         var submitbtn = $(document.getElementById('addTripsavebtn'));
+        // $('body').on('click', '#addTripsavebtn', function () {
+        //     submitbtn.submit();
+        //     console.log("clicked");
+
+        //         //send request from local storage
+        //     var key = localStorage.getItem("userKey");
+        //     // insertParam("userKey", key);
+        //     console.log("inserted param");
+
+        //         //For the format of date, check http://momentjs.com/
+        //     console.log(start.data("DateTimePicker").getDate().format());        
+        // });
         submitbtn.click(function(){
                 //which one of these will work??
             submitbtn.submit();
-            submitbtn.click();
+            // submitbtn.click();
             console.log("clicked");
 
                 //send request from local storage
