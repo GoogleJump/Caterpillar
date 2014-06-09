@@ -688,14 +688,21 @@ Util = (function(){
     this.editbtn = editbtn;
 
     /*function for uploading photo button, called in addEntry.**/
+    //returns the file names (todo: or maybe should return files themselves??)
+    //trying to return fileurl instead
     function uploadPhotos(selector, toDiv){
         var files = selector.files;
+        var filenames = new Array(files.length);
+        var fileurl = new Array(files.length);
         var num= files.length;
         for (var i=0;i<num;i++){
             var file = files[i];
             var filename = file.name;
+            filenames[i] = filename;
+            fileurl[i] = URL.createObjectURL(file.slice());
             toDiv.append(photoPreview(file,filename,"Edit to add Description"));
         }
+        return fileurl;
     }
 
 })();

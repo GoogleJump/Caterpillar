@@ -18,6 +18,7 @@
 <%@ page import="java.io.IOException" %>
 <%@ page import="java.io.InputStream" %>
 <%@ page import="java.net.URL"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobKey" %>
 <%-- //[END imports]--%>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -131,18 +132,22 @@
                 entry.getProperty("title"));
                  pageContext.setAttribute("entry_description",
                 entry.getProperty("description"));
-               /* pageContext.setAttribute("entry_image",
-                entry.getProperty("imageKey"));*/
+
+              List<BlobKey> imageKeys = (List<BlobKey>) entry.getProperty("imageKeys");
+              String imageKey = imageKeys.get(0).getKeyString();
+
+                pageContext.setAttribute("entry_image",
+                imageKey);
 
       
 %>
 <p>Entry:</p>
   <script>console.log("entry here");</script>
-  <div class="entry">
+  <div class="entry" style="padding-top: 100px">
 <p><b>${fn:escapeXml(entry_title)}</b></p>
-<p>{fn:escapeXml(entry_description)}</p>
+<p>${fn:escapeXml(entry_description)}</p>
 <!--TESTING IMAGE replace blobKeySample with imageKey and uncomment imageKey-->
-<!--<img src="/getImageFromBlobKey?blobKey=${fn:escapeXml(blobKeySample)}" id="imagefromblob">-->
+<img src="/getImage?blobKey=${fn:escapeXml(entry_image)}" id="imagefromblob">
 </div>
 <%
     }

@@ -41,6 +41,34 @@ addEntry = (function(){
         start.data("DateTimePicker").setMaxDate(e.date);
     });*/
 
+
+	//invisible entry key input - get from url parameters and set
+	var entryKeyInput = $(document.createElement('input'));
+	entryKeyInput.css("display", "none");
+	var entryKey = getQueryVariable("entryKey");
+	entryKeyInput.attr("name", "entryKey");
+	entryKeyInput.attr("value", entryKey);
+	contentDiv.append(entryKeyInput);
+	console.log("entry key is:" + entryKey);
+
+	//invisible user key input - get from local storage and set
+	var userKeyInput = $(document.createElement('input'));
+	userKeyInput.css("display", "none");
+	var userKey = getFromLocalStorage("userKey");
+	console.log("user key is:" + userKey);
+	userKeyInput.attr("value", userKey);
+	userKeyInput.attr("name","userKey")
+	contentDiv.append(userKeyInput);
+
+	//invisible trip key input - get from url param and set
+	var tripKeyInput = $(document.createElement('input'));
+	tripKeyInput.css("display", "none");
+	var tripKey = getQueryVariable("tripKey");
+	console.log("trip key is:" + tripKey);
+	tripKeyInput.attr("value", tripKey);
+	tripKeyInput.attr("name","tripKey")
+	contentDiv.append(tripKeyInput);
+
     //TODO: get PC's current location
 	var where = Util.inputGroup('Where: ',"Current Location");
 	contentDiv.append(where);
@@ -50,27 +78,45 @@ addEntry = (function(){
 	var btnDiv = $(document.createElement('div'));
 	contentDiv.append(btnDiv);
 	btnDiv.addClass('col-sm-offset-1');
-	var uploadbtn = $(document.createElement('div'));
+	var uploadbtn = $(document.createElement('input'));
+	//add this b/c idk if there is way to uplaod files without it coming straight from file form
+	uploadbtn.attr("type", "file");
+	//uploadbtn.attr("name", entryKey);
+	uploadbtn.attr("name", "fileUpload");
 	// uploadbtn.addClass("btn btn-primary");
 	btnDiv.append(uploadbtn);
 	var fileElem=(document.getElementById("fileElem"));
-	uploadbtn.click(function(){//"click", function (e) {
+	uploadbtn.click(function(e){//"click", function (e) {
 		console.log("before fileElem true");
+		// e.preventDefault(); // prevent navigation to "#" //commented out to make sure it's submitting the file - don't think we need it anymore
 	  	if (fileElem) {
 	  		console.log("fileElem true");
 	    	fileElem.click();
 	  	}
-	  	// e.preventDefault(); // prevent navigation to "#"
+	  	
+	});
+	$(fileElem).change(function(){
+		var filenames = Util.uploadPhotos(fileElem, photoDiv);
+		//create inputs with those file names as values:
+		for(var i = 0; i < filenames.length; ++i) {
+			var inputFileName = $(document.createElement('input'));
+			inputFileName.css("display", "none");
+			inputFileName.attr("type", "file");
+			inputFileName.attr("name", entryKey);
+			inputFileName.attr("value", filenames[i]);
+			contentDiv.append(inputFileName);
+		}
 	});
 
 	uploadbtn.text("Upload Photos");
 	uploadbtn.css({
 		'margin-top':'10px',
+		'background-color':Util.dark_purple,
+		//XM: Comment the following out if you wanna change uploadbtn to a real btn
 		'position':'relative',
 		'height':'30px',
 		'width':'100px',
 		'color':'white',
-		'background-color':Util.dark_purple,
 	});
 
 	var photoRow = $(document.createElement('div'));
@@ -96,10 +142,7 @@ addEntry = (function(){
 		// 'left':''
 	});
 
-	$(fileElem).change(function(){
-		Util.uploadPhotos(fileElem, photoDiv);
-	});
-
+	
 
 	var labelDiv = $(document.createElement('div'));
 	labelDiv.addClass('row col-sm-offset-1');
@@ -149,7 +192,6 @@ addEntry = (function(){
 	    'padding-bottom':'10px',
 	});
 	tagsDiv.append(addTags); 
-	//TODO: uncomment this, trying to find type error
 	addTags.tagsInput({
 	    'width': 'auto',
 	    'height':'5px',
@@ -183,32 +225,7 @@ addEntry = (function(){
 }
 
 
-	//invisible entry key input - get from url parameters and set
-	var entryKeyInput = $(document.createElement('input'));
-	entryKeyInput.css("display", "none");
-	var entryKey = getQueryVariable("entryKey");
-	entryKeyInput.attr("name", "entryKey");
-	entryKeyInput.attr("value", entryKey);
-	contentDiv.append(entryKeyInput);
-	console.log("entry key is:" + entryKey);
 
-	//invisible user key input - get from local storage and set
-	var userKeyInput = $(document.createElement('input'));
-	userKeyInput.css("display", "none");
-	var userKey = getFromLocalStorage("userKey");
-	console.log("user key is:" + userKey);
-	userKeyInput.attr("value", userKey);
-	userKeyInput.attr("name","userKey")
-	contentDiv.append(userKeyInput);
-
-	//invisible trip key input - get from url param and set
-	var tripKeyInput = $(document.createElement('input'));
-	tripKeyInput.css("display", "none");
-	var tripKey = getQueryVariable("tripKey");
-	console.log("trip key is:" + tripKey);
-	tripKeyInput.attr("value", tripKey);
-	tripKeyInput.attr("name","tripKey")
-	contentDiv.append(tripKeyInput);
 
 	var btnsDiv = $(document.createElement('div'));
 	btnsDiv.addClass('row col-sm-offset-1');
@@ -243,6 +260,7 @@ addEntry = (function(){
 	//make sure this button submits the form (because there are two buttons it might not work):
 	savebtn.click(function(){
 		savebtn.submit();
+		contentForm.submit(); //why should we even need this?!
 	});
 	btnsDiv.append(cancelbtn);
 	btnsDiv.append(savebtn);

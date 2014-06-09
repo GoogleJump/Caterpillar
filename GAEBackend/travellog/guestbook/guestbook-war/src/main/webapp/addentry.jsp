@@ -62,10 +62,10 @@
         </div>
       </div><!--/.nav-collapse -->
       <div id="main" class="container-fluid">
-        <form id="addEntry" action="<%= blobstoreService.createUploadUrl("/insertEntry") %>" method="post" enctype="multipart/form-data">
+        <form id="addEntry" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
         </form>
         <!-- hidden file selector for customized button -->
-        <input type="file" id="fileElem" multiple accept="image/*" style="display:none" >
+        <!--<input type="file" id="fileElem" multiple accept="image/*" style="display:none" >--> <!--testing something, uncomment later-->
 
       </div>
 
