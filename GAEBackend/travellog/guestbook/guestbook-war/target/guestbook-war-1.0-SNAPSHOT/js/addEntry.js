@@ -78,15 +78,25 @@ addEntry = (function(){
 	var btnDiv = $(document.createElement('div'));
 	contentDiv.append(btnDiv);
 	btnDiv.addClass('col-sm-offset-1');
-	var uploadbtn = $(document.createElement('input'));
+	/*var uploadbtn = $(document.createElement('input'));
 	//add this b/c idk if there is way to uplaod files without it coming straight from file form
 	uploadbtn.attr("type", "file");
 	//uploadbtn.attr("name", entryKey);
 	uploadbtn.attr("name", "fileUpload");
 	// uploadbtn.addClass("btn btn-primary");
-	btnDiv.append(uploadbtn);
+	btnDiv.append(uploadbtn);*/
 	var fileElem=(document.getElementById("fileElem"));
-	uploadbtn.click(function(e){//"click", function (e) {
+	btnDiv.append(fileElem);
+	/*fileElem.css({
+		'margin-top':'10px',
+		'background-color':Util.dark_purple,
+		//XM: Comment the following out if you wanna change uploadbtn to a real btn
+		'position':'relative',
+		'height':'30px',
+		'width':'100px',
+		'color':'white',
+	});*/
+	/*uploadbtn.click(function(e){//"click", function (e) {
 		console.log("before fileElem true");
 		// e.preventDefault(); // prevent navigation to "#" //commented out to make sure it's submitting the file - don't think we need it anymore
 	  	if (fileElem) {
@@ -94,21 +104,22 @@ addEntry = (function(){
 	    	fileElem.click();
 	  	}
 	  	
-	});
+	});*/
+
 	$(fileElem).change(function(){
 		var filenames = Util.uploadPhotos(fileElem, photoDiv);
-		//create inputs with those file names as values:
-		for(var i = 0; i < filenames.length; ++i) {
+		//create inputs with those file names as values: //--don't need this anymore
+		/*for(var i = 0; i < filenames.length; ++i) {
 			var inputFileName = $(document.createElement('input'));
 			inputFileName.css("display", "none");
 			inputFileName.attr("type", "file");
 			inputFileName.attr("name", entryKey);
 			inputFileName.attr("value", filenames[i]);
 			contentDiv.append(inputFileName);
-		}
+		}*/
 	});
 
-	uploadbtn.text("Upload Photos");
+	/*uploadbtn.text("Upload Photos");
 	uploadbtn.css({
 		'margin-top':'10px',
 		'background-color':Util.dark_purple,
@@ -117,7 +128,18 @@ addEntry = (function(){
 		'height':'30px',
 		'width':'100px',
 		'color':'white',
-	});
+	});*/
+
+	//fileElem.text("Upload Photos");
+	/*fileElem.css({
+		'margin-top':'10px',
+		'background-color':Util.dark_purple,
+		//XM: Comment the following out if you wanna change uploadbtn to a real btn
+		'position':'relative',
+		'height':'30px',
+		'width':'100px',
+		'color':'white',
+	});*/
 
 	var photoRow = $(document.createElement('div'));
 	contentDiv.append(photoRow);
@@ -184,7 +206,8 @@ addEntry = (function(){
 	var tagsDiv= $(document.createElement('div'));
 	tagsDiv.addClass('col-md-10 col-sm-offset-1');
 	tagsWrapper.append(tagsDiv);
-	var addTags = $(document.createElement('input'));
+	//not working, commented out for now:
+	/*var addTags = $(document.createElement('input'));
 	addTags.attr("name", "tags");
 	addTags.attr('type','text');
 	addTags.addClass('tags');
@@ -198,7 +221,7 @@ addEntry = (function(){
 	        // 'padding-bottom':'5px',
 	        //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
 	        // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
-	});
+	});*/
 
 	function getQueryVariable(variable) {
 	  var query = window.location.search.substring(1);
