@@ -43,22 +43,22 @@ public class InsertEntryServlet extends HttpServlet {
 	  i) dateCreated - Date
 	  j) tripPoster - Key of thrip it belongs to*/
 	    
-    System.out.println("Hello insert entry servlet");
+//    System.out.println("Hello insert entry servlet");
     String title = req.getParameter("title");
     String description = req.getParameter("description");
     String tags = req.getParameter("tags");
     String location = req.getParameter("location");
     //unlike the other inserts, get entryKey as a parameter (because of blob id issues)
     String entryKeyString = req.getParameter("entryKey");
-    System.out.println("entry key: "+entryKeyString);
+//    System.out.println("entry key: "+entryKeyString);
     Key entryKey = KeyFactory.stringToKey(entryKeyString);
     
     String poster = req.getParameter("userKey"); //user that posted the trip/entry
-    System.out.println("poster(user) key: " + poster);
+//    System.out.println("poster(user) key: " + poster);
     
     Key posterKey = KeyFactory.stringToKey(poster);
     String posterTrip = req.getParameter("tripKey"); //trip that this entry belongs to
-    System.out.println("trip key: " + posterTrip);
+//    System.out.println("trip key: " + posterTrip);
     Key posterTripKey = KeyFactory.stringToKey(posterTrip);
     
     Date date = new Date();

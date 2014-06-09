@@ -6,7 +6,7 @@ addEntry = (function(){
 	var contentForm = $(document.getElementById('addEntry')); //changed from making new one because needed to include some java stuff for blobs in .jsp
 	var contentDiv = $(document.createElement('div'));
 	contentForm.append(contentDiv);
-	main.append(contentForm); //already appended though...
+	// main.append(contentForm); //already appended though...
 	contentDiv.addClass("row");
 	main.css('padding-bottom','60px');
 	var pageheader = $(document.createElement('div'));
@@ -18,7 +18,7 @@ addEntry = (function(){
 
 	var title = Util.inputGroup('Title: ', "Untitled");
 	title.addClass('col-md-6 col-sm-offset-1');
-	title.attr("name", "title");
+	title.children('input').eq(0).attr("name", "title");
 	contentDiv.append(title);
 
 //no start/end date for entries
@@ -45,24 +45,31 @@ addEntry = (function(){
 	var where = Util.inputGroup('Where: ',"Current Location");
 	contentDiv.append(where);
 	where.addClass('col-md-6 col-sm-offset-1');
+	where.children('input').eq(0).attr('name','location');
 
 	var btnDiv = $(document.createElement('div'));
 	contentDiv.append(btnDiv);
 	btnDiv.addClass('col-sm-offset-1');
-	var uploadbtn = $(document.createElement('button'));
-	uploadbtn.addClass("btn btn-primary");
+	var uploadbtn = $(document.createElement('div'));
+	// uploadbtn.addClass("btn btn-primary");
 	btnDiv.append(uploadbtn);
 	var fileElem=(document.getElementById("fileElem"));
 	uploadbtn.click(function(){//"click", function (e) {
-	  if (fileElem) {
-	    fileElem.click();
-	  }
-	  //e.preventDefault(); // prevent navigation to "#"
+		console.log("before fileElem true");
+	  	if (fileElem) {
+	  		console.log("fileElem true");
+	    	fileElem.click();
+	  	}
+	  	// e.preventDefault(); // prevent navigation to "#"
 	});
 
 	uploadbtn.text("Upload Photos");
 	uploadbtn.css({
 		'margin-top':'10px',
+		'position':'relative',
+		'height':'30px',
+		'width':'100px',
+		'color':'white',
 		'background-color':Util.dark_purple,
 	});
 
@@ -143,25 +150,25 @@ addEntry = (function(){
 	});
 	tagsDiv.append(addTags); 
 	//TODO: uncomment this, trying to find type error
-	/*addTags.tagsInput({
+	addTags.tagsInput({
 	    'width': 'auto',
 	    'height':'5px',
 	        // 'padding-bottom':'5px',
 	        //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
 	        // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
-	});*/
+	});
 
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i=0;i<vars.length;i++) {
-    var pair = vars[i].split("=");
-    if (pair[0] == variable) {
-      return pair[1];
-  }
-} 
-alert('Query Variable ' + variable + ' not found');
-}
+	function getQueryVariable(variable) {
+	  var query = window.location.search.substring(1);
+	  var vars = query.split("&");
+	  for (var i=0;i<vars.length;i++) {
+	    var pair = vars[i].split("=");
+	    if (pair[0] == variable) {
+	      return pair[1];
+	  }
+	} 
+	alert('Query Variable ' + variable + ' not found');
+	}
 
 //get value from local storage
     function getFromLocalStorage(key) {

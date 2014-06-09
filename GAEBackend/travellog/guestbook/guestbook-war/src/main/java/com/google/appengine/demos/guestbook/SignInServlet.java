@@ -24,7 +24,7 @@ public class SignInServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
   throws IOException, ServletException {
 
-    System.out.println("signing in");
+//    System.out.println("signing in");
     String email = req.getParameter("email");
     String password = req.getParameter("password");
 
@@ -35,13 +35,13 @@ public class SignInServlet extends HttpServlet {
     }
 
 
-    System.out.println("datastore service");
+//    System.out.println("datastore service");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    System.out.println("about to make query with email");
+//    System.out.println("about to make query with email");
     Query query = new Query("User").addFilter("email",
      Query.FilterOperator.EQUAL,
      email);
-    System.out.println("about to prepare to query");
+//    System.out.println("about to prepare to query");
     List<Entity> users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1));
 
 
@@ -49,16 +49,16 @@ public class SignInServlet extends HttpServlet {
      //nothing matches email
     if (users.isEmpty()) {
      // JOptionPane.showMessageDialog(frame, "email or password incorrect");
-      System.out.println("users was empty--no matches to query");
+//      System.out.println("users was empty--no matches to query");
       resp.sendRedirect("/signin.jsp");
     }
 
     else {
-      System.out.println("success! users was not empty!  Now, get the user and check for a matching password");
+//      System.out.println("success! users was not empty!  Now, get the user and check for a matching password");
       Entity user = users.get(0);
       //correct password
       if(user.getProperty("password").equals(password)) {
-        System.out.println("success! password matches! :D");
+//        System.out.println("success! password matches! :D");
 
          //if successful sign up, send over the user's key and redirect to tripview page:
        /* req.setAttribute("key", user.getProperty("key"));
@@ -78,7 +78,7 @@ public class SignInServlet extends HttpServlet {
       }
       //incorrect password
       else {
-        System.out.println("password doesn't match :(");
+//        System.out.println("password doesn't match :(");
           resp.sendRedirect("/signin.jsp");
         }
       }
