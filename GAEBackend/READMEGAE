@@ -1,5 +1,17 @@
 Not really a read me - just letting xiaoyi know what I did and what she needs to do before I go to bed!
 
+
+June 8:
+I finished insert entry and connected inputs with backend, but only started on inserting blob key.  Name of whatever holds the input file should have the same name as the entry key so this will work like this:
+BlobKey blobKey = blobs.get(entryKey); 
+the entry key is saved as a variable somewhere in addentry.js
+TODO: 
+-submit button for add entry doesn’t work (why does this seem to be a common theme?)
+-test that blob stuff works and connect upload file part of add entry to the servlet
+-For viewing trips (and entries I suppose): I got it to display trip titles.  We need to instead have it so it the images display.  Maybe if for each trip we get its image information and place it as text in a div of a class “trip” or something.  Then in javascript we find this class and format the image. 
+Same thing for entries, we need to have it display all the info wrapped in some class then formatted (because we can’t query from javascript, it has to be in the html).  Entries should be easier — we can first do without pictures and at least all the text will be there.
+
+
 June 7:
 Did: 
 added homepage.jsp, got rid of date picker views for stuff that wasn’t supposed to be dates, tested insert trip- had to submit through console because button not connected

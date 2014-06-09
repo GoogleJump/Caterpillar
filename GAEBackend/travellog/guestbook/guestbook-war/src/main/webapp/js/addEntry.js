@@ -3,12 +3,11 @@ addEntry = (function(){
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
 
-	var contentDiv = $(document.createElement('form'));
-	contentDiv.attr("id", "addEntry");
-	main.append(contentDiv);
+	var contentForm = $(document.getElementById('addEntry')); //changed from making new one because needed to include some java stuff for blobs in .jsp
+	var contentDiv = $(document.createElement('div'));
+	contentForm.append(contentDiv);
+	main.append(contentForm); //already appended though...
 	contentDiv.addClass("row");
-	contentDiv.attr("method", "post");
-	contentDiv.attr("action", "/insertEntry");
 	main.css('padding-bottom','60px');
 	var pageheader = $(document.createElement('div'));
 	pageheader.addClass('page-header col-md-12');
@@ -142,14 +141,15 @@ addEntry = (function(){
 	addTags.css({
 	    'padding-bottom':'10px',
 	});
-	tagsDiv.append(addTags);
-	addTags.tagsInput({
+	tagsDiv.append(addTags); 
+	//TODO: uncomment this, trying to find type error
+	/*addTags.tagsInput({
 	    'width': 'auto',
 	    'height':'5px',
 	        // 'padding-bottom':'5px',
 	        //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
 	        // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
-	});
+	});*/
 
 function getQueryVariable(variable) {
   var query = window.location.search.substring(1);

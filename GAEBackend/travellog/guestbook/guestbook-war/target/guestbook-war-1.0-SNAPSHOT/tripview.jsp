@@ -14,6 +14,10 @@
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="com.google.appengine.api.datastore.Query" %>
+<%@ page import="java.io.ByteArrayOutputStream"%>
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.io.InputStream" %>
+<%@ page import="java.net.URL"%>
 <%-- //[END imports]--%>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -91,6 +95,27 @@
          Query.FilterOperator.EQUAL,
          tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
     List<Entity> entries = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
+
+
+    //CODE TO TEST BLOBS, DELETE THIS ONCE TESTED:
+    /*URL imageUrl = new URL("http://www.japantoday.com/images/size/x/2013/10/giraffe.jpg");
+     InputStream input = imageUrl.openStream();
+     ByteArrayOutputStream bos = new ByteArrayOutputStream();
+     int next = input.read();
+     while (next > -1) {
+         bos.write(next);
+         next = input.read();
+     }
+     bos.flush();
+     byte[] result = bos.toByteArray();
+     Blob sampleImage = new Blob(result);
+     pageContext.setAttribute("blobKeySample",
+                entry.getProperty(sampleImage.));*/
+
+
+
+
+
     if (entries.isEmpty()) {
 %>
    <p>No Entries to Display</p>
@@ -104,12 +129,20 @@
     for (Entity entry : entries) {
         pageContext.setAttribute("entry_title",
                 entry.getProperty("title"));
+                 pageContext.setAttribute("entry_description",
+                entry.getProperty("description"));
+               /* pageContext.setAttribute("entry_image",
+                entry.getProperty("imageKey"));*/
+
       
 %>
 <p>Entry:</p>
   <script>console.log("entry here");</script>
   <div class="entry">
 <p><b>${fn:escapeXml(entry_title)}</b></p>
+<p>{fn:escapeXml(entry_description)}</p>
+<!--TESTING IMAGE replace blobKeySample with imageKey and uncomment imageKey-->
+<!--<img src="/getImageFromBlobKey?blobKey=${fn:escapeXml(blobKeySample)}" id="imagefromblob">-->
 </div>
 <%
     }
