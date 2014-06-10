@@ -32,6 +32,10 @@
     <servlet-name>getImage</servlet-name>
     <servlet-class>com.google.appengine.demos.guestbook.GetImageFromBlobKey</servlet-class>
   </servlet>
+    <servlet>
+    <servlet-name>getTripImage</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.GetTripImage</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>guestbook</servlet-name>
@@ -60,6 +64,10 @@
 <servlet-mapping>
   <servlet-name>getImage</servlet-name>
   <url-pattern>/getImage</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+  <servlet-name>getTripImage</servlet-name>
+  <url-pattern>/getTripImage</url-pattern>
 </servlet-mapping>
 <welcome-file-list>
  <welcome-file>signin.jsp</welcome-file>

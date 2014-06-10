@@ -5,6 +5,8 @@ logout button
 checks on inputs for sign up (all fields there, etc.)
 location value should be geo point, not string
 separate page for viewing individual posts (or a way to view images larger w/the caption like Facebook does)
+multiple image upload - prevent user from clicking “choose file” twice OR have it support that
+removing/editing an image when uploading should actually edit/remove it
 
 
 ————————

@@ -537,13 +537,12 @@ Util = (function(){
         imgDiv.css({
             'width':'251px',
             'height':'166px',
-            // 'display':'block',
-            // 'margin':'auto',
             'background-size':'contain',
-            'background': 'no-repeat center',
+            'background-repeat': 'no-repeat',
+            'background-position':'center',
         })
         thumbDiv.append(imgDiv);
-        var thumbnail=$(document.createElement('img'));
+        // var thumbnail=$(document.createElement('img'));
         // thumbnail.css({
         //     'height':'180px',
         //     'width':'260px',
@@ -556,15 +555,6 @@ Util = (function(){
                 var p = e.target.result; 
                 // $(document.getElementById(cap+"modal")).attr('src',p);
                 imgDiv.css('background-image','url(' + p + ')');
-                var srcH = thumbnail.height,
-                    srcW = thumbnail.width,
-                    // targetH = 180,
-                    targetW = 251;
-                // thumbnail.attr('src', p);
-                // var img = new Image();
-                // if(srcW>srcH)
-                // thumbnail.height()
-                debugger;
             }
             
             reader.readAsDataURL(file);

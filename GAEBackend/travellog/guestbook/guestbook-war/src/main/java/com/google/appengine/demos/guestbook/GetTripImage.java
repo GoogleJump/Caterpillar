@@ -44,21 +44,39 @@ public class GetTripImage extends HttpServlet {
   public void  doGet(HttpServletRequest req, HttpServletResponse resp)
   throws IOException, ServletException {
 	  
-	  Key tripKey = KeyFactory.stringToKey(req.getParameter("tripKey"));
-	  
-	  Query entryquery = new Query("Entry").addFilter("posterTrip",
-		         Query.FilterOperator.EQUAL,
-		        	tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
-
 	  DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 	  
-	  List<Entity> entriesInTrip = datastore.prepare(entryquery).asList(FetchOptions.Builder.withLimit(1));
+	  Key tripKey = KeyFactory.stringToKey(req.getParameter("tripKey"));
+	  System.out.println("trip key is:" + req.getParameter("tripKey"));
+	  
+	  Query entryquery = new Query("Entry").addFilter("tripPoster",
+		         Query.FilterOperator.EQUAL,
+		        	tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
+	  Query entryAll = new Query("Entry");
+	  List<Entity> entriesAll = datastore.prepare(entryAll).asList(FetchOptions.Builder.withLimit(1));
+	  System.out.println("all entries number is:" + entriesAll.size());
+	  System.out.println("poster trip key is:" + entriesAll.get(0).getProperty("tripPoster"));
+	  
 
+	
+	  
+	 List<Entity> entriesInTrip = datastore.prepare(entryquery).asList(FetchOptions.Builder.withLimit(1));
+
+	 if(entriesInTrip.size() != 0) {
 	  List<BlobKey> imageKeys = (List<BlobKey>) entriesInTrip.get(0).getProperty("imageKeys");
+	 if(imageKeys.size() != 0) {
 	  BlobKey image = imageKeys.get(0);
 	  blobstoreService.serve(image, resp); //for now, serve like this, but instead uuse image api b/c more efficient and need cropping
-	  
+	 }
+	 else {
+		 System.out.println("no images in entry");
+		 //TODO, check all the entries and find the first image before concluding no images
+	 }
+}
+else {
+	System.out.println("no entries in trip");
+}
 //TODO: test this, crop it how we want (put 500 pixels as image size completely randomly)
      // BlobKey blobKey = new BlobKey(req.getParameter("blobKey"));
      /*// blobstoreService.serve(blobKey, resp); //this is another option
