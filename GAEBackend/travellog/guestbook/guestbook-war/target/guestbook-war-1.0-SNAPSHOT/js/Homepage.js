@@ -44,10 +44,14 @@ Homepage = (function(){
     addNewTrip();
 
     //TODO: Should get thumbnails of each trip later from backend
-    var trips = document.getElementsByClassName('trip');
+    var trips = $(".trip");
     for(var i = 0; i < trips.length; ++i) {
-        var trip = Util.photoPreview(true);
-        //maybe set an attribute of trip[i] to be the thumbnail link or blob??  not sure how this is going to work
+        var tripinfo = trips.eq(i);
+        var src = tripinfo.attr("id");
+       var link = "/tripview.jsp?tripKey=" + tripinfo.attr("name");
+       var trip = createThumbnail(src, link);
+        // var trip = Util.photoPreview(src, "", "", true);
+        //TODO: onclick sets parameter as this trip and leads to tripview **Test
         tripGrid.append(trip);
     }
     /*
@@ -73,12 +77,12 @@ Homepage = (function(){
 
     @param: path: the path to the thumbnail image.
     **/
-    function createThumbnail(path){
+    function createThumbnail(path, link){
     	var colDiv = $(document.createElement('div'));
     	
     	colDiv.addClass('col-sm-6 col-md-4');
     	var thumba=$(document.createElement('a'));
-    	thumba.attr("href","#");//TODO: href would be the trip's url later
+    	thumba.attr("href",link);
     	thumba.addClass("thumbnail");
     	colDiv.append(thumba);
     	var thumbnail=$(document.createElement('img'));

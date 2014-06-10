@@ -110,12 +110,9 @@
                 KeyFactory.keyToString(trip.getKey()));
       
 %>
-<p>Trip:</p>
-  <script>console.log("trip here");</script>
-  <div class="trip">
-<p><b>${fn:escapeXml(trip_title)}</b></p>
-<img src="/getTripImage?tripKey=${fn:escapeXml(tripKey)}"/>
-</div>
+<!--<p>Trip:</p> <p><b>${fn:escapeXml(trip_title)}</b></p>-->
+<!--kind of hacky for now:-->
+<img class="trip" id="/getTripImage?tripKey=${fn:escapeXml(tripKey)}" name="${fn:escapeXml(tripKey)}" style="display:none"/>
 <%
     }
 %>

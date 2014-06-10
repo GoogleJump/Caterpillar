@@ -72,10 +72,13 @@ public class GetTripImage extends HttpServlet {
 	 else {
 		 System.out.println("no images in entry");
 		 //TODO, check all the entries and find the first image before concluding no images
+		 //TODO: put a legit sample picture here:
+		 resp.sendRedirect("http://imx.solid-run.com/wiki/images/7/75/No_image_available.png");
 	 }
 }
 else {
 	System.out.println("no entries in trip");
+	resp.sendRedirect("http://imx.solid-run.com/wiki/images/7/75/No_image_available.png");
 }
 //TODO: test this, crop it how we want (put 500 pixels as image size completely randomly)
      // BlobKey blobKey = new BlobKey(req.getParameter("blobKey"));
