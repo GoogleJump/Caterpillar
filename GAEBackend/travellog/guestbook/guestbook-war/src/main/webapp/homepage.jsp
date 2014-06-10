@@ -106,12 +106,15 @@
     for (Entity trip : trips) {
         pageContext.setAttribute("trip_title",
                 trip.getProperty("title"));
+                pageContext.setAttribute("tripKey",
+                KeyFactory.keyToString(trip.getKey()));
       
 %>
 <p>Trip:</p>
   <script>console.log("trip here");</script>
   <div class="trip">
 <p><b>${fn:escapeXml(trip_title)}</b></p>
+<img src="/getTripImage?tripKey=${fn:escapeXml(tripKey)}"/>
 </div>
 <%
     }
