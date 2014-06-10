@@ -143,7 +143,7 @@
 %>
 <p>Entry:</p>
   <script>console.log("entry here");</script>
-  <div class="entry" style="padding-top: 100px">
+  <div class="entry" style="padding-top: 100px; display: none">
 <p><b>${fn:escapeXml(entry_title)}</b></p>
 <p>${fn:escapeXml(entry_description)}</p>
 <!--TESTING IMAGE replace blobKeySample with imageKey and uncomment imageKey-->

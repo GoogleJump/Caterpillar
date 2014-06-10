@@ -531,22 +531,46 @@ Util = (function(){
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
+
         colDiv.append(thumbDiv);
+        var imgDiv = $(document.createElement('div'));
+        imgDiv.css({
+            'width':'251px',
+            'height':'166px',
+            // 'display':'block',
+            // 'margin':'auto',
+            'background-size':'contain',
+            'background': 'no-repeat center',
+        })
+        thumbDiv.append(imgDiv);
         var thumbnail=$(document.createElement('img'));
+        // thumbnail.css({
+        //     'height':'180px',
+        //     'width':'260px',
+        // })
         //get the thumbnail from the upload file. Sync the thumbnail in corresponding modal as well
         if(file){
             //probably need to crop them/resize them later if the photos are not in standard size
             var reader = new FileReader();
             reader.onload = function (e) {
-                var p = e.target.result;
-                $(document.getElementById(cap+"modal")).attr('src',p);
-                thumbnail.attr('src', p);
+                var p = e.target.result; 
+                // $(document.getElementById(cap+"modal")).attr('src',p);
+                imgDiv.css('background-image','url(' + p + ')');
+                var srcH = thumbnail.height,
+                    srcW = thumbnail.width,
+                    // targetH = 180,
+                    targetW = 251;
+                // thumbnail.attr('src', p);
+                // var img = new Image();
+                // if(srcW>srcH)
+                // thumbnail.height()
+                debugger;
             }
             
             reader.readAsDataURL(file);
         }
-        thumbnail.attr("alt","Oops, there is an error with the image")
-        thumbDiv.append(thumbnail);
+        // thumbnail.attr("alt","Oops, there is an error with the image")
+        // imgDiv.append(thumbnail);
         var captionDiv = $(document.createElement('div'));
         captionDiv.addClass("caption");
         thumbDiv.append(captionDiv);
