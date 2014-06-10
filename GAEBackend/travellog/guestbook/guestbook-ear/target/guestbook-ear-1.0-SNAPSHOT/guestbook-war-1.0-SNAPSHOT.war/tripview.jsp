@@ -134,22 +134,30 @@
                 entry.getProperty("description"));
 
               List<BlobKey> imageKeys = (List<BlobKey>) entry.getProperty("imageKeys");
-              String imageKey = imageKeys.get(0).getKeyString();
+              //String imageKey = imageKeys.get(0).getKeyString();
 
-                pageContext.setAttribute("entry_image",
-                imageKey);
+                //pageContext.setAttribute("entry_images",
+                //imageKeys);
 
-      
-%>
-<p>Entry:</p>
-  <script>console.log("entry here");</script>
-  <div class="entry" style="padding-top: 100px">
-<p><b>${fn:escapeXml(entry_title)}</b></p>
-<p>${fn:escapeXml(entry_description)}</p>
-<!--TESTING IMAGE replace blobKeySample with imageKey and uncomment imageKey-->
-<img src="/getImage?blobKey=${fn:escapeXml(entry_image)}" id="imagefromblob">
-</div>
-<%
+     // src="/getImage?blobKey=
+        %>
+        <p>Entry:</p>
+          <script>console.log("entry here");</script>
+          <div class="entry" style="padding-top: 100px; display:none">
+        <input class="Entrytitle" value = "${fn:escapeXml(entry_title)}"></input>
+        <input class="EntryDescription" value="${fn:escapeXml(entry_description)}"></input>
+        <!--TESTING IMAGE replace blobKeySample with imageKey and uncomment imageKey-->
+        <% 
+        for(int i=0;i<imageKeys.size();i++){
+          String imageKey = imageKeys.get(i).getKeyString();
+          pageContext.setAttribute("entry_image", imageKey);
+          %>
+          <img class="Entryimages" src="/getImage?blobKey=${fn:escapeXml(entry_image)}"></img>
+        <%
+        }
+        %>
+        </div>
+        <%
     }
 %>
 <blockquote></blockquote>

@@ -254,7 +254,7 @@ Util = (function(){
     function to make a post in trip view, it can be with img only, or text only, or both.
     probably, later add videos too. toEntry is the link to the post's main page.
     */
-    function makePost(hasText, hasImg, toEntry, content){
+    function makePost(hasText, hasImg, entrytitle, entrydesp, imgs,toEntry, content){
         var postDiv = $(document.createElement('div'));
         postDiv.addClass('blog-post');
         var title = $(document.createElement('h2'));
@@ -270,7 +270,7 @@ Util = (function(){
                 'text-decoration':'none',
             });
         });
-        title.text("This is a Post");
+        title.text(entrytitle);
         title.css({
             'font-family':'Arial Black", Gadget, sans-serif',
         });
@@ -297,7 +297,7 @@ Util = (function(){
             carouselDiv.css({
                 'padding-bottom':'5px',
             })
-            var carousel = makeCarousel("myCarousel",3);
+            var carousel = makeCarousel("myCarousel",imgs.length, imgs);
             carouselDiv.append(carousel);
         }
         if(hasText===true){
@@ -316,7 +316,7 @@ Util = (function(){
                 'overflow':'hidden',
             });
             var text=$(document.createElement('p'));
-            text.text("Scientists have for the first time ever solved a 150-year-old evolutionary mystery - the iconic kiwi actually once flew. ")
+            text.text(entrydesp)
             block.append(text);            
         }
         postDiv.append(content);
@@ -328,7 +328,7 @@ Util = (function(){
     function to create carousel, given a unique id for it, and number of pictures. 
     and data(including info for pics.)
     */
-    function makeCarousel(id, picNum, data){        
+    function makeCarousel(id, picNum,imgs){        
         var carousel = $(document.createElement('div'));
         // carouselDiv.
         carousel.attr({
@@ -360,10 +360,10 @@ Util = (function(){
         carousel.append(inner);
         for(var j=0; j<picNum; j++){
             if(j===0){
-                var item = carouselItem(true, "Slide "+j.toString(),"descript the city you live in");
+                var item = carouselItem(true, imgs[j],"Slide "+j.toString(),"descript the city you live in");
             }
             else{
-                var item = carouselItem(false, "Slide "+j.toString(),"descript the city you live in");
+                var item = carouselItem(false,imgs[j], "Slide "+j.toString(),"descript the city you live in");
             }
             inner.append(item);            
         }
@@ -396,11 +396,11 @@ Util = (function(){
     boolean for checking active(first slide)
     picture's caption and description
     */
-    function carouselItem(isActive,picCaption,description){
+    function carouselItem(isActive,img,picCaption,description){
         var item = $(document.createElement('div'));
         item.addClass('item');
         
-        var thumb = $(document.createElement('img'));
+        var thumb = $(img);
         thumb.css({
             'width':'100%',
             'height':'auto',
@@ -408,7 +408,7 @@ Util = (function(){
             'display':'block',
             // 'margin':'auto'
         })
-        thumb.attr('src','../images/3.jpg');
+        // thumb.attr('src','../images/3.jpg');
         item.append(thumb);
         var container = $(document.createElement('div'));
         container.addClass('container');
@@ -537,13 +537,12 @@ Util = (function(){
         imgDiv.css({
             'width':'251px',
             'height':'166px',
-            // 'display':'block',
-            // 'margin':'auto',
             'background-size':'contain',
-            'background': 'no-repeat center',
+            'background-repeat': 'no-repeat',
+            'background-position':'center',
         })
         thumbDiv.append(imgDiv);
-        var thumbnail=$(document.createElement('img'));
+        // var thumbnail=$(document.createElement('img'));
         // thumbnail.css({
         //     'height':'180px',
         //     'width':'260px',
@@ -556,15 +555,6 @@ Util = (function(){
                 var p = e.target.result; 
                 // $(document.getElementById(cap+"modal")).attr('src',p);
                 imgDiv.css('background-image','url(' + p + ')');
-                var srcH = thumbnail.height,
-                    srcW = thumbnail.width,
-                    // targetH = 180,
-                    targetW = 251;
-                // thumbnail.attr('src', p);
-                // var img = new Image();
-                // if(srcW>srcH)
-                // thumbnail.height()
-                debugger;
             }
             
             reader.readAsDataURL(file);

@@ -73,7 +73,25 @@ Tripview = (function(){
 		// 'width':'80%',
 		// 'background-color':'background-color'
 	});
-	
+	var entries = $(document.getElementsByClassName("entry"));
+	if(entries.length!==0){
+		for(var i=0;i<entries.length;i++){
+			var entry = $(entries[i]);
+			var entrytitle = entry.children(".Entrytitle").val();
+			var entryDescripion = entry.children(".EntryDescripion").val();
+			var imgs = entry.children(".Entryimages");
+			var hasImage=true,
+				hasText=true;
+			if(entryDescripion===""){
+				hasText=false;
+			}
+			if(imgs.length===0){
+				hasImage=false;
+			}
+			allEntries.append(Util.makePost(hasText, hasImage,entrytitle,entryDescripion,imgs));
+		}
+	}
+
 	// allEntries.append(Util.makePost(true, false));
 	// allEntries.append(Util.makePost(true, true));
 	// allEntries.append(Util.makePost(false, true));
