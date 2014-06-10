@@ -97,30 +97,30 @@
          tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
     List<Entity> entries = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
 
-
-    //CODE TO TEST BLOBS, DELETE THIS ONCE TESTED:
-    /*URL imageUrl = new URL("http://www.japantoday.com/images/size/x/2013/10/giraffe.jpg");
-     InputStream input = imageUrl.openStream();
-     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-     int next = input.read();
-     while (next > -1) {
-         bos.write(next);
-         next = input.read();
-     }
-     bos.flush();
-     byte[] result = bos.toByteArray();
-     Blob sampleImage = new Blob(result);
-     pageContext.setAttribute("blobKeySample",
-                entry.getProperty(sampleImage.));*/
+    //MOVE THIS TO BACKEND SOMEWHERE:
+    Entity trip = datastore.get(tripKey);
+    pageContext.setAttribute("trip_title",
+      trip.getProperty("title"));
+      pageContext.setAttribute("trip_depart",
+        trip.getProperty("depDate"));
+        pageContext.setAttribute("trip_return",
+          trip.getProperty("retDate"));
+         pageContext.setAttribute("trip_description",
+          trip.getProperty("description"));
+          pageContext.setAttribute("trip_location",
+          trip.getProperty("location"));
 
 
+%>
 
+<h1 id="tripTitle">${fn:escapeXml(trip_title)}</h1><br/>
+<small id="tripDate">${fn:escapeXml(trip_depart)} to ${fn:escapeXml(trip_return)}</small>
 
+<%
 
     if (entries.isEmpty()) {
 %>
    <p>No Entries to Display</p>
-  <script>console.log("no trips");</script>
 
   <%
 } else { 
@@ -145,7 +145,6 @@
           <div class="entry" style="padding-top: 100px; display:none">
         <input class="Entrytitle" value = "${fn:escapeXml(entry_title)}"></input>
         <input class="EntryDescription" value="${fn:escapeXml(entry_description)}"></input>
-        <!--TESTING IMAGE replace blobKeySample with imageKey and uncomment imageKey-->
         <% 
         for(int i=0;i<imageKeys.size();i++){
           String imageKey = imageKeys.get(i).getKeyString();

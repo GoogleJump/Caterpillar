@@ -1,12 +1,19 @@
 This is not a read me right now.  It’s more like…todolist/comminication between stef and xiaoyi.
 
 To-Do eventually or soon or maybe if there’s time in the near future:
-logout button
-checks on inputs for sign up (all fields there, etc.)
+logout button (and removing user key from local storage)
+remembering user is logged in (going to the login in page when user key is in storage should redirect to homepage)
+checks on inputs for sign up/sign in (all fields there, wrong username/password, etc.)
 location value should be geo point, not string
 separate page for viewing individual posts (or a way to view images larger w/the caption like Facebook does)
 multiple image upload - prevent user from clicking “choose file” twice OR have it support that
 removing/editing an image when uploading should actually edit/remove it
+edit/delete trip buttons
+link buttons to diff pages
+edit/delete entries
+information on photos
+entry page - information on entry (date created, location, description) info on trips (description, location)
+thumbnails (backend needs to serve smaller images, frontend or backend needs to crop)
 
 
 ————————

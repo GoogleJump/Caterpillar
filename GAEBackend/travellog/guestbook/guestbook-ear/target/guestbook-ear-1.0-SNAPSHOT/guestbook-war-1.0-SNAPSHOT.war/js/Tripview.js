@@ -20,17 +20,19 @@ Tripview = (function(){
 		
 	titleDiv.addClass('page-header col-md-12');
 	contentDiv.append(titleDiv);
-	var title = $(document.createElement('h1'));
-	title.text('Trip to Wonderland');
+	//var title = $(document.createElement('h1'));
+	var title = $(document.getElementById('tripTitle'));
+	//title.text('Trip to Wonderland');
 	title.addClass('font-effect-fragile');
 	title.css({
 		'padding-top':'5px',
 		'font-family':"Rancho', serif",
 		'font-size':'100px'
 	})
+
 	titleDiv.append(title);
-	var date=$(document.createElement('small'));
-	date.text(" created on May 33th");
+	var date=$(document.getElementById('tripDate'));
+	//date.text(" created on May 33th");
 	title.append(date);
 	titleDiv.css({
 		'padding-top':'10px'
