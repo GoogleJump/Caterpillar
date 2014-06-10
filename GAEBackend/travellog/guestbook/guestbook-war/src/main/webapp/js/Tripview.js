@@ -73,10 +73,10 @@ Tripview = (function(){
 		// 'width':'80%',
 		// 'background-color':'background-color'
 	});
-
-	allEntries.append(Util.makePost(true, false));
-	allEntries.append(Util.makePost(true, true));
-	allEntries.append(Util.makePost(false, true));
+	
+	// allEntries.append(Util.makePost(true, false));
+	// allEntries.append(Util.makePost(true, true));
+	// allEntries.append(Util.makePost(false, true));
 
 
 	var pager = $(document.createElement('ul'));

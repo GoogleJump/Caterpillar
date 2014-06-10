@@ -16,7 +16,7 @@ addEntry = (function(){
 	header.text("Add a Post");
 	pageheader.append(header);
 
-	var title = Util.inputGroup('Title: ', "Untitled");
+	var title = Util.inputGroup('Title: ', "Untitled","Untitled");
 	title.addClass('col-md-6 col-sm-offset-1');
 	title.children('input').eq(0).attr("name", "title");
 	contentDiv.append(title);
@@ -78,15 +78,37 @@ addEntry = (function(){
 	var btnDiv = $(document.createElement('div'));
 	contentDiv.append(btnDiv);
 	btnDiv.addClass('col-sm-offset-1');
-	/*var uploadbtn = $(document.createElement('input'));
+	var uploadbtn = $(document.createElement('div'));
 	//add this b/c idk if there is way to uplaod files without it coming straight from file form
-	uploadbtn.attr("type", "file");
+	// uploadbtn.attr("type", "file");
 	//uploadbtn.attr("name", entryKey);
-	uploadbtn.attr("name", "fileUpload");
-	// uploadbtn.addClass("btn btn-primary");
-	btnDiv.append(uploadbtn);*/
+	// uploadbtn.attr("name", "fileUpload");
+	uploadbtn.addClass("btn btn-primary fileUpload");
+	var upload = $(document.createElement('span'));
+	upload.text('Upload Photos');
+	uploadbtn.append(upload);
+	btnDiv.append(uploadbtn);
 	var fileElem=(document.getElementById("fileElem"));
-	btnDiv.append(fileElem);
+
+	uploadbtn.append(fileElem);
+	uploadbtn.css({
+		'position': 'relative',
+		'overflow': 'hidden',
+		// 'margin': '10px',
+		'background-color':Util.dark_purple,
+
+	});
+	$(fileElem).css({
+		'position': 'absolute',
+		'top': '0',
+		'right': '0',
+		'margin': '0',
+		'padding': '0',
+		'font-size': '20px',
+		'cursor': 'pointer',
+		'opacity': '0',
+		'filter': 'alpha(opacity=0)',
+	});
 	/*fileElem.css({
 		'margin-top':'10px',
 		'background-color':Util.dark_purple,
