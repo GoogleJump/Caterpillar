@@ -1,23 +1,13 @@
 {
   "files": [
     {
-<<<<<<< HEAD
-      "downloadUrl": "/downloads/userendpoint/v1/20140602144324/java/1.16.0-rc/travellog.com-userendpoint-v1-20140602144324-java-1.16.0-rc-sources.jar", 
-      "path": "travellog.com-userendpoint-v1-20140602144324-java-1.16.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/userendpoint/v1/20140611065431/java/1.16.0-rc/travellog.com-userendpoint-v1-20140611065431-java-1.16.0-rc-sources.jar", 
+      "path": "travellog.com-userendpoint-v1-20140611065431-java-1.16.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-06-02 14:43"
+      "timestamp": "2014-06-11 06:54"
     }, 
     {
-      "path": "travellog.com-userendpoint-v1-20140602144324-java-1.16.0-rc.jar.properties", 
-=======
-      "downloadUrl": "/downloads/userendpoint/v1/20140529170914/java/1.16.0-rc/travellog.com-userendpoint-v1-20140529170914-java-1.16.0-rc-sources.jar", 
-      "path": "travellog.com-userendpoint-v1-20140529170914-java-1.16.0-rc-sources.jar", 
-      "type": "source", 
-      "timestamp": "2014-05-29 17:09"
-    }, 
-    {
-      "path": "travellog.com-userendpoint-v1-20140529170914-java-1.16.0-rc.jar.properties", 
->>>>>>> 3dcd2465fa1b0ccf19d0c52e5ab4c78015324544
+      "path": "travellog.com-userendpoint-v1-20140611065431-java-1.16.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -711,9 +701,5 @@
   "version": "v1", 
   "language_version": "1.16.0-rc", 
   "id": "userendpoint:v1", 
-<<<<<<< HEAD
-  "revision": 20140602144324
-=======
-  "revision": 20140529170914
->>>>>>> 3dcd2465fa1b0ccf19d0c52e5ab4c78015324544
+  "revision": 20140611065431
 }

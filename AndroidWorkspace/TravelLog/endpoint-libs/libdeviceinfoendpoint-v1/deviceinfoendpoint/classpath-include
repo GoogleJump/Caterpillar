@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="libs/google-api-services-deviceinfoendpoint-v1-rev20140602144318-1.16.0-rc.jar" sourcepath="libs-sources/google-api-services-deviceinfoendpoint-v1-rev20140602144318-1.16.0-rc-sources.jar"/>
-=======
-	<classpathentry kind="lib" path="libs/google-api-services-deviceinfoendpoint-v1-rev20140529170904-1.16.0-rc.jar" sourcepath="libs-sources/google-api-services-deviceinfoendpoint-v1-rev20140529170904-1.16.0-rc-sources.jar"/>
->>>>>>> 3dcd2465fa1b0ccf19d0c52e5ab4c78015324544
+	<classpathentry kind="lib" path="libs/google-api-services-deviceinfoendpoint-v1-rev20140611065352-1.16.0-rc.jar" sourcepath="libs-sources/google-api-services-deviceinfoendpoint-v1-rev20140611065352-1.16.0-rc-sources.jar"/>
 	<classpathentry kind="lib" path="libs/google-api-client-1.16.0-rc.jar" sourcepath="libs-sources/google-api-client-1.16.0-rc-sources.jar"/>
 	<classpathentry kind="lib" path="libs/google-api-client-android-1.16.0-rc.jar" sourcepath="libs-sources/google-api-client-android-1.16.0-rc-sources.jar"/>
 	<classpathentry kind="lib" path="libs/google-api-client-appengine-1.16.0-rc.jar" sourcepath="libs-sources/google-api-client-appengine-1.16.0-rc-sources.jar"/>

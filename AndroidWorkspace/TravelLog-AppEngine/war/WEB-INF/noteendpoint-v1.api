@@ -26,6 +26,27 @@
   "ownerDomain" : "travellog.com",
   "ownerName" : "travellog.com",
   "methods" : {
+    "noteendpoint.getNote" : {
+      "path" : "note/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.travellog.NoteEndpoint.getNote",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "noteendpoint.updateNote" : {
       "path" : "note",
       "httpMethod" : "PUT",
@@ -34,22 +55,6 @@
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
       "rosyMethod" : "com.travellog.NoteEndpoint.updateNote",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "noteendpoint.insertNote" : {
-      "path" : "note",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.NoteEndpoint.insertNote",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -104,22 +109,17 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "noteendpoint.getNote" : {
-      "path" : "note/{id}",
-      "httpMethod" : "GET",
+    "noteendpoint.insertNote" : {
+      "path" : "note",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.NoteEndpoint.getNote",
+      "rosyMethod" : "com.travellog.NoteEndpoint.insertNote",
       "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -160,15 +160,12 @@
       }
     },
     "methods" : {
-      "com.travellog.NoteEndpoint.updateNote" : {
-        "request" : {
-          "$ref" : "Note"
-        },
+      "com.travellog.NoteEndpoint.getNote" : {
         "response" : {
           "$ref" : "Note"
         }
       },
-      "com.travellog.NoteEndpoint.insertNote" : {
+      "com.travellog.NoteEndpoint.updateNote" : {
         "request" : {
           "$ref" : "Note"
         },
@@ -183,7 +180,10 @@
           "$ref" : "CollectionResponse_Note"
         }
       },
-      "com.travellog.NoteEndpoint.getNote" : {
+      "com.travellog.NoteEndpoint.insertNote" : {
+        "request" : {
+          "$ref" : "Note"
+        },
         "response" : {
           "$ref" : "Note"
         }

@@ -29,10 +29,10 @@ public class UserEndpoint {
 	 * persisted and a cursor to the next page.
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	@ApiMethod(name = "listUser")
+	@ApiMethod(name = "listUser", path = "listUser")
 	public CollectionResponse<User> listUser(
 			@Nullable @Named("cursor") String cursorString,
-			@Nullable @Named("limit") Integer limit) {
+			@Nullable @Named("limit") Integer limit, @Named("email") String email) {
 
 		EntityManager mgr = null;
 		Cursor cursor = null;
@@ -40,7 +40,7 @@ public class UserEndpoint {
 
 		try {
 			mgr = getEntityManager();
-			Query query = mgr.createQuery("select from User as User");
+			Query query = mgr.createQuery("select from User as User where User.email = :e").setParameter("e", email);
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
 				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
@@ -74,7 +74,7 @@ public class UserEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getUser")
+	@ApiMethod(name = "getUser", path="getUser")
 	public User getUser(@Named("id") Long id) {
 		EntityManager mgr = getEntityManager();
 		User user = null;

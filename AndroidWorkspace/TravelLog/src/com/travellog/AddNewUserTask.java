@@ -29,7 +29,6 @@ public class AddNewUserTask extends AsyncTask {
 				new HttpRequestInitializer() {
 					public void initialize(HttpRequest httpRequest) { }
 				});
-//		endpointBuilder.setApplicationName("gjtravellog");
 		Userendpoint endpoint = CloudEndpointUtils.updateBuilder(
 				endpointBuilder).build();
 		

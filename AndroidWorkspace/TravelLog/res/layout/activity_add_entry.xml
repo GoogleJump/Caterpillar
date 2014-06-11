@@ -13,22 +13,53 @@
         android:background="@color/dark_purple" >
     </LinearLayout> -->
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+         >
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="50dp" 
-            android:id="@+id/add_photo_grid">
+            android:padding="50dp" >
 
-           <Button
-               android:id="@+id/add_photo_label"
-               style="@style/ButtonTheme"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:onClick="onUploadPhotoClick"
-               android:text="Upload Photo" />
+            <ImageView
+                android:id="@+id/entry_photo"
+                android:layout_width="125dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:paddingBottom="20dp"
+                android:scaleType="centerCrop"
+                android:onClick="onUploadPhotoClick"
+                />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/entry_polaroid"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignRight="@+id/entry_photo"
+                android:layout_alignTop="@+id/entry_photo"
+                android:paddingBottom="0dp"
+                android:src="@drawable/polaroid_blank"
+                 />
+
+            <ImageView
+                android:id="@+id/add_photo_label"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@+id/entry_photo"
+                android:layout_alignLeft="@+id/entry_photo"
+                android:layout_alignRight="@+id/entry_photo"
+                android:layout_alignTop="@+id/entry_photo"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="20dp"
+                android:src="@drawable/add_photos_img" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

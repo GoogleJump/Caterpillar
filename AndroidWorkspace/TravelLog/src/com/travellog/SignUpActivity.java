@@ -258,7 +258,6 @@ public class SignUpActivity extends DrawerActivity {
 				user.setFirstName("Chuck");
 				user.setLastName("Norris");
 				user.setPassword("password123");
-				user.setUserId(Long.valueOf(1));
 				 //Integer userID = Integer.valueOf(new Date().getSeconds());
 		          
 				// user.setDateCreated(new DateTime(new Date()));

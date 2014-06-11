@@ -119,8 +119,8 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		//retreive trip, but for now just make a new one
 		selectedTrip = new TripView(this);
 		setTitle(selectedTrip.getTrip().getTitle());
-		((LinearLayout) content
-				.findViewById(R.id.view_entries_content)).addView(selectedTrip.getTripInfoView(this));
+//		((LinearLayout) content
+//				.findViewById(R.id.view_entries_content)).addView(selectedTrip.getTripInfoView(this));
 
 		// for sliding drawer menu:
 		mTitle = mDrawerTitle = getTitle();
@@ -426,7 +426,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 				//img_preview = img_preview.createScaledBitmap(img_preview, 220, 220, true);
 				ImageView imgview_preview = new ImageView(this);
 				imgview_preview.setImageBitmap(img_preview);
-				((LinearLayout) findViewById(R.id.add_photo_grid)).addView(imgview_preview);
+//				((LinearLayout) findViewById(R.id.add_photo_grid)).addView(imgview_preview);
 			}
 		}
 	}
