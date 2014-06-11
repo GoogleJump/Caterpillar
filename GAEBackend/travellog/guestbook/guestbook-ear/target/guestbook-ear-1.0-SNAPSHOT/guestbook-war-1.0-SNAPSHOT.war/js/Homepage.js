@@ -48,10 +48,13 @@ Homepage = (function(){
     for(var i = 0; i < trips.length; ++i) {
         var tripinfo = trips.eq(i);
         var src = tripinfo.attr("id");
-       var link = "/tripview.jsp?tripKey=" + tripinfo.attr("name");
-       var trip = createThumbnail(src, link);
-        // var trip = Util.photoPreview(src, "", "", true);
+        var link = "/tripview.jsp?tripKey=" + tripinfo.attr("name");
+        // var trip = createThumbnail(src, link);
+        var triptitle;
+        var tripdesc;
+        var trip = Util.tripPreview(src, "Untitled", tripdesc,link);
         //TODO: onclick sets parameter as this trip and leads to tripview **Test
+        // tripGrid.append(oneTrip);
         tripGrid.append(trip);
     }
     /*

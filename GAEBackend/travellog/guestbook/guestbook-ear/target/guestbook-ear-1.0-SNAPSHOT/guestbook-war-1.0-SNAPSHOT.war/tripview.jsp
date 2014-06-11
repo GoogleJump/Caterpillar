@@ -113,7 +113,7 @@
 
 %>
 
-<h1 id="tripTitle">${fn:escapeXml(trip_title)}</h1>
+<h1 id="tripTitle">${fn:escapeXml(trip_title)}</h1><br/>
 <small id="tripDate">${fn:escapeXml(trip_depart)} to ${fn:escapeXml(trip_return)}</small>
 
 <%

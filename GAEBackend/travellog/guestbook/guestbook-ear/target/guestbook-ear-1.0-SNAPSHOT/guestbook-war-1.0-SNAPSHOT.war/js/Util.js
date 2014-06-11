@@ -16,6 +16,7 @@ Util = (function(){
         makeModal: makeModal,
         inputGroup : inputGroup,
         makePost: makePost,
+        tripPreview:tripPreview,
         photoPreview: photoPreview,
         uploadPhotos:uploadPhotos,
         userSignup: userSignup,
@@ -433,31 +434,25 @@ Util = (function(){
     }
     this.carouselItem = carouselItem;
 
-    function tripPreview(file,title,desc){
+    function tripPreview(src,cap,desc,link){
         var colDiv = $(document.createElement('div'));
-        var descript=desc;
+        // var thumba=$(document.createElement('a'));
+        // thumba.attr('href',link);
+        // colDiv.append(thumba);        
+        // var descript=desc;
         var spec={
-                // imgsrc: path,
+                img: src,
                 title: cap,
                 description: desc,
         };
-        var modal = editBtn(spec);
-        colDiv.addClass('col-sm-6 col-md-4');
+        var modal = editBtn("Trip",spec);
+        colDiv.addClass('col-md-4');
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
         colDiv.append(thumbDiv);
         var thumbnail=$(document.createElement('img'));
-        if(file){
-            //probably need to crop them/resize them later if the photos are not in standard size
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var p = e.target.result;
-                $(document.getElementById(cap+"modal")).attr('src',p);
-                thumbnail.attr('src', p);
-            }
-            
-            reader.readAsDataURL(file);
-        }
+        thumbnail.attr("src",src);
+
         thumbnail.attr("alt","No image for the trip available")
         thumbDiv.append(thumbnail);
         var captionDiv = $(document.createElement('div'));
@@ -480,13 +475,19 @@ Util = (function(){
             // 'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
         });
+        // var descript=$(document.createElement('p'))
+        if(desc===null){
+            descDiv.text("Click Edit to add description");
+        }else{
+            descDiv.text(desc);
+        }
         captionDiv.append(descDiv);
         var btngroup = $(document.createElement('div'));
         btngroup.addClass('row');
         captionDiv.append(btngroup);
 
         var editbtn = $(document.createElement('button'));
-        descDiv.text(descript);
+        descDiv.text(desc);
         editbtn.text("Edit");
         editbtn.addClass("btn btn-default col-sm-offset-1");
         editbtn.click(function(){
@@ -494,21 +495,24 @@ Util = (function(){
             //open a modal to edit info about the photo
 
         });
+
+        var viewbtna = $(document.createElement('a'));
         var viewbtn = $(document.createElement('button'));
         viewbtn.text("View");
         viewbtn.addClass('btn btn-default col-sm-offset-1');
         //TODO: lead to the trip's page when clicked
+        viewbtna.attr("href",link);
         viewbtn.click(function(){});
-
+        viewbtna.append(viewbtn);
         var deletebtn = $(document.createElement('button'));
         deletebtn.text("Delete");
-        deletebtn.addClass("btn btn-default delete col-sm-offset-4");
+        deletebtn.addClass("btn btn-default delete col-sm-offset-1");
         deletebtn.click(function(){
             colDiv.remove(); 
             modal.remove();   
         });
         btngroup.append(editbtn);
-        btngroup.append(viewbtn);
+        btngroup.append(viewbtna);
         btngroup.append(deletebtn);
         return colDiv;
     }
