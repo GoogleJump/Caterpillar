@@ -26,11 +26,17 @@
 # view AndroidManifest.xml #generated:38
 -keep class com.travellog.SearchActivity { <init>(...); }
 
+# view AndroidManifest.xml #generated:44
+-keep class com.travellog.SignUpActivity { <init>(...); }
+
 # view AndroidManifest.xml #generated:37
 -keep class com.travellog.TakePhotoActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:42
 -keep class com.travellog.UploadToServer { <init>(...); }
+
+# view AndroidManifest.xml #generated:45
+-keep class com.travellog.ViewEntriesActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:43
 -keep class com.travellog.ViewPhotosActivity { <init>(...); }

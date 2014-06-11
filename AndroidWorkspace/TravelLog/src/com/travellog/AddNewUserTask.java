@@ -48,7 +48,7 @@ public class AddNewUserTask extends AsyncTask {
 			u.setEmail(e);          
 			User result = endpoint.insertUser(u).execute();
 			Log.w("myApp", "trying to work");
-//			endpoint.insertUser(u).execute();
+			endpoint.insertUser(u).execute();
 			Log.w("myApp", "works");
 		} catch (IOException e) {
 			e.printStackTrace();

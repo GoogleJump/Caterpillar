@@ -221,7 +221,8 @@ public class SignUpActivity extends DrawerActivity {
 	}
 
 	public boolean onSignUpClick(View v) {
-		new AddNewUserTask().execute(getFields());
+		new AddNewUserTask().execute(null, getFirstName(), getLastName(), getUsername(), 
+				getPassword(), getEmail());
 		Intent i = new Intent(this, ViewTripsActivity.class);
 		startActivity(i);
 		return true;
@@ -229,12 +230,12 @@ public class SignUpActivity extends DrawerActivity {
 
 	public String[] getFields() {
 		// { null, first name, last name, username, password, email }
-		String[] user = new String[6];
-		user[1] = getFirstName();
-		user[2] = getLastName();
-		user[3] = getUsername();
-		user[4] = getPassword();
-		user[5] = getEmail();
+		String[] user = new String[5];
+		user[0] = getFirstName();
+		user[1] = getLastName();
+		user[2] = getUsername();
+		user[3] = getPassword();
+		user[4] = getEmail();
 		return user;
 	}
 

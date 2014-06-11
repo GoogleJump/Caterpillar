@@ -604,17 +604,8 @@ public class ViewTripsActivity extends DrawerActivity implements
 		//String[] trip = {null, owner, title, description, location, depart, return }
 		//get's the fields in this fragment and calls the task that inserts trip
 		public void addTrip() {
-			String[] trip = new String[7];
-			trip[0] = null;
-			trip[1] = userKey;
-			trip[2] = getTitle();
-			trip[3] = getDescription();
-			trip[4] = getLocation();
-			trip[5] = getDepart();
-			trip[6] = getReturn();
-			
-			new AddNewTripTask().execute(trip);
-			
+			new AddNewTripTask().execute(userKey, getTitle(), getDescription(), getLocation(),
+					getDepart(), getReturn());	
 		}
 
 	}

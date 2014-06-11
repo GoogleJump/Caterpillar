@@ -226,7 +226,8 @@ public class MainActivity extends DrawerActivity {
 	}
 
 	public boolean onSignUpClick(View v) {
-		// TODO
+		Intent i = new Intent(this, SignUpActivity.class);
+		startActivity(i);
 		return true;
 	}
 	
@@ -244,8 +245,7 @@ public class MainActivity extends DrawerActivity {
 		
 		//TODO: get by email task should check as well
 		String userKey = null; //TODO: get the user key and store it
-		String[] emailpassword = { getEmail(), getPassword() };
-		new GetUserKeyByEmailTask().execute(emailpassword);
+		new GetUserKeyByEmailTask().execute(null, getEmail(), getPassword());
 		
 		
 		if(userKey != null) {
@@ -253,11 +253,17 @@ public class MainActivity extends DrawerActivity {
 				      MyPREFERENCES, Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString("userKey", userKey);
+			Intent i = new Intent(this, ViewTripsActivity.class);
+			startActivity(i);
 		}
 		
-		// TODO: check if sign in is successful
-		Intent i = new Intent(this, ViewTripsActivity.class);
-		startActivity(i);
+		else {
+			Toast.makeText(this, "username or password incorrect", Toast.LENGTH_LONG).show();
+		}
+		
+		//if not working just uncomment this:
+//		Intent i = new Intent(this, ViewTripsActivity.class);
+//		startActivity(i);
 		return true;
 	}
 }
