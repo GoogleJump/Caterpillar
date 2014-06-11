@@ -17,7 +17,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -108,12 +110,15 @@ public class ViewTripsActivity extends DrawerActivity implements
 	private static final int SELECT_PICTURE = 1; 
 	private String selectedImagePath;
 
+	private static String userKey;
 	// static boolean edit; // determines whether edit mode or new trip mode
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		userKey = getUserKey();
 
 		getLayoutContent(); //replace activity main content with content for this activity
 
@@ -305,13 +310,11 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
+		// 
 		if (tab.getPosition() == 0) {
-			// removeAllEntries();
 		}
 
 		if (tab.getPosition() == 1) {
-			// loadEntries();
 		}
 
 	}
@@ -338,8 +341,6 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
 	}
 
 	//opens new fragment for adding an entry
@@ -406,6 +407,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 			layout.addView(entry);
 		}
 	}
+
 
 	//clicking a trip view will load the entries from that trip
 	//unless it is the very first trip view - the "addTripView"
@@ -527,6 +529,12 @@ public class ViewTripsActivity extends DrawerActivity implements
 			return view;
 		}
 	}
+	
+	public String getUserKey() {
+		SharedPreferences prefs = this.getSharedPreferences(
+			      MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		return prefs.getString("userKey", null);
+	}
 
 	public static class EditTripFragment extends Fragment {
 		View view;
@@ -561,6 +569,52 @@ public class ViewTripsActivity extends DrawerActivity implements
 			depart.setText((CharSequence) selectedTrip.getDepartDateAsString());
 			ret.setText((CharSequence) selectedTrip.getReturnDateAsString());
 
+		}
+		
+		//returns current text in field
+		public String getTitle(){
+			return ((EditText) view.findViewById(R.id.edit_trip_title)).getText().toString();
+		}
+		
+		//returns current text in field
+		public String getDescription(){
+			return ((EditText) view.findViewById(R.id.edit_trip_description)).getText().toString();
+		}
+		
+		//returns current text in field
+		public String getTags(){
+			return ((EditText) view.findViewById(R.id.edit_trip_tags)).getText().toString();
+		}
+		
+		//returns current text in field
+		public String getLocation(){
+			return ((EditText) view.findViewById(R.id.edit_trip_location)).getText().toString();
+		}
+		
+		//returns current text in field
+		public String getDepart(){
+			return depart.getText().toString();
+		}
+		
+		//returns current text in field
+		public String getReturn(){
+			return ret.getText().toString();
+		}
+		
+		//String[] trip = {null, owner, title, description, location, depart, return }
+		//get's the fields in this fragment and calls the task that inserts trip
+		public void addTrip() {
+			String[] trip = new String[7];
+			trip[0] = null;
+			trip[1] = userKey;
+			trip[2] = getTitle();
+			trip[3] = getDescription();
+			trip[4] = getLocation();
+			trip[5] = getDepart();
+			trip[6] = getReturn();
+			
+			new AddNewTripTask().execute(trip);
+			
 		}
 
 	}

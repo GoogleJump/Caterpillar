@@ -33,6 +33,7 @@ public class AddNewTripTask extends AsyncTask {
 		Tripendpoint endpoint = CloudEndpointUtils.updateBuilder(
 				endpointBuilder).build();
 		
+		//String[] trip = {owner, title, description, location, depart, return }
 		try {
 			Trip t = new Trip().setHashtags(new ArrayList<String>());
 			t.setOwner((String) arg0[1]);
@@ -45,8 +46,8 @@ public class AddNewTripTask extends AsyncTask {
 			t.setLocation((String) arg0[4]);
 			DateTime d = new DateTime(new Date());
 			t.setDateCreated(d);
-			t.setDepartDate(d);
-			t.setReturnDate(d);
+			t.setDepartDate(d); //will be args[5]
+			t.setReturnDate(d); //will be args[6] TODO: parse date
 			
 			Log.w("myApp", "trying to work");
 			Trip result = endpoint.insertTrip(t).execute();

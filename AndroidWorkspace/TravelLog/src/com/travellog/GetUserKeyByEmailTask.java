@@ -19,7 +19,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class GetUserKeyByEmailTask extends AsyncTask {
-
+	String userKey;
 	@Override
 	protected Object doInBackground(Object... params) {
 //		Query q = new Query("User");
@@ -42,6 +42,7 @@ public class GetUserKeyByEmailTask extends AsyncTask {
 				endpointBuilder).build();
 		
 		try {
+			 String user = endpoint.listUser((String) params[1]).setPrettyPrint(true).execute().toString();
 			Log.w("user", endpoint.listUser((String) params[1]).setPrettyPrint(true).execute().toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -49,6 +50,10 @@ public class GetUserKeyByEmailTask extends AsyncTask {
 		}
 		
 		return null;
+	}
+	
+	void onPostExecute() {
+		
 	}
 
 }

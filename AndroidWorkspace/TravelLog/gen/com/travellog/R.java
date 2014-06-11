@@ -123,8 +123,6 @@ public final class R {
         public static final int date_return_label=0x7f090015;
         public static final int drawer_layout=0x7f090018;
         public static final int dropdown=0x7f090065;
-        public static final int editText1=0x7f09004f;
-        public static final int editText2=0x7f090051;
         public static final int edit_photo_btn=0x7f090061;
         public static final int edit_photo_caption=0x7f090034;
         public static final int edit_photo_tags=0x7f090036;
@@ -157,6 +155,8 @@ public final class R {
         public static final int left_drawer=0x7f090020;
         public static final int linearLayout1=0x7f09001b;
         public static final int location_label=0x7f090006;
+        public static final int login_email=0x7f09004f;
+        public static final int login_password=0x7f090051;
         public static final int logo_homepage=0x7f09001c;
         public static final int msgView=0x7f090021;
         public static final int pager=0x7f090039;

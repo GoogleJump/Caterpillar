@@ -8,7 +8,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Display;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -46,6 +49,8 @@ public class MainActivity extends DrawerActivity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mPlanetTitles;
+	
+	public static final String MyPREFERENCES = "MyPrefs" ;//for shared preferences
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -224,8 +229,32 @@ public class MainActivity extends DrawerActivity {
 		// TODO
 		return true;
 	}
+	
+	//get current email in email field
+	public String getEmail() {
+		return (((EditText) findViewById(R.id.login_email)).getText().toString());
+	}
+	
+	//get current password in password field
+		public String getPassword() {
+			return (((EditText) findViewById(R.id.login_password)).getText().toString());
+		}
 
 	public boolean onSignInClick(View v) {
+		
+		//TODO: get by email task should check as well
+		String userKey = null; //TODO: get the user key and store it
+		String[] emailpassword = { getEmail(), getPassword() };
+		new GetUserKeyByEmailTask().execute(emailpassword);
+		
+		
+		if(userKey != null) {
+			SharedPreferences prefs = this.getSharedPreferences(
+				      MyPREFERENCES, Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putString("userKey", userKey);
+		}
+		
 		// TODO: check if sign in is successful
 		Intent i = new Intent(this, ViewTripsActivity.class);
 		startActivity(i);
