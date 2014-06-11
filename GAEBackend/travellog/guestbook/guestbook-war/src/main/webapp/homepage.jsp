@@ -108,11 +108,26 @@
                 trip.getProperty("title"));
                 pageContext.setAttribute("tripKey",
                 KeyFactory.keyToString(trip.getKey()));
+        pageContext.setAttribute("trip_depart",
+        trip.getProperty("depDate"));
+        pageContext.setAttribute("trip_return",
+          trip.getProperty("retDate"));
+         pageContext.setAttribute("trip_description",
+          trip.getProperty("description"));
+          pageContext.setAttribute("trip_location",
+          trip.getProperty("location"));
       
 %>
 <!--<p>Trip:</p> <p><b>${fn:escapeXml(trip_title)}</b></p>-->
 <!--kind of hacky for now:-->
-<img class="trip" id="/getTripImage?tripKey=${fn:escapeXml(tripKey)}" name="${fn:escapeXml(tripKey)}" style="display:none"/>
+<div class="trip" id="/getTripImage?tripKey=${fn:escapeXml(tripKey)}" name="${fn:escapeXml(tripKey)}" style="display:none">
+<input class="title" value="${fn:escapeXml(trip_title)}"></input>
+<input class="description" value="${fn:escapeXml(trip_description)}"></input>
+<input class="depdate" value="${fn:escapeXml(trip_depart)}"></input>
+<input class="retdate" value="${fn:escapeXml(trip_return)}"></input>
+<input class="location" value="${fn:escapeXml(trip_location)}"></input>
+</div>
+
 <%
     }
 %>

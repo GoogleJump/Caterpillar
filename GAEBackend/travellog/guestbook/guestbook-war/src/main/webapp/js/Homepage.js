@@ -50,9 +50,17 @@ Homepage = (function(){
         var src = tripinfo.attr("id");
         var link = "/tripview.jsp?tripKey=" + tripinfo.attr("name");
         // var trip = createThumbnail(src, link);
-        var triptitle;
-        var tripdesc;
-        var trip = Util.tripPreview(src, "Untitled", tripdesc,link);
+        // var triptitle;
+        var spec ={
+            title: tripinfo.children(".title").val(),
+            description:tripinfo.children(".description").val(),
+            depDate: tripinfo.children(".depdate").val(),
+            retDate: tripinfo.children(".retdate").val(),
+            location: tripinfo.children(".location").val(),
+            link: link,
+            img:src,
+        };
+        var trip = Util.tripPreview(src, spec,"Untitled",null,link);
         //TODO: onclick sets parameter as this trip and leads to tripview **Test
         // tripGrid.append(oneTrip);
         tripGrid.append(trip);

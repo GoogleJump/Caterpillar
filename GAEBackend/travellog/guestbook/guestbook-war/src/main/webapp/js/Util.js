@@ -434,17 +434,17 @@ Util = (function(){
     }
     this.carouselItem = carouselItem;
 
-    function tripPreview(src,cap,desc,link){
+    function tripPreview(src,spec,cap,desc,link){
         var colDiv = $(document.createElement('div'));
         // var thumba=$(document.createElement('a'));
         // thumba.attr('href',link);
         // colDiv.append(thumba);        
         // var descript=desc;
-        var spec={
-                img: src,
-                title: cap,
-                description: desc,
-        };
+        // var spec={
+        //         img: src,
+        //         title: cap,
+        //         description: desc,
+        // };
         var modal = editBtn("Trip",spec);
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
@@ -467,7 +467,7 @@ Util = (function(){
             'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
         });
-        caption.text(cap);
+        caption.text(spec.title);
         var descDiv = $(document.createElement('div'));
         descDiv.css({
             'height':'60px',
@@ -476,10 +476,10 @@ Util = (function(){
             'text-overflow': 'ellipsis',
         });
         // var descript=$(document.createElement('p'))
-        if(desc===null){
+        if(spec.desc===null){
             descDiv.text("Click Edit to add description");
         }else{
-            descDiv.text(desc);
+            descDiv.text(spec.desc);
         }
         captionDiv.append(descDiv);
         var btngroup = $(document.createElement('div'));
@@ -487,7 +487,7 @@ Util = (function(){
         captionDiv.append(btngroup);
 
         var editbtn = $(document.createElement('button'));
-        descDiv.text(desc);
+        // descDiv.text(desc);
         editbtn.text("Edit");
         editbtn.addClass("btn btn-default col-sm-offset-1");
         editbtn.click(function(){
@@ -501,7 +501,7 @@ Util = (function(){
         viewbtn.text("View");
         viewbtn.addClass('btn btn-default col-sm-offset-1');
         //TODO: lead to the trip's page when clicked
-        viewbtna.attr("href",link);
+        viewbtna.attr("href",spec.link);
         viewbtn.click(function(){});
         viewbtna.append(viewbtn);
         var deletebtn = $(document.createElement('button'));
@@ -522,7 +522,7 @@ Util = (function(){
     path: path to img src
     file: file to img.(for file picker preview)
     */
-    function photoPreview(file,cap,desc, isTrip){
+    function photoPreview(file,cap,desc){
         var colDiv = $(document.createElement('div'));
         var descript=desc;
         // var path;
@@ -557,7 +557,7 @@ Util = (function(){
             var reader = new FileReader();
             reader.onload = function (e) {
                 var p = e.target.result; 
-                // $(document.getElementById(cap+"modal")).attr('src',p);
+                $(document.getElementById(cap+"modal")).attr('src',p);
                 imgDiv.css('background-image','url(' + p + ')');
             }
             
@@ -592,14 +592,14 @@ Util = (function(){
         captionDiv.append(btngroup);
         
         var editbtn = $(document.createElement('button'));
-        if(isTrip){
-            var viewbtn = $(document.createElement('button'));
-            viewbtn.text("View");
-            viewbtn.addClass('btn btn-default col-sm-offset-1');
-            //TODO: lead to the trip's page when clicked
-            viewbtn.click(function(){});
-            btngroup.append(viewbtn);
-        }
+        // if(isTrip){
+        //     var viewbtn = $(document.createElement('button'));
+        //     viewbtn.text("View");
+        //     viewbtn.addClass('btn btn-default col-sm-offset-1');
+        //     //TODO: lead to the trip's page when clicked
+        //     viewbtn.click(function(){});
+        //     btngroup.append(viewbtn);
+        // }
         descDiv.text(descript);
         editbtn.text("Edit");
         // }
@@ -632,15 +632,17 @@ Util = (function(){
         var title = spec.title,
             thumb = spec.img,
             description = spec.description,
-            date=spec.date,
-            loc = spec.loc;
-        var modal = makeModal(title, "Edit Photo", false);
+            // date=spec.date,
+            loc = spec.location;
+        var modal = makeModal(spec.link, "Edit Photo", false);
         var body = $(document.getElementById("body"));
         body.append(modal); 
-        var modalBody = $(document.getElementById(title+"modalBody"));
+        var modalBody = $(document.getElementById(spec.link+"modalBody"));
+        var contentForm = $(document.createElement('form'));
+        modalBody.append(contentForm);
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');
-        modalBody.append(contentRow);
+        contentForm.append(contentRow);
         var thumbRow = $(document.createElement('div'));
         thumbRow.addClass('row');
         contentRow.append(thumbRow);
@@ -659,14 +661,33 @@ Util = (function(){
 
         
         if(type==="Trip"){
-            var dateRow =$(document.createElement('div'));
-            dateRow.addClass("row col-md-10 col-sm-offset-1");
-            var dateInput = inputGroup("When: ", null, date);
-            dateRow.append(dateInput);    
-            contentRow.append(dateRow);
+            var startDiv = $(document.createElement('div'));
+            startDiv.addClass("row col-md-10 col-sm-offset-1");
+            var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
+            startDiv.append(start);
+            // start.addClass('row col-md-10 col-sm-offset-1');
+            start.children('input').eq(0).attr('name', 'departDate');
+            var endDiv = $(document.createElement('div'));
+            endDiv.addClass("row col-md-10 col-sm-offset-1");
+            var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+            endDiv.append(end);
+            end.children('input').eq(0).attr('name', 'retDate');
+            // end.addClass('row col-md-10 col-sm-offset-1');
+           
+            contentRow.append(startDiv); 
+            contentRow.append(endDiv);
+            start.data("DateTimePicker").setDate(spec.depDate);
+            end.data("DateTimePicker").setDate(spec.retDate);
+            //make sure the start date is always in front of the end date
+            start.on("dp.change",function (e) {
+                end.data("DateTimePicker").setMinDate(e.date);
+            });
+            end.on("dp.change",function (e) {
+                start.data("DateTimePicker").setMaxDate(e.date);
+            });
             var locRow =$(document.createElement('div'));
             locRow.addClass("row col-md-10 col-sm-offset-1");
-            var locInput = inputGroup("Title: ", null, location);
+            var locInput = inputGroup("Location: ", null, loc);
             locRow.append(locInput);    
             contentRow.append(locRow);
         }
