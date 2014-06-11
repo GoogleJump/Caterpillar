@@ -15,8 +15,8 @@
 	</classpathentry>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/shayanpatel/Documents/apache-mime4j-0.3.jar"/>
-	<classpathentry kind="lib" path="/Users/shayanpatel/Documents/httpmime-4.0-beta2.jar"/>
+	<classpathentry kind="lib" path="/Users/stefaniealfonso/Downloads/apache-mime4j-0.3/apache-mime4j-0.3.jar"/>
+	<classpathentry kind="lib" path="/Users/stefaniealfonso/Downloads/httpmime-4.0-beta2.jar"/>
 	<classpathentry kind="src" path="endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libnoteendpoint-v1/noteendpoint/noteendpoint-v1-generated-source"/>

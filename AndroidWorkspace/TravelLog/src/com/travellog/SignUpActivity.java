@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -53,8 +54,8 @@ import com.google.api.client.json.jackson.JacksonFactory;
 /**
  * The Sign Up Activity.
  * 
- * sign in/sign up buttons 
- * TODO check if sign in was successful and store the user id somewhere
+ * sign in/sign up buttons TODO check if sign in was successful and store the
+ * user id somewhere
  */
 public class SignUpActivity extends DrawerActivity {
 
@@ -124,11 +125,39 @@ public class SignUpActivity extends DrawerActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		//new SampleEndpointsTask().execute(getApplicationContext());
-		
+		// new SampleEndpointsTask().execute(getApplicationContext());
+
 	}
 
+	// gets whatever text is currently in the first name field
+	public String getFirstName() {
+		return ((EditText) findViewById(R.id.signup_firstname_edittext))
+				.getText().toString();
+	}
+
+	// gets whatever text is currently in the last name field
+	public String getLastName() {
+		return ((EditText) findViewById(R.id.signup_lastname_edittext))
+				.getText().toString();
+	}
+
+	// gets whatever text is currently in the email field
+	public String getEmail() {
+		return ((EditText) findViewById(R.id.signup_email_edittext)).getText()
+				.toString();
+	}
+
+	// gets whatever text is currently in the password field
+	public String getPassword() {
+		return ((EditText) findViewById(R.id.signup_password_edittext)).getText()
+				.toString();
+	}
 	
+	// gets whatever text is currently in the username field
+	public String getUsername() {
+		return ((EditText) findViewById(R.id.signup_username_edittext)).getText()
+				.toString();
+	}
 
 	// logo should be a square with sides half the screen
 	public void resizeLogo() {
@@ -192,83 +221,67 @@ public class SignUpActivity extends DrawerActivity {
 	}
 
 	public boolean onSignUpClick(View v) {
-		//TODO - create new user in database
+		new AddNewUserTask().execute(getFields());
 		Intent i = new Intent(this, ViewTripsActivity.class);
 		startActivity(i);
 		return true;
 	}
 
-	
-	public class SampleEndpointsTask extends AsyncTask<Context, Integer, Long> {
-        protected Long doInBackground(Context... contexts) {
-
-               Noteendpoint.Builder endpointBuilder = new Noteendpoint.Builder(
-              AndroidHttp.newCompatibleTransport(),
-              new JacksonFactory(),
-              new HttpRequestInitializer() {
-              public void initialize(HttpRequest httpRequest) { }
-              });
-      Noteendpoint endpoint = CloudEndpointUtils.updateBuilder(
-      endpointBuilder).build();
-      try {
-    	  System.out.println("trycatch");
-          Note note = new Note().setDescription("Note Description");
-          String noteID = new Date().toString();
-          note.setId(noteID);
-
-          note.setEmailAddress("E-Mail Address");          
-          Note result = endpoint.insertNote(note).execute();
-          System.out.println("stored note");
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-          return (long) 0;
-        }
-    }
-	
-	public class EndpointsTask extends AsyncTask<Context, Integer, Long> {
-		protected Long doInBackground(Context... contexts) {
-
-			System.out.println("task starting");
-			Userendpoint.Builder endpointBuilder = new Userendpoint.Builder(
-					AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-					new HttpRequestInitializer() {
-						public void initialize(HttpRequest httpRequest) {
-							System.out.println("initializing http");
-							// httpRequest.setConnectTimeout(5*20000);
-						}
-					});
-			
-			
-			System.out.println("about to do things");
-			Userendpoint endpoint = CloudEndpointUtils.updateBuilder(
-					endpointBuilder).build();
-			
-			System.out.println("built user endpoint starting");
-			try {
-				System.out.println("try block");
-				Date d = new Date();
-				User user = new User();
-				//User user = new User();
-				System.out.println("new user");
-				//Long UserID = System.currentTimeMillis();
-				Email email = new Email();
-				email.setEmail("emailll@yespleasework.plz");
-				user.setEmail(email);
-				user.setFirstName("Chuck");
-				user.setLastName("Norris");
-				user.setPassword("password123");
-				 //Integer userID = Integer.valueOf(new Date().getSeconds());
-		          
-				// user.setDateCreated(new DateTime(new Date()));
-				System.out.println("about to insert user");
-				User result = endpoint.insertUser(user).execute();
-				System.out.println("success! :D");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return (long) 0;
-		}
+	public String[] getFields() {
+		// { null, first name, last name, username, password, email }
+		String[] user = new String[6];
+		user[1] = getFirstName();
+		user[2] = getLastName();
+		user[3] = getUsername();
+		user[4] = getPassword();
+		user[5] = getEmail();
+		return user;
 	}
+
+	/*
+	 * public class SampleEndpointsTask extends AsyncTask<Context, Integer,
+	 * Long> { protected Long doInBackground(Context... contexts) {
+	 * 
+	 * Noteendpoint.Builder endpointBuilder = new Noteendpoint.Builder(
+	 * AndroidHttp.newCompatibleTransport(), new JacksonFactory(), new
+	 * HttpRequestInitializer() { public void initialize(HttpRequest
+	 * httpRequest) { } }); Noteendpoint endpoint =
+	 * CloudEndpointUtils.updateBuilder( endpointBuilder).build(); try {
+	 * System.out.println("trycatch"); Note note = new
+	 * Note().setDescription("Note Description"); String noteID = new
+	 * Date().toString(); note.setId(noteID);
+	 * 
+	 * note.setEmailAddress("E-Mail Address"); Note result =
+	 * endpoint.insertNote(note).execute(); System.out.println("stored note"); }
+	 * catch (IOException e) { e.printStackTrace(); } return (long) 0; } }
+	 * 
+	 * public class EndpointsTask extends AsyncTask<Context, Integer, Long> {
+	 * protected Long doInBackground(Context... contexts) {
+	 * 
+	 * System.out.println("task starting"); Userendpoint.Builder endpointBuilder
+	 * = new Userendpoint.Builder( AndroidHttp.newCompatibleTransport(), new
+	 * JacksonFactory(), new HttpRequestInitializer() { public void
+	 * initialize(HttpRequest httpRequest) {
+	 * System.out.println("initializing http"); //
+	 * httpRequest.setConnectTimeout(5*20000); } });
+	 * 
+	 * 
+	 * System.out.println("about to do things"); Userendpoint endpoint =
+	 * CloudEndpointUtils.updateBuilder( endpointBuilder).build();
+	 * 
+	 * System.out.println("built user endpoint starting"); try {
+	 * System.out.println("try block"); Date d = new Date(); User user = new
+	 * User(); //User user = new User(); System.out.println("new user"); //Long
+	 * UserID = System.currentTimeMillis(); Email email = new Email();
+	 * email.setEmail("emailll@yespleasework.plz"); user.setEmail(email);
+	 * user.setFirstName("Chuck"); user.setLastName("Norris");
+	 * user.setPassword("password123"); //Integer userID = Integer.valueOf(new
+	 * Date().getSeconds());
+	 * 
+	 * // user.setDateCreated(new DateTime(new Date()));
+	 * System.out.println("about to insert user"); User result =
+	 * endpoint.insertUser(user).execute(); System.out.println("success! :D"); }
+	 * catch (IOException e) { e.printStackTrace(); } return (long) 0; } }
+	 */
 
 }

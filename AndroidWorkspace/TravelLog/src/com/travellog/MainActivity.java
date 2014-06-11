@@ -65,53 +65,51 @@ public class MainActivity extends DrawerActivity {
 		new UploadImageToBlobstoreTask().execute(getApplicationContext(), "/storage/emulated/0/DCIM/Camera/IMG_20140610_215900.jpg");
 		
 		// TODO: if the person is already logged in, start next activity
-//		setLayoutContent();
-//		Display display = getWindowManager().getDefaultDisplay();
-//		SCREEN_WIDTH = display.getWidth();
-//		SCREEN_HEIGHT = display.getHeight();
-//		// resizeIcons();
-//		// resizeLogo();
-//
-//		mTitle = mDrawerTitle = getTitle();
-//		mPlanetTitles = getResources().getStringArray(R.array.menu_options);
-//		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-//
-//		// set a custom shadow that overlays the main content when the drawer
-//		// opens
-//		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-//				GravityCompat.START);
-//		// set up the drawer's list view with items and click listener
-//		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-//				R.layout.drawer_list_item, mPlanetTitles));
-//		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-//
-//		// enable ActionBar app icon to behave as action to toggle nav drawer
-//		getActionBar().setDisplayHomeAsUpEnabled(true);
-//		getActionBar().setHomeButtonEnabled(true);
-//
-//		// ActionBarDrawerToggle ties together the the proper interactions
-//		// between the sliding drawer and the action bar app icon
-//		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-//		mDrawerLayout, /* DrawerLayout object */
-//		R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
-//		R.string.drawer_open, /* "open drawer" description for accessibility */
-//		R.string.drawer_close /* "close drawer" description for accessibility */
-//		) {
-//			public void onDrawerClosed(View view) {
-//				// getActionBar().setTitle(mTitle);
-//				invalidateOptionsMenu(); // creates call to
-//											// onPrepareOptionsMenu()
-//			}
-//
-//			public void onDrawerOpened(View drawerView) {
-//				// getActionBar().setTitle(mDrawerTitle);
-//				invalidateOptionsMenu(); // creates call to
-//											// onPrepareOptionsMenu()
-//			}
-//		};
-//		mDrawerLayout.setDrawerListener(mDrawerToggle);
-//		// new SampleEndpointsTask().execute(getApplicationContext());
+		setLayoutContent();
+		Display display = getWindowManager().getDefaultDisplay();
+		SCREEN_WIDTH = display.getWidth();
+		SCREEN_HEIGHT = display.getHeight();
+
+		mTitle = mDrawerTitle = getTitle();
+		mPlanetTitles = getResources().getStringArray(R.array.menu_options);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+		// set a custom shadow that overlays the main content when the drawer
+		// opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+				GravityCompat.START);
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+				R.layout.drawer_list_item, mPlanetTitles));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+		mDrawerLayout, /* DrawerLayout object */
+		R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+		R.string.drawer_open, /* "open drawer" description for accessibility */
+		R.string.drawer_close /* "close drawer" description for accessibility */
+		) {
+			public void onDrawerClosed(View view) {
+				// getActionBar().setTitle(mTitle);
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+
+			public void onDrawerOpened(View drawerView) {
+				// getActionBar().setTitle(mDrawerTitle);
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+		};
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		// new SampleEndpointsTask().execute(getApplicationContext());
 
 	}
 
@@ -159,46 +157,46 @@ public class MainActivity extends DrawerActivity {
 //
 //	}
 //
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflater = getMenuInflater();
-//		inflater.inflate(R.menu.main, menu);
-//		return super.onCreateOptionsMenu(menu);
-//	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 //
 //	/* Called whenever we call invalidateOptionsMenu() */
-//	@Override
-//	public boolean onPrepareOptionsMenu(Menu menu) {
-//		// If the nav drawer is open, hide action items related to the content
-//		// view
-//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//		// menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-//		return super.onPrepareOptionsMenu(menu);
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		// The action bar home/up action should open or close the drawer.
-//		// ActionBarDrawerToggle will take care of this.
-//		if (mDrawerToggle.onOptionsItemSelected(item)) {
-//			return true;
-//		}
-//		// Handle action buttons
-//		switch (item.getItemId()) {
-//		/*
-//		 * case R.id.action_websearch: // create intent to perform web search
-//		 * for this planet Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-//		 * intent.putExtra(SearchManager.QUERY, getActionBar().getTitle()); //
-//		 * catch event that there's no activity to handle intent if
-//		 * (intent.resolveActivity(getPackageManager()) != null) {
-//		 * startActivity(intent); } else { Toast.makeText(this,
-//		 * R.string.app_not_available, Toast.LENGTH_LONG).show(); } return true;
-//		 */
-//		default:
-//			return super.onOptionsItemSelected(item);
-//		}
-//	}
-//
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content
+		// view
+		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		// menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// The action bar home/up action should open or close the drawer.
+		// ActionBarDrawerToggle will take care of this.
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		// Handle action buttons
+		switch (item.getItemId()) {
+		/*
+		 * case R.id.action_websearch: // create intent to perform web search
+		 * for this planet Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+		 * intent.putExtra(SearchManager.QUERY, getActionBar().getTitle()); //
+		 * catch event that there's no activity to handle intent if
+		 * (intent.resolveActivity(getPackageManager()) != null) {
+		 * startActivity(intent); } else { Toast.makeText(this,
+		 * R.string.app_not_available, Toast.LENGTH_LONG).show(); } return true;
+		 */
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 //	// the following is for the original homepage. No longer relevant because
 //	// homepage is same as viewentriesactivity
 //	/*
@@ -215,22 +213,22 @@ public class MainActivity extends DrawerActivity {
 //	 * AddEntryActivity.class); startActivity(i); return true; }
 //	 */
 //
-//	public void setLayoutContent() {
-//		// set the content for the layout
-//		RelativeLayout content = (RelativeLayout) findViewById(R.id.content_homepage);
-//		content.removeAllViews();
-//		getLayoutInflater().inflate(R.layout.login_signup, content);
-//	}
-//
-//	public boolean onSignUpClick(View v) {
-//		// TODO
-//		return true;
-//	}
-//
-//	public boolean onSignInClick(View v) {
-//		// TODO: check if sign in is successful
-//		Intent i = new Intent(this, ViewTripsActivity.class);
-//		startActivity(i);
-//		return true;
-//	}
+	public void setLayoutContent() {
+		// set the content for the layout
+		RelativeLayout content = (RelativeLayout) findViewById(R.id.content_homepage);
+		content.removeAllViews();
+		getLayoutInflater().inflate(R.layout.login_signup, content);
+	}
+
+	public boolean onSignUpClick(View v) {
+		// TODO
+		return true;
+	}
+
+	public boolean onSignInClick(View v) {
+		// TODO: check if sign in is successful
+		Intent i = new Intent(this, ViewTripsActivity.class);
+		startActivity(i);
+		return true;
+	}
 }

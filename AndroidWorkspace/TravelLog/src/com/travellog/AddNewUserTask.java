@@ -19,7 +19,8 @@ import com.google.api.client.util.DateTime;
 import com.google.appengine.api.datastore.Key;
 
 public class AddNewUserTask extends AsyncTask {
-
+	//input is a String array.  [0] left blank
+	//{ null, first name, last name, username, password, email } 
 	@Override
 	protected Object doInBackground(Object... arg0) {
 		
@@ -33,6 +34,7 @@ public class AddNewUserTask extends AsyncTask {
 				endpointBuilder).build();
 		
 		try {
+		
 			User u = new User().setFirstName((String) arg0[1]);
 			u.setLastName((String) arg0[2]);
 			DateTime d = new DateTime(new Date());
