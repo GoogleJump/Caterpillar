@@ -41,19 +41,26 @@ public class InsertTripServlet extends HttpServlet {
     String location = req.getParameter("location");
     String depDate = req.getParameter("departDate");
     String retDate = req.getParameter("retDate");
+    //if (depDate == null) depDate = new Date().toString();
+    //if(retDate == null) retDate = new Date().toString();
     Date date = new Date();
     String tags = req.getParameter("tags");
     Key tripKey = KeyFactory.createKey("Trip", System.currentTimeMillis()+""); //**for now generate key using seconds, but figure out how to autogenerate
     System.out.println(depDate+"________"+retDate);
+
+  
+    //This next stuff is not being used--must fix
     //format depart and return dates:
+    Date departDate = new Date();
+    Date returnDate = new Date();
     try {
-		Date departDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(depDate);
+		departDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(depDate);
 	} catch (ParseException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
     try {
-		Date returnDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(retDate);
+		returnDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.ENGLISH).parse(retDate);
 	} catch (ParseException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -75,7 +82,7 @@ public class InsertTripServlet extends HttpServlet {
     trip.setProperty("description", description);
     trip.setProperty("dateCreated", date);
     trip.setProperty("location", location);
-    trip.setProperty("retDate", retDate);
+    trip.setProperty("retDate", retDate); //these are strings, should be dates
     trip.setProperty("depDate", depDate);
     trip.setProperty("viewer", viewers); 
     trip.setProperty("posters", posters);

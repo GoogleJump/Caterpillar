@@ -148,11 +148,11 @@ Util = (function(){
             wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
                 // pickTime: false,
             });
-            titleInput.attr({
-                'type':'datetime',
+         /*   titleInput.attr({
+                //'type':'datetime',
                 'required':true,
                 'disabled':true,
-            });
+            });*/
         }
         if(type===2){
             titleInput.attr({

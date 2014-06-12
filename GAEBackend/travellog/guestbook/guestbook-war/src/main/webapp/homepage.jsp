@@ -67,7 +67,7 @@
       </div>
       <div id="stripnavbar" class="navbar-default navbar">
         <ul class="nav nav-pills">
-          <li class="active"><a href="#">Trips</a></li>
+          <li class="active"><a href="homepage.jsp">Trips</a></li>
           <li><a href="#">Locations</a></li>
         </ul>
       </div>
@@ -88,6 +88,10 @@
 
  <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    String userKeyString = request.getParameter("userKey");
+    if(userKeyString == null) {
+      //userKeyString = localStorage.getItem("userKey"); 
+  }
     Key userKey = KeyFactory.stringToKey(request.getParameter("userKey"));
     Query query = new Query("Trip").addFilter("owner",
          Query.FilterOperator.EQUAL,
