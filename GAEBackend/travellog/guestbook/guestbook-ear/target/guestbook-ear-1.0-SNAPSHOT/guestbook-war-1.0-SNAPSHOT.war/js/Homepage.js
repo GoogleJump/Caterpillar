@@ -138,7 +138,10 @@ Homepage = (function(){
         });
         var titleWrapper = Util.inputGroup('Title: ', 'Untitled',null);
         addTripform.append(titleWrapper);
-        titleWrapper.children('input').eq(0).attr('name', 'title');
+        titleWrapper.children('input').eq(0).attr({
+            'name': 'title',
+            'required':true,
+        });
 
         var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
         addTripform.append(locationWrapper);
@@ -156,6 +159,9 @@ Homepage = (function(){
         addTripform.append(start); 
         addTripform.append(end);
         //make sure the start date is always in front of the end date
+        // start.children('input').eq(0).click(function(){
+            
+        // });
         start.on("dp.change",function (e) {
             end.data("DateTimePicker").setMinDate(e.date);
         });

@@ -138,7 +138,7 @@
 
 
     </div>
-    <div id="footer" class="footer"><p>Copyright (c) Caterpillar</p></div>
+    <div id="footer" class="footer navbar-fixed-bottom"><p>Copyright (c) Caterpillar</p></div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

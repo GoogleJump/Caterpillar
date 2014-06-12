@@ -148,9 +148,17 @@ Util = (function(){
             wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
                 // pickTime: false,
             });
+            titleInput.attr({
+                'type':'datetime',
+                'required':true,
+                'disabled':true,
+            });
         }
         if(type===2){
-           // titleInput.attr('name','username');
+            titleInput.attr({
+                'type':'email',
+                'required':true,
+            });
         }
         if(type===3){
             titleInput.attr('name','password');
@@ -186,25 +194,40 @@ Util = (function(){
         registration.attr('action', '/insertUser');
         registration.attr('id','registration');
         // var username = $(document)
-        var username = inputGroup('Username','Pick a Username',null,2);
-        username.children('input').eq(0).attr('name', 'username');
+        var username = inputGroup('Username','Pick a Username',null,null);
+        username.children('input').eq(0).attr({
+            'name':'username',
+            'required':'true',
+        });
         registration.append(username);
          
        
-        var pwd = inputGroup('Password',null, null, 3);
+        var pwd = inputGroup('Password',"Please enter your password", null, 3);
         pwd.children('input').eq(0).attr('name', 'password');
         registration.append(pwd);
        
-        var email = inputGroup('Email', 'Please enter your email address', null, 2);
-        email.children('input').eq(0).attr('name', 'email');
-        registration.append(email);
+        var emailinput = inputGroup('Email', 'Please enter your email address', null, 2);
+        emailinput.children('input').eq(0).attr({
+            'name': 'email',
+            // 'type':'email',
+            // 'required':true,
+        });
+        registration.append(emailinput);
+        // emailinput.attr('required');
+        // password.attr('type','password');
 
-        var firstname = inputGroup('First Name', null, null, 2);
-        firstname.children('input').eq(0).attr('name', 'firstname');
+        var firstname = inputGroup('First Name', null, null, null);
+        firstname.children('input').eq(0).attr({
+            'name':'firstname',
+            'required':'true',
+        });
         registration.append(firstname);
 
-        var lastname = inputGroup('Last Name', null, null, 2);
-        lastname.children('input').eq(0).attr('name', 'lastname');
+        var lastname = inputGroup('Last Name', null, null, null);
+        lastname.children('input').eq(0).attr({
+            'name':'lastname',
+            'required':'true',
+        });
         registration.append(lastname);
 
         var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
@@ -229,24 +252,31 @@ Util = (function(){
             //submit_input.toggle();
         });
 
-
-        $("#registration").validate({
-            rules:{
-                email: {required:true,email: true},
-                pwd:{required:true},
-                firstname:{required:true},
-                lastname:{required:true},
-                username:{required:true},
-
-            }
-        });
+        // $("#registration").validate({
+        //     rules:{
+        // // $.extend(settings, {
+        // //     rules: {
+        //         email: {required:true,email: true},
+        //         pwd:{required:true},
+        //         firstname:{required:true},
+        //         lastname:{required:true},
+        //         username:{required:true},
+        //     },
+        //     messages: {
+        //         "email": "<li>Please enter a valid Email address.</li>",
+        //         pwd: "password required",
+        //         firstname:"Please enter your first name",
+        //         lastname:"Please enter your last name",
+        //         username:"Please enter your username",
+        //     }
+        // });
 
         var closebtn = $(document.getElementById(id+'closebtn'));
         console.log(id+'closebtn');
         closebtn.click(function(){
             console.log("clicked");
             registration.find('input:text, input:password, input:file, select, textarea').val('');
-
+            // registration.validate().resetForm();
             // $(this).closest('form').find("input[type=text], textarea").val("");
         });
         return modal;
@@ -634,7 +664,13 @@ Util = (function(){
             description = spec.description,
             // date=spec.date,
             loc = spec.location;
-        var modal = makeModal(spec.link, "Edit Photo", false);
+
+        var modal;
+        if(type==="Trip"){
+            modal=makeModal(spec.link, "Edit Photo", false);  
+        } else{
+            modal=makeModal(spec.link, "Edit Trip", false);
+        }
         var body = $(document.getElementById("body"));
         body.append(modal); 
         var modalBody = $(document.getElementById(spec.link+"modalBody"));
