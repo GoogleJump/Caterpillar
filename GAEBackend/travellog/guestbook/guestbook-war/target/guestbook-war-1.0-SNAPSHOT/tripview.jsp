@@ -75,7 +75,7 @@
       </div>
       <div id="stripnavbar" class="navbar-default navbar">
         <ul class="nav nav-pills">
-          <li><a href="/homepage.jsp">Back to Trips</a></li>
+          <li><a href="#" id="trips_button">Back to Trips</a></li>
           <li><a href="#">Locations</a></li>
 
         </ul>

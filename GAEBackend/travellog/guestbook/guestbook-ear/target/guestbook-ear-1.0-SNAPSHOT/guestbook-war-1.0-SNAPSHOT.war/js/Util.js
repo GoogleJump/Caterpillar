@@ -20,7 +20,36 @@ Util = (function(){
         photoPreview: photoPreview,
         uploadPhotos:uploadPhotos,
         userSignup: userSignup,
+        getQueryVariable: getQueryVariable,
     };
+
+
+//get value from local storage
+    function getFromLocalStorage(key) {
+     var item = localStorage.getItem(key);
+     if(item) { 
+        return item;
+    }
+    else {
+        console.log("could not store " + key);
+        return null;
+    }
+}
+
+//gets parameter either from url if available or local storage if not
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+  }
+} 
+//if it's not a parameter, check if it's in local storage
+return getFromLocalStorage(variable);
+}
+
 	/**
      * make a Modal when a button is clicked. 
      * @param modalId: assign a unique id to the modal so that the btn knows which to trigger

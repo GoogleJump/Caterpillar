@@ -1,4 +1,15 @@
 Tripview = (function(){
+	//if there is a user key stored, get it and set as parameter
+	console.log("about to get user key");
+    var userKey = Util.getQueryVariable("userKey");
+    if(userKey != null) {
+        console.log("user key was not null, setting param")
+    }
+
+    var tripbutton = $(document.getElementById("trips_button"));
+    tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
+
+
 	var body = $(document.getElementById("body"));
 	var main = $(document.createElement("div"));
 	main.addClass("container-fluid");
