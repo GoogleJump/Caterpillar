@@ -221,7 +221,7 @@ public class SignUpActivity extends DrawerActivity {
 	}
 
 	public boolean onSignUpClick(View v) {
-		new AddNewUserTask().execute(null, getFirstName(), getLastName(), getUsername(), 
+		new AddNewUserTask().execute(getApplicationContext(), getFirstName(), getLastName(), getUsername(), 
 				getPassword(), getEmail());
 		Intent i = new Intent(this, ViewTripsActivity.class);
 		startActivity(i);

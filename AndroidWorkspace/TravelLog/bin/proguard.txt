@@ -44,7 +44,7 @@
 # view AndroidManifest.xml #generated:39
 -keep class com.travellog.ViewTripsActivity { <init>(...); }
 
-# onClick res/layout/activity_add_entry.xml #generated:143
+# onClick res/layout/activity_add_entry.xml #generated:142
 -keepclassmembers class * { *** onAddEntryClick(...); }
 
 # onClick res/layout/activity_main.xml #generated:95

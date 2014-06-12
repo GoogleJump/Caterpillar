@@ -187,8 +187,8 @@ public final class R {
         public static final int textView3=0x7f090050;
         public static final int trip_description_label=0x7f090011;
         public static final int trip_info_dates=0x7f090059;
-        public static final int trip_info_description=0x7f09005a;
-        public static final int trip_info_location=0x7f09005b;
+        public static final int trip_info_description=0x7f09005b;
+        public static final int trip_info_location=0x7f09005a;
         public static final int trip_info_title=0x7f090058;
         public static final int trip_photo=0x7f09005d;
         public static final int trip_polaroid=0x7f09005e;

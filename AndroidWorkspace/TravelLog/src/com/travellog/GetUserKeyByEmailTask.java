@@ -47,21 +47,23 @@ public class GetUserKeyByEmailTask extends AsyncTask {
 		Userendpoint endpoint = CloudEndpointUtils.updateBuilder(
 				endpointBuilder).build();
 
-		try { 
+		try {
 			System.out
 					.println("param email and pass: " + params[1] + params[2]);
 			ListUser userlist = endpoint.listUser((String) params[1]);
 			if (userlist != null) {
 				User user = (User) userlist.get(0);
-				String userKey = user.getKey().toString();
-				System.out.println("userkey" + userKey);
-				// TODO: see if password matches
-				if (user.getPassword().equals(params[1]))
-					return userKey;
-				
-				System.out.println("get pass is" + user.getPassword());
-				Log.w("user", userlist.setPrettyPrint(true).execute()
-						.toString());
+				if (user != null) {
+					String userKey = user.getKey().toString();
+					System.out.println("userkey" + userKey);
+					// TODO: see if password matches
+					if (user.getPassword().equals(params[1]))
+						return userKey;
+
+					System.out.println("get pass is" + user.getPassword());
+					Log.w("user", userlist.setPrettyPrint(true).execute()
+							.toString());
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

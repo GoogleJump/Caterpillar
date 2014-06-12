@@ -503,10 +503,12 @@ public class ViewPhotosActivity extends DrawerActivity {
 			photoList = new ArrayList<Photo>();
 			
 			//add sample images to photoList
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 8; i++) {
 				Photo samplePhoto = new Photo();
+				 BitmapFactory.Options options = new BitmapFactory.Options();
+				 options.inSampleSize = 6;
 				samplePhoto.setImage((BitmapFactory.decodeResource(
-						getResources(), R.drawable.eiffel_tower_samplepic)));
+						getResources(), R.drawable.eiffel_tower_samplepic, options)));
 				photoList.add(samplePhoto);
 
 			}

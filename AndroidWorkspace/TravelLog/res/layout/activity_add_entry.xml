@@ -68,9 +68,8 @@
 
         <TextView
             android:id="@+id/t"
-            android:layout_width="54dp"
+            android:layout_width="81dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.49"
             android:text="Title" />
 
         <EditText

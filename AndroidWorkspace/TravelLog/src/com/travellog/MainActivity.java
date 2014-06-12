@@ -60,7 +60,6 @@ public class MainActivity extends DrawerActivity {
 
 		// Intent i = new Intent(this, RegisterActivity.class);
 		// startActivity(i);
-		
 //		new AddNewUserTask().execute(getApplicationContext(), "Ben", "Affleck", "Benny", "IamBatman", "bf@Test.com");
 //		new GetUserKeyByEmailTask().execute(getApplicationContext(), "bf@Test.com");
 
@@ -245,7 +244,7 @@ public class MainActivity extends DrawerActivity {
 		
 		//TODO: get by email task should check as well
 		String userKey = null; //TODO: get the user key and store it
-		new GetUserKeyByEmailTask().execute(null, getEmail(), getPassword());
+		new GetUserKeyByEmailTask().execute(getApplicationContext(), getEmail(), getPassword());
 		
 		
 		if(userKey != null) {

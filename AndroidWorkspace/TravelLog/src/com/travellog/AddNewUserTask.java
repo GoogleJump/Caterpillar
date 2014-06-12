@@ -31,9 +31,9 @@ public class AddNewUserTask extends AsyncTask {
 					public void initialize(HttpRequest httpRequest) { }
 				});
 		Userendpoint endpoint = CloudEndpointUtils.updateBuilder(
-				endpointBuilder).build();
+				endpointBuilder).build(); 
 		
-		try {
+		try { 
 		
 			User u = new User().setFirstName((String) arg0[1]);
 			u.setLastName((String) arg0[2]);

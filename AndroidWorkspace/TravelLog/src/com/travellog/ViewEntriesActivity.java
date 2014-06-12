@@ -102,7 +102,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 	static Button depart; //button that opens depart date picker
 	static Button ret; //button that opens return date picker
 
-	
+
 	/*for uploading images to an entry*/
 	private static final int SELECT_PICTURE = 1; 
 	private String selectedImagePath;
@@ -115,12 +115,12 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		setContentView(R.layout.activity_main);
 
 		getLayoutContent(); //replace activity main content with content for this activity
-		
+
 		//retreive trip, but for now just make a new one
 		selectedTrip = new TripView(this);
 		setTitle(selectedTrip.getTrip().getTitle());
-//		((LinearLayout) content
-//				.findViewById(R.id.view_entries_content)).addView(selectedTrip.getTripInfoView(this));
+		((LinearLayout) content
+				.findViewById(R.id.view_entries_content)).addView(selectedTrip.getTripInfoView(this));
 
 		// for sliding drawer menu:
 		mTitle = mDrawerTitle = getTitle();
@@ -164,7 +164,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		this.loadEntriesExample();
 	}
-	
+
 	public void getLayoutContent() {
 		content = (RelativeLayout) findViewById(R.id.content_homepage);
 		content.removeAllViews();
@@ -212,7 +212,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	/*a few hard coded entries to test the layout - adds them directly to layout*/
 	public void loadEntriesExample() {
 		// TODO: load entries into the layout
@@ -245,7 +245,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		entry.toggleShortenedText();
 		return true;
 	}
-	
+
 
 	//opens new fragment for adding an entry
 	public boolean onAddEntryClick(View v) {
@@ -271,7 +271,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		return false;
 	}
 
-	
+
 	public void loadEntriesFromTrip(Trip trip) {
 		LinearLayout layout = (LinearLayout) content
 				.findViewById(R.id.view_entries_content);
@@ -426,7 +426,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 				//img_preview = img_preview.createScaledBitmap(img_preview, 220, 220, true);
 				ImageView imgview_preview = new ImageView(this);
 				imgview_preview.setImageBitmap(img_preview);
-//				((LinearLayout) findViewById(R.id.add_photo_grid)).addView(imgview_preview);
+			//	((LinearLayout) findViewById(R.id.add_photo_grid)).addView(imgview_preview);
 			}
 		}
 	}
@@ -453,7 +453,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		// this is our fallback here
 		return uri.getPath();
 	}
-	
+
 	 public static Bitmap getThumbnail(Uri uri, InputStream input) throws FileNotFoundException, IOException{
 
 	        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
