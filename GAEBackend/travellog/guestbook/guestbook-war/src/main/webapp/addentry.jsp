@@ -56,7 +56,7 @@
         </div>
         <div id="stripnavbar" class="navbar-default navbar">
           <ul class="nav nav-pills">
-            <li class="active"><a href="#">Trips</a></li>
+            <li class="active"><a href="#" id="trips_button">Trips</a></li>
             <li><a href="#">Locations</a></li>
           </ul>
         </div>

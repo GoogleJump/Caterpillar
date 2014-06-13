@@ -147,6 +147,7 @@
         <input class="Entrytitle" value = "${fn:escapeXml(entry_title)}"></input>
         <input class="EntryDescription" value="${fn:escapeXml(entry_description)}"></input>
         <% 
+        if(imageKeys != null) {
         for(int i=0;i<imageKeys.size();i++){
           String imageKey = imageKeys.get(i).getKeyString();
           pageContext.setAttribute("entry_image", imageKey);
@@ -154,6 +155,7 @@
           <img class="Entryimages" src="/getImage?blobKey=${fn:escapeXml(entry_image)}"></img>
         <%
         }
+      }
         %>
         </div>
         <%

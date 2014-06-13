@@ -1,4 +1,8 @@
 addEntry = (function(){
+
+
+
+
 	"use strict";
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
@@ -20,6 +24,17 @@ addEntry = (function(){
 	title.addClass('col-md-6 col-sm-offset-1');
 	title.children('input').eq(0).attr("name", "title");
 	contentDiv.append(title);
+
+
+
+	//if there is a user key stored, get it and set as parameter for link
+        console.log("about to get user key");
+    var userKey = Util.getQueryVariable("userKey");
+    if(userKey != null) {
+        console.log("user key was not null, setting param")
+    }
+    var tripbutton = $(document.getElementById("trips_button"));
+    tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
 
 //no start/end date for entries
 	/*var duration = $(document.createElement('div'));
