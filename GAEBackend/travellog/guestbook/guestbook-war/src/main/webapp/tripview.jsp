@@ -85,8 +85,8 @@
 
     <%
    //upon every reload, generate an entry key and set as parameter
-    Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis()+"");
-    pageContext.setAttribute("entryKey", KeyFactory.keyToString(entryKey));
+  //  Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis()+"");
+    //pageContext.setAttribute("entryKey", KeyFactory.keyToString(entryKey));
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     String tripKeyString = request.getParameter("tripKey");
@@ -166,7 +166,7 @@
     }
 %>
 <!--TODO: does this action do what it's supposed to because I doubt it-->
-<form action="/addentry.jsp?entryKey=${fn:escapeXml(entryKey)}&tripKey=${fn:escapeXml(tripKey)}" method="post" id="addEntryForm">
+<form action="/addentry.jsp?tripKey=${fn:escapeXml(tripKey)}" method="post" id="addEntryForm">
   <!--In javascript, add "add entry" button as child to this form-->
 </form>
 

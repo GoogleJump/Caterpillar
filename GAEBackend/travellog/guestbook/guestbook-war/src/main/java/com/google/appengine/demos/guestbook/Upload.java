@@ -41,8 +41,9 @@ public class Upload extends HttpServlet {
 		// and make sure still works)
 		// unlike the other inserts, get entryKey as a parameter (because of
 		// blob id issues)
-		String entryKeyString = req.getParameter("entryKey");
-		Key entryKey = KeyFactory.stringToKey(entryKeyString);
+		//String entryKeyString = req.getParameter("entryKey");
+		//Key entryKey = KeyFactory.stringToKey(entryKeyString);
+		Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis());
 		String poster = req.getParameter("userKey"); // user that posted the
 														// trip/entry
 		Key posterKey = KeyFactory.stringToKey(poster);

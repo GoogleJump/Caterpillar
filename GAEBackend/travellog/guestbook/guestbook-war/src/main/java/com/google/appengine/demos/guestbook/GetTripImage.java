@@ -65,9 +65,12 @@ public class GetTripImage extends HttpServlet {
 
 	 if(entriesInTrip.size() != 0) {
 	  List<BlobKey> imageKeys = (List<BlobKey>) entriesInTrip.get(0).getProperty("imageKeys");
-	 if(imageKeys.size() != 0) {
+	if(imageKeys != null && imageKeys.size() != 0) {
 	  BlobKey image = imageKeys.get(0);
-	  blobstoreService.serve(image, resp); //for now, serve like this, but instead uuse image api b/c more efficient and need cropping
+     String imgurl = imagesService.getServingUrl(image); //idk what image size should be
+    System.out.println("url is" + imgurl);
+     resp.sendRedirect(imgurl+"=s300-c"); //center crop 300 is longest dimension
+	 // blobstoreService.serve(image, resp); //for now, serve like this, but instead uuse image api b/c more efficient and need cropping
 	 }
 	 else {
 		 System.out.println("no images in entry");

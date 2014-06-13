@@ -23,7 +23,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 
 import java.util.List;
-
+//NOT USING THIS.  USING UPLOAD INSTEAD
 public class InsertEntryServlet extends HttpServlet {
 
 	// private BlobstoreService blobstoreService =
@@ -54,10 +54,10 @@ public class InsertEntryServlet extends HttpServlet {
 		String location = req.getParameter("location");
 		// unlike the other inserts, get entryKey as a parameter (because of
 		// blob id issues)
-		String entryKeyString = req.getParameter("entryKey");
+		//String entryKeyString = req.getParameter("entryKey");
 		// System.out.println("entry key: "+entryKeyString);
-		Key entryKey = KeyFactory.stringToKey(entryKeyString);
-
+		//Key entryKey = KeyFactory.stringToKey(entryKeyString);
+		Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis());
 		String poster = req.getParameter("userKey"); // user that posted the
 														// trip/entry
 		// System.out.println("poster(user) key: " + poster);

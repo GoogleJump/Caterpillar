@@ -1,13 +1,15 @@
 Homepage = (function(){
 
     //if there is a user key stored, get it and set as parameter for link
-        console.log("about to get user key");
-    var userKey = Util.getQueryVariable("userKey");
-    if(userKey != null) {
-        console.log("user key was not null, setting param")
-    }
+    console.log("about to get user key");
+  //  var userKey = Util.getQueryVariable("userKey");
+  var userKey = Util.getFromLocalStorage("userKey");
+  //if(userKey == null) userKey = Util.getQueryVariable("userKey");
+  if(userKey != null) {
+    console.log("user key was not null, setting param")
     var tripbutton = $(document.getElementById("trips_button"));
     tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
+}
 
     var body = $(document.getElementById("body"));//root.find("div");
 

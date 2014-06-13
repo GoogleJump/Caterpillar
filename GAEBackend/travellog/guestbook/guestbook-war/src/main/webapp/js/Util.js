@@ -21,6 +21,7 @@ Util = (function(){
         uploadPhotos:uploadPhotos,
         userSignup: userSignup,
         getQueryVariable: getQueryVariable,
+        getFromLocalStorage : getFromLocalStorage,
     };
 
 

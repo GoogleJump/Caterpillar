@@ -15,7 +15,7 @@ entry page - information on entry (date created, location, description) info on 
 thumbnails (backend needs to serve smaller images, frontend or backend needs to crop)
 sample image if no image
 backend checks all entries for images to pull for trip preview, not just last one
-
+bug: links don’t work because getting user key is returning entry key somewhere..hmmm
 
 ————————
 
