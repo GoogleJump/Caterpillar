@@ -15,6 +15,8 @@ entry page - information on entry (date created, location, description) info on 
 thumbnails (backend is cropping, but showing up small sometimes??what)
 backend checks all entries for images to pull for trip preview, not just last one
 keys should be strings instead of keys - be careful not to break everything w/this
+remove print statements and logs eventually?
+return and depart date need to be dates not strings
 
 ————————
 

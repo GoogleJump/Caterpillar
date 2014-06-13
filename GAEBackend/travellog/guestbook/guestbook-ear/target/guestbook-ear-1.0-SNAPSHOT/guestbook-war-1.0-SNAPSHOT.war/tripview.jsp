@@ -115,8 +115,14 @@
 
 <h1 id="tripTitle">${fn:escapeXml(trip_title)}</h1><br/>
 <h1 id="tripDescription">${fn:escapeXml(trip_description)}</h1>
+<%
+if(trip.getProperty("depDate") != null && trip.getProperty("retDate") != null) {
+%>
 <small id="tripDate">${fn:escapeXml(trip_depart)} to ${fn:escapeXml(trip_return)}</small>
-
+<%
+} //end of if depart date and return date are null
+%>
+<p id="tripLocation">${fn:escapeXml(trip_location)}</p>
 <%
 
     if (entries.isEmpty()) {

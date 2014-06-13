@@ -59,10 +59,13 @@ public class GetTripImage extends HttpServlet {
 	 if(entriesInTrip.size() != 0) {
 	  List<BlobKey> imageKeys = (List<BlobKey>) entriesInTrip.get(0).getProperty("imageKeys");
 	if(imageKeys != null && imageKeys.size() != 0) {
-	  BlobKey image = imageKeys.get(0);
-     String imgurl = imagesService.getServingUrl(image); //idk what image size should be
+	  BlobKey imageBlobKey = imageKeys.get(0);
+	 // Image image = ImagesServiceFactory.makeImageFromBlob(imageBlobKey);
+     String imgurl = imagesService.getServingUrl(imageBlobKey, 251, false); //biggest side is 251, resized, not cropped
      //System.out.println("url is" + imgurl);
-     resp.sendRedirect(imgurl+"=s300-c"); //center crop 300 is longest dimension
+    // Transform resize = ImagesServiceFactory.makeResize(200, 300);
+   //  Image resizedImage = imagesService.applyTransform(resize, image);
+     resp.sendRedirect(imgurl); 
 	 // blobstoreService.serve(image, resp); //for now, serve like this, but instead uuse image api b/c more efficient and need cropping
 	 }
 	 else {

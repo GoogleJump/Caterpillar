@@ -43,11 +43,27 @@ Tripview = (function(){
 
 	titleDiv.append(title);
 	var date=$(document.getElementById('tripDate'));
-	//date.text(" created on May 33th");
 	title.append(date);
+	var location = $(document.getElementById('tripLocation'));
+	location.css({
+		"font-family": "serif",
+		"font-size":"14"
+	});
+	title.append(location);
+	var description = $(document.getElementById('tripDescription'));
+		location.css({
+		"font-family": "serif",
+		"font-size":"12"
+	});
+	title.append(description);
+	
+	//date.text(" created on May 33th");
+	
 	titleDiv.css({
 		'padding-top':'10px'
 	});
+
+
 
 	var addbtn = $(document.createElement('button'));
 	addbtn.addClass('btn btn-primary');

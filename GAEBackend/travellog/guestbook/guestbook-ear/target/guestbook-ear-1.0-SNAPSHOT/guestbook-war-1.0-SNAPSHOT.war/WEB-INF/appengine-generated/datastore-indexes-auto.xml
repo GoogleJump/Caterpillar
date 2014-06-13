@@ -1,14 +1,14 @@
-<!-- Indices written at Fri, 13 Jun 2014 09:11:11 EDT -->
+<!-- Indices written at Fri, 13 Jun 2014 14:23:28 EDT -->
 
 <datastore-indexes>
 
-    <!-- Used 2 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="Trip" ancestor="false" source="auto">
         <property name="owner" direction="asc"/>
         <property name="dateCreated" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 3 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="Entry" ancestor="false" source="auto">
         <property name="tripPoster" direction="asc"/>
         <property name="dateCreated" direction="desc"/>
