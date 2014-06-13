@@ -9,11 +9,12 @@ separate page for viewing individual posts (or a way to view images larger w/the
 multiple image upload - prevent user from clicking “choose file” twice OR have it support that
 removing/editing an image when uploading should actually edit/remove it
 edit/delete trip buttons
-link buttons to diff pages
 edit/delete entries
 information on photos
 entry page - information on entry (date created, location, description) info on trips (description, location)
 thumbnails (backend needs to serve smaller images, frontend or backend needs to crop)
+sample image if no image
+backend checks all entries for images to pull for trip preview, not just last one
 
 
 ————————

@@ -38,16 +38,16 @@ public class GetImageFromBlobKey extends HttpServlet {
   @Override
   public void  doGet(HttpServletRequest req, HttpServletResponse resp)
   throws IOException, ServletException {
-//TODO: test this, crop it how we want (put 500 pixels as image size completely randomly)
+	  
+	  //get the image from blobkey and resize
       BlobKey blobKey = new BlobKey(req.getParameter("blobKey"));
-     /*// blobstoreService.serve(blobKey, resp); //this is another option
       Image image = ImagesServiceFactory.makeImageFromBlob(blobKey);
-      Transform noOpCrop = ImagesServiceFactory.makeCrop(0, 0, 1, 1);
-      image = imagesService.applyTransform(noOpCrop, image);                     
-      System.out.println("Stored image " + image.getWidth() + ", " + image.getHeight());
-     String imgurl = imagesService.getServingUrl(blobKey, 500, true); //idk what image size should be
-     resp.sendRedirect(imgurl);*/
-      blobstoreService.serve(blobKey, resp); //for now using this b/c easier, but more inefficient
+     // Transform resize = ImagesServiceFactory.makeResize(500, 500);
+      System.out.println("blobkey is"+blobKey);
+     String imgurl = imagesService.getServingUrl(blobKey); //idk what image size should be
+    System.out.println("url is" + imgurl);
+     resp.sendRedirect(imgurl+"=s300-c"); //center crop 300 is longest dimension
+     // blobstoreService.serve(blobKey, resp); //this one is easier, but less efficient & doesn't crop
      
      
      
