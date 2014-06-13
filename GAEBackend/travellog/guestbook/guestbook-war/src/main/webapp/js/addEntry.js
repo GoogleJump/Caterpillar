@@ -58,13 +58,13 @@ addEntry = (function(){
 
 
 	//invisible entry key input - get from url parameters and set
-	var entryKeyInput = $(document.createElement('input'));
+	/*var entryKeyInput = $(document.createElement('input'));
 	entryKeyInput.css("display", "none");
 	var entryKey = getQueryVariable("entryKey");
 	entryKeyInput.attr("name", "entryKey");
 	entryKeyInput.attr("value", entryKey);
 	contentDiv.append(entryKeyInput);
-	console.log("entry key is:" + entryKey);
+	console.log("entry key is:" + entryKey);*/
 
 	//invisible user key input - get from local storage and set
 	var userKeyInput = $(document.createElement('input'));

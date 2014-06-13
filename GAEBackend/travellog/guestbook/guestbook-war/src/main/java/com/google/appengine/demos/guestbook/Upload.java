@@ -69,7 +69,7 @@ public class Upload extends HttpServlet {
 
 		datastore.put(entry);
 
-		res.sendRedirect("/tripview.jsp?userKey="
+		res.sendRedirect("/tripview.jsp?entryKey="
 				+ KeyFactory.keyToString(entry.getKey()) + "&tripKey="
 				+ posterTrip);
 

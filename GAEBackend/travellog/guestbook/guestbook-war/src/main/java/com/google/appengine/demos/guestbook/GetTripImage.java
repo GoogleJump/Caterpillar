@@ -53,13 +53,6 @@ public class GetTripImage extends HttpServlet {
 	  Query entryquery = new Query("Entry").addFilter("tripPoster",
 		         Query.FilterOperator.EQUAL,
 		        	tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
-	  Query entryAll = new Query("Entry");
-	  List<Entity> entriesAll = datastore.prepare(entryAll).asList(FetchOptions.Builder.withLimit(1));
-	  System.out.println("all entries number is:" + entriesAll.size());
-	  System.out.println("poster trip key is:" + entriesAll.get(0).getProperty("tripPoster"));
-	  
-
-	
 	  
 	 List<Entity> entriesInTrip = datastore.prepare(entryquery).asList(FetchOptions.Builder.withLimit(1));
 
@@ -68,7 +61,7 @@ public class GetTripImage extends HttpServlet {
 	if(imageKeys != null && imageKeys.size() != 0) {
 	  BlobKey image = imageKeys.get(0);
      String imgurl = imagesService.getServingUrl(image); //idk what image size should be
-    System.out.println("url is" + imgurl);
+     //System.out.println("url is" + imgurl);
      resp.sendRedirect(imgurl+"=s300-c"); //center crop 300 is longest dimension
 	 // blobstoreService.serve(image, resp); //for now, serve like this, but instead uuse image api b/c more efficient and need cropping
 	 }

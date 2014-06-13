@@ -227,9 +227,11 @@ Homepage = (function(){
         }
 
         var key = getQueryVariable("userKey");
+        if(key != null) {
         keyUser.attr('value', key);
         putToLocalStorage("userKey", key);
         console.log("set key user attribute as:" + key);
+    }
 }
 
 
