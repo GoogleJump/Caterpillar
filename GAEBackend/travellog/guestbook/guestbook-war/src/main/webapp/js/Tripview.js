@@ -38,7 +38,8 @@ Tripview = (function(){
 	title.css({
 		'padding-top':'5px',
 		'font-family':"Rancho', serif",
-		'font-size':'100px'
+		'font-size':'100px',
+		"display" : "block"
 	})
 
 	titleDiv.append(title);
@@ -47,15 +48,17 @@ Tripview = (function(){
 	var location = $(document.getElementById('tripLocation'));
 	location.css({
 		"font-family": "serif",
-		"font-size":"14"
+		"font-size":"14",
+		"display" : "block"
 	});
-	title.append(location);
+	titleDiv.append(location);
 	var description = $(document.getElementById('tripDescription'));
 		location.css({
 		"font-family": "serif",
-		"font-size":"12"
+		"font-size":"12",
+		"display" : "block"
 	});
-	title.append(description);
+	titleDiv.append(description);
 	
 	//date.text(" created on May 33th");
 	
