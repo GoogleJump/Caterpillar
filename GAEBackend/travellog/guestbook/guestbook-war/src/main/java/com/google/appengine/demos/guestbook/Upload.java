@@ -60,10 +60,10 @@ public class Upload extends HttpServlet {
 		entry.setProperty("title", title);
 		entry.setProperty("description", description);
 		entry.setProperty("location", location);
-		entry.setProperty("poster", posterKey);
+		entry.setProperty("poster", poster); //string
 		entry.setProperty("tags", tags);
 		entry.setProperty("dateCreated", date);
-		entry.setProperty("tripPoster", posterTripKey);
+		entry.setProperty("tripPoster", posterTrip); //string
 		entry.setProperty("imageKeys", blobKeys);
 		// entry.setProperty("videoKey", value); TODO: videos
 

@@ -94,17 +94,20 @@
     pageContext.setAttribute("tripKey", tripKeyString);
     Query query = new Query("Entry").addFilter("tripPoster",
          Query.FilterOperator.EQUAL,
-         tripKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
+         tripKeyString).addSort("dateCreated", Query.SortDirection.DESCENDING);
     List<Entity> entries = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
 
     //MOVE THIS TO BACKEND SOMEWHERE:
     Entity trip = datastore.get(tripKey);
+    String startDate = (String)trip.getProperty("depDate");
+    String endDate = (String)trip.getProperty("retDate");
+
     pageContext.setAttribute("trip_title",
       trip.getProperty("title"));
       pageContext.setAttribute("trip_depart",
-        trip.getProperty("depDate"));
+        startDate);
         pageContext.setAttribute("trip_return",
-          trip.getProperty("retDate"));
+          endDate);
          pageContext.setAttribute("trip_description",
           trip.getProperty("description"));
           pageContext.setAttribute("trip_location",
@@ -115,7 +118,8 @@
 
 <h1 id="tripTitle">${fn:escapeXml(trip_title)}</h1>
 <%
-if(trip.getProperty("depDate") != null && trip.getProperty("retDate") != null) {
+//make sure the date is legit.  if not, don't include it at all
+if(startDate != null  && startDate != "" && endDate != null && endDate != "") {
 %>
 <small id="tripDate">${fn:escapeXml(trip_depart)} to ${fn:escapeXml(trip_return)}</small>
 <%

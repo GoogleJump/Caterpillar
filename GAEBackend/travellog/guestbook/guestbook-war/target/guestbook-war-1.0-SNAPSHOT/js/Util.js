@@ -146,7 +146,7 @@ return getFromLocalStorage(variable);
     type4: location
     **/
 
-    function inputGroup(name, placeholder,value,type){
+    function inputGroup(nametitle, inputname, placeholder,value,type){
         var wrapper = $(document.createElement('div'));
         wrapper.addClass('input-group');
         wrapper.css({
@@ -154,7 +154,7 @@ return getFromLocalStorage(variable);
         })
         var title = $(document.createElement('span'));
         title.addClass('input-group-addon');
-        title.text(name);
+        title.text(nametitle);
         title.css({
             'height':'15px',
             'background-color':'#504552',
@@ -164,6 +164,7 @@ return getFromLocalStorage(variable);
         wrapper.append(title);
         var titleInput = $(document.createElement('input'));
         titleInput.attr('type','text');
+        titleInput.attr('name', inputname);
         wrapper.append(titleInput);
         if(type===1){
             //add the button to show the calendar
@@ -224,7 +225,7 @@ return getFromLocalStorage(variable);
         registration.attr('action', '/insertUser');
         registration.attr('id','registration');
         // var username = $(document)
-        var username = inputGroup('Username','Pick a Username',null,null);
+        var username = inputGroup('Username','username', 'Pick a Username',null,null);
         username.children('input').eq(0).attr({
             'name':'username',
             'required':'true',
@@ -232,11 +233,11 @@ return getFromLocalStorage(variable);
         registration.append(username);
          
        
-        var pwd = inputGroup('Password',"Please enter your password", null, 3);
+        var pwd = inputGroup('Password','password', "Please enter your password", null, 3);
         pwd.children('input').eq(0).attr('name', 'password');
         registration.append(pwd);
        
-        var emailinput = inputGroup('Email', 'Please enter your email address', null, 2);
+        var emailinput = inputGroup('Email', 'email', 'Please enter your email address', null, 2);
         emailinput.children('input').eq(0).attr({
             'name': 'email',
             // 'type':'email',
@@ -246,14 +247,14 @@ return getFromLocalStorage(variable);
         // emailinput.attr('required');
         // password.attr('type','password');
 
-        var firstname = inputGroup('First Name', null, null, null);
+        var firstname = inputGroup('First Name', 'firstname', null, null, null);
         firstname.children('input').eq(0).attr({
             'name':'firstname',
             'required':'true',
         });
         registration.append(firstname);
 
-        var lastname = inputGroup('Last Name', null, null, null);
+        var lastname = inputGroup('Last Name', 'lastname', null, null, null);
         lastname.children('input').eq(0).attr({
             'name':'lastname',
             'required':'true',
@@ -338,7 +339,7 @@ return getFromLocalStorage(variable);
 
         var date = $(document.createElement('p'));
         date.addClass('blog-post-meta');
-        date.text("1min before the end of the world");
+        //date.text("1min before the end of the world");
         date.css({
             'font-family':'"Comic Sans MS", cursive, sans-serif'
         });
@@ -564,16 +565,21 @@ return getFromLocalStorage(variable);
         viewbtna.attr("href",spec.link);
         viewbtn.click(function(){});
         viewbtna.append(viewbtn);
+        var deleteForm = $(document.createElement('form'));
+        deleteForm.attr('method', 'post');
+        deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
         var deletebtn = $(document.createElement('button'));
         deletebtn.text("Delete");
         deletebtn.addClass("btn btn-default delete col-sm-offset-1");
         deletebtn.click(function(){
             colDiv.remove(); 
-            modal.remove();   
+            modal.remove();
+
         });
+        deleteForm.append(deletebtn);
         btngroup.append(editbtn);
         btngroup.append(viewbtna);
-        btngroup.append(deletebtn);
+        btngroup.append(deleteForm);
         return colDiv;
     }
     /**
@@ -706,6 +712,12 @@ return getFromLocalStorage(variable);
         var modalBody = $(document.getElementById(spec.link+"modalBody"));
         var contentForm = $(document.createElement('form'));
         modalBody.append(contentForm);
+       
+        //submission functionality:
+        $(document.getElementById(spec.link + "savebtn")).click(function(){
+            contentForm.submit();
+        });
+
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');
         contentForm.append(contentRow);
@@ -721,21 +733,23 @@ return getFromLocalStorage(variable);
         thumbnail.attr('src',thumb);
         var titleRow =$(document.createElement('div'));
         titleRow.addClass("row col-md-10 col-sm-offset-1");
-        var titleInput = inputGroup("Title: ", null, title);
+        var titleInput = inputGroup("Title: ", 'title', null, title);
         titleRow.append(titleInput);    
         contentRow.append(titleRow);
 
         
         if(type==="Trip"){
+            contentForm.attr('action', '/editTrip?tripKey='+spec.tripkey);
+            contentForm.attr('method', 'post')
             var startDiv = $(document.createElement('div'));
             startDiv.addClass("row col-md-10 col-sm-offset-1");
-            var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
+            var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1);
             startDiv.append(start);
             // start.addClass('row col-md-10 col-sm-offset-1');
             start.children('input').eq(0).attr('name', 'departDate');
             var endDiv = $(document.createElement('div'));
             endDiv.addClass("row col-md-10 col-sm-offset-1");
-            var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+            var end = Util.inputGroup('End: ', 'retDate',"Choose an end date",null,1);
             endDiv.append(end);
             end.children('input').eq(0).attr('name', 'retDate');
             // end.addClass('row col-md-10 col-sm-offset-1');
@@ -753,7 +767,7 @@ return getFromLocalStorage(variable);
             });
             var locRow =$(document.createElement('div'));
             locRow.addClass("row col-md-10 col-sm-offset-1");
-            var locInput = inputGroup("Location: ", null, loc);
+            var locInput = inputGroup("Location: ", 'location', null, loc);
             locRow.append(locInput);    
             contentRow.append(locRow);
         }

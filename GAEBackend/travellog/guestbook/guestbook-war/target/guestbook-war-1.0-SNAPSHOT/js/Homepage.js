@@ -71,6 +71,8 @@ Homepage = (function(){
             location: tripinfo.children(".location").val(),
             link: link,
             img:src,
+            tripkey: tripinfo.attr("name"),
+            userkey: userKey,
         };
         var trip = Util.tripPreview(src, spec,"Untitled",null,link);
         //TODO: onclick sets parameter as this trip and leads to tripview **Test
@@ -148,24 +150,24 @@ Homepage = (function(){
             'position':'relative',
             'width':'80%'
         });
-        var titleWrapper = Util.inputGroup('Title: ', 'Untitled',null);
+        var titleWrapper = Util.inputGroup('Title: ', 'title', 'Untitled',null);
         addTripform.append(titleWrapper);
         titleWrapper.children('input').eq(0).attr({
             'name': 'title',
             'required':true,
         });
 
-        var locationWrapper = Util.inputGroup('Where: ','Location',null,4);
+        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Location',null,4);
         addTripform.append(locationWrapper);
         locationWrapper.children('input').eq(0).attr('name', 'location');
 
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
         // rowwrapper.append(timeWrapper);
-        var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
+        var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1);
         start.addClass('col-md-12');
         start.children('input').eq(0).attr('name', 'departDate');
-        var end = Util.inputGroup('End: ',"Choose an end date",null,1);
+        var end = Util.inputGroup('End: ', 'retDate', "Choose an end date",null,1);
         end.children('input').eq(0).attr('name', 'retDate');
         end.addClass('col-md-12');
         addTripform.append(start); 

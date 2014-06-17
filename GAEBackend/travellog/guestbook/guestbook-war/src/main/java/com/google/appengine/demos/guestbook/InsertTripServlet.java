@@ -77,7 +77,7 @@ public class InsertTripServlet extends HttpServlet {
     
     //create trip entitiy - TODO: also make sure these are correct and consistent
     Entity trip = new Entity("Trip", tripKey);
-    trip.setProperty("owner", ownerKey);
+    trip.setProperty("owner", owner); //string
     trip.setProperty("title", title);
     trip.setProperty("description", description);
     trip.setProperty("dateCreated", date);

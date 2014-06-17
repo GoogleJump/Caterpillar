@@ -23,7 +23,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 
 import java.util.List;
-//NOT USING THIS.  USING UPLOAD INSTEAD
+//**NOT USING THIS.  USING UPLOAD INSTEAD**/
+
 public class InsertEntryServlet extends HttpServlet {
 
 	// private BlobstoreService blobstoreService =
@@ -84,10 +85,10 @@ public class InsertEntryServlet extends HttpServlet {
 		entry.setProperty("title", title);
 		entry.setProperty("description", description);
 		entry.setProperty("location", location);
-		entry.setProperty("poster", posterKey);
+		entry.setProperty("poster", poster); //string
 		entry.setProperty("tags", tags);
 		entry.setProperty("dateCreated", date);
-		entry.setProperty("tripPoster", posterTripKey);
+		entry.setProperty("tripPoster", posterTrip); //string
 		// entry.setProperty("imageKey", blobKey.get(0)); //TODO: multiple
 		// images (collection of blob keys)
 		// entry.setProperty("videoKey", value); TODO: videos

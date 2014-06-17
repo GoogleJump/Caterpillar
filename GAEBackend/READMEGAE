@@ -1,22 +1,24 @@
 This is not a read me right now (actually never a README).  It’s more like…todolist/comminication between stef and xiaoyi.
 
 To-Do eventually or soon or maybe if there’s time in the near future:
-logout button (and removing user key from local storage)
-remembering user is logged in (going to the login in page when user key is in storage should redirect to homepage)
+(edit: attempted to sort them somewhat by priority, feel free to change up order)
+
+entry page - information on entry (date created, location, description) - is this done??
+entry page - info on trips (description, location) - everything is there, but needs to be formatted
+edit/delete entries and functionality
+edit/delete photo functionality
+return and depart date need to be dates not strings
+information on photos - store them in blob?
 wrong inputs for sign up/sign in should warn user (wrong username/password, etc.)
 location value should be geo point, not string
-separate page for viewing individual posts (or a way to view images larger w/the caption like Facebook does)
-multiple image upload - prevent user from clicking “choose file” twice OR have it support that
 removing/editing an image when uploading should actually edit/remove it
-edit/delete trip buttons and functionality
-edit/delete entries and functionality
-information on photos - store them in blob?
-entry page - information on entry (date created, location, description) info on trips (description, location)
-thumbnails (backend is cropping, but showing up small sometimes??what)
+multiple image upload - prevent user from clicking “choose file” twice OR have it support that
 backend checks all entries for images to pull for trip preview, not just last one
-keys should be strings instead of keys - be careful not to break everything w/this
+thumbnails (backend is cropping, but showing up small sometimes??what)
+remembering user is logged in (ex: going to the login in page when user key is in storage should redirect to homepage)
+logout button (and removing user key from local storage)
+separate page for viewing individual posts (or a way to view images larger w/the caption like Facebook does)
 remove print statements and logs eventually?
-return and depart date need to be dates not strings
 
 ————————
 

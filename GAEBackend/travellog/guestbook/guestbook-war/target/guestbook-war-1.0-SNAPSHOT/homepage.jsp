@@ -92,10 +92,10 @@
     if(userKeyString == null) {
       //userKeyString = localStorage.getItem("userKey"); 
   }
-    Key userKey = KeyFactory.stringToKey(request.getParameter("userKey"));
+   // Key userKey = KeyFactory.stringToKey(request.getParameter("userKey"));
     Query query = new Query("Trip").addFilter("owner",
          Query.FilterOperator.EQUAL,
-         userKey).addSort("dateCreated", Query.SortDirection.DESCENDING);
+         userKeyString).addSort("dateCreated", Query.SortDirection.DESCENDING);
     List<Entity> trips = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
     if (trips.isEmpty()) {
 %>
