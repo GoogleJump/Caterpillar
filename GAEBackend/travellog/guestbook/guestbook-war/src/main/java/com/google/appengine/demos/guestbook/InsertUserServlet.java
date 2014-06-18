@@ -57,7 +57,7 @@ public class InsertUserServlet extends HttpServlet {
 
             user = new Entity("User", userKey);
        
-            user.setProperty("key", userKey);
+           // user.setProperty("key", userKey);
             user.setProperty("firstName", firstname);
             user.setProperty("lastName", lastname);
             user.setProperty("username", username);

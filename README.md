@@ -44,11 +44,16 @@ b) description - String
 c) hashtags - String collection
 d) location - String for city and country (or can be 2 properties for long and lat coordinates - easier to pin on a map with this info)
 e) poster - Key (user key) //do we need this??
-f) image key - blob key collection (of images on blob store) (??? Should there be descriptions associated with images and videos?)
+f) photos - list of strings that correspond to Photo keys
 g) video key - blob key collection (of videos on blob store)
 h) key - Key
 i) dateCreated - Date
 j) tripPoster - Key of thrip it belongs to
+
+Each Photo entity will have the following properties:
+a) blobKey - BlobKey for the image blob
+b) title - string
+c) description - string
 
 3) BlobInfo kind
 

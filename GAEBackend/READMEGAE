@@ -15,6 +15,7 @@ multiple image upload - prevent user from clicking “choose file” twice OR ha
 backend checks all entries for images to pull for trip preview, not just last one
 thumbnails (backend is cropping, but showing up small sometimes??what)
 remembering user is logged in (ex: going to the login in page when user key is in storage should redirect to homepage)
+refactor a lot
 logout button (and removing user key from local storage)
 separate page for viewing individual posts (or a way to view images larger w/the caption like Facebook does)
 remove print statements and logs eventually?

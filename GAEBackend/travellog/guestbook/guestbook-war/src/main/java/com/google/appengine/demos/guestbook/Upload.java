@@ -1,6 +1,7 @@
 package com.google.appengine.demos.guestbook;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,36 +27,43 @@ public class Upload extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-
+		
+		
+		//get parameters for entry
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
 		System.out.println("number of blobs uploaded: " + blobs.size());
 		List<BlobKey> blobKeys = blobs.get("fileUpload");
-
 		String title = req.getParameter("title");
 		String description = req.getParameter("description");
 		String tags = req.getParameter("tags");
 		String location = req.getParameter("location");
-		// TODO: don't need to get entryKey as parameter anymore, get rid of it
-		// everywhere
-		// (leaving for now because need to get rid of it in a bunch of places
-		// and make sure still works)
-		// unlike the other inserts, get entryKey as a parameter (because of
-		// blob id issues)
-		//String entryKeyString = req.getParameter("entryKey");
-		//Key entryKey = KeyFactory.stringToKey(entryKeyString);
 		Key entryKey = KeyFactory.createKey("Entry", System.currentTimeMillis());
-		String poster = req.getParameter("userKey"); // user that posted the
-														// trip/entry
-		Key posterKey = KeyFactory.stringToKey(poster);
-		String posterTrip = req.getParameter("tripKey"); // trip that this entry
-															// belongs to
-		Key posterTripKey = KeyFactory.stringToKey(posterTrip);
-
+		String poster = req.getParameter("userKey"); // user that posted the trip/entry		
+		//Key posterKey = KeyFactory.stringToKey(poster);
+		String posterTrip = req.getParameter("tripKey"); // trip that this entry												// belongs to
+	    //Key posterTripKey = KeyFactory.stringToKey(posterTrip);
 		Date date = new Date();
-
+		
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
+		
+		//make photos from blobs
+		List<String> photos = new ArrayList<String>(); //list of photo entities' key strings
+		for(int i = 0; i < blobs.size(); i++) {
+			Key photoKey = KeyFactory.createKey("Photo", System.currentTimeMillis());
+			Entity photo = new Entity("Photo", photoKey);
+			photo.setProperty("blobKey", blobKeys.get(i));
+			photo.setProperty("title", "TODO");
+			photo.setProperty("description", "TODO");
+			datastore.put(photo);
+			String photoKeyString = KeyFactory.keyToString(photo.getKey());
+			photos.add(photoKeyString);
+		}
+		
+		
+		
+		//create entry
 		Entity entry = new Entity("Entry", entryKey);
 		entry.setProperty("title", title);
 		entry.setProperty("description", description);
@@ -64,8 +72,8 @@ public class Upload extends HttpServlet {
 		entry.setProperty("tags", tags);
 		entry.setProperty("dateCreated", date);
 		entry.setProperty("tripPoster", posterTrip); //string
-		entry.setProperty("imageKeys", blobKeys);
-		// entry.setProperty("videoKey", value); TODO: videos
+		entry.setProperty("photos", photos); //list of photo entities
+	   // entry.setProperty("videoKey", value); TODO: videos
 
 		datastore.put(entry);
 

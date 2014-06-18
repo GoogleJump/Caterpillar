@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * TODO: do we want to update dateCreated or no?? it would be more like date last updated
  * edits entry information, redirects to that poster trip's entries (or entry's page if we
  * have separate page for that)
- *
+ *	TODO: edit/delete images
  */
 public class EditEntryServlet extends HttpServlet {
 	@Override

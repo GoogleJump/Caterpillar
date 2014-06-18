@@ -44,7 +44,7 @@ Tripview = (function(){
 
 	titleDiv.append(title);
 	var date=$(document.getElementById('tripDate'));
-	titleDiv.append(date);
+	title.append(date);
 	var location = $(document.getElementById('tripLocation'));
 	location.css({
 		"font-family": "serif",
