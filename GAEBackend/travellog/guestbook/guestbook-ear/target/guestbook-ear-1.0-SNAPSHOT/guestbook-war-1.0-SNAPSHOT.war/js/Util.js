@@ -706,6 +706,7 @@ return modal;
             colDiv.remove(); 
             modal.remove();   
             //TODO remove photo from queue to be uploaded
+            
         });
         btngroup.append(deletebtn);
         return colDiv;
