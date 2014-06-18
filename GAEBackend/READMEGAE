@@ -12,8 +12,8 @@ wrong inputs for sign up/sign in should warn user (wrong username/password, etc.
 location value should be geo point, not string
 removing/editing an image when uploading should actually edit/remove it
 multiple image upload - prevent user from clicking “choose file” twice OR have it support that
+thumbnails (backend is cropping, but showing up small sometimes??what) —> so 1 - 2 trips are really small, but if there are 3 or more they are the right size…weird
 backend checks all entries for images to pull for trip preview, not just last one
-thumbnails (backend is cropping, but showing up small sometimes??what)
 remembering user is logged in (ex: going to the login in page when user key is in storage should redirect to homepage)
 refactor a lot
 logout button (and removing user key from local storage)

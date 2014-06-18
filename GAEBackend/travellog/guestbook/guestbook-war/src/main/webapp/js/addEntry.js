@@ -142,9 +142,9 @@ addEntry = (function(){
 	  	}
 	  	
 	});*/
-
+	var filenames;
 	$(fileElem).change(function(){
-		var filenames = Util.uploadPhotos(fileElem, photoDiv);
+		filenames = Util.uploadPhotos(fileElem, photoDiv);
 		//create inputs with those file names as values: //--don't need this anymore
 		/*for(var i = 0; i < filenames.length; ++i) {
 			var inputFileName = $(document.createElement('input'));
@@ -319,8 +319,32 @@ addEntry = (function(){
 
 	//make sure this button submits the form (because there are two buttons it might not work):
 	savebtn.click(function(){
+		
+		//create inputs for each of the photo previews
+		var thumbs = $(document.getElementsByClassName);
+		for(var i = 0; i < thumbs.length; ++i) {
+			var titleInput = $(document.createElement('input'));
+			titleInput.attr('name', 'photoTitle');
+			titleInput.attr('value', $(document.getElementById("photoTitle"+i)).text());
+			titleInput.css("display", "none");
+			contentForm.append(titleInput);
+
+			var descInput = $(document.createElement('input'));
+			descInput.attr('name', 'photoDescription');
+			descInput.attr('value', $(document.getElementById("photoDescription"+i)).text());
+			descInput.css("display", "none");
+			contentForm.append(descInput);
+
+			var fileInput = $(document.createElement('input'));
+			fileInput.attr('name', 'photoFile');
+			fileInput.attr('value', filenames[i]);
+			fileInput.css('display', 'none');
+			contentForm.append(fileInput);
+
+		}
+
 		savebtn.submit();
-		contentForm.submit(); //why should we even need this?!
+		contentForm.submit(); //why should we even need this?
 	});
 	btnsDiv.append(cancelbtn);
 	btnsDiv.append(savebtn);

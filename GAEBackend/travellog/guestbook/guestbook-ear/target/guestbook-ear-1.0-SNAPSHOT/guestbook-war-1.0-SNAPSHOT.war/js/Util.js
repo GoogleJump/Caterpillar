@@ -2,12 +2,12 @@ Util = (function(){
 	"use strict";
 
     var yellow = '#FFFCD4',
-        dark_purple='#504552',
-        aqua= '#B1F2EF',
-        teal='#5A9491',
-        lgter_aqua='#cff8f6';
+    dark_purple='#504552',
+    aqua= '#B1F2EF',
+    teal='#5A9491',
+    lgter_aqua='#cff8f6';
     // this.yellow = yellow;
-	return {
+    return {
         yellow: yellow,
         aqua: aqua,
         teal: teal,
@@ -26,15 +26,15 @@ Util = (function(){
 
 
 //get value from local storage
-    function getFromLocalStorage(key) {
-     var item = localStorage.getItem(key);
-     if(item) { 
-        return item;
-    }
-    else {
-        console.log("could not store " + key);
-        return null;
-    }
+function getFromLocalStorage(key) {
+ var item = localStorage.getItem(key);
+ if(item) { 
+    return item;
+}
+else {
+    console.log("could not store " + key);
+    return null;
+}
 }
 
 //gets parameter either from url if available or local storage if not
@@ -56,10 +56,11 @@ return getFromLocalStorage(variable);
      * @param modalId: assign a unique id to the modal so that the btn knows which to trigger
      @param title: the title of the modal.
      @param: islarge: if true, the modal is the large one, else, regular size
+     @param: index: index of photo, -1 if not for edit photo modal
      TODO: submit function for the button?
      */
 
-    function makeModal(modalId,title, islarge) {
+     function makeModal(modalId,title, islarge, index) {
         var modal = $(document.createElement('div'));
         modal.addClass('modal fade');
         modal.attr('data-backdrop','false');
@@ -184,31 +185,31 @@ return getFromLocalStorage(variable);
                 'required':true,
                 'disabled':true,
             });*/
-        }
-        if(type===2){
-            titleInput.attr({
-                'type':'email',
-                'required':true,
-            });
-        }
-        if(type===3){
-            titleInput.attr('name','password');
-            titleInput.attr('type','password');
-        }
-        titleInput.addClass('form-control');
-        titleInput.attr('placeholder',placeholder);
-        if(value){
-            titleInput.attr('value',value);
-        }
+}
+if(type===2){
+    titleInput.attr({
+        'type':'email',
+        'required':true,
+    });
+}
+if(type===3){
+    titleInput.attr('name','password');
+    titleInput.attr('type','password');
+}
+titleInput.addClass('form-control');
+titleInput.attr('placeholder',placeholder);
+if(value){
+    titleInput.attr('value',value);
+}
 
-        return wrapper;
-    }
+return wrapper;
+}
     /*
 
     */
     function userSignup(){
         var id = "signup";
-        var modal = makeModal(id,'Sign Up',false);
+        var modal = makeModal(id,'Sign Up',false, -1);
         var body = $(document.getElementById("body"));
         body.append(modal);
         // var contentDiv= $(document.createElement('div'));
@@ -231,12 +232,12 @@ return getFromLocalStorage(variable);
             'required':'true',
         });
         registration.append(username);
-         
-       
+
+
         var pwd = inputGroup('Password','password', "Please enter your password", null, 3);
         pwd.children('input').eq(0).attr('name', 'password');
         registration.append(pwd);
-       
+
         var emailinput = inputGroup('Email', 'email', 'Please enter your email address', null, 2);
         emailinput.children('input').eq(0).attr({
             'name': 'email',
@@ -302,16 +303,16 @@ return getFromLocalStorage(variable);
         //     }
         // });
 
-        var closebtn = $(document.getElementById(id+'closebtn'));
-        console.log(id+'closebtn');
-        closebtn.click(function(){
-            console.log("clicked");
-            registration.find('input:text, input:password, input:file, select, textarea').val('');
+var closebtn = $(document.getElementById(id+'closebtn'));
+console.log(id+'closebtn');
+closebtn.click(function(){
+    console.log("clicked");
+    registration.find('input:text, input:password, input:file, select, textarea').val('');
             // registration.validate().resetForm();
             // $(this).closest('form').find("input[type=text], textarea").val("");
         });
-        return modal;
-    }
+return modal;
+}
     /**
     function to make a post in trip view, it can be with img only, or text only, or both.
     probably, later add videos too. toEntry is the link to the post's main page.
@@ -582,25 +583,41 @@ return getFromLocalStorage(variable);
         btngroup.append(deleteForm);
         return colDiv;
     }
+
+    /**
+    Given an exisitng photo preview, update its text
+    title: title of photo
+    description: description of photo
+    index: part of id, same index that was inputted when preview was created (aka the order they were appended)
+    **/
+    function updatePhotoPreview(title, description, index) {
+       // var thumbnail = $(document.getElementById("thumbnail"+index));
+        $(document.getElementById("photoTitle"+index)).text(title);
+        $(document.getElementById("photoDescription"+index)).text(description);
+    }
+
     /**
     function to create a thumbnail div with caption and description
     isTrip: boolean to decide what buttons to put.
     path: path to img src
     file: file to img.(for file picker preview)
     */
-    function photoPreview(file,cap,desc){
+    function photoPreview(file,cap,desc, i){
         var colDiv = $(document.createElement('div'));
         var descript=desc;
         // var path;
         var spec={
-                // imgsrc: path,
-                title: cap,
-                description: desc,
+            filename: file,
+            title: cap,
+            description: desc,
+            index: i,
         };
+        console.log("photo preview index is:" + spec.index + " or maybe it's" + i);
         var modal = editBtn(null,spec);
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
+        thumbDiv.attr('id', 'thumbnail'+ spec.index); //give thumbnail a unique id based on index of file
 
         colDiv.append(thumbDiv);
         var imgDiv = $(document.createElement('div'));
@@ -634,9 +651,10 @@ return getFromLocalStorage(variable);
         var captionDiv = $(document.createElement('div'));
         captionDiv.addClass("caption");
         thumbDiv.append(captionDiv);
-        var caption = $(document.createElement('label'));
+        var caption = $(document.createElement('label')); //title label w/class photoTitle 
         captionDiv.append(caption);
         captionDiv.css('width','100%');
+        caption.attr('id', 'photoTitle' + i);
         caption.css({
             'width':'100%',
             'overflow':'hidden',
@@ -644,7 +662,7 @@ return getFromLocalStorage(variable);
             'text-overflow': 'ellipsis',
         });
         caption.text(cap);
-        var descDiv = $(document.createElement('div'));
+        var descDiv = $(document.createElement('div')); //description div w/id photoDescription holds description of photo
         descDiv.css({
             'height':'60px',
             'overflow':'hidden',
@@ -667,10 +685,13 @@ return getFromLocalStorage(variable);
         //     btngroup.append(viewbtn);
         // }
         descDiv.text(descript);
+        descDiv.attr('id', 'photoDescription'+i); 
         editbtn.text("Edit");
         // }
         editbtn.addClass("btn btn-default col-sm-offset-1");
-        editbtn.click(function(){
+        editbtn.click(function(e){
+            //remove default behavior (submitting form):
+            e.preventDefault();
             modal.modal({show:true});
             //open a modal to edit info about the photo
 
@@ -680,9 +701,11 @@ return getFromLocalStorage(variable);
         deletebtn.text("Delete");
         deletebtn.addClass("btn btn-default delete col-sm-offset-4");
 
-        deletebtn.click(function(){
+        deletebtn.click(function(e){
+            e.preventDefault();
             colDiv.remove(); 
             modal.remove();   
+            //TODO remove photo from queue to be uploaded
         });
         btngroup.append(deletebtn);
         return colDiv;
@@ -696,27 +719,29 @@ return getFromLocalStorage(variable);
     function editBtn(type, spec){
         console.log(spec);
         var title = spec.title,
-            thumb = spec.img,
-            description = spec.description,
-            // date=spec.date,
-            loc = spec.location;
+        thumb = spec.img,
+        description = spec.description,
+        index = spec.index,
+        loc = spec.location;
+
+         console.log("edit btn index is: " + index + " or maybe " + spec.index);
 
         var modal;
         if(type==="Trip"){
-            modal=makeModal(spec.link, "Edit Photo", false);  
-        } else{
-            modal=makeModal(spec.link, "Edit Trip", false);
+            modal=makeModal(spec.link, "Edit Trip", false, -1);  
+             //submission functionality:
+             $(document.getElementById(spec.link + "savebtn")).click(function(){
+                contentForm.submit();
+            });
+         } else{
+            modal=makeModal(spec.link, "Edit Photo", false, index);
         }
         var body = $(document.getElementById("body"));
         body.append(modal); 
         var modalBody = $(document.getElementById(spec.link+"modalBody"));
         var contentForm = $(document.createElement('form'));
         modalBody.append(contentForm);
-       
-        //submission functionality:
-        $(document.getElementById(spec.link + "savebtn")).click(function(){
-            contentForm.submit();
-        });
+
 
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');
@@ -753,7 +778,7 @@ return getFromLocalStorage(variable);
             endDiv.append(end);
             end.children('input').eq(0).attr('name', 'retDate');
             // end.addClass('row col-md-10 col-sm-offset-1');
-           
+
             contentRow.append(startDiv); 
             contentRow.append(endDiv);
             start.data("DateTimePicker").setDate(spec.depDate);
@@ -800,8 +825,35 @@ return getFromLocalStorage(variable);
             'width':'100%',
             'resize':'none',
         });
-        text.val(description);
+        text.val(description)
         textWrapper.append(text);
+
+        //TODO: what is the type for photo??
+        if(type != "Trip") {
+          //  text.attr('id', 'photoDescription');
+            var titleInputField =   titleInput.children('input').eq(0);
+           // titleInputField.attr('id', 'photoTitle'+spec.index);
+            //also put in file name so we can match photos to info?? TODO: HOW...
+            //if submitted, append inputs to main content form
+            var submitEditPhoto = $(document.getElementById(spec.link + "savebtn"));
+            var closeEditPhoto = $(document.getElementById(spec.link + "closebtn"));
+            submitEditPhoto.click(function(e){
+                e.preventDefault(); //no submission
+                //TODO: update photo preview
+                console.log("clicked. index is: " + index + " or maybe " + spec.index);
+                console.log("title is:" + titleInputField.val() + "desc is " + text.val());
+                updatePhotoPreview(titleInputField.val(), text.val(), index);
+               /* console.log("edit photo, save clicked, appending information");
+                var inputTitle = $(document.getElementById("photoTitle"));
+                var inputDescription = $(document.getElementById("photoDescription"));
+                var entryForm = $(document.getElementById("addEntry"));
+                entryForm.append(inputTitle);
+                entryForm.append(inputDescription);*/
+                closeEditPhoto.click();
+
+            });
+        }
+
         return modal;
     }
     this.editbtn = editbtn;
@@ -819,7 +871,8 @@ return getFromLocalStorage(variable);
             var filename = file.name;
             filenames[i] = filename;
             fileurl[i] = URL.createObjectURL(file.slice());
-            toDiv.append(photoPreview(file,filename,"Edit to add Description"));
+            console.log("about to photo preview with index" + i);
+            toDiv.append(photoPreview(file,filename,"Edit to add Description", i));
         }
         return fileurl;
     }

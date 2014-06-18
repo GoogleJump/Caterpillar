@@ -63,8 +63,10 @@ public class GetTripImage extends HttpServlet {
 		if (entriesInTrip.size() != 0) {
 			List<String> photos = (List<String>) entriesInTrip.get(0)
 					.getProperty("photos");
+			System.out.println("number of photos is:" + photos.size());
 			if (photos != null && photos.size() != 0) {
 				String photoKey = photos.get(0);
+				System.out.println("photoKey is: " + photoKey);
 				Entity photoEntity = null;
 				try {
 					photoEntity = datastore.get(KeyFactory
