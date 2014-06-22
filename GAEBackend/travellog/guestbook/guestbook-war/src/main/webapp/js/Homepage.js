@@ -3,13 +3,13 @@ Homepage = (function(){
     //if there is a user key stored, get it and set as parameter for link
     console.log("about to get user key");
   //  var userKey = Util.getQueryVariable("userKey");
-  var userKey = Util.getFromLocalStorage("userKey");
-  //if(userKey == null) userKey = Util.getQueryVariable("userKey");
-  if(userKey != null) {
-    console.log("user key was not null, setting param")
-    var tripbutton = $(document.getElementById("trips_button"));
-    tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
-}
+    var userKey = Util.getFromLocalStorage("userKey");
+    //if(userKey == null) userKey = Util.getQueryVariable("userKey");
+    if(userKey != null) {
+        console.log("user key was not null, setting param")
+        var tripbutton = $(document.getElementById("trips_button"));
+        tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
+    }
 
     var body = $(document.getElementById("body"));//root.find("div");
 
@@ -19,9 +19,9 @@ Homepage = (function(){
     contentDiv.addClass("row");
     contentDiv.css('padding-top','50px');
     var addbtnDiv = $(document.createElement('div'));
-    // addbtnDiv.addClass("col-md-offset5");
+    addbtnDiv.addClass("col-md-12");
     addbtnDiv.css({
-        'padding-left':'15px',
+        //'padding-left':'15px',
         'padding-bottom':'8px'
     });
     contentDiv.append(addbtnDiv);
@@ -41,14 +41,14 @@ Homepage = (function(){
 
     var tripGrid = $(document.createElement('div'));
     contentDiv.append(tripGrid);
-    tripGrid.addClass("row col-md-offset3 col-md-10");
-    tripGrid.css({
-    	// 'top':'100px',
-    	// 'left':'10%',
-    	// 'posit ion':'absolute',
-    	// 'height':'auto',
-    	// 'width':'80%'
-    });
+    tripGrid.addClass("row col-md-offset-1");
+    // tripGrid.css({
+    // 	'top':'100px',
+    // 	'left':'10%',
+    // 	'position':'absolute',
+    // 	'height':'auto',
+    // 	'width':'80%'
+    // });
     // addTrip=createThumbnail("../images/plus.jpeg");
     // tripGrid.append(addTrip);
     // addTrip.attr('data-toggle','modal');
@@ -79,20 +79,7 @@ Homepage = (function(){
         // tripGrid.append(oneTrip);
         tripGrid.append(trip);
     }
-    /*
-    var trip1 = Util.photoPreview(true);//createThumbnail("../images/1.JPG");
-    tripGrid.append(trip1);
-    var trip2 = Util.photoPreview(true);//createThumbnail("../images/2.jpg");
-    tripGrid.append(trip2);
-    var trip3 = Util.photoPreview(true);//createThumbnail("../images/3.jpg");
-    tripGrid.append(trip3);
-    var trip4 = Util.photoPreview(true);//createThumbnail("../images/4.jpg");
-    tripGrid.append(trip4);
-    var trip5 = Util.photoPreview(true);//createThumbnail("../images/5.JPG");
-    tripGrid.append(trip5);
-    var trip6 = Util.photoPreview(true);//createThumbnail("../images/6.JPG");
-    tripGrid.append(trip6);
-*/
+
 
     /**
     Function for create a div for a trip, 

@@ -25,31 +25,31 @@ Util = (function(){
     };
 
 
-//get value from local storage
-function getFromLocalStorage(key) {
- var item = localStorage.getItem(key);
- if(item) { 
-    return item;
-}
-else {
-    console.log("could not store " + key);
-    return null;
-}
-}
+    //get value from local storage
+    function getFromLocalStorage(key) {
+        var item = localStorage.getItem(key);
+        if(item) { 
+            return item;
+        }
+        else {
+            console.log("could not store " + key);
+            return null;
+        }
+    }
 
-//gets parameter either from url if available or local storage if not
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i=0;i<vars.length;i++) {
-    var pair = vars[i].split("=");
-    if (pair[0] == variable) {
-      return pair[1];
-  }
-} 
-//if it's not a parameter, check if it's in local storage
-return getFromLocalStorage(variable);
-}
+    //gets parameter either from url if available or local storage if not
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        } 
+        //if it's not a parameter, check if it's in local storage
+        return getFromLocalStorage(variable);
+    }
 
 	/**
      * make a Modal when a button is clicked. 
@@ -185,25 +185,25 @@ return getFromLocalStorage(variable);
                 'required':true,
                 'disabled':true,
             });*/
-}
-if(type===2){
-    titleInput.attr({
-        'type':'email',
-        'required':true,
-    });
-}
-if(type===3){
-    titleInput.attr('name','password');
-    titleInput.attr('type','password');
-}
-titleInput.addClass('form-control');
-titleInput.attr('placeholder',placeholder);
-if(value){
-    titleInput.attr('value',value);
-}
+        }
+        if(type===2){
+            titleInput.attr({
+                'type':'email',
+                'required':true,
+            });
+        }
+        if(type===3){
+            titleInput.attr('name','password');
+            titleInput.attr('type','password');
+        }
+        titleInput.addClass('form-control');
+        titleInput.attr('placeholder',placeholder);
+        if(value){
+            titleInput.attr('value',value);
+        }
 
-return wrapper;
-}
+    return wrapper;
+    }
     /*
 
     */
@@ -284,35 +284,17 @@ return wrapper;
             //submit_input.toggle();
         });
 
-        // $("#registration").validate({
-        //     rules:{
-        // // $.extend(settings, {
-        // //     rules: {
-        //         email: {required:true,email: true},
-        //         pwd:{required:true},
-        //         firstname:{required:true},
-        //         lastname:{required:true},
-        //         username:{required:true},
-        //     },
-        //     messages: {
-        //         "email": "<li>Please enter a valid Email address.</li>",
-        //         pwd: "password required",
-        //         firstname:"Please enter your first name",
-        //         lastname:"Please enter your last name",
-        //         username:"Please enter your username",
-        //     }
-        // });
 
-var closebtn = $(document.getElementById(id+'closebtn'));
-console.log(id+'closebtn');
-closebtn.click(function(){
-    console.log("clicked");
-    registration.find('input:text, input:password, input:file, select, textarea').val('');
-            // registration.validate().resetForm();
-            // $(this).closest('form').find("input[type=text], textarea").val("");
+        var closebtn = $(document.getElementById(id+'closebtn'));
+        console.log(id+'closebtn');
+        closebtn.click(function(){
+        console.log("clicked");
+        registration.find('input:text, input:password, input:file, select, textarea').val('');
+                // registration.validate().resetForm();
+                // $(this).closest('form').find("input[type=text], textarea").val("");
         });
-return modal;
-}
+    return modal;
+    }
     /**
     function to make a post in trip view, it can be with img only, or text only, or both.
     probably, later add videos too. toEntry is the link to the post's main page.
@@ -496,33 +478,43 @@ return modal;
     }
     this.carouselItem = carouselItem;
 
+
     function tripPreview(src,spec,cap,desc,link){
         var colDiv = $(document.createElement('div'));
-        // var thumba=$(document.createElement('a'));
-        // thumba.attr('href',link);
-        // colDiv.append(thumba);        
-        // var descript=desc;
-        // var spec={
-        //         img: src,
-        //         title: cap,
-        //         description: desc,
-        // };
-        var modal = editBtn("Trip",spec);
-        colDiv.addClass('col-sm-6 col-md-4');
-        var thumbDiv = $(document.createElement('div'));
-        thumbDiv.addClass('thumbnail');
-        colDiv.append(thumbDiv);
-        var thumbnail=$(document.createElement('img'));
-        thumbnail.attr("src",src);
+        colDiv.addClass("col-md-5");
+        colDiv.css({
+            'background-color':Util.yellow,
+            'height':'400px',
+            // 'padding-left':'20px',
+            'margin-right':'40px',
+            'margin-bottom':'40px',
 
-        thumbnail.attr("alt","No image for the trip available")
-        thumbDiv.append(thumbnail);
+        });
+        var thumbDiv = $(document.createElement('div'));
+        thumbDiv.css({
+            'top':'3%',
+            'left':'10%',
+            'height':'60%',
+            'width':'80%',
+            'position':'absolute',
+            'background':'url(' + src + ')',
+            'background-size':'contain',
+            'background-repeat': 'no-repeat',
+            'background-position':'center',
+        });
+        colDiv.append(thumbDiv);
+
         var captionDiv = $(document.createElement('div'));
         captionDiv.addClass("caption");
-        thumbDiv.append(captionDiv);
+        captionDiv.css({
+            'top':'64%',
+            'position':'absolute',
+            'width':'90%',
+        });
+        colDiv.append(captionDiv);
         var caption = $(document.createElement('label'));
         captionDiv.append(caption);
-        captionDiv.css('width','100%');
+        // captionDiv.css('width','100%');
         caption.css({
             'width':'100%',
             'overflow':'hidden',
@@ -532,22 +524,28 @@ return modal;
         caption.text(spec.title);
         var descDiv = $(document.createElement('div'));
         descDiv.css({
-            'height':'60px',
+            'height':'45px',
             'overflow':'hidden',
-            // 'white-space': 'nowrap',
+            //'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
         });
-        // var descript=$(document.createElement('p'))
-        if(spec.desc===null){
+        // var descript=$(document.createElement('p'));
+        // descript.css({
+        //     'text-overflow': 'ellipsis',
+        // });
+        if(spec.description===null){
             descDiv.text("Click Edit to add description");
         }else{
-            descDiv.text(spec.desc);
+            descDiv.text(spec.description);
         }
+        // descDiv.append(descript);
         captionDiv.append(descDiv);
         var btngroup = $(document.createElement('div'));
         btngroup.addClass('row');
         captionDiv.append(btngroup);
+        
 
+        var modal = editBtn("Trip",spec);
         var editbtn = $(document.createElement('button'));
         // descDiv.text(desc);
         editbtn.text("Edit");
@@ -555,7 +553,6 @@ return modal;
         editbtn.click(function(){
             modal.modal({show:true});
             //open a modal to edit info about the photo
-
         });
 
         var viewbtna = $(document.createElement('a'));
@@ -566,7 +563,10 @@ return modal;
         viewbtna.attr("href",spec.link);
         viewbtn.click(function(){});
         viewbtna.append(viewbtn);
+        var deleteDiv=$(document.createElement("div"));
+        deleteDiv.addClass("col-sm-3");
         var deleteForm = $(document.createElement('form'));
+        deleteDiv.append(deleteForm);
         deleteForm.attr('method', 'post');
         deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
         var deletebtn = $(document.createElement('button'));
@@ -579,10 +579,102 @@ return modal;
         });
         deleteForm.append(deletebtn);
         btngroup.append(editbtn);
+        btngroup.append(deleteDiv);
+
         btngroup.append(viewbtna);
-        btngroup.append(deleteForm);
         return colDiv;
     }
+    // function tripPreview(src,spec,cap,desc,link){
+    //     var colDiv = $(document.createElement('div'));
+    //     // var thumba=$(document.createElement('a'));
+    //     // thumba.attr('href',link);
+    //     // colDiv.append(thumba);        
+    //     // var descript=desc;
+    //     // var spec={
+    //     //         img: src,
+    //     //         title: cap,
+    //     //         description: desc,
+    //     // };
+    //     var modal = editBtn("Trip",spec);
+    //     colDiv.addClass('col-md-5');
+    //     var thumbDiv = $(document.createElement('div'));
+    //     //thumbDiv.addClass('thumbnail');
+    //     colDiv.append(thumbDiv);
+    //     var thumbnail=$(document.createElement('img'));
+    //     thumbnail.attr("src",src);
+
+    //     thumbnail.attr("alt","No image for the trip available")
+    //     thumbDiv.append(thumbnail);
+    //     var captionDiv = $(document.createElement('div'));
+    //     captionDiv.addClass("caption");
+    //     thumbDiv.append(captionDiv);
+    //     var caption = $(document.createElement('label'));
+    //     captionDiv.append(caption);
+    //     captionDiv.css('width','100%');
+    //     caption.css({
+    //         'width':'100%',
+    //         'overflow':'hidden',
+    //         'white-space': 'nowrap',
+    //         'text-overflow': 'ellipsis',
+    //     });
+    //     caption.text(spec.title);
+    //     var descDiv = $(document.createElement('div'));
+    //     descDiv.css({
+    //         'height':'60px',
+    //         'overflow':'hidden',
+    //         // 'white-space': 'nowrap',
+    //         'text-overflow': 'ellipsis',
+    //     });
+    //     // var descript=$(document.createElement('p'))
+    //     if(spec.description===null){
+    //         descDiv.text("Click Edit to add description");
+    //     }else{
+    //         descDiv.text(spec.description);
+    //     }
+    //     captionDiv.append(descDiv);
+    //     var btngroup = $(document.createElement('div'));
+    //     btngroup.addClass('row');
+    //     captionDiv.append(btngroup);
+
+    //     var editbtn = $(document.createElement('button'));
+    //     // descDiv.text(desc);
+    //     editbtn.text("Edit");
+    //     editbtn.addClass("btn btn-default col-sm-offset-1");
+    //     editbtn.click(function(){
+    //         modal.modal({show:true});
+    //         //open a modal to edit info about the photo
+
+    //     });
+
+    //     var viewbtna = $(document.createElement('a'));
+    //     var viewbtn = $(document.createElement('button'));
+    //     viewbtn.text("View");
+    //     viewbtn.addClass('btn btn-default col-sm-offset-1');
+    //     //TODO: lead to the trip's page when clicked
+    //     viewbtna.attr("href",spec.link);
+    //     viewbtn.click(function(){});
+    //     viewbtna.append(viewbtn);
+    //     var deleteDiv=$(document.createElement("div"));
+    //     deleteDiv.addClass("col-sm-3");
+    //     var deleteForm = $(document.createElement('form'));
+    //     deleteDiv.append(deleteForm);
+    //     deleteForm.attr('method', 'post');
+    //     deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
+    //     var deletebtn = $(document.createElement('button'));
+    //     deletebtn.text("Delete");
+    //     deletebtn.addClass("btn btn-default delete col-sm-offset-1");
+    //     deletebtn.click(function(){
+    //         colDiv.remove(); 
+    //         modal.remove();
+
+    //     });
+    //     deleteForm.append(deletebtn);
+    //     btngroup.append(editbtn);
+    //     btngroup.append(deleteDiv);
+
+    //     btngroup.append(viewbtna);
+    //     return colDiv;
+    // }
 
     /**
     Given an exisitng photo preview, update its text

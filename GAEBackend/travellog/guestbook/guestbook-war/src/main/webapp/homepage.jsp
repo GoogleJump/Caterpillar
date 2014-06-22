@@ -72,7 +72,7 @@
         </ul>
       </div>
     </div><!--/.nav-collapse -->
-    <div id="main" class="container-fluid">
+    <div id="main" class="container">
 
 <script>
       // check if storage is available for this browser
@@ -135,7 +135,7 @@
 <%
     }
 %>
-<blockquote></blockquote>
+<!-- <blockquote></blockquote> -->
 <%
     }
 %>

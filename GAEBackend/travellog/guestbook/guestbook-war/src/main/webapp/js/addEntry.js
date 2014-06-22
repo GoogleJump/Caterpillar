@@ -12,7 +12,7 @@ addEntry = (function(){
 	contentForm.append(contentDiv);
 	// main.append(contentForm); //already appended though...
 	contentDiv.addClass("row");
-	main.css('padding-bottom','60px');
+	// main.css('padding-bottom','60px');
 	var pageheader = $(document.createElement('div'));
 	pageheader.addClass('page-header col-md-12');
 	contentDiv.append(pageheader); 

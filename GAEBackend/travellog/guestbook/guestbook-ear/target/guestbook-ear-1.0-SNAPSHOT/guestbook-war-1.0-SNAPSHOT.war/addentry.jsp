@@ -69,7 +69,7 @@
        <!-- <input type="file" id="fileElem" multiple accept="image/*" style="display:none" > testing something, not sure if should comment out or not-->
 
       </div>
-
+    <div id="footer" class="footer navbar-fixed-bottom"><p>Copyright (c) Caterpillar</p></div>
     <script src="../js/util/jquery-1.10.2.min.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.min.js"></script>

@@ -120,6 +120,7 @@ Tripview = (function(){
 			if(imgs.length===0){
 				hasImage=false;
 			}
+			console.log("DESCRPTION: "+entryDescripion);
 			allEntries.append(Util.makePost(hasText, hasImage,entrytitle,entryDescripion,imgs));
 		}
 	}
