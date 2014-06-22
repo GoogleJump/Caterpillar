@@ -72,6 +72,7 @@ li{
 #main{
 	position:absolute;
 	top:100px;
+	padding-bottom:60px;
 }
 /*.footer, .push {
     height: 155px;  .push must be the same height as .footer 
@@ -79,7 +80,7 @@ li{
     margin-top: 20px
 }*/
 #footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
