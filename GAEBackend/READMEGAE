@@ -3,10 +3,10 @@ This is not a read me right now (actually never a README).  It’s more like…t
 To-Do eventually or soon or maybe if there’s time in the near future:
 (edit: attempted to sort them somewhat by priority, feel free to change up order)
 
-entry page - information on entry (date created, location, description) - is this done??
+(DONE BUT NEED TO BE REVIEWED/ADD BACKEND STUFF)entry page - information on entry (date created, location, description) - is this done??
 edit/delete entries and functionality
 edit/delete photo functionality
-return and depart date need to be dates not strings
+return and depart date need to be dates not strings(I think this is already done? moment can get date)
 information on photos - store them in blob?
 wrong inputs for sign up/sign in should warn user (wrong username/password, etc.)
 location value should be geo point, not string
