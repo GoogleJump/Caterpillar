@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-1.0-sdk/1.9.3/appengine-api-1.0-sdk-1.9.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jstl/jstl/1.2/jstl-1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-testing/1.9.3/appengine-testing-1.9.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-stubs/1.9.3/appengine-api-stubs-1.9.3.jar"/>
+	<classpathentry kind="output" path="target/guestbook-war-1.0-SNAPSHOT/WEB-INF/classes"/>
+</classpath>
