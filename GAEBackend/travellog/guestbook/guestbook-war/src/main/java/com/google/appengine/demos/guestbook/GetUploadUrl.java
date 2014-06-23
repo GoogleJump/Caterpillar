@@ -15,7 +15,7 @@ public class GetUploadUrl extends HttpServlet {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String blobUploadUrl = blobstoreService.createUploadUrl("/blob/upload");
+        String blobUploadUrl = blobstoreService.createUploadUrl("/blob/getblobkey");
         
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/plain");
