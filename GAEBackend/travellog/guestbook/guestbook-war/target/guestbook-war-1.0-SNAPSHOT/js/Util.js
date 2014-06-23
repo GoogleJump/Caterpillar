@@ -61,6 +61,7 @@ Util = (function(){
      */
 
      function makeModal(modalId,title, islarge, index) {
+        console.log("making modal:" + index);
         var modal = $(document.createElement('div'));
         modal.addClass('modal fade');
         modal.attr('data-backdrop','false');
@@ -813,7 +814,7 @@ Util = (function(){
     @param: type: indicates which kind of edit button this is for
     @param: spec: includes title, description,date,loc and image. 
     */
-    function editBtn(type, spec){
+    function editBtn(type, spec) {
         console.log(spec);
         var title = spec.title,
         thumb = spec.img,
@@ -825,17 +826,17 @@ Util = (function(){
 
         var modal;
         if(type==="Trip"){
-            modal=makeModal(spec.link, "Edit Trip", false, -1);  
+            modal=makeModal(spec.title, "Edit Trip", false, -1);  
              //submission functionality:
-             $(document.getElementById(spec.link + "savebtn")).click(function(){
+             $(document.getElementById(spec.title + "savebtn")).click(function(){
                 contentForm.submit();
             });
          } else{
-            modal=makeModal(spec.link, "Edit Photo", false, index);
+            modal=makeModal(spec.title, "Edit Photo", false, index);
         }
         var body = $(document.getElementById("body"));
         body.append(modal); 
-        var modalBody = $(document.getElementById(spec.link+"modalBody"));
+        var modalBody = $(document.getElementById(spec.title+"modalBody"));
         var contentForm = $(document.createElement('form'));
         modalBody.append(contentForm);
 
@@ -932,8 +933,8 @@ Util = (function(){
            // titleInputField.attr('id', 'photoTitle'+spec.index);
             //also put in file name so we can match photos to info?? TODO: HOW...
             //if submitted, append inputs to main content form
-            var submitEditPhoto = $(document.getElementById(spec.link + "savebtn"));
-            var closeEditPhoto = $(document.getElementById(spec.link + "closebtn"));
+            var submitEditPhoto = $(document.getElementById(spec.title + "savebtn"));
+            var closeEditPhoto = $(document.getElementById(spec.title + "closebtn"));
             submitEditPhoto.click(function(e){
                 e.preventDefault(); //no submission
                 //TODO: update photo preview
@@ -970,7 +971,7 @@ Util = (function(){
             console.log("about to photo preview with index" + i);
             toDiv.append(photoPreview(file, filename, "Edit to add Description", i));
         }
-        return filenames;
+        return fileurl;
     }
 
 })();
