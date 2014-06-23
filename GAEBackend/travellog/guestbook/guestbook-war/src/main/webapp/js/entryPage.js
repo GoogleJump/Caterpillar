@@ -50,7 +50,8 @@ entryPage= (function(){
  	var photoDiv = $(document.getElementById("photoDiv"));
  	var photos = $(document.getElementsByClassName("entryPhoto"));
  	for(var i = 0; i < photos.length; ++i) {
- 		photoDiv.append(createThumbnail(photos.attr("src"), photos.attr("value")));
+ 		var photo = $(photos[i]);
+ 		photoDiv.append(createThumbnail(photo.attr("id"), photo.attr("value"), i));
  	}
 
  	/*photoDiv.append(createThumbnail("../images/1.JPG", "Image1",0));

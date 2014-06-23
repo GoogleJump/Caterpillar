@@ -121,7 +121,7 @@
             alt="no image for trip available"/>
           </a>
         </div>-->
-        <img class="entryPhoto" src="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" style="display: none">
+        <div class="entryPhoto" id="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" style="display: none">
 
 <%
 }

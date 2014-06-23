@@ -957,7 +957,6 @@ Util = (function(){
 
     /*function for uploading photo button, called in addEntry.**/
     //returns the file names (todo: or maybe should return files themselves??)
-    //trying to return fileurl instead
     function uploadPhotos(selector, toDiv){
         var files = selector.files;
         var filenames = new Array(files.length);
@@ -969,9 +968,9 @@ Util = (function(){
             filenames[i] = filename;
             fileurl[i] = URL.createObjectURL(file.slice());
             console.log("about to photo preview with index" + i);
-            toDiv.append(photoPreview(file,filename,"Edit to add Description", i));
+            toDiv.append(photoPreview(file, filename, "Edit to add Description", i));
         }
-        return fileurl;
+        return filenames;
     }
 
 })();

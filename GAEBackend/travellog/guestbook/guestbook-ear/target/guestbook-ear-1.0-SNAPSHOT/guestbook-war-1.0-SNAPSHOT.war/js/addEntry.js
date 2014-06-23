@@ -321,7 +321,8 @@ addEntry = (function(){
 	savebtn.click(function(){
 		
 		//create inputs for each of the photo previews
-		var thumbs = $(document.getElementsByClassName);
+		var thumbs = $(document.getElementsByClassName("thumbnail"));
+		console.log("thumbnail amount is:" + thumbs.length);
 		for(var i = 0; i < thumbs.length; ++i) {
 			var titleInput = $(document.createElement('input'));
 			titleInput.attr('name', 'photoTitle');
