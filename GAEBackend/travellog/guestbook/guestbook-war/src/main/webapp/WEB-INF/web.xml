@@ -4,72 +4,88 @@
 "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
-  <servlet>
-    <servlet-name>guestbook</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.GuestbookServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>insertUser</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.InsertUserServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>signIn</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.SignInServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>insertTrip</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.InsertTripServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>insertEntry</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.InsertEntryServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>Upload</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.Upload</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>getImage</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.GetImageFromBlobKey</servlet-class>
-  </servlet>
-    <servlet>
-    <servlet-name>getTripImage</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.GetTripImage</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>guestbook</servlet-name>
-    <url-pattern>/guestbook</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>insertUser</servlet-name>
-    <url-pattern>/insertUser</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>signIn</servlet-name>
-    <url-pattern>/signIn</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>insertTrip</servlet-name>
-    <url-pattern>/insertTrip</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>insertEntry</servlet-name>
-    <url-pattern>/insertEntry</url-pattern>
-  </servlet-mapping>
-<servlet-mapping>
-  <servlet-name>Upload</servlet-name>
-  <url-pattern>/upload</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-  <servlet-name>getImage</servlet-name>
-  <url-pattern>/getImage</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-  <servlet-name>getTripImage</servlet-name>
-  <url-pattern>/getTripImage</url-pattern>
-</servlet-mapping>
-<welcome-file-list>
- <welcome-file>signin.jsp</welcome-file>
-</welcome-file-list>
+	<servlet>
+		<servlet-name>guestbook</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.GuestbookServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>insertUser</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.InsertUserServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>signIn</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.SignInServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>insertTrip</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.InsertTripServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>insertEntry</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.InsertEntryServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Upload</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.Upload</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>getImage</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.GetImageFromBlobKey</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>getTripImage</servlet-name>
+		<servlet-class>com.google.appengine.demos.guestbook.GetTripImage</servlet-class>
+	</servlet>
+	<servlet>
+	    <servlet-name>GetUploadUrl</servlet-name>
+	    <servlet-class>com.google.appengine.demos.guestbook.GetUploadUrl</servlet-class>
+	</servlet>
+	<servlet>
+	    <servlet-name>GetBlobKey</servlet-name>
+	    <servlet-class>com.google.appengine.demos.guestbook.GetBlobKey</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>guestbook</servlet-name>
+		<url-pattern>/guestbook</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>insertUser</servlet-name>
+		<url-pattern>/insertUser</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>signIn</servlet-name>
+		<url-pattern>/signIn</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>insertTrip</servlet-name>
+		<url-pattern>/insertTrip</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>insertEntry</servlet-name>
+		<url-pattern>/insertEntry</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>getImage</servlet-name>
+		<url-pattern>/getImage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>getTripImage</servlet-name>
+		<url-pattern>/getTripImage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>GetUploadUrl</servlet-name>
+	    <url-pattern>/blob/getuploadurl</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>GetBlobKey</servlet-name>
+	    <url-pattern>/blob/getblobkey</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>signin.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

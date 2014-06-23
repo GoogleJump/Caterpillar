@@ -63,27 +63,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "noteendpoint.removeNote" : {
-      "path" : "note/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.NoteEndpoint.removeNote",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
     "noteendpoint.listNote" : {
       "path" : "note",
       "httpMethod" : "GET",
@@ -107,6 +86,27 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "noteendpoint.removeNote" : {
+      "path" : "note/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.travellog.NoteEndpoint.removeNote",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
       }
     },
     "noteendpoint.insertNote" : {
@@ -173,12 +173,12 @@
           "$ref" : "Note"
         }
       },
-      "com.travellog.NoteEndpoint.removeNote" : {
-      },
       "com.travellog.NoteEndpoint.listNote" : {
         "response" : {
           "$ref" : "CollectionResponse_Note"
         }
+      },
+      "com.travellog.NoteEndpoint.removeNote" : {
       },
       "com.travellog.NoteEndpoint.insertNote" : {
         "request" : {

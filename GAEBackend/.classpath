@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="travellog/guestbook/guestbook-war/src/main/java"/>
+	<classpathentry kind="lib" path="travellog/guestbook/guestbook-ear/target/guestbook-ear-1.0-SNAPSHOT/guestbook-war-1.0-SNAPSHOT.war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.6.jar"/>
+	<classpathentry kind="lib" path="travellog/guestbook/guestbook-ear/target/guestbook-ear-1.0-SNAPSHOT/guestbook-war-1.0-SNAPSHOT.war/WEB-INF/lib/jstl-1.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="output" path="travellog/guestbook/guestbook-ear/target/guestbook-ear-1.0-SNAPSHOT/guestbook-war-1.0-SNAPSHOT.war/WEB-INF/classes"/>
+</classpath>
