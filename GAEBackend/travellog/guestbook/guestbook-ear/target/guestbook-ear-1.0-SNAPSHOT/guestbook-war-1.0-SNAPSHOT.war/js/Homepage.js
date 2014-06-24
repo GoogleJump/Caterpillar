@@ -137,24 +137,27 @@ Homepage = (function(){
             'position':'relative',
             'width':'80%'
         });
-        var titleWrapper = Util.inputGroup('Title: ', 'title', 'Untitled',null);
+        var titleWrapper = Util.inputGroup('Title: ', 'title', 'Untitled',null,null,true);
         addTripform.append(titleWrapper);
         titleWrapper.children('input').eq(0).attr({
             'name': 'title',
             'required':true,
         });
 
-        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Location',null,4);
+        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Location',null,4,false);
         addTripform.append(locationWrapper);
-        locationWrapper.children('input').eq(0).attr('name', 'location');
+        locationWrapper.children('input').eq(0).attr({
+            'name': 'location',
+            // 'required':true,
+        });
 
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
         // rowwrapper.append(timeWrapper);
-        var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1);
+        var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1,false);
         start.addClass('col-md-12');
         start.children('input').eq(0).attr('name', 'departDate');
-        var end = Util.inputGroup('End: ', 'retDate', "Choose an end date",null,1);
+        var end = Util.inputGroup('End: ', 'retDate', "Choose an end date",null,1,false);
         end.children('input').eq(0).attr('name', 'retDate');
         end.addClass('col-md-12');
         addTripform.append(start); 

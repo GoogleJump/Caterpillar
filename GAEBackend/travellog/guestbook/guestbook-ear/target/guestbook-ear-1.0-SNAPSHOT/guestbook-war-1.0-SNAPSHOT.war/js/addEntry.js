@@ -20,9 +20,11 @@ addEntry = (function(){
 	header.text("Add a Post");
 	pageheader.append(header);
 
-	var title = Util.inputGroup('Title: ', "Untitled","Untitled");
+	var title = Util.inputGroup('Title: ', "Untitled","Untitled",null,null,true);
 	title.addClass('col-md-6 col-sm-offset-1');
 	title.children('input').eq(0).attr("name", "title");
+	// title.children("input").eq(0).setCustomValidity('Please type your title for the trip');
+
 	contentDiv.append(title);
 
 
@@ -319,7 +321,10 @@ addEntry = (function(){
 
 	//make sure this button submits the form (because there are two buttons it might not work):
 	savebtn.click(function(){
-		
+		// if(title.children("input").eq(0).val()===""){
+		// 	title.children("input").eq(0).setCustomValidity('Please type your title for the trip');
+		// 	return;
+		// }
 		//create inputs for each of the photo previews
 		var thumbs = $(document.getElementsByClassName("thumbnail"));
 		console.log("thumbnail amount is:" + thumbs.length);

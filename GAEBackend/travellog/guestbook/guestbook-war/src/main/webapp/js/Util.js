@@ -148,7 +148,7 @@ Util = (function(){
     type4: location
     **/
 
-    function inputGroup(nametitle, inputname, placeholder,value,type){
+    function inputGroup(nametitle, inputname, placeholder,value,type, isrequired){
         var wrapper = $(document.createElement('div'));
         wrapper.addClass('input-group');
         wrapper.css({
@@ -168,6 +168,9 @@ Util = (function(){
         titleInput.attr('type','text');
         titleInput.attr('name', inputname);
         wrapper.append(titleInput);
+        if(isrequired===true){
+            titleInput.attr('required',true);
+        }
         if(type===1){
             //add the button to show the calendar
             wrapper.addClass('date');
@@ -218,7 +221,11 @@ Util = (function(){
         var modalBody = $(document.getElementById(id+"modalBody"));
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');
-        contentRow.css('width','80%');
+        contentRow.css({
+            'width':'80%',
+            'left':'10%',
+            'position':'relative'
+        });
         modalBody.append(contentRow);
         var registration = $(document.createElement('form'));
         registration.addClass('form-horizontal');
@@ -227,10 +234,10 @@ Util = (function(){
         registration.attr('action', '/insertUser');
         registration.attr('id','registration');
         // var username = $(document)
-        var username = inputGroup('Username','username', 'Pick a Username',null,null);
+        var username = inputGroup('Username','username', 'Pick a Username',null,null,true);
         username.children('input').eq(0).attr({
             'name':'username',
-            'required':'true',
+            // 'required':'true',
         });
         registration.append(username);
 
@@ -249,17 +256,17 @@ Util = (function(){
         // emailinput.attr('required');
         // password.attr('type','password');
 
-        var firstname = inputGroup('First Name', 'firstname', null, null, null);
+        var firstname = inputGroup('First Name', 'firstname', null, null, null,true);
         firstname.children('input').eq(0).attr({
             'name':'firstname',
-            'required':'true',
+            //'required':'true',
         });
         registration.append(firstname);
 
-        var lastname = inputGroup('Last Name', 'lastname', null, null, null);
+        var lastname = inputGroup('Last Name', 'lastname', null, null, null,true);
         lastname.children('input').eq(0).attr({
             'name':'lastname',
-            'required':'true',
+            //'required':'true',
         });
         registration.append(lastname);
 
@@ -359,11 +366,13 @@ Util = (function(){
                 'color':'black',
             });
             textDiv.append(block);
+
             textDiv.css({
-                'height':'auto',
+                'max-height':'300px',
                 'padding-bottom':'5px',
                 'text-overflow':'ellipsis',
                 'overflow':'hidden',
+                'word-wrap': 'break-word'
             });
             var text=$(document.createElement('p'));
             text.text(entrydesp)
@@ -531,7 +540,7 @@ Util = (function(){
         descDiv.css({
             'height':'45px',
             'overflow':'hidden',
-            //'white-space': 'nowrap',
+            'word-wrap': 'break-word',
             'text-overflow': 'ellipsis',
         });
         // var descript=$(document.createElement('p'));
@@ -554,7 +563,7 @@ Util = (function(){
         var editbtn = $(document.createElement('button'));
         // descDiv.text(desc);
         editbtn.text("Edit");
-        editbtn.addClass("btn btn-default col-sm-offset-1");
+        editbtn.addClass("btn btn-default col-sm-offset-2");
         editbtn.click(function(){
             modal.modal({show:true});
             //open a modal to edit info about the photo
@@ -563,20 +572,20 @@ Util = (function(){
         var viewbtna = $(document.createElement('a'));
         var viewbtn = $(document.createElement('button'));
         viewbtn.text("View");
-        viewbtn.addClass('btn btn-default col-sm-offset-1');
+        viewbtn.addClass('btn btn-default col-sm-offset-2');
         //TODO: lead to the trip's page when clicked
         viewbtna.attr("href",spec.link);
         viewbtn.click(function(){});
         viewbtna.append(viewbtn);
         var deleteDiv=$(document.createElement("div"));
-        deleteDiv.addClass("col-sm-3");
+        deleteDiv.addClass("col-sm-2 col-sm-offset-1");
         var deleteForm = $(document.createElement('form'));
         deleteDiv.append(deleteForm);
         deleteForm.attr('method', 'post');
         deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
         var deletebtn = $(document.createElement('button'));
         deletebtn.text("Delete");
-        deletebtn.addClass("btn btn-default delete col-sm-offset-1");
+        deletebtn.addClass("btn btn-default delete");
         deletebtn.click(function(){
             colDiv.remove(); 
             modal.remove();
@@ -856,7 +865,7 @@ Util = (function(){
         thumbnail.attr('src',thumb);
         var titleRow =$(document.createElement('div'));
         titleRow.addClass("row col-md-10 col-sm-offset-1");
-        var titleInput = inputGroup("Title: ", 'title', null, title);
+        var titleInput = inputGroup("Title: ", 'title', null, title,null,true);
         titleRow.append(titleInput);    
         contentRow.append(titleRow);
 
@@ -866,13 +875,13 @@ Util = (function(){
             contentForm.attr('method', 'post')
             var startDiv = $(document.createElement('div'));
             startDiv.addClass("row col-md-10 col-sm-offset-1");
-            var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1);
+            var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1,true);
             startDiv.append(start);
             // start.addClass('row col-md-10 col-sm-offset-1');
             start.children('input').eq(0).attr('name', 'departDate');
             var endDiv = $(document.createElement('div'));
             endDiv.addClass("row col-md-10 col-sm-offset-1");
-            var end = Util.inputGroup('End: ', 'retDate',"Choose an end date",null,1);
+            var end = Util.inputGroup('End: ', 'retDate',"Choose an end date",null,1,true);
             endDiv.append(end);
             end.children('input').eq(0).attr('name', 'retDate');
             // end.addClass('row col-md-10 col-sm-offset-1');
@@ -890,7 +899,7 @@ Util = (function(){
             });
             var locRow =$(document.createElement('div'));
             locRow.addClass("row col-md-10 col-sm-offset-1");
-            var locInput = inputGroup("Location: ", 'location', null, loc);
+            var locInput = inputGroup("Location: ", 'location', null, loc,null,false);
             locRow.append(locInput);    
             contentRow.append(locRow);
         }
