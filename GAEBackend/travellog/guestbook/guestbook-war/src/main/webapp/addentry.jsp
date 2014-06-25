@@ -63,7 +63,7 @@
       </div><!--/.nav-collapse -->
       <div id="main" class="container-fluid">
         <form id="addEntry" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
-        <input type="file" id="fileElem" multiple accept="image/*" name="fileUpload">
+        <input type="file" id="fileElem" class="multi" accept="image/*" name="fileUpload">
         </form>
         <!-- hidden file selector for customized button -->
        <!-- <input type="file" id="fileElem" multiple accept="image/*" style="display:none" > testing something, not sure if should comment out or not-->

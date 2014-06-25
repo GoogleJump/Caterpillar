@@ -19,13 +19,16 @@ addEntry = (function(){
 	var header = $(document.createElement('h1'));
 	header.text("Add a Post");
 	pageheader.append(header);
-
-	var title = Util.inputGroup('Title: ', "Untitled","Untitled",null,null,true);
+	var msg = "Please type in your title for trip";
+	var title = Util.inputGroup('Title: ', "Untitled","Untitled",null,null,true,msg);
 	title.addClass('col-md-6 col-sm-offset-1');
-	title.children('input').eq(0).attr("name", "title");
-	// title.children("input").eq(0).setCustomValidity('Please type your title for the trip');
+	title.children('input').eq(0).attr({
+		"name": "title",
+		"id":"entryTitle",
+	});
 
 	contentDiv.append(title);
+	//document.getElementById("entryTitle").setCustomValidity("Please give your entry a lovely title");
 
 
 
@@ -288,6 +291,13 @@ addEntry = (function(){
 
 
 
+	var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
+    submit_input.attr('type', 'submit');
+    submit_input.css({
+            'display' : 'none'
+    });
+
+    contentForm.append(submit_input);
 
 	var btnsDiv = $(document.createElement('div'));
 	btnsDiv.addClass('row col-sm-offset-1');
@@ -350,7 +360,7 @@ addEntry = (function(){
 		}
 
 		savebtn.submit();
-		contentForm.submit(); //why should we even need this?
+		submit_input.click(); //why should we even need this?
 	});
 	btnsDiv.append(cancelbtn);
 	btnsDiv.append(savebtn);

@@ -80,14 +80,16 @@ signinPage=(function(){
 		'position':'absolute',
 		'padding-left':'5px',
 	});
-	var username = $(document.createElement('input'));
-	username.attr('name', 'email'); //name
-	username.attr('type','email');
-	username.attr('placeholder','Email address');
-	username.attr('required');
-	username.attr('autofocus');
+	var username=document.createElement('input');
+	var $username = $(username);
+	$username.attr('name', 'email'); //name
+	$username.attr('type','email');
+	$username.attr('placeholder','Email address');
+	$username.attr('required',true);
+	//username.setCustomValidity("Please type in your username");
+	$username.attr('autofocus');
 	signinDiv.append(username);
-	username.css({
+	$username.css({
 		'bottom':'25px',
 		'background-color':'#FFFCD4',
 		'text-color':'black',
@@ -96,7 +98,7 @@ signinPage=(function(){
 	var password = $(document.createElement('input'));
 	password.attr('name', 'password'); //name
 	password.attr('placeholder','Password');
-	password.attr('required');
+	password.attr('required',true);
 	password.attr('type','password');
 	signinDiv.append(password);
 	password.css({

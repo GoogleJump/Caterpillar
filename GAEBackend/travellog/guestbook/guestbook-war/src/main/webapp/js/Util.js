@@ -164,7 +164,8 @@ Util = (function(){
             'font-weight':'bold'
         });
         wrapper.append(title);
-        var titleInput = $(document.createElement('input'));
+        var titleinput=document.createElement('input');
+        var titleInput = $(titleinput);
         titleInput.attr('type','text');
         titleInput.attr('name', inputname);
         wrapper.append(titleInput);
@@ -180,7 +181,7 @@ Util = (function(){
             icon.addClass('glyphicon glyphicon-calendar');
             btn.append(icon);
             wrapper.append(btn);
-            titleInput.addClass('form-control');
+            //titleInput.addClass('form-control');
             wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
                 // pickTime: false,
             });
@@ -868,7 +869,15 @@ Util = (function(){
         var titleInput = inputGroup("Title: ", 'title', null, title,null,true);
         titleRow.append(titleInput);    
         contentRow.append(titleRow);
+        
+        //Make sure call submit_input.click() when click submit 
+        var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
+        submit_input.attr('type', 'submit');
+        submit_input.css({
+                'display' : 'none'
+        });
 
+        contentForm.append(submit_input);
         
         if(type==="Trip"){
             contentForm.attr('action', '/editTrip?tripKey='+spec.tripkey);
@@ -956,6 +965,7 @@ Util = (function(){
                 var entryForm = $(document.getElementById("addEntry"));
                 entryForm.append(inputTitle);
                 entryForm.append(inputDescription);*/
+                submit_input.click();
                 closeEditPhoto.click();
 
             });
