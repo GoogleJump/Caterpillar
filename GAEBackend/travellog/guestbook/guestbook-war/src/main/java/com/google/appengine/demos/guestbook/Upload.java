@@ -29,25 +29,6 @@ public class Upload extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("uploading entries/photos");
 		
-		String[] photoTitles;
-		photoTitles = req.getParameterValues("photoTitle");
-		if (photoTitles != null) {
-			for (int i = 0; i < photoTitles.length; i++) {
-				System.out.println("title: " + photoTitles[i]);
-			}
-		}
-
-		String[] photoDescriptions;
-		photoDescriptions = req.getParameterValues("photoDescription");
-		if (photoDescriptions != null) {
-			for (int i = 0; i < photoTitles.length; i++) {
-				System.out.println("title: " + photoTitles[i]);
-			}
-		}
-		// get parameters for entry
-		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
-		System.out.println("number of blobs uploaded: " + blobs.size());
-		List<BlobKey> blobKeys = blobs.get("fileUpload");
 		String title = req.getParameter("title");
 		String description = req.getParameter("description");
 		String tags = req.getParameter("tags");
@@ -63,13 +44,51 @@ public class Upload extends HttpServlet {
 		Date date = new Date();
 		String photoTitle = req.getParameter("photoTitle");
 		System.out.println("photo title is: " + photoTitle);
+		
+		
+		//photo info
+		
+		String[] photoTitles;
+		photoTitles = req.getParameterValues("photoTitle");
+		if (photoTitles != null) {
+			for (int i = 0; i < photoTitles.length; i++) {
+				System.out.println("title: " + photoTitles[i]);
+			}
+		}
+
+		String[] photoDescriptions;
+		photoDescriptions = req.getParameterValues("photoDescription");
+		if (photoDescriptions != null) {
+			for (int i = 0; i < photoTitles.length; i++) {
+				System.out.println("title: " + photoTitles[i]);
+			}
+		}
+		
+		// images
+		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
+		if(blobs == null){ 
+			res.sendRedirect("/tripview.jsp?tripKey="
+					+ posterTrip);
+			return; 
+			}
+		List<BlobKey> blobKeys = blobs.get("fileUpload");
+		if(blobKeys == null) {
+			res.sendRedirect("/tripview.jsp?tripKey="
+					+ posterTrip);
+			return;
+		}
+		System.out.println("number of blobs uploaded: " + blobKeys.size());
+		
+		
+		
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
 		// make photos from blobs
 		List<String> photos = new ArrayList<String>(); // list of photo
 														// entities' key strings
-		for (int i = 0; i < blobs.size(); i++) {
+		for (int i = 0; i < blobKeys.size(); i++) {
+			System.out.println("photo create");
 		/*	Key photoKey = KeyFactory.createKey("Photo",
 					System.currentTimeMillis());
 			Entity photo = new Entity("Photo", photoKey);*/

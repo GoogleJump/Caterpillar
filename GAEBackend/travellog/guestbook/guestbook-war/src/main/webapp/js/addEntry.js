@@ -108,9 +108,10 @@ addEntry = (function(){
 	upload.text('Upload Photos');
 	uploadbtn.append(upload);
 	btnDiv.append(uploadbtn);
-	var fileElem=(document.getElementById("fileElem"));
-
-	uploadbtn.append(fileElem);
+	//var fileElem=(document.getElementById("fileElem"));
+	var fileElem = (document.getElementsByClassName('multi'));
+for(var i = 0; i < fileElem.length; i++) {
+	uploadbtn.append(fileElem[i]);
 	uploadbtn.css({
 		'position': 'relative',
 		'overflow': 'hidden',
@@ -118,7 +119,7 @@ addEntry = (function(){
 		'background-color':Util.dark_purple,
 
 	});
-	$(fileElem).css({
+	$(fileElem[i]).css({
 		'position': 'absolute',
 		'top': '0',
 		'right': '0',
@@ -147,9 +148,17 @@ addEntry = (function(){
 	  	}
 	  	
 	});*/
+} //end of fileElem loop
 	var filenames;
 	$(fileElem).change(function(){
-		filenames = Util.uploadPhotos(fileElem, photoDiv);
+		console.log("fileElem length is:" +fileElem.length);
+		console.log("file Elem is:"+ fileElem);
+		console.log("fileElem[0] is"+ fileElem);
+		for(var j = 0; j < fileElem.length; j++ ) {
+		filenames = Util.uploadPhotos(fileElem[j], photoDiv);
+		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
+	}
+
 		//create inputs with those file names as values: //--don't need this anymore
 		/*for(var i = 0; i < filenames.length; ++i) {
 			var inputFileName = $(document.createElement('input'));
@@ -160,6 +169,7 @@ addEntry = (function(){
 			contentDiv.append(inputFileName);
 		}*/
 	});
+
 
 	/*uploadbtn.text("Upload Photos");
 	uploadbtn.css({

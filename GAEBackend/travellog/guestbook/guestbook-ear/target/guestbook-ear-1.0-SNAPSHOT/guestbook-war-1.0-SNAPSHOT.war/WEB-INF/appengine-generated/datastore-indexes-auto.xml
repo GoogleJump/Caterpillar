@@ -1,6 +1,12 @@
-<!-- Indices written at Tue, 24 Jun 2014 22:27:38 EDT -->
+<!-- Indices written at Wed, 25 Jun 2014 12:49:32 EDT -->
 
 <datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Trip" ancestor="false" source="auto">
+        <property name="owner" direction="asc"/>
+        <property name="dateCreated" direction="desc"/>
+    </datastore-index>
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="Entry" ancestor="false" source="auto">

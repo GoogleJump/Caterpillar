@@ -63,7 +63,7 @@
       </div><!--/.nav-collapse -->
       <div id="main" class="container-fluid">
         <form id="addEntry" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
-        <input type="file" id="fileElem" class="multi" accept="image/*" name="fileUpload">
+        <input type="file" id="fileElem" class="multi" accept="gif|jpg" name="fileUpload" > <!--add multiple="" to have multiple at once, add accept="image/*" if this isn't working-->
         </form>
         <!-- hidden file selector for customized button -->
        <!-- <input type="file" id="fileElem" multiple accept="image/*" style="display:none" > testing something, not sure if should comment out or not-->
@@ -73,6 +73,7 @@
     <script src="../js/util/jquery-1.10.2.min.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/js/jquery.MultiFile.js" type="text/javascript" language="javascript"></script>
     <!-- src for tags -->
     <script src="../js/util/tagsinputs/jquery.tagsinput.js"></script>
     <link rel="stylesheet" type="text/css" href="../js/util/tagsinputs/jquery.tagsinput.css"/>

@@ -978,6 +978,10 @@ Util = (function(){
     /*function for uploading photo button, called in addEntry.**/
     //returns the file names (todo: or maybe should return files themselves??)
     function uploadPhotos(selector, toDiv){
+     //   for(var s = 0; s < selector.length; s++) {
+        //console.log("selector length is:" + selector.length);
+        console.log("selector is" + selector);
+        console.log("selector files is" + selector.files);
         var files = selector.files;
         var filenames = new Array(files.length);
         var fileurl = new Array(files.length);
@@ -990,6 +994,7 @@ Util = (function(){
             console.log("about to photo preview with index" + i);
             toDiv.append(photoPreview(file, filename, "Edit to add Description", i));
         }
+  //  }
         return fileurl;
     }
 
