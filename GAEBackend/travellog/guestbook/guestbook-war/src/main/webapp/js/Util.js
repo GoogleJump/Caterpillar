@@ -719,6 +719,7 @@ Util = (function(){
             description: desc,
             index: i,
         };
+        console.log("photo Preview info is:" + file + " " + cap + " " + desc);
         console.log("photo preview index is:" + spec.index + " or maybe it's" + i);
         var modal = editBtn(null,spec);
         colDiv.addClass('col-sm-6 col-md-4');
@@ -825,7 +826,7 @@ Util = (function(){
     @param: spec: includes title, description,date,loc and image. 
     */
     function editBtn(type, spec) {
-        console.log(spec);
+        console.log("edit button spec is" + spec + "desc is " + spec.description + "title is" + spec.title);
         var title = spec.title,
         thumb = spec.img,
         description = spec.description,
@@ -833,6 +834,13 @@ Util = (function(){
         loc = spec.location;
 
          console.log("edit btn index is: " + index + " or maybe " + spec.index);
+
+      
+        var body = $(document.getElementById("body"));
+        body.append(modal); 
+        var modalBody = $(document.getElementById(spec.title+"modalBody"));
+        var contentForm = $(document.createElement('form'));
+        modalBody.append(contentForm);
 
         var modal;
         if(type==="Trip"){
@@ -844,11 +852,7 @@ Util = (function(){
          } else{
             modal=makeModal(spec.title, "Edit Photo", false, index);
         }
-        var body = $(document.getElementById("body"));
-        body.append(modal); 
-        var modalBody = $(document.getElementById(spec.title+"modalBody"));
-        var contentForm = $(document.createElement('form'));
-        modalBody.append(contentForm);
+
 
 
         var contentRow = $(document.createElement('div'));
@@ -977,7 +981,7 @@ Util = (function(){
 
     /*function for uploading photo button, called in addEntry.**/
     //returns the file names (todo: or maybe should return files themselves??)
-    function uploadPhotos(selector, toDiv){
+    function uploadPhotos(selector, toDiv, ind){
      //   for(var s = 0; s < selector.length; s++) {
         //console.log("selector length is:" + selector.length);
         console.log("selector is" + selector);
@@ -992,7 +996,7 @@ Util = (function(){
             filenames[i] = filename;
             fileurl[i] = URL.createObjectURL(file.slice());
             console.log("about to photo preview with index" + i);
-            toDiv.append(photoPreview(file, filename, "Edit to add Description", i));
+            toDiv.append(photoPreview(file, filename, "Edit to add Description", i+ind));
         }
   //  }
         return fileurl;

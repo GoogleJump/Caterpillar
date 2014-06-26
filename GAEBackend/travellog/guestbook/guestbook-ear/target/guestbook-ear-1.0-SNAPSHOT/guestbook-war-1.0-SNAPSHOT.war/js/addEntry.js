@@ -110,6 +110,7 @@ addEntry = (function(){
 	btnDiv.append(uploadbtn);
 	//var fileElem=(document.getElementById("fileElem"));
 	var fileElem = (document.getElementsByClassName('multi'));
+
 for(var i = 0; i < fileElem.length; i++) {
 	uploadbtn.append(fileElem[i]);
 	uploadbtn.css({
@@ -149,26 +150,84 @@ for(var i = 0; i < fileElem.length; i++) {
 	  	
 	});*/
 } //end of fileElem loop
-	var filenames;
-	$(fileElem).change(function(){
+var filenames;
+/*$(".multi").change(function(){
+	console.log("multi");
+		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
 		console.log("fileElem length is:" +fileElem.length);
 		console.log("file Elem is:"+ fileElem);
 		console.log("fileElem[0] is"+ fileElem);
 		for(var j = 0; j < fileElem.length; j++ ) {
-		filenames = Util.uploadPhotos(fileElem[j], photoDiv);
+			filenames = Util.uploadPhotos(fileElem[j], photoDiv);
+
+		}
+	});
+
+$(".MultiFile-applied").change(function(){
+	console.log("multifile applieD");
 		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
+		console.log("fileElem length multifile-applied is:" +fileElem.length);
+		console.log("file Elem is:"+ fileElem);
+		console.log("fileElem[0] is"+ fileElem);
+		for(var j = 0; j < fileElem.length; j++ ) {
+			filenames = Util.uploadPhotos(fileElem[j], photoDiv);
+
+		}
+	});
+
+$(".MultiFile").change(function(){
+	console.log("multifile");
+		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
+		console.log("fileElem length multifile is:" +fileElem.length);
+		console.log("file Elem is:"+ fileElem);
+		console.log("fileElem[0] is"+ fileElem);
+		for(var j = 0; j < fileElem.length; j++ ) {
+			filenames = Util.uploadPhotos(fileElem[j], photoDiv);
+			
+		}
+	});*/
+
+/*removes all photos and adds the updated ones back on the front end*/
+function addPhotoPreview() {
+	console.log("update");
+		$(photoDiv).empty(); //empty all photo thumbnails
+		//$(".modal").empty(); //empty all modals
+		var num_photos = photoDiv.children().length; //current amount - index of new one will be this length
+		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
+		console.log("fileElem length multifile is:" +fileElem.length);
+		console.log("file Elem is:"+ fileElem);
+		console.log("fileElem[0] is"+ fileElem);
+		for(var j = 0; j < fileElem.length - 1; j++ ) {
+			/*if(("#thumbnail" + j).length > 0) { //index exists - skip
+				console.log("thumbnail exists");
+			}*/
+			//console.log("fileElem value is" + fileElem.value());
+			//if(fileElem.value() != "" && fileElem.value() != null){
+				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j);
+			//}
+		}
 	}
 
-		//create inputs with those file names as values: //--don't need this anymore
-		/*for(var i = 0; i < filenames.length; ++i) {
-			var inputFileName = $(document.createElement('input'));
-			inputFileName.css("display", "none");
-			inputFileName.attr("type", "file");
-			inputFileName.attr("name", entryKey);
-			inputFileName.attr("value", filenames[i]);
-			contentDiv.append(inputFileName);
-		}*/
-	});
+	/*uploadbtn.click(function(){
+		console.log("upload button click");
+		updatePhotoPreviews();
+	});*/
+var first = 0;
+	$(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
+		console.log("upload bind insert/remove");
+
+	
+    if (event.type == 'DOMNodeInserted') {
+        //alert('Content added! Current content:' + '\n\n' + this.innerHTML);
+        if(first != 0) addPhotoPreview(); //don't do this the first time
+		first = 1;
+    } else {
+       // alert('Content removed! Current content:' + '\n\n' + this.innerHTML);
+       console.log("content removed");
+    }
+});
+
+
 
 
 	/*uploadbtn.text("Upload Photos");

@@ -73,6 +73,7 @@ Homepage = (function(){
             img:src,
             tripkey: tripinfo.attr("name"),
             userkey: userKey,
+            index: i,
         };
         var trip = Util.tripPreview(src, spec,"Untitled",null,link);
         //TODO: onclick sets parameter as this trip and leads to tripview **Test
