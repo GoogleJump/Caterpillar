@@ -23,6 +23,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class Upload extends HttpServlet {
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory
 			.getBlobstoreService();
+	private DatastoreService datastore = DatastoreServiceFactory
+			.getDatastoreService();
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -66,7 +68,7 @@ public class Upload extends HttpServlet {
 		
 		// images
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
-		if(blobs == null){ 
+		/*if(blobs == null){ 
 			res.sendRedirect("/tripview.jsp?tripKey="
 					+ posterTrip);
 			return; 
@@ -77,35 +79,19 @@ public class Upload extends HttpServlet {
 					+ posterTrip);
 			return;
 		}
-		System.out.println("number of blobs uploaded: " + blobKeys.size());
+		System.out.println("number of blobs uploaded: " + blobKeys.size());*/
 		
-		
-		
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-
 		// make photos from blobs
 		List<String> photos = new ArrayList<String>(); // list of photo
 														// entities' key strings
-		for (int i = 0; i < blobKeys.size(); i++) {
-			System.out.println("photo create");
-		/*	Key photoKey = KeyFactory.createKey("Photo",
-					System.currentTimeMillis());
-			Entity photo = new Entity("Photo", photoKey);*/
-			Entity photo = new Entity("Photo");
-			photo.setProperty("blobKey", blobKeys.get(i));
-			//TODO: check if this works (if the order uploaded = order info)
-			//if not, upload file name and match them
-			//either way, this will work for just one photo uploaded
-			if(i < photoTitles.length) photo.setProperty("title", photoTitles[i]);
-			else photo.setProperty("title", "");
-			if(i < photoDescriptions.length)photo.setProperty("description", photoDescriptions[i]); 
-			else photo.setProperty("description", "");
-			datastore.put(photo);
-			String photoKeyString = KeyFactory.keyToString(photo.getKey());
-			photos.add(photoKeyString);
+		
+		if(blobs != null) {
+			List<BlobKey> blobKeys = blobs.get("fileUpload");
+			if(blobKeys != null) {
+				createPhotos(photos, blobKeys, photoTitles, photoDescriptions);
+			}
 		}
-	       
+		
 		// create entry
 		Entity entry = new Entity("Entry", entryKey);
 		entry.setProperty("title", title);
@@ -133,5 +119,30 @@ public class Upload extends HttpServlet {
 		 * res.sendRedirect("/tripview.jsp?userKey="+
 		 * KeyFactory.keyToString(entry.getKey()) +"&tripKey=" + posterTrip); }
 		 */
+	}
+	
+	/**
+	 * adds photo keystrings to parameter photos
+	 * @param photos
+	 * @param blobKeys
+	 * @param photoTitles
+	 * @param photoDescriptions
+	 */
+	public void createPhotos(List<String> photos, List<BlobKey> blobKeys, String[] photoTitles, String[] photoDescriptions) {
+		for (int i = 0; i < blobKeys.size(); i++) {
+			System.out.println("photo create");
+			Entity photo = new Entity("Photo");
+			photo.setProperty("blobKey", blobKeys.get(i));
+			//TODO: check if this works (if the order uploaded = order info)
+			//if not, upload file name and match them
+			//either way, this will work for just one photo uploaded
+			if(i < photoTitles.length) photo.setProperty("title", photoTitles[i]);
+			else photo.setProperty("title", "");
+			if(i < photoDescriptions.length)photo.setProperty("description", photoDescriptions[i]); 
+			else photo.setProperty("description", "");
+			datastore.put(photo);
+			String photoKeyString = KeyFactory.keyToString(photo.getKey());
+			photos.add(photoKeyString);
+		}
 	}
 }

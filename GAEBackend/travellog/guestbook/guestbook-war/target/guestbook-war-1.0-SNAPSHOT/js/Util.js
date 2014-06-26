@@ -809,11 +809,15 @@ Util = (function(){
         deletebtn.text("Delete");
         deletebtn.addClass("btn btn-default delete col-sm-offset-4");
 
-        deletebtn.click(function(e){
+        deletebtn.click(function(e) {
             e.preventDefault();
             colDiv.remove(); 
             modal.remove();   
-            //TODO remove photo from queue to be uploaded
+            //TODO remove photo from queue to be uploaded**
+            //click the x, index is i
+            var removelist = $(document.getElementsByClassName("MultiFile-remove"));
+            var remove = $(removelist[i]);
+            remove.click();
             
         });
         btngroup.append(deletebtn);

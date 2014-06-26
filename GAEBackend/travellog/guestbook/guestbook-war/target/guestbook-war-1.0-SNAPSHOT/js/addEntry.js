@@ -187,9 +187,11 @@ $(".MultiFile").change(function(){
 		}
 	});*/
 
+
 /*removes all photos and adds the updated ones back on the front end*/
 function addPhotoPreview() {
 	console.log("update");
+	$(".MultiFile-list").hide(); //hide the list that shows the files
 		$(photoDiv).empty(); //empty all photo thumbnails
 		$(".modal").remove(); //empty all modals
 		var num_photos = photoDiv.children().length; //current amount - index of new one will be this length
@@ -212,7 +214,7 @@ function addPhotoPreview() {
 		console.log("upload button click");
 		updatePhotoPreviews();
 	});*/
-var first = 0;
+	var first = 0;
 	$(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
 		console.log("upload bind insert/remove");
 
