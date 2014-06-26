@@ -191,7 +191,7 @@ $(".MultiFile").change(function(){
 function addPhotoPreview() {
 	console.log("update");
 		$(photoDiv).empty(); //empty all photo thumbnails
-		//$(".modal").empty(); //empty all modals
+		$(".modal").remove(); //empty all modals
 		var num_photos = photoDiv.children().length; //current amount - index of new one will be this length
 		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
 		console.log("fileElem length multifile is:" +fileElem.length);

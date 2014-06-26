@@ -835,24 +835,24 @@ Util = (function(){
 
          console.log("edit btn index is: " + index + " or maybe " + spec.index);
 
-      
-        var body = $(document.getElementById("body"));
-        body.append(modal); 
-        var modalBody = $(document.getElementById(spec.title+"modalBody"));
-        var contentForm = $(document.createElement('form'));
-        modalBody.append(contentForm);
-
         var modal;
+        var contentForm = $(document.createElement('form'));
         if(type==="Trip"){
             modal=makeModal(spec.title, "Edit Trip", false, -1);  
              //submission functionality:
              $(document.getElementById(spec.title + "savebtn")).click(function(){
                 contentForm.submit();
             });
-         } else{
+         } else {
             modal=makeModal(spec.title, "Edit Photo", false, index);
         }
 
+        var body = $(document.getElementById("body"));
+        body.append(modal); 
+        var modalBody = $(document.getElementById(spec.title+"modalBody"));
+        modalBody.append(contentForm);
+
+      
 
 
         var contentRow = $(document.createElement('div'));
@@ -969,7 +969,7 @@ Util = (function(){
                 var entryForm = $(document.getElementById("addEntry"));
                 entryForm.append(inputTitle);
                 entryForm.append(inputDescription);*/
-                submit_input.click();
+              //  submit_input.click();
                 closeEditPhoto.click();
 
             });

@@ -3,11 +3,11 @@ entryPage= (function(){
 
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
-	var backDiv = $(document.getElementById("backDiv"));
+	/*var backDiv = $(document.getElementById("backDiv"));
 	backDiv.addClass("col-md-12");
 	backDiv.css("padding-bottom","10px");
 	var back2Trip = $(document.createElement('button'));
-	back2Trip.addClass('btn btn-primary');
+	back2Trip.addClass('btn btn-primary');*/
 	//main.addClass("container-fluid");
 	// body.append(main);
 	/*var contentDiv = $(document.createElement('div'));
@@ -20,7 +20,7 @@ entryPage= (function(){
 	backDiv.css("padding-bottom","10px");
 	var back2Trip = $(document.createElement('button'));
 	back2Trip.addClass('btn btn-primary');*/
-	back2Trip.attr({
+/*	back2Trip.attr({
 		//'data-target':"#",
 		'left':'0px',
 		'position':'relative'
@@ -31,7 +31,7 @@ entryPage= (function(){
 	});
 
 	//contentDiv.append(backDiv);
- 	backDiv.append(back2Trip);
+ 	backDiv.append(back2Trip);*/
 
 
  	/**For title and created day**/
@@ -51,7 +51,8 @@ entryPage= (function(){
  	var photos = $(document.getElementsByClassName("entryPhoto"));
  	for(var i = 0; i < photos.length; ++i) {
  		var photo = $(photos[i]);
- 		photoDiv.append(createThumbnail(photo.attr("id"), photo.attr("value"), i));
+ 		if(i == 0) photoDiv.append(createThumbnail(photo.attr("id"), photo.attr("value"), 0));
+ 		else photoDiv.append(createThumbnail(photo.attr("id"), photo.attr("value")));
  	}
 
  	/*photoDiv.append(createThumbnail("../images/1.JPG", "Image1",0));

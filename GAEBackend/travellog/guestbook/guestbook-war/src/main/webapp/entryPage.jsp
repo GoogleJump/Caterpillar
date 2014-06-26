@@ -49,35 +49,7 @@
     <![endif]-->
   </head>
 
-  <body id='body'>
-    <div id="header" class='navbar navbar-default navbar-fixed-top'>
-      <div id='navbarTop' class='navbar navbar-default'>
-
-      <!-- top bar for title and icon -->
-        <div id='ownerContainer'>
-          <label id='owner'>Caterpillar's</label>
-        </div>
-        <div id='logoDiv'>
-          <img id='stampLogo'  src='../images/stamp.png'></img>
-        </div>
-        <div id='whiteLogoDiv'>
-          <img id='whiteLogo' src='../images/whitelogo.png'></img>
-        </div>
-      </div>
-      <div id="stripnavbar" class="navbar-default navbar">
-        <ul class="nav nav-pills">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Locations</a></li>
-        </ul>
-      </div>
-    </div><!--/.nav-collapse -->
-    <div id="main" class="container-fluid">
-      <div class="row" style="padding-top: 50px">
-        <div id="backDiv"></div>
-
-
-
-       <%
+    <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     String entryKeyString = request.getParameter("entryKey");
     if(entryKeyString == null) {
@@ -100,6 +72,38 @@
         pageContext.setAttribute("entryDateCreated",
         entry.getProperty("dateCreated"));
 %>
+
+  <body id='body'>
+    <div id="header" class='navbar navbar-default navbar-fixed-top'>
+      <div id='navbarTop' class='navbar navbar-default'>
+
+      <!-- top bar for title and icon -->
+        <div id='ownerContainer'>
+          <label id='owner'>Caterpillar's</label>
+        </div>
+        <div id='logoDiv'>
+          <img id='stampLogo'  src='../images/stamp.png'></img>
+        </div>
+        <div id='whiteLogoDiv'>
+          <img id='whiteLogo' src='../images/whitelogo.png'></img>
+        </div>
+      </div>
+      <div id="stripnavbar" class="navbar-default navbar">
+        <ul class="nav nav-pills">
+          <li class="active"><a href="/homepage.jsp?userKey=${fn:escapeXml(entryPoster)}">Home</a></li>
+          <li><a href="#">Locations</a></li>
+        </ul>
+      </div>
+    </div><!--/.nav-collapse -->
+    <div id="main" class="container-fluid">
+      <div class="row" style="padding-top: 50px">
+
+        <div id="backDiv" class="col-md-12" style="padding-bottom: 10px;">
+          <a href="/tripview.jsp?tripKey=${fn:escapeXml(entryTripPoster)}">
+            <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Back to Trip</button>
+          </a>
+        </div>
+     
 <div id="photoDiv" class="row col-md-10 col-md-offset-1"> <!--photo div-->
 <%
         //photos:
@@ -114,13 +118,6 @@
 
         %>
 
-        <!--image thumbnail-->
-        <!--<div class="col-lg-3 col-sm-4 col-xs-6">
-          <a href="#" title="${fn:escapeXml(entryPhotoTitle)}">
-            <img class="thumbnail img-responsive" src="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}"
-            alt="no image for trip available"/>
-          </a>
-        </div>-->
         <div class="entryPhoto" id="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" style="display: none">
 
 <%
@@ -176,7 +173,7 @@
     <!-- rich text editor required doc -->
     <!-- // <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script> -->
     <!-- <link href="../js/util/bootstrap-wysiwyg-master/summernote.css" /> -->
-    // <!-- <script src="../js/util/bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
+     <!-- <script src="../js/util/bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
     // <script src="../js/util/bootstrap-wysiwyg-master/external/jquery.hotkeys.js"></script> -->
     
     <script src="../js/Util.js"></script>
