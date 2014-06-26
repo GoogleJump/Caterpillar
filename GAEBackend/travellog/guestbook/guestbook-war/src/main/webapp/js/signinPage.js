@@ -176,5 +176,20 @@ signinPage=(function(){
 		'background-image':'url(../images/android.png)'
 	});
 	overlay.append(androidDiv);
+
+	var signin = Util.getQueryVariable("signin"); //will be false if unsuccessful
+	var username = Util.getQueryVariable("username"); //will be taken if unsuccessful
+	var email = Util.getQueryVariable("email"); //will be taken if unsuccessful
+
+	if(signin != null) {
+		alert("email or password incorrect");
+	}
+	if(username != null) {
+		alert("Sorry, that username is taken");
+	}
+	if(email != null) {
+		alert("Someone has already registered with that email.");
+	}
+
 })();
 

@@ -72,14 +72,14 @@ public class InsertUserServlet extends HttpServlet {
 
       else { //users by username is not empty
         System.out.println("user already registered with username"+ username);
-        resp.sendRedirect("/signin.jsp");
+        resp.sendRedirect("/signin.jsp?username=taken");
         return;
       }
 
     }
       else { //users by email is not empty
         System.out.println("user already registered with email: " + email);
-        resp.sendRedirect("/signin.jsp");
+        resp.sendRedirect("/signin.jsp?email=taken");
         return;
       }
 

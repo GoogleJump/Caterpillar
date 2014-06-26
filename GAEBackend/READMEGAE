@@ -7,18 +7,15 @@ Bugs: multiple image upload, 0 image upload, thumbnails (I think this is fixed?)
 
 (DONE BUT NEED TO BE REVIEWED/ADD BACKEND STUFF)entry page - information on entry (date created, location, description) - is this done??
 edit/delete entries and functionality
-edit/delete photo functionality
+edit/delete photos and functionality
 return and depart date need to be dates not strings(I think this is already done? moment can get date)
-information on photos - works for just one photo, todo: multiple
-wrong inputs for sign up/sign in should warn user (wrong username/password, etc.)
 location value should be geo point, not string
-removing/editing an image when uploading should actually edit/remove it
 multiple image upload - prevent user from clicking “choose file” twice OR have it support that
 backend checks all entries for images to pull for trip preview, not just last one
 remembering user is logged in (ex: going to the login in page when user key is in storage should redirect to homepage)
 refactor a lot
+wrong inputs for sign up/sign in should warn user (wrong username/password, etc.) - DONE BUT IS UGLY
 logout button (and removing user key from local storage)
-separate page for viewing individual posts (or a way to view images larger w/the caption like Facebook does)
 remove print statements and logs eventually?
 
 ————————

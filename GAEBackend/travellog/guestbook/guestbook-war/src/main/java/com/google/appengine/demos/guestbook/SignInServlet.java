@@ -34,7 +34,7 @@ public class SignInServlet extends HttpServlet {
 
 		if (email == null || password == null) {
 			System.out.println("email or password null");
-			resp.sendRedirect("/signin.jsp");
+			resp.sendRedirect("/signin.jsp?signin=false");
 		}
 
 		DatastoreService datastore = DatastoreServiceFactory
@@ -46,7 +46,7 @@ public class SignInServlet extends HttpServlet {
 
 		// nothing matches email
 		if (users.isEmpty()) {
-			resp.sendRedirect("/signin.jsp");
+			resp.sendRedirect("/signin.jsp?signin=false");
 		}
 
 		else {
@@ -62,10 +62,10 @@ public class SignInServlet extends HttpServlet {
 			}
 			// incorrect password
 			else {
-				resp.sendRedirect("/signin.jsp");
+				resp.sendRedirect("/signin.jsp?signin=false");
 			}
 		}
-		resp.sendRedirect("/signin.jsp");
+		resp.sendRedirect("/signin.jsp?signin=false");
 
 	}
 }
