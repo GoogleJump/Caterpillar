@@ -46,7 +46,7 @@ public class GetImageFromBlobKey extends HttpServlet {
       System.out.println("blobkey is"+blobKey);
      String imgurl = imagesService.getServingUrl(blobKey); //idk what image size should be
     System.out.println("url is" + imgurl);
-     resp.sendRedirect(imgurl+"=s300-c"); //center crop 300 is longest dimension
+     resp.sendRedirect(imgurl); //center crop 300 is longest dimension
      // blobstoreService.serve(blobKey, resp); //this one is easier, but less efficient & doesn't crop
      
      

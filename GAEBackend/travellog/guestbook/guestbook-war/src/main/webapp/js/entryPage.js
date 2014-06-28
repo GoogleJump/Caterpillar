@@ -48,56 +48,56 @@ entryPage= (function(){
  	contentDiv.append(photoDiv);*/
 
  	var photoDiv = $(document.getElementById("photoDiv"));
+ 	photoDiv.isotope({
+ 		itemSelector:'.photos',
+ 	});
  	var photos = $(document.getElementsByClassName("entryPhoto"));
+ 	var photoArray=[]; 
+ 	var photoTitles =[];
  	for(var i = 0; i < photos.length; ++i) {
  		var photo = $(photos[i]);
- 		if(i == 0) photoDiv.append(createThumbnail(photo.attr("id"), photo.attr("value"), 0));
- 		else photoDiv.append(createThumbnail(photo.attr("id"), photo.attr("value")));
+ 		var photopath = photo.attr("id");
+ 		var photoTitle = photo.attr("value");
+ 		photoTitles.push(photoTitle);
+ 		var photoimg = (document.createElement('img'));
+ 		photoimg.setAttribute('src',photopath);
+ 		photoimg.setAttribute('value',photoTitle);
+ 		photoArray.push(photoimg);
+ 		if(i == 0) photoDiv.append(createThumbnail(photopath, photoTitle, 0));
+ 		else photoDiv.append(createThumbnail(photopath, photoTitle));
  	}
 
- 	/*photoDiv.append(createThumbnail("../images/1.JPG", "Image1",0));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image2"));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image3"));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image4"));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image5"));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image6"));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image7"));
- 	photoDiv.append(createThumbnail("../images/1.JPG", "Image8"));*/
+ 	//modal for nest a carousel
+ 	var modal = Util.makeModal("diplayPhotos",photoTitles[0],true);
+ 	main.append(modal);
+ 	var modalBody = modal.find('.modal-body');
+ 	var carousel = Util.makeCarousel("AllPhotos",photos.length,photoArray,true);
+ 	modalBody.append(carousel);
 
-
- 	/* copy loaded thumbnails into carousel */
- 	$('.row .thumbnail').on('load', function() {
-	}).each(function(i) {
-	  if(this.complete) {
-	  	var item = $('<div class="item"></div>');
-	    var itemDiv = $(this).parents('div');
-	    var title = $(this).parent('a').attr("title");
-	    item.attr("title",title);
-	    console.log("image: "+item+"  title"+title);
-	  	$(itemDiv.html()).appendTo(item);
-	  	item.appendTo('.carousel-inner'); 
-	    if (i==0){ // set first item active
-	     item.addClass('active');
-	    }
-	  }
-	});
 
 	/* activate the carousel */
-	$('#modalCarousel').carousel({interval:false});
+	carousel.attr({'data-interval':false});
 
 	/* change modal title when slide changes */
-	$('#modalCarousel').on('slid.bs.carousel', function () {
+	carousel.on('slid.bs.carousel', function () {
 	  $('.modal-title').html($(this).find('.active').attr("title"));
 	})
+
+	//remove the carousel indicators, aks white dots
+	$('.carousel-indicators').remove();
 
 	/* when clicking a thumbnail */
 	$('.row .thumbnail').click(function(){
 	    var idx = $(this).parents('div').index();
 	  	var id = parseInt(idx);
-	  	$('#myModal').modal('show'); // show the modal
-	    $('#modalCarousel').carousel(id); // slide carousel to selected
-	  	
+	  	modal.modal('show');
+	  	console.log("Current Id "+id);
+	  	carousel.carousel(id-1);
 	});
+	// $(document).ready(function() {
+ //        $('.photos').equalHeights();
+	// });
+
 
 
 	/**Now the main content for blog**/
@@ -123,30 +123,21 @@ entryPage= (function(){
     **/
     function createThumbnail(path, caption,i){
     	var colDiv = $(document.createElement('div'));
-    	
-    	colDiv.addClass('col-lg-3 col-sm-4 col-xs-6');
+    	//colDiv.css('min-height','300px');
+       	colDiv.addClass('col-lg-3 col-sm-4 col-xs-6');
     	var thumba=$(document.createElement('a'));
     	thumba.attr("href","#");//TODO: href would be the trip's url later
-    	// thumba.addClass("thumbnail img-responsive");
+    	colDiv.addClass("photos");
+
     	thumba.attr('title',caption);
     	colDiv.append(thumba);
     	var thumbnail=$(document.createElement('img'));
     	thumbnail.addClass("thumbnail img-responsive");
-    	thumbnail.attr("src",path);
+    	thumbnail.attr("src",path);    	
     	// thumbnail.attr("src","//placehold.it/600*350");
     	thumbnail.attr("alt","No image for the trip available")
     	thumba.append(thumbnail);
 
-    	var item = $('<div class="item"></div>');
-	    var itemDiv = thumbnail.parents('div');
-	    var title = thumbnail.parent('a').attr("title");
-	    item.attr("title",title);
-	    console.log("image: "+item+"  title"+title);
-	  	$(itemDiv.html()).appendTo(item);
-	  	item.appendTo('.carousel-inner'); 
-	    if (i==0){ // set first item active
-	     item.addClass('active');
-		}
     	return colDiv;
     }
     // this.createThumbnail=createThumbnail;

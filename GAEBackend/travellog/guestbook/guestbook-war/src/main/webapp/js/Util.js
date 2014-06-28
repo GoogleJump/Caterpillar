@@ -16,6 +16,7 @@ Util = (function(){
         makeModal: makeModal,
         inputGroup : inputGroup,
         makePost: makePost,
+        makeCarousel:makeCarousel,
         tripPreview:tripPreview,
         photoPreview: photoPreview,
         uploadPhotos:uploadPhotos,
@@ -387,8 +388,10 @@ Util = (function(){
     /**
     function to create carousel, given a unique id for it, and number of pictures. 
     and data(including info for pics.)
+    if it is for entry, we don't want items to have captions and descriptions for now in the carousel
     */
-    function makeCarousel(id, picNum,imgs){        
+
+    function makeCarousel(id, picNum,imgs,isForEntry){        
         var carousel = $(document.createElement('div'));
         // carouselDiv.
         carousel.attr({
@@ -420,10 +423,10 @@ Util = (function(){
         carousel.append(inner);
         for(var j=0; j<picNum; j++){
             if(j===0){
-                var item = carouselItem(true, imgs[j],"Slide "+j.toString(),"descript the city you live in");
+                var item = carouselItem(true, imgs[j],"Untitled","description",isForEntry);
             }
             else{
-                var item = carouselItem(false,imgs[j], "Slide "+j.toString(),"descript the city you live in");
+                var item = carouselItem(false,imgs[j], "Untitled","description",isForEntry);
             }
             inner.append(item);            
         }
@@ -456,11 +459,12 @@ Util = (function(){
     boolean for checking active(first slide)
     picture's caption and description
     */
-    function carouselItem(isActive,img,picCaption,description){
+    function carouselItem(isActive,img,picCaption,description, isEntryPage){
         var item = $(document.createElement('div'));
         item.addClass('item');
-        
         var thumb = $(img);
+        item.attr('title',thumb.attr('value'));
+
         thumb.css({
             'width':'100%',
             'height':'auto',
@@ -476,18 +480,21 @@ Util = (function(){
         if(isActive===true){
             item.addClass('active');
         }
-        var captionDiv = $(document.createElement('div'));
-        captionDiv.addClass('carousel-caption');
-        captionDiv.css({
-            'z-index':10,
-        });
-        container.append(captionDiv);
-        var caption = $(document.createElement('h1'));
-        caption.text(picCaption);
-        captionDiv.append(caption);
-        var descri= $(document.createElement('p'));
-        descri.text(description);
-        captionDiv.append(description);
+        if(isEntryPage!==true){
+            var captionDiv = $(document.createElement('div'));
+            captionDiv.addClass('carousel-caption');
+            captionDiv.css({
+                'z-index':10,
+            });
+            container.append(captionDiv);
+            var caption = $(document.createElement('h1'));
+            caption.text(picCaption);
+            captionDiv.append(caption);
+            var descri= $(document.createElement('p'));
+            descri.text(description);
+            captionDiv.append(description);    
+        }
+        
 
         return item;
     }

@@ -139,7 +139,7 @@
     </div>
     <div id="footer" class="footer"><p>Copyright (c) Caterpillar</p></div>
 
-    <div class="modal" id="myModal" role="dialog">
+    <!-- <div class="modal" id="myModal" role="dialog">
       <div class="modal-dialog">
       <div class="modal-content">
       <div class="modal-header">
@@ -158,7 +158,7 @@
       </div>
        </div>
       </div>
-    </div>
+    </div> -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -167,6 +167,7 @@
     <!-- // <script src="../js/util/jquery.tagsinput.js"></script> -->
     <script src="../js/util/bootstrap/js/bootstrap.js"></script>
     <script src="../js/util/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/util/isotope.min.js"></script>
 
     <!-- <link rel="stylesheet" type="text/css" href="../js/util/jquery.tagsinput.css"/> -->
 
