@@ -192,6 +192,14 @@ $(".MultiFile").change(function(){
 function addPhotoPreview() {
 	console.log("update");
 	$(".MultiFile-list").hide(); //hide the list that shows the files
+	var titles = new Array(fileElem.length);
+	var descriptions = new Array(fileElem.length);
+	//save titles and descriptions before removing from photoDiv
+	for(var i = 0; i < fileElem.length; i++) {
+		titles[i] = $(document.getElementById("photoTitle"+i)).text();
+        descriptions[i] = $(document.getElementById("photoDescription"+i)).text();
+	}
+	
 		$(photoDiv).empty(); //empty all photo thumbnails
 		$(".modal").remove(); //empty all modals
 		var num_photos = photoDiv.children().length; //current amount - index of new one will be this length
@@ -200,13 +208,7 @@ function addPhotoPreview() {
 		console.log("file Elem is:"+ fileElem);
 		console.log("fileElem[0] is"+ fileElem);
 		for(var j = 0; j < fileElem.length - 1; j++ ) {
-			/*if(("#thumbnail" + j).length > 0) { //index exists - skip
-				console.log("thumbnail exists");
-			}*/
-			//console.log("fileElem value is" + fileElem.value());
-			//if(fileElem.value() != "" && fileElem.value() != null){
-				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j);
-			//}
+				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j, titles[j], descriptions[j]);
 		}
 	}
 

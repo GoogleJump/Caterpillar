@@ -959,6 +959,13 @@ Util = (function(){
         text.val(description)
         textWrapper.append(text);
 
+           if(type == "displayPhotos") {
+                //no submit button
+                 var submit = $(document.getElementById(spec.title + "savebtn"));
+                 submit.remove();
+
+            }
+
         //TODO: what is the type for photo??
         if(type != "Trip") {
           //  text.attr('id', 'photoDescription');
@@ -966,6 +973,7 @@ Util = (function(){
            // titleInputField.attr('id', 'photoTitle'+spec.index);
             //also put in file name so we can match photos to info?? TODO: HOW...
             //if submitted, append inputs to main content form
+
             var submitEditPhoto = $(document.getElementById(spec.title + "savebtn"));
             var closeEditPhoto = $(document.getElementById(spec.title + "closebtn"));
             submitEditPhoto.click(function(e){
@@ -992,7 +1000,7 @@ Util = (function(){
 
     /*function for uploading photo button, called in addEntry.**/
     //returns the file names (todo: or maybe should return files themselves??)
-    function uploadPhotos(selector, toDiv, ind){
+    function uploadPhotos(selector, toDiv, ind, title, description){
      //   for(var s = 0; s < selector.length; s++) {
         //console.log("selector length is:" + selector.length);
         console.log("selector is" + selector);
@@ -1007,7 +1015,7 @@ Util = (function(){
             filenames[i] = filename;
             fileurl[i] = URL.createObjectURL(file.slice());
             console.log("about to photo preview with index" + i);
-            toDiv.append(photoPreview(file, filename, "Edit to add Description", i+ind));
+            toDiv.append(photoPreview(file, title, description, i+ind));
         }
   //  }
         return fileurl;
