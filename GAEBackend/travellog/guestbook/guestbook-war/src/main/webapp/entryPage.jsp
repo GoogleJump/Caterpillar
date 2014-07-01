@@ -96,14 +96,16 @@
       </div>
     </div><!--/.nav-collapse -->
     <div id="main" class="container-fluid">
-      <div class="row" style="padding-top: 50px">
+      <div class="row" id="contentDiv" style="padding-top: 50px">
 
         <div id="backDiv" class="col-md-12" style="padding-bottom: 10px;">
           <a href="/tripview.jsp?tripKey=${fn:escapeXml(entryTripPoster)}">
             <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Back to Trip</button>
+            <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Edit Entry</button>
           </a>
         </div>
-     
+      <div class="row col-md-10 col-md-offset-1"><h1>${fn:escapeXml(entryTitle)}</h1></div>
+      <div class="row col-md-10 col-md-offset-1"><h3>Location: ${fn:escapeXml(entryLocation)}</h3></div>
 <div id="photoDiv" class="row col-md-10 col-md-offset-1"> <!--photo div-->
 <%
         //photos:
@@ -126,12 +128,10 @@
 </div> <!--end of photo div-->
 
 <!--stuff about entry here-->
-<div class="row col-md-10 col-md-offset-1">
-<h1 id="entryTitle">${fn:escapeXml(entryTitle)}</h1>
-</div>
-<div class="row col-md-10 col-md-offset-1">
-<p id="entryDescription" style="font-family: 'Times New Roman', Times, serif; font-size: 25px; padding-bottom: 20px;">${fn:escapeXml(entryDescription)}</p>
-</div>
+
+      <div class="row col-md-10 col-md-offset-1">
+      <p id="entryDescription" style="font-family: 'Times New Roman', Times, serif; font-size: 25px; padding-bottom: 20px;">${fn:escapeXml(entryDescription)}</p>
+      </div>
 
 </div><!--end row div-->
 

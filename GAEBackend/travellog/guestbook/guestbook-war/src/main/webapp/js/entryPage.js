@@ -33,14 +33,14 @@ entryPage= (function(){
 	//contentDiv.append(backDiv);
  	backDiv.append(back2Trip);*/
 
-
- 	/**For title and created day**/
- 	/*var blogTitleDiv = $(document.createElement('div'));
- 	blogTitleDiv.addClass('row col-md-10 col-md-offset-1');
- 	contentDiv.append(blogTitleDiv);
- 	var blogTitle = $(document.createElement('h1'));
- 	blogTitle.text("We Put Blog Title here");
- 	blogTitleDiv.append(blogTitle);
+ 	var contentDiv = $(document.getElementById('contentDiv'));
+ 	// /**For title and created day**/
+ 	// var blogTitleDiv = $(document.createElement('div'));
+ 	// blogTitleDiv.addClass('row col-md-10 col-md-offset-1');
+ 	// contentDiv.append(blogTitleDiv);
+ 	// var blogTitle = $(document.createElement('h1'));
+ 	// blogTitle.text("We Put Blog Title here");
+ 	// blogTitleDiv.append(blogTitle);
 
  	/** for photos. */
  	/*var photoDiv = $(document.createElement('div'));
@@ -101,17 +101,17 @@ entryPage= (function(){
 
 
 	/**Now the main content for blog**/
-	/*&var blogDiv = $(document.createElement('div'));
-	blogDiv.addClass('row col-md-10 col-md-offset-1');
-	contentDiv.append(blogDiv);
-	var blogText = $(document.createElement('p'));
-	blogDiv.append(blogText);
-	blogText.text("sajfkjasdl;gjsdkb fsda fkjewg;sdkfjasdkjsadklbjvaskjewijgsdkljga;dfsadf\njlkfasjdkfjsdakfjsd;akfjdslkfjdslkjf;sdakjkbmxcnvjglfkjsadf");
-	blogText.css({
- 	    'font-family': '"Times New Roman", Times, serif',
- 	    'font-size':'25px',
- 	    'padding-bottom':'20px',
-	});*/
+	// var blogDiv = $(document.createElement('div'));
+	// blogDiv.addClass('row col-md-10 col-md-offset-1');
+	// contentDiv.append(blogDiv);
+	// var blogText = $(document.createElement('p'));
+	// blogDiv.append(blogText);
+	// blogText.text("sajfkjasdl;gjsdkb fsda fkjewg;sdkfjasdkjsadklbjvaskjewijgsdkljga;dfsadf\njlkfasjdkfjsdakfjsd;akfjdslkfjdslkjf;sdakjkbmxcnvjglfkjsadf");
+	// blogText.css({
+ // 	    'font-family': '"Times New Roman", Times, serif',
+ // 	    'font-size':'25px',
+ // 	    'padding-bottom':'20px',
+	// });
 
  	/**
     Function for create a div for a trip, 
