@@ -29,10 +29,10 @@ public class UserEndpoint {
 	 * persisted and a cursor to the next page.
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	@ApiMethod(name = "listUser", path = "listUser")
+	@ApiMethod(name = "listUser")
 	public CollectionResponse<User> listUser(
 			@Nullable @Named("cursor") String cursorString,
-			@Nullable @Named("limit") Integer limit, @Named("email") String email) {
+			@Nullable @Named("limit") Integer limit) {
 
 		EntityManager mgr = null;
 		Cursor cursor = null;
@@ -40,7 +40,7 @@ public class UserEndpoint {
 
 		try {
 			mgr = getEntityManager();
-			Query query = mgr.createQuery("select from User as User where User.email = :e").setParameter("e", email);
+			Query query = mgr.createQuery("select from User as User");
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
 				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
@@ -74,7 +74,7 @@ public class UserEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getUser", path="getUser")
+	@ApiMethod(name = "getUser")
 	public User getUser(@Named("id") Long id) {
 		EntityManager mgr = getEntityManager();
 		User user = null;
@@ -98,6 +98,9 @@ public class UserEndpoint {
 	public User insertUser(User user) {
 		EntityManager mgr = getEntityManager();
 		try {
+			if (containsUser(user)) {
+				throw new EntityExistsException("Object already exists");
+			}
 			mgr.persist(user);
 		} finally {
 			mgr.close();
@@ -117,6 +120,9 @@ public class UserEndpoint {
 	public User updateUser(User user) {
 		EntityManager mgr = getEntityManager();
 		try {
+			if (!containsUser(user)) {
+				throw new EntityNotFoundException("Object does not exist");
+			}
 			mgr.persist(user);
 		} finally {
 			mgr.close();

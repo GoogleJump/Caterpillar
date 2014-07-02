@@ -1,17 +1,17 @@
 package com.travellog;
-
+ 
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-
+ 
 import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
-
+ 
 import java.io.IOException;
-
+ 
 /**
  * Common utilities for working with Cloud Endpoints.
  * 
@@ -24,7 +24,7 @@ import java.io.IOException;
  * information.
  */
 public class CloudEndpointUtils {
-
+ 
   /*
    * TODO: Need to change this to 'true' if you're running your backend locally using
    * the DevAppServer. See
@@ -32,13 +32,13 @@ public class CloudEndpointUtils {
    * information.
    */
   protected static final boolean LOCAL_ANDROID_RUN = true;
-
+ 
   /*
    * The root URL of where your DevAppServer is running (if you're running the
    * DevAppServer locally).
    */
   protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8888/";
-
+ 
   /*
    * The root URL of where your DevAppServer is running when it's being
    * accessed via the Android emulator (if you're running the DevAppServer
@@ -47,8 +47,8 @@ public class CloudEndpointUtils {
    * http://developer.android.com/tools/devices/emulator.html#networkaddresses
    * for more information.
    */
-  protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8888";
-
+  protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.0.2:8888";
+ 
   /**
    * Updates the Google client builder to connect the appropriate server based
    * on whether LOCAL_ANDROID_RUN is true or false.
@@ -63,10 +63,10 @@ public class CloudEndpointUtils {
       builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID
           + "/_ah/api/");
     }
-
+ 
     // only enable GZip when connecting to remote server
     final boolean enableGZip = builder.getRootUrl().startsWith("https:");
-
+ 
     builder.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
       public void initialize(AbstractGoogleClientRequest<?> request)
           throws IOException {
@@ -75,10 +75,10 @@ public class CloudEndpointUtils {
         }
       }
     });
-
+ 
     return builder;
   }
-
+ 
   /**
    * Logs the given message and shows an error alert dialog with it.
    * 
@@ -93,7 +93,7 @@ public class CloudEndpointUtils {
     Log.e(tag, message);
     showError(activity, message);
   }
-
+ 
   /**
    * Logs the given throwable and shows an error alert dialog with its
    * message.
@@ -119,7 +119,7 @@ public class CloudEndpointUtils {
     }
     showError(activity, message);
   }
-
+ 
   /**
    * Shows an error alert dialog with the given message.
    * 

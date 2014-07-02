@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/Cu0Z215yFnUBuVC0Q_OVU2Dsl6Q\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/YC_gAEAjC1dHRDcS97RNUz28UBk\"",
  "discoveryVersion": "v1",
  "id": "userendpoint:v1",
  "name": "userendpoint",
@@ -157,14 +157,14 @@
  "methods": {
   "getUser": {
    "id": "userendpoint.getUser",
-   "path": "getUser",
+   "path": "user/{id}",
    "httpMethod": "GET",
    "parameters": {
     "id": {
      "type": "string",
      "required": true,
      "format": "int64",
-     "location": "query"
+     "location": "path"
     }
    },
    "parameterOrder": [
@@ -194,16 +194,11 @@
   },
   "listUser": {
    "id": "userendpoint.listUser",
-   "path": "listUser",
+   "path": "user",
    "httpMethod": "GET",
    "parameters": {
     "cursor": {
      "type": "string",
-     "location": "query"
-    },
-    "email": {
-     "type": "string",
-     "required": true,
      "location": "query"
     },
     "limit": {
@@ -212,9 +207,6 @@
      "location": "query"
     }
    },
-   "parameterOrder": [
-    "email"
-   ],
    "response": {
     "$ref": "CollectionResponse_User"
    },

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/Cu0Z215yFnUBuVC0Q_OVU2Dsl6Q\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/YC_gAEAjC1dHRDcS97RNUz28UBk\"",
  "discoveryVersion": "v1",
  "id": "userendpoint:v1",
  "name": "userendpoint",
@@ -197,18 +197,11 @@
     "cursor": {
      "type": "string"
     },
-    "email": {
-     "type": "string",
-     "required": true
-    },
     "limit": {
      "type": "integer",
      "format": "int32"
     }
    },
-   "parameterOrder": [
-    "email"
-   ],
    "returns": {
     "$ref": "CollectionResponse_User"
    },

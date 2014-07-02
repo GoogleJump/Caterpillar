@@ -29,10 +29,10 @@ public class TripEndpoint {
 	 * persisted and a cursor to the next page.
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	@ApiMethod(name = "listTrip", path = "listTrip")
+	@ApiMethod(name = "listTrip")
 	public CollectionResponse<Trip> listTrip(
 			@Nullable @Named("cursor") String cursorString,
-			@Nullable @Named("limit") Integer limit, @Named("owner") String owner) {
+			@Nullable @Named("limit") Integer limit) {
 
 		EntityManager mgr = null;
 		Cursor cursor = null;
@@ -40,7 +40,7 @@ public class TripEndpoint {
 
 		try {
 			mgr = getEntityManager();
-			Query query = mgr.createQuery("select from Trip as Trip where Trip.owner = :o").setParameter("o", owner);
+			Query query = mgr.createQuery("select from Trip as Trip");
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
 				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
@@ -74,7 +74,7 @@ public class TripEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getTrip", path = "getTrip")
+	@ApiMethod(name = "getTrip")
 	public Trip getTrip(@Named("id") Long id) {
 		EntityManager mgr = getEntityManager();
 		Trip trip = null;
@@ -98,6 +98,9 @@ public class TripEndpoint {
 	public Trip insertTrip(Trip trip) {
 		EntityManager mgr = getEntityManager();
 		try {
+			if (containsTrip(trip)) {
+				throw new EntityExistsException("Object already exists");
+			}
 			mgr.persist(trip);
 		} finally {
 			mgr.close();

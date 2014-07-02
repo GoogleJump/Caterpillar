@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/07XJCpwvgO5DFO-mFftcXHAdWNw\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/2ISrvMed_QK8FQVjztnhLdJ43dY\"",
  "discoveryVersion": "v1",
  "id": "tripendpoint:v1",
  "name": "tripendpoint",
@@ -171,14 +171,14 @@
  "methods": {
   "getTrip": {
    "id": "tripendpoint.getTrip",
-   "path": "getTrip",
+   "path": "trip/{id}",
    "httpMethod": "GET",
    "parameters": {
     "id": {
      "type": "string",
      "required": true,
      "format": "int64",
-     "location": "query"
+     "location": "path"
     }
    },
    "parameterOrder": [
@@ -208,7 +208,7 @@
   },
   "listTrip": {
    "id": "tripendpoint.listTrip",
-   "path": "listTrip",
+   "path": "trip",
    "httpMethod": "GET",
    "parameters": {
     "cursor": {
@@ -219,16 +219,8 @@
      "type": "integer",
      "format": "int32",
      "location": "query"
-    },
-    "owner": {
-     "type": "string",
-     "required": true,
-     "location": "query"
     }
    },
-   "parameterOrder": [
-    "owner"
-   ],
    "response": {
     "$ref": "CollectionResponse_Trip"
    },

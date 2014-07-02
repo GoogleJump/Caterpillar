@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/07XJCpwvgO5DFO-mFftcXHAdWNw\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/2ISrvMed_QK8FQVjztnhLdJ43dY\"",
  "discoveryVersion": "v1",
  "id": "tripendpoint:v1",
  "name": "tripendpoint",
@@ -214,15 +214,8 @@
     "limit": {
      "type": "integer",
      "format": "int32"
-    },
-    "owner": {
-     "type": "string",
-     "required": true
     }
    },
-   "parameterOrder": [
-    "owner"
-   ],
    "returns": {
     "$ref": "CollectionResponse_Trip"
    },

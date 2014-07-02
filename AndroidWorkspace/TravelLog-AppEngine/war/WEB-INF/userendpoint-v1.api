@@ -27,7 +27,7 @@
   "ownerName" : "travellog.com",
   "methods" : {
     "userendpoint.getUser" : {
-      "path" : "getUser",
+      "path" : "user/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -85,7 +85,7 @@
       }
     },
     "userendpoint.listUser" : {
-      "path" : "listUser",
+      "path" : "user",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -101,10 +101,6 @@
           "limit" : {
             "type" : "int32",
             "required" : false
-          },
-          "email" : {
-            "type" : "string",
-            "required" : true
           }
         },
         "body" : "empty"
@@ -180,11 +176,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       },

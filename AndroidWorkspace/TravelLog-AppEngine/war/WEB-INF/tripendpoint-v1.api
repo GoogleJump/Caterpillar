@@ -64,7 +64,7 @@
       }
     },
     "tripendpoint.listTrip" : {
-      "path" : "listTrip",
+      "path" : "trip",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -80,10 +80,6 @@
           "limit" : {
             "type" : "int32",
             "required" : false
-          },
-          "owner" : {
-            "type" : "string",
-            "required" : true
           }
         },
         "body" : "empty"
@@ -109,7 +105,7 @@
       }
     },
     "tripendpoint.getTrip" : {
-      "path" : "getTrip",
+      "path" : "trip/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -203,11 +199,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       },

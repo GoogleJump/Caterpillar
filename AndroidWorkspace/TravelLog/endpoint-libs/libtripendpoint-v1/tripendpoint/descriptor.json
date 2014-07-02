@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/tripendpoint/v1/20140611065401/java/1.16.0-rc/travellog.com-tripendpoint-v1-20140611065401-java-1.16.0-rc-sources.jar", 
-      "path": "travellog.com-tripendpoint-v1-20140611065401-java-1.16.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/tripendpoint/v1/20140702213411/java/1.16.0-rc/travellog.com-tripendpoint-v1-20140702213411-java-1.16.0-rc-sources.jar", 
+      "path": "travellog.com-tripendpoint-v1-20140702213411-java-1.16.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-06-11 06:54"
+      "timestamp": "2014-07-02 21:34"
     }, 
     {
-      "path": "travellog.com-tripendpoint-v1-20140611065401-java-1.16.0-rc.jar.properties", 
+      "path": "travellog.com-tripendpoint-v1-20140702213411-java-1.16.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -701,5 +701,5 @@
   "version": "v1", 
   "language_version": "1.16.0-rc", 
   "id": "tripendpoint:v1", 
-  "revision": 20140611065401
+  "revision": 20140702213411
 }
