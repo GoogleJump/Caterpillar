@@ -19,7 +19,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-
+//TODO: rename this AddEntryServlet everywhere
 public class Upload extends HttpServlet {
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory
 			.getBlobstoreService();

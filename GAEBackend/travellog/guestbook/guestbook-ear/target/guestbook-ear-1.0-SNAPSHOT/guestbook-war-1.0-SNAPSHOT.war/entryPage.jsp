@@ -112,6 +112,7 @@
 <%
         //photos:
         List<String> photos = (List<String>) entry.getProperty("photos"); //list of photo key strings
+        if(photos != null && photos.size() > 0) {
         for(String photo : photos) { 
         Entity photoEntity = datastore.get(KeyFactory.stringToKey(photo));
         String imageKey = ((BlobKey) photoEntity.getProperty("blobKey")).getKeyString();
@@ -125,6 +126,7 @@
         <div class="entryPhoto" id="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" style="display: none">
 
 <%
+  }
 }
 %>
 </div> <!--end of photo div-->
