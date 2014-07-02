@@ -1,4 +1,4 @@
-addEntry = (function(){
+editEntry = (function(){
 
 
 
@@ -7,7 +7,7 @@ addEntry = (function(){
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
 
-	var contentForm = $(document.getElementById('addEntry')); //changed from making new one because needed to include some java stuff for blobs in .jsp
+	var contentForm = $(document.getElementById('editEntry')); //changed from making new one because needed to include some java stuff for blobs in .jsp
 	var contentDiv = $(document.createElement('div'));
 	contentForm.append(contentDiv);
 	// main.append(contentForm); //already appended though...
@@ -33,13 +33,13 @@ addEntry = (function(){
 
 
 	//if there is a user key stored, get it and set as parameter for link
-        console.log("about to get user key");
-    var userKey = Util.getQueryVariable("userKey");
-    if(userKey != null) {
-        console.log("user key was not null, setting param")
-    }
-    var tripbutton = $(document.getElementById("trips_button"));
-    tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
+	console.log("about to get user key");
+	var userKey = Util.getQueryVariable("userKey");
+	if(userKey != null) {
+		console.log("user key was not null, setting param")
+	}
+	var tripbutton = $(document.getElementById("trips_button"));
+	tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
 
 //no start/end date for entries
 	/*var duration = $(document.createElement('div'));
@@ -81,29 +81,29 @@ addEntry = (function(){
 	contentDiv.append(userKeyInput);
 
 	//invisible trip key input - get from url param and set
-	var tripKeyInput = $(document.createElement('input'));
+	/*var tripKeyInput = $(document.createElement('input'));
 	tripKeyInput.css("display", "none");
 	var tripKey = getQueryVariable("tripKey");
 	console.log("trip key is:" + tripKey);
 	tripKeyInput.attr("value", tripKey);
 	tripKeyInput.attr("name","tripKey")
-	contentDiv.append(tripKeyInput);
+	contentDiv.append(tripKeyInput);*/
 
     //TODO: get PC's current location
-	var where = Util.inputGroup('Where: ',"Current Location");
-	contentDiv.append(where);
-	where.addClass('col-md-6 col-sm-offset-1');
-	where.children('input').eq(0).attr('name','location');
+    var where = Util.inputGroup('Where: ',"Current Location");
+    contentDiv.append(where);
+    where.addClass('col-md-6 col-sm-offset-1');
+    where.children('input').eq(0).attr('name','location');
 
-	var btnDiv = $(document.createElement('div'));
-	contentDiv.append(btnDiv);
-	btnDiv.addClass('col-sm-offset-1');
-	var uploadbtn = $(document.createElement('div'));
+    var btnDiv = $(document.createElement('div'));
+    contentDiv.append(btnDiv);
+    btnDiv.addClass('col-sm-offset-1');
+    var uploadbtn = $(document.createElement('div'));
 	//add this b/c idk if there is way to uplaod files without it coming straight from file form
 	// uploadbtn.attr("type", "file");
 	//uploadbtn.attr("name", entryKey);
 	// uploadbtn.attr("name", "fileUpload");
-	uploadbtn.addClass("btn btn-primary fileUpload");
+	/*uploadbtn.addClass("btn btn-primary fileUpload");
 	var upload = $(document.createElement('span'));
 	upload.text('Upload Photos');
 	uploadbtn.append(upload);
@@ -148,9 +148,9 @@ for(var i = 0; i < fileElem.length; i++) {
 	    	fileElem.click();
 	  	}
 	  	
-	});*/
-} //end of fileElem loop
-var filenames;
+	  });*/
+//} //end of fileElem loop
+//var filenames;
 /*$(".multi").change(function(){
 	console.log("multi");
 		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
@@ -214,19 +214,19 @@ function addPhotoPreview() {
 		console.log("upload button click");
 		updatePhotoPreviews();
 	});*/
-	var first = 0;
-	$(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
-		console.log("upload bind insert/remove");
+var first = 0;
+$(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
+	console.log("upload bind insert/remove");
 
 	
-    if (event.type == 'DOMNodeInserted') {
+	if (event.type == 'DOMNodeInserted') {
         //alert('Content added! Current content:' + '\n\n' + this.innerHTML);
         if(first != 0) addPhotoPreview(); //don't do this the first time
-		first = 1;
+        first = 1;
     } else {
        // alert('Content removed! Current content:' + '\n\n' + this.innerHTML);
        console.log("content removed");
-    }
+   }
 });
 
 
@@ -254,18 +254,18 @@ function addPhotoPreview() {
 		'color':'white',
 	});*/
 
-	var photoRow = $(document.createElement('div'));
-	contentDiv.append(photoRow);
-	photoRow.addClass('row');
-	photoRow.css({
-		'margin-left':'0px',
-		'margin-right':'0px',
-	});
-	var photoDiv = $(document.createElement('div'));
-	photoDiv.addClass("col-sm-offset-1 col-md-10");
-	photoRow.append(photoDiv);
-	photoDiv.css({
-		'margin-top':'10px',
+var photoRow = $(document.createElement('div'));
+contentDiv.append(photoRow);
+photoRow.addClass('row');
+photoRow.css({
+	'margin-left':'0px',
+	'margin-right':'0px',
+});
+var photoDiv = $(document.createElement('div'));
+photoDiv.addClass("col-sm-offset-1 col-md-10");
+photoRow.append(photoDiv);
+photoDiv.css({
+	'margin-top':'10px',
 		'background-color':'#f5f5f5',//Util.yellow,
 		'border':'gray 3px solid',
 		'border-radius':'3px',
@@ -277,43 +277,43 @@ function addPhotoPreview() {
 		// 'left':''
 	});
 
-	
 
-	var labelDiv = $(document.createElement('div'));
-	labelDiv.addClass('row col-sm-offset-1');
-	labelDiv.css('padding-bottom','10px');
-	contentDiv.append(labelDiv);
-	var notebook = $(document.createElement('h3'));
-	var desLabel = $(document.createElement('span'));
-	desLabel.addClass('label label-default');
-	desLabel.text("Blog");
-	desLabel.css({
-		"background-color":Util.dark_purple,
-	});
-	notebook.append(desLabel);
-	labelDiv.append(notebook);
 
-	var textWrapper= $(document.createElement('div'));
-	textWrapper.addClass('row');
-	textWrapper.css('padding-bottom','15px');
-	contentDiv.append(textWrapper);
-	var textDiv = $(document.createElement('div'));
-	textDiv.addClass('col-md-10 col-sm-offset-1');
-	textWrapper.append(textDiv);
+var labelDiv = $(document.createElement('div'));
+labelDiv.addClass('row col-sm-offset-1');
+labelDiv.css('padding-bottom','10px');
+contentDiv.append(labelDiv);
+var notebook = $(document.createElement('h3'));
+var desLabel = $(document.createElement('span'));
+desLabel.addClass('label label-default');
+desLabel.text("Blog");
+desLabel.css({
+	"background-color":Util.dark_purple,
+});
+notebook.append(desLabel);
+labelDiv.append(notebook);
 
-	var text = $(document.createElement('textarea'));
-	text.attr("name", "description");
-	text.css({
-		'height':'300px',
-		'overflow-y':'auto',
-		'width':'100%',
-        'resize':'none',
+var textWrapper= $(document.createElement('div'));
+textWrapper.addClass('row');
+textWrapper.css('padding-bottom','15px');
+contentDiv.append(textWrapper);
+var textDiv = $(document.createElement('div'));
+textDiv.addClass('col-md-10 col-sm-offset-1');
+textWrapper.append(textDiv);
 
-	});
-	textDiv.append(text);
+var text = $(document.createElement('textarea'));
+text.attr("name", "description");
+text.css({
+	'height':'300px',
+	'overflow-y':'auto',
+	'width':'100%',
+	'resize':'none',
 
-	var tagsWrapper = $(document.createElement('div'));
-	tagsWrapper.addClass('row');
+});
+textDiv.append(text);
+
+var tagsWrapper = $(document.createElement('div'));
+tagsWrapper.addClass('row');
 	// tagsWrapper.css('margin-top','15px');
 	contentDiv.append(tagsWrapper);
 	var tagsDiv= $(document.createElement('div'));
@@ -334,41 +334,41 @@ function addPhotoPreview() {
 	        // 'padding-bottom':'5px',
 	        //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
 	        // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
-	});*/
+	    });*/
 
-	function getQueryVariable(variable) {
-	  var query = window.location.search.substring(1);
-	  var vars = query.split("&");
-	  for (var i=0;i<vars.length;i++) {
-	    var pair = vars[i].split("=");
-	    if (pair[0] == variable) {
-	      return pair[1];
-	  }
+function getQueryVariable(variable) {
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i=0;i<vars.length;i++) {
+		var pair = vars[i].split("=");
+		if (pair[0] == variable) {
+			return pair[1];
+		}
 	} 
 	alert('Query Variable ' + variable + ' not found');
-	}
+}
 
 //get value from local storage
-    function getFromLocalStorage(key) {
-     var item = localStorage.getItem(key);
-     if(item) { 
-        return item;
-    }
-    else {
-        console.log("could not store " + key);
-        return null;
-    }
+function getFromLocalStorage(key) {
+	var item = localStorage.getItem(key);
+	if(item) { 
+		return item;
+	}
+	else {
+		console.log("could not store " + key);
+		return null;
+	}
 }
 
 
 
 	var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
-    submit_input.attr('type', 'submit');
-    submit_input.css({
-            'display' : 'none'
-    });
+	submit_input.attr('type', 'submit');
+	submit_input.css({
+		'display' : 'none'
+	});
 
-    contentForm.append(submit_input);
+	contentForm.append(submit_input);
 
 	var btnsDiv = $(document.createElement('div'));
 	btnsDiv.addClass('row col-sm-offset-1');
@@ -416,7 +416,7 @@ function addPhotoPreview() {
 		// 	return;
 		// }
 		//create inputs for each of the photo previews
-		var thumbs = $(document.getElementsByClassName("thumbnail"));
+		/*var thumbs = $(document.getElementsByClassName("thumbnail"));
 		console.log("thumbnail amount is:" + thumbs.length);
 		for(var i = 0; i < thumbs.length; ++i) {
 			var titleInput = $(document.createElement('input'));
@@ -437,12 +437,36 @@ function addPhotoPreview() {
 			fileInput.css('display', 'none');
 			contentForm.append(fileInput);
 
-		}
+		}*/
 
 		savebtn.submit();
 		submit_input.click(); //why should we even need this?
 	});
-	btnsDiv.append(cancelbtn);
-	btnsDiv.append(savebtn);
+btnsDiv.append(cancelbtn);
+btnsDiv.append(savebtn);
 
 })();
+
+function loadFields(entry){
+	console.log("IS THIS EVEN UPDATING");
+	$("input, textarea").each(function() {
+		var name = $(this).attr("name");
+		if(name == "title") {
+			$(this).attr("value", entry.title);
+		}
+		else if(name == "description") {
+			console.log("found description");
+			//it's not loading the text inside, yet it's changing the value so trying all these things
+			$(this).attr("value", entry.description);
+			$(this).innerHtml = entry.description;
+			$(this).text(entry.description);
+			$(this).innerText = entry.description;
+		}
+		else if(name == "location") {
+			$(this).attr("value", entry.location);
+		}
+		else if(name == "tags") {
+			$(this).attr("value", entry.tags);
+		}
+	});
+  }

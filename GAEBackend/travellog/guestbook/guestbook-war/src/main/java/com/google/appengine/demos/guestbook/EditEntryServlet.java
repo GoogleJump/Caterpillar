@@ -48,10 +48,13 @@ public class EditEntryServlet extends HttpServlet {
 		String location = req.getParameter("location");
 		Date date = new Date();
 		String tags = req.getParameter("tags");
+		System.out.println("title is:" + title);
+		System.out.println("tags is:" + tags);
+		System.out.println("description is:" + description);
 		//String poster = req.getParameter("userKey"); // user that posted the
 		// trip/entry -- this won't change upon edit
 		// System.out.println("poster(user) key: " + poster);
-		String posterTrip = req.getParameter("tripKey"); // trip that this entry
+		//String posterTrip = req.getParameter("tripKey"); // trip that this entry
 					// belongs to
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -87,8 +90,8 @@ public class EditEntryServlet extends HttpServlet {
 		 * ).get(0);
 		 */
 
-		resp.sendRedirect("/tripview.jsp?tripKey="
-				+ posterTrip); 
+		resp.sendRedirect("/entryPage.jsp?entryKey="
+				+ entryKey); 
 
 	}
 }

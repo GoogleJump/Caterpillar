@@ -136,9 +136,11 @@ public class Upload extends HttpServlet {
 			//TODO: check if this works (if the order uploaded = order info)
 			//if not, upload file name and match them
 			//either way, this will work for just one photo uploaded
+			if(photoTitles[i] == null) photoTitles[i] = "";
 			if(i < photoTitles.length) photo.setProperty("title", photoTitles[i]);
 			else photo.setProperty("title", "");
-			if(i < photoDescriptions.length)photo.setProperty("description", photoDescriptions[i]); 
+			if(photoDescriptions[i] == null) photoDescriptions[i] = "";
+			if(i < photoDescriptions.length) photo.setProperty("description", photoDescriptions[i]); 
 			else photo.setProperty("description", "");
 			datastore.put(photo);
 			String photoKeyString = KeyFactory.keyToString(photo.getKey());

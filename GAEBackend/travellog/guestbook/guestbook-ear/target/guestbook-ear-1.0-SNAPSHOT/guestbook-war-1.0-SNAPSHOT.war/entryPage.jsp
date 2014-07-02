@@ -57,6 +57,8 @@
   }
 
   Entity entry = datastore.get(KeyFactory.stringToKey(entryKeyString));
+   pageContext.setAttribute("entryKey",
+        entryKeyString);
    pageContext.setAttribute("entryTitle",
         entry.getProperty("title"));
    pageContext.setAttribute("entryDescription",
@@ -100,8 +102,8 @@
 
         <div id="backDiv" class="col-md-12" style="padding-bottom: 10px;">
           <a href="/tripview.jsp?tripKey=${fn:escapeXml(entryTripPoster)}">
-            <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Back to Trip</button>
-            <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Edit Entry</button>
+            <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Back to Trip</button></a>
+           <a href="/editentry.jsp?entryKey=${fn:escapeXml(entryKey)}"> <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Edit Entry</button></a>
           </a>
         </div>
       <div class="row col-md-10 col-md-offset-1"><h1>${fn:escapeXml(entryTitle)}</h1></div>
