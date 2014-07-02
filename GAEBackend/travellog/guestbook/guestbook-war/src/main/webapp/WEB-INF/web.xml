@@ -25,11 +25,6 @@
   </servlet>
 
   <servlet>
-    <servlet-name>insertEntry</servlet-name>
-    <servlet-class>com.google.appengine.demos.guestbook.InsertEntryServlet</servlet-class>
-  </servlet>
-
-  <servlet>
     <servlet-name>Upload</servlet-name>
     <servlet-class>com.google.appengine.demos.guestbook.Upload</servlet-class>
   </servlet>
@@ -87,11 +82,6 @@
 <servlet-mapping>
   <servlet-name>insertTrip</servlet-name>
   <url-pattern>/insertTrip</url-pattern>
-</servlet-mapping>
-
-<servlet-mapping>
-  <servlet-name>insertEntry</servlet-name>
-  <url-pattern>/insertEntry</url-pattern>
 </servlet-mapping>
 
 <servlet-mapping>

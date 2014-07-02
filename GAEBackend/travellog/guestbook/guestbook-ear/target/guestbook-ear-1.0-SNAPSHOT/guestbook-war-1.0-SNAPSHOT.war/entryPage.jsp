@@ -107,7 +107,13 @@
           </a>
         </div>
       <div class="row col-md-10 col-md-offset-1"><h1>${fn:escapeXml(entryTitle)}</h1></div>
+      <%
+      //only include "Location:" if there is one
+        String location = (String) entry.getProperty("location");
+        if(location != null && !location.equals("")) {
+      %>
       <div class="row col-md-10 col-md-offset-1"><h3>Location: ${fn:escapeXml(entryLocation)}</h3></div>
+      <% } %>
 <div id="photoDiv" class="row col-md-10 col-md-offset-1"> <!--photo div-->
 <%
         //photos:

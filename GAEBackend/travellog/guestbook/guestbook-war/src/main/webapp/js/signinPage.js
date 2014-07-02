@@ -173,7 +173,8 @@ signinPage=(function(){
 		'left':'50%',
 		'height':'60%',
 		'width':'40%',
-		'background-image':'url(../images/android.png)'
+		'background-image':'url(../images/travellogimage.jpg)',
+		'background-size': 'cover'
 	});
 	overlay.append(androidDiv);
 

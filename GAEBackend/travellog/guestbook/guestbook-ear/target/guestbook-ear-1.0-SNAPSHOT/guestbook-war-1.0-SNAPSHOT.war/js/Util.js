@@ -892,6 +892,8 @@ Util = (function(){
                 'display' : 'none'
         });
 
+
+
         contentForm.append(submit_input);
         
         if(type==="Trip"){
@@ -942,6 +944,8 @@ Util = (function(){
         });
         descriRow.append(desLabel);
 
+
+
         var textWrapper= $(document.createElement('div'));
         textWrapper.addClass('row col-md-10 col-sm-offset-1');
         textWrapper.css('padding-bottom','5px');
@@ -956,11 +960,24 @@ Util = (function(){
             'width':'100%',
             'resize':'none',
         });
+
+        //TODO: which one is it??
         text.val(description)
+        text.attr("name", "description");
+      /*  text.innertHTML = description;
+        text.innerText = description;
+        text.value = description;*/
         textWrapper.append(text);
 
+         var submit = $(document.getElementById(spec.title + "savebtn"));
+        submit.click(function(e){
+            alert("submitting");
+            submit_input.click();
+            contentForm.submit();
+        });
+
            if(type == "displayPhotos") {
-                //no submit button
+                //no submit button - this doesn't seem to work...TODO
                  var submit = $(document.getElementById(spec.title + "savebtn"));
                  submit.remove();
 
