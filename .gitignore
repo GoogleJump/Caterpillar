@@ -60,5 +60,9 @@ war/WEB-INF/classes/
 # App engine generated #
 war/WEB-INF/appengine-generated/
 
+#maven generated#
+guestbook-ear/target
+guestbook-war/target
+
 
 
