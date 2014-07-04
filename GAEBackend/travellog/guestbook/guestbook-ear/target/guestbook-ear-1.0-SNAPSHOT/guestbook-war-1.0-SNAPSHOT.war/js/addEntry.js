@@ -347,7 +347,7 @@ function addPhotoPreview() {
 	      return pair[1];
 	  }
 	} 
-	alert('Query Variable ' + variable + ' not found');
+	//alert('Query Variable ' + variable + ' not found');
 	}
 
 //get value from local storage
@@ -409,18 +409,20 @@ function addPhotoPreview() {
 		// 	return;
 		// }
 		//create inputs for each of the photo previews
-		var thumbs = $(document.getElementsByClassName("thumbnail"));
+		var thumbs = $(document.getElementsByClassName("photoThumbnails"));
 		console.log("thumbnail amount is:" + thumbs.length);
 		for(var i = 0; i < thumbs.length; ++i) {
+			var curid = $(thumbs[i]).attr("id");
+			var curtitle= curid.slice(0,curid.length-10);//the id is filedefaultname+modalthumb. we only need filedefaultname
 			var titleInput = $(document.createElement('input'));
 			titleInput.attr('name', 'photoTitle');
-			titleInput.attr('value', $(document.getElementById("photoTitle"+i)).text());
+			titleInput.attr('value', $(document.getElementById("photoTitle"+curtitle)).text());
 			titleInput.css("display", "none");
 			contentForm.append(titleInput);
 
 			var descInput = $(document.createElement('input'));
 			descInput.attr('name', 'photoDescription');
-			descInput.attr('value', $(document.getElementById("photoDescription"+i)).text());
+			descInput.attr('value', $(document.getElementById("photoDescription"+curtitle)).text());
 			descInput.css("display", "none");
 			contentForm.append(descInput);
 

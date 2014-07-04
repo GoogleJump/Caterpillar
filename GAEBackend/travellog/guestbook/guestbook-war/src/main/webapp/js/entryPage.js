@@ -56,22 +56,24 @@ entryPage= (function(){
  	var photoTitles =[];
  	for(var i = 0; i < photos.length; ++i) {
  		var photo = $(photos[i]);
- 		var photopath = photo.attr("id");
+ 		var photopath = photo.attr("src");
  		var photoTitle = photo.attr("value");
+ 		var photoDescription=photo.attr("description");
  		photoTitles.push(photoTitle);
  		var photoimg = (document.createElement('img'));
  		photoimg.setAttribute('src',photopath);
  		photoimg.setAttribute('value',photoTitle);
+ 		// photoimg.
  		photoArray.push(photoimg);
  		if(i == 0) photoDiv.append(createThumbnail(photopath, photoTitle, 0));
  		else photoDiv.append(createThumbnail(photopath, photoTitle));
  	}
 
  	//modal for nest a carousel
- 	var modal = Util.makeModal("diplayPhotos",photoTitles[0],true);
+ 	var modal = Util.makeModal("diplayPhotos",photoTitles[0],true,null,true);
  	main.append(modal);
  	var modalBody = modal.find('.modal-body');
- 	var carousel = Util.makeCarousel("AllPhotos",photos.length,photoArray,true);
+ 	var carousel = Util.makeCarousel("AllPhotos",photos.length,photos,true);
  	modalBody.append(carousel);
 
 

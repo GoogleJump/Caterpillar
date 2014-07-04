@@ -61,7 +61,7 @@ Util = (function(){
      TODO: submit function for the button?
      */
 
-     function makeModal(modalId,title, islarge, index) {
+     function makeModal(modalId,title, islarge, index, isForEntry) {
         console.log("making modal:" + index);
         var modal = $(document.createElement('div'));
         modal.addClass('modal fade');
@@ -124,18 +124,21 @@ Util = (function(){
         closebtn.attr('data-dismiss','modal');
         closebtn.attr('id',modalId+'closebtn');
         closebtn.text("Close");
-        // console.log(modalId+'closebtn');
-        var savebtn = $(document.createElement('btn'));
-        savebtn.attr('type','button submit');
-        savebtn.addClass('btn btn-primary');
-        // savebtn.attr('data-dismiss','modal');
-        savebtn.text("Submit");
-        savebtn.attr('id',modalId+'savebtn');
-        savebtn.css({
-            'background-color':'#504552'
-        });
         footer.append(closebtn);
-        footer.append(savebtn);
+
+        // console.log(modalId+'closebtn');
+        if(isForEntry!==true){
+            var savebtn = $(document.createElement('btn'));
+            savebtn.attr('type','button submit');
+            savebtn.addClass('btn btn-primary');
+            // savebtn.attr('data-dismiss','modal');
+            savebtn.text("Submit");
+            savebtn.attr('id',modalId+'savebtn');
+            savebtn.css({
+                'background-color':'#504552'
+            });
+            footer.append(savebtn);
+        }
         return modal;
     }
     this.makeModal = makeModal;
@@ -480,19 +483,21 @@ Util = (function(){
         if(isActive===true){
             item.addClass('active');
         }
-        if(isEntryPage!==true){
+        
+        container.append(captionDiv);
+        if(isEntryPage===true){
             var captionDiv = $(document.createElement('div'));
             captionDiv.addClass('carousel-caption');
             captionDiv.css({
                 'z-index':10,
             });
             container.append(captionDiv);
-            var caption = $(document.createElement('h1'));
-            caption.text(picCaption);
-            captionDiv.append(caption);
+            // var caption = $(document.createElement('h1'));
+            // caption.text(picCaption);
+            // captionDiv.append(caption);
             var descri= $(document.createElement('p'));
-            descri.text(description);
-            captionDiv.append(description);    
+            descri.text($(img).attr("description"));
+            captionDiv.append(descri);    
         }
         
 
@@ -704,10 +709,10 @@ Util = (function(){
     description: description of photo
     index: part of id, same index that was inputted when preview was created (aka the order they were appended)
     **/
-    function updatePhotoPreview(title, description, index) {
+    function updatePhotoPreview(title, description, filename) {
        // var thumbnail = $(document.getElementById("thumbnail"+index));
-        $(document.getElementById("photoTitle"+index)).text(title);
-        $(document.getElementById("photoDescription"+index)).text(description);
+        $(document.getElementById("photoTitle"+filename)).text(title);
+        $(document.getElementById("photoDescription"+filename)).text(description);
     }
 
     /**
@@ -721,7 +726,7 @@ Util = (function(){
         var descript=desc;
         // var path;
         var spec={
-            filename: file,
+            picfile: file,
             title: cap,
             description: desc,
             index: i,
@@ -732,13 +737,14 @@ Util = (function(){
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
-        thumbDiv.attr('id', 'thumbnail'+ spec.index); //give thumbnail a unique id based on index of file
+        thumbDiv.attr('id', 'thumbnail'+ spec.picfile.name); //give thumbnail a unique id based on index of file
 
         colDiv.append(thumbDiv);
         var imgDiv = $(document.createElement('div'));
         imgDiv.css({
-            'width':'251px',
+            'width':'100%',
             'height':'166px',
+            'position':"relative",
             'background-size':'contain',
             'background-repeat': 'no-repeat',
             'background-position':'center',
@@ -755,7 +761,7 @@ Util = (function(){
             var reader = new FileReader();
             reader.onload = function (e) {
                 var p = e.target.result; 
-                $(document.getElementById(cap+"modal")).attr('src',p);
+                $(document.getElementById(file.name+"modalthumb")).attr('src',p);
                 imgDiv.css('background-image','url(' + p + ')');
             }
             
@@ -769,7 +775,7 @@ Util = (function(){
         var caption = $(document.createElement('label')); //title label w/class photoTitle 
         captionDiv.append(caption);
         captionDiv.css('width','100%');
-        caption.attr('id', 'photoTitle' + i);
+        caption.attr('id', 'photoTitle' + file.name);
         caption.css({
             'width':'100%',
             'overflow':'hidden',
@@ -800,7 +806,7 @@ Util = (function(){
         //     btngroup.append(viewbtn);
         // }
         descDiv.text(descript);
-        descDiv.attr('id', 'photoDescription'+i); 
+        descDiv.attr('id', 'photoDescription'+file.name); 
         editbtn.text("Edit");
         // }
         editbtn.addClass("btn btn-default col-sm-offset-1");
@@ -846,21 +852,23 @@ Util = (function(){
 
          console.log("edit btn index is: " + index + " or maybe " + spec.index);
 
-        var modal;
+        var modal,modalId;
         var contentForm = $(document.createElement('form'));
         if(type==="Trip"){
-            modal=makeModal(spec.title, "Edit Trip", false, -1);  
+            modalId = spec.tripKey;
+            modal=makeModal(modalId, "Edit Trip", false, -1);  
              //submission functionality:
-             $(document.getElementById(spec.title + "savebtn")).click(function(){
+             $(document.getElementById(modalId + "savebtn")).click(function(){
                 contentForm.submit();
             });
          } else {
-            modal=makeModal(spec.title, "Edit Photo", false, index);
+            modalId="image"+spec.picfile.name;
+            modal=makeModal(modalId, "Edit Photo", false, index);
         }
 
         var body = $(document.getElementById("body"));
         body.append(modal); 
-        var modalBody = $(document.getElementById(spec.title+"modalBody"));
+        var modalBody = $(document.getElementById(modalId+"modalBody"));
         modalBody.append(contentForm);
 
       
@@ -876,7 +884,13 @@ Util = (function(){
         thumbDiv.addClass('thumbnail col-md-6 col-sm-offset-3');
         thumbRow.append(thumbDiv);
         var thumbnail=$(document.createElement('img'));
-        thumbnail.attr('id',title+"modal");
+        thumbnail.addClass("photoThumbnails");
+        if(type==="Trip"){
+            thumbnail.attr('id',title+"modal");
+        }
+        else if(type!=="Trip"){
+            thumbnail.attr('id',spec.picfile.name+"modalthumb");    
+        }
         thumbDiv.append(thumbnail);
         thumbnail.attr('src',thumb);
         var titleRow =$(document.createElement('div'));
@@ -966,35 +980,32 @@ Util = (function(){
         text.attr("name", "description");
         textWrapper.append(text);
 
-         var submit = $(document.getElementById(spec.title + "savebtn"));
-        submit.click(function(e){
-            submit_input.click();
-            contentForm.submit();
-        });
 
-           if(type == "displayPhotos") {
-                //no submit button - this doesn't seem to work...TODO
-                 var submit = $(document.getElementById(spec.title + "savebtn"));
-                 submit.remove();
 
-            }
+           // if(type == "displayPhotos") {
+           //      //no submit button - this doesn't seem to work...TODO
+           //       var submit = $(document.getElementById(modalId + "savebtn"));
+           //       submit.remove();
+
+           //  }
 
         //TODO: what is the type for photo??
-        if(type != "Trip") {
+        if(type !=="Trip") {
           //  text.attr('id', 'photoDescription');
             var titleInputField =   titleInput.children('input').eq(0);
            // titleInputField.attr('id', 'photoTitle'+spec.index);
             //also put in file name so we can match photos to info?? TODO: HOW...
             //if submitted, append inputs to main content form
 
-            var submitEditPhoto = $(document.getElementById(spec.title + "savebtn"));
-            var closeEditPhoto = $(document.getElementById(spec.title + "closebtn"));
+            var submitEditPhoto = $(document.getElementById(modalId + "savebtn"));
+            var closeEditPhoto = $(document.getElementById(modalId + "closebtn"));
+            console.log("photooooooooo iddddd "+modalId);
             submitEditPhoto.click(function(e){
                 e.preventDefault(); //no submission
                 //TODO: update photo preview
                 console.log("clicked. index is: " + index + " or maybe " + spec.index);
                 console.log("title is:" + titleInputField.val() + "desc is " + text.val());
-                updatePhotoPreview(titleInputField.val(), text.val(), index);
+                updatePhotoPreview(titleInputField.val(), text.val(), spec.picfile.name);
                /* console.log("edit photo, save clicked, appending information");
                 var inputTitle = $(document.getElementById("photoTitle"));
                 var inputDescription = $(document.getElementById("photoDescription"));
@@ -1004,6 +1015,12 @@ Util = (function(){
               //  submit_input.click();
                 closeEditPhoto.click();
 
+            });
+        }else{
+            var submit = $(document.getElementById(modalId + "savebtn"));
+            submit.click(function(e){
+                submit_input.click();
+                contentForm.submit();
             });
         }
 

@@ -126,10 +126,11 @@
         imageKey);
         pageContext.setAttribute("entryPhotoTitle",
         photoEntity.getProperty("title"));
+        pageContext.setAttribute("entryPhotoDescription",photoEntity.getProperty("description"));
 
         %>
 
-        <div class="entryPhoto" id="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" style="display: none">
+        <img class="entryPhoto" src="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" description = "${fn:escapeXml(entryPhotoDescription)}" style="display: none">
 
 <%
   }
