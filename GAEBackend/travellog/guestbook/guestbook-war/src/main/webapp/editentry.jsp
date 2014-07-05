@@ -18,7 +18,6 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 <%-- //[END imports]--%>
-
 <%
 BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -44,7 +43,44 @@ pageContext.setAttribute("entryTripPoster",
   entry.getProperty("tripPoster"));
 pageContext.setAttribute("entryDateCreated",
   entry.getProperty("dateCreated"));
+  List<String> photos = (List<String>) entry.getProperty("photos");
+  pageContext.setAttribute("photolength", photos.size());
   %>
+
+<script>
+  var photos = new Array(${fn:escapeXml(photolength)});
+</script>
+
+<%
+for(int i = 0; i < photos.size(); i++) {
+    Entity photo = null;
+    try {
+      photo = datastore.get(KeyFactory.stringToKey(photos.get(0)));
+    } catch (EntityNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    String blobKey = ((BlobKey) photo.getProperty("blobKey")).getKeyString();
+    String title = (String) photo.getProperty("title");
+    String description = (String) photo.getProperty("description");
+
+    pageContext.setAttribute("blobKey", blobKey);
+    pageContext.setAttribute("title", title);
+    pageContext.setAttribute("description", description);
+%>
+<script>
+console.log("title: ${fn:escapeXml(title)} blobKey is: ${fn:escapeXml(blobKey)}");
+var photo = {
+  title: "${fn:escapeXml(title)}",
+  description: "${fn:escapeXml(description)}",
+  url: "/getImageFromBlobKey?blobKey=${fn:escapeXml(blobKey)}",
+};
+
+photos.push(photo);
+</script>
+<%
+}
+%>
 
   <head>
     <meta charset="utf-8">
@@ -104,7 +140,7 @@ pageContext.setAttribute("entryDateCreated",
       </div><!--/.nav-collapse -->
       <div id="main" class="container-fluid">
         <form id="editEntry" action="/editEntry?entryKey=${fn:escapeXml(entryKey)}" method="post">
-          <!--  <input type="file" id="fileElem" class="multi" accept="gif|jpg" name="fileUpload" > <!--add multiple="" to have multiple at once, add accept="image/*" if this isn't working-->
+        <input type="file" id="fileElem" class="multi" accept="gif|jpg" name="fileUpload" > <!--add multiple="" to have multiple at once, add accept="image/*" if this isn't working-->
         </form>
         <!-- hidden file selector for customized button -->
         <!-- <input type="file" id="fileElem" multiple accept="image/*" style="display:none" > testing something, not sure if should comment out or not-->
@@ -142,7 +178,7 @@ pageContext.setAttribute("entryDateCreated",
       };
      // var entry = "poop";
 
-      loadFields(entry);
+      loadFields(entry, photos);
       </script>
     </body>
     </html>

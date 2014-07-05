@@ -34,7 +34,8 @@ import java.util.ArrayList;
  * parameters: tripKey, title, description, location, departDate, retDate. tags
  * TODO: do we want to update dateCreated or no?? it would be more like date
  * last updated edits entry information, redirects to that poster trip's entries
- * (or entry's page if we have separate page for that) TODO: edit/delete images
+ * (or entry's page if we have separate page for that)
+ * TODO: make edit/delete image more efficient
  */
 public class EditEntryServlet extends HttpServlet {
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -109,7 +110,7 @@ public class EditEntryServlet extends HttpServlet {
 				entry.setProperty("photos", photos);
 			}
 		}
-
+		
 		resp.sendRedirect("/entryPage.jsp?entryKey=" + entryKey);
 
 	}

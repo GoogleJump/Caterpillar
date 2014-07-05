@@ -103,7 +103,7 @@ editEntry = (function(){
 	// uploadbtn.attr("type", "file");
 	//uploadbtn.attr("name", entryKey);
 	// uploadbtn.attr("name", "fileUpload");
-	/*uploadbtn.addClass("btn btn-primary fileUpload");
+	uploadbtn.addClass("btn btn-primary fileUpload");
 	var upload = $(document.createElement('span'));
 	upload.text('Upload Photos');
 	uploadbtn.append(upload);
@@ -139,8 +139,9 @@ for(var i = 0; i < fileElem.length; i++) {
 		'height':'30px',
 		'width':'100px',
 		'color':'white',
-	});*/
-	/*uploadbtn.click(function(e){//"click", function (e) {
+	});
+
+	uploadbtn.click(function(e){//"click", function (e) {
 		console.log("before fileElem true");
 		// e.preventDefault(); // prevent navigation to "#" //commented out to make sure it's submitting the file - don't think we need it anymore
 	  	if (fileElem) {
@@ -149,7 +150,8 @@ for(var i = 0; i < fileElem.length; i++) {
 	  	}
 	  	
 	  });*/
-//} //end of fileElem loop
+
+} //end of fileElem loop
 //var filenames;
 /*$(".multi").change(function(){
 	console.log("multi");
@@ -189,6 +191,8 @@ $(".MultiFile").change(function(){
 
 
 /*removes all photos and adds the updated ones back on the front end*/
+var title = "";
+var description = "";
 function addPhotoPreview() {
 	console.log("update");
 	$(".MultiFile-list").hide(); //hide the list that shows the files
@@ -205,7 +209,9 @@ function addPhotoPreview() {
 			}*/
 			//console.log("fileElem value is" + fileElem.value());
 			//if(fileElem.value() != "" && fileElem.value() != null){
-				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j);
+				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j, title, description);
+				title = "";
+				description = "";
 			//}
 		}
 	}
@@ -232,7 +238,7 @@ $(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
 
 
 
-	/*uploadbtn.text("Upload Photos");
+	uploadbtn.text("Upload Photos");
 	uploadbtn.css({
 		'margin-top':'10px',
 		'background-color':Util.dark_purple,
@@ -241,10 +247,10 @@ $(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
 		'height':'30px',
 		'width':'100px',
 		'color':'white',
-	});*/
+	});
 
-	//fileElem.text("Upload Photos");
-	/*fileElem.css({
+	/*fileElem.text("Upload Photos");
+	fileElem.css({
 		'margin-top':'10px',
 		'background-color':Util.dark_purple,
 		//XM: Comment the following out if you wanna change uploadbtn to a real btn
@@ -447,7 +453,7 @@ btnsDiv.append(savebtn);
 
 })();
 
-function loadFields(entry){
+function loadFields(entry, photos) {
 	console.log("IS THIS EVEN UPDATING");
 	$("input, textarea").each(function() {
 		var name = $(this).attr("name");
@@ -469,4 +475,19 @@ function loadFields(entry){
 			$(this).attr("value", entry.tags);
 		}
 	});
-  }
+	loadPhotos(photos);
+}
+
+function loadPhotos(photos) {
+//TODO: title, description, and indication that photo already exists on server
+	for(var i = 0; i < photos.length; i++) {
+			var photo = $(photos[i]);
+			var id = "fileElem";
+			if(i != 0) id = "fileElem_F" + i;
+			var file = { link: photo.url };
+			$('#'+id).fileupload("option", "url", file.link);
+			$('#'+id).submit();
+			title = photo.title;
+			description = photo.description;
+		}
+	}
