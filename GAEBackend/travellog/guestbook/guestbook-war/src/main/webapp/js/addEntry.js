@@ -196,8 +196,14 @@ function addPhotoPreview() {
 	var descriptions = new Array(fileElem.length);
 	//save titles and descriptions before removing from photoDiv
 	for(var i = 0; i < fileElem.length; i++) {
-		titles[i] = $(document.getElementById("photoTitle"+i)).text();
-        descriptions[i] = $(document.getElementById("photoDescription"+i)).text();
+		titles[i]=[];
+		descriptions[i]=[];
+		for(var k=0;k<fileElem[i].files.length;k++){
+			var curfilename = fileElem[i].files[k].name;
+			titles[i].push($(document.getElementById("photoTitle"+curfilename)).text());
+        	descriptions[i].push($(document.getElementById("photoDescription"+curfilename)).text());
+		}
+		
 	}
 	
 		$(photoDiv).empty(); //empty all photo thumbnails
