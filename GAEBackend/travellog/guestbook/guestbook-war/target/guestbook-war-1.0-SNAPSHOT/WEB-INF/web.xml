@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+"-//Oracle Corporation//DTD Web Application 2.3//EN"
+"http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  <servlet>
+    <servlet-name>guestbook</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.GuestbookServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>insertUser</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.InsertUserServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>signIn</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.SignInServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>insertTrip</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.InsertTripServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.Upload</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>getImage</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.GetImageFromBlobKey</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>getTripImage</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.GetTripImage</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>editTrip</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.EditTripServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>editEntry</servlet-name>
+    <servlet-class>com.google.appengine.demos.guestbook.EditEntryServlet</servlet-class>
+  </servlet>
+
+<servlet>
+  <servlet-name>deleteTrip</servlet-name>
+  <servlet-class>com.google.appengine.demos.guestbook.DeleteTripServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>deleteEntry</servlet-name>
+  <servlet-class>com.google.appengine.demos.guestbook.DeleteEntryServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>getImageFromBlobKey</servlet-name>
+  <servlet-class>com.google.appengine.demos.guestbook.GetImageFromBlobKey</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>guestbook</servlet-name>
+  <url-pattern>/guestbook</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>insertUser</servlet-name>
+  <url-pattern>/insertUser</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>signIn</servlet-name>
+  <url-pattern>/signIn</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>insertTrip</servlet-name>
+  <url-pattern>/insertTrip</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>Upload</servlet-name>
+  <url-pattern>/upload</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>getImage</servlet-name>
+  <url-pattern>/getImage</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>getTripImage</servlet-name>
+  <url-pattern>/getTripImage</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>editTrip</servlet-name>
+  <url-pattern>/editTrip</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>editEntry</servlet-name>
+  <url-pattern>/editEntry</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>deleteEntry</servlet-name>
+  <url-pattern>/deleteEntry</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>deleteTrip</servlet-name>
+  <url-pattern>/deleteTrip</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>getImageFromBlobKey</servlet-name>
+  <url-pattern>/getImageFromBlobKey</url-pattern>
+</servlet-mapping>
+
+
+<welcome-file-list>
+ <welcome-file>signin.jsp</welcome-file>
+</welcome-file-list>
+</web-app>

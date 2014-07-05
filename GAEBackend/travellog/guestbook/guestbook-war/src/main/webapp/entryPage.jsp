@@ -107,6 +107,11 @@
           </a>
         </div>
       <div class="row col-md-10 col-md-offset-1"><h1>${fn:escapeXml(entryTitle)}</h1></div>
+      <!--stuff about entry here-->
+
+      <div class="row col-md-10 col-md-offset-1">
+      <p id="entryDescription" style="font-family: 'Times New Roman', Times, serif; font-size: 25px; padding-bottom: 20px;">${fn:escapeXml(entryDescription)}</p>
+      </div>
       <%
       //only include "Location:" if there is one
         String location = (String) entry.getProperty("location");
@@ -138,14 +143,9 @@
 %>
 </div> <!--end of photo div-->
 
-<!--stuff about entry here-->
 
-      <div class="row col-md-10 col-md-offset-1">
-      <p id="entryDescription" style="font-family: 'Times New Roman', Times, serif; font-size: 25px; padding-bottom: 20px;">${fn:escapeXml(entryDescription)}</p>
-      </div>
 
 </div><!--end row div-->
-
 
     </div>
     <div id="footer" class="footer"><p>Copyright (c) Caterpillar</p></div>

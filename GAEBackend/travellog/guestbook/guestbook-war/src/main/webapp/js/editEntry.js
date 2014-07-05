@@ -152,7 +152,7 @@ for(var i = 0; i < fileElem.length; i++) {
 	  });*/
 
 } //end of fileElem loop
-//var filenames;
+var filenames;
 /*$(".multi").change(function(){
 	console.log("multi");
 		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
@@ -478,15 +478,15 @@ function loadFields(entry, photos) {
 	loadPhotos(photos);
 }
 
+//TODO: load title, description, and photo url into the modals somehow...hmm
 function loadPhotos(photos) {
-//TODO: title, description, and indication that photo already exists on server
 	for(var i = 0; i < photos.length; i++) {
 			var photo = $(photos[i]);
 			var id = "fileElem";
 			if(i != 0) id = "fileElem_F" + i;
 			var file = { link: photo.url };
-			$('#'+id).fileupload("option", "url", file.link);
-			$('#'+id).submit();
+			//$('#'+id).fileupload("option", "url", file.link);
+			//$('#'+id).submit();
 			title = photo.title;
 			description = photo.description;
 		}
