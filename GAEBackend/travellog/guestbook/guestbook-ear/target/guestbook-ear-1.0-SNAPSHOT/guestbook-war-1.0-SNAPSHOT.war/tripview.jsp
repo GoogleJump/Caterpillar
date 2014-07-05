@@ -198,6 +198,7 @@
 <script type="text/javascript" src="../js/util/node_modules/moment/moment.js"></script>
 <link rel="stylesheet" href="../js/util/datepicker/css/bootstrap-datetimepicker.min.css" />
 <script type="text/javascript" src="../js/util/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script src = "../js/Util.js"></script>
 <script src="../js/Tripview.js"></script>
 </body>

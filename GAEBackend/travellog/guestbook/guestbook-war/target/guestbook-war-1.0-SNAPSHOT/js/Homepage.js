@@ -145,7 +145,7 @@ Homepage = (function(){
             'required':true,
         });
 
-        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Location',null,4,false);
+        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Enter a location',null,4,false);
         addTripform.append(locationWrapper);
         locationWrapper.children('input').eq(0).attr({
             'name': 'location',

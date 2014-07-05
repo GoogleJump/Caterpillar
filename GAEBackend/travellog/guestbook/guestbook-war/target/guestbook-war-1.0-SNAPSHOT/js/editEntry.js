@@ -90,7 +90,7 @@ editEntry = (function(){
 	contentDiv.append(tripKeyInput);*/
 
     //TODO: get PC's current location
-    var where = Util.inputGroup('Where: ',"Current Location");
+    var where = Util.inputGroup('Where: ',"location","Current Location",null,4,false);
     contentDiv.append(where);
     where.addClass('col-md-6 col-sm-offset-1');
     where.children('input').eq(0).attr('name','location');

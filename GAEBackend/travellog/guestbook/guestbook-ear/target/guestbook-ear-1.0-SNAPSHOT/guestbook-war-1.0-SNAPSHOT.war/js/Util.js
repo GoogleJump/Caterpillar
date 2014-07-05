@@ -205,6 +205,13 @@ Util = (function(){
             titleInput.attr('name','password');
             titleInput.attr('type','password');
         }
+        if(type===4){
+            var autocomplete = new google.maps.places.Autocomplete(
+                  titleinput,
+                  { types: ['geocode'] });
+              google.maps.event.addListener(autocomplete, 'place_changed', function() {
+              });
+        }
         titleInput.addClass('form-control');
         titleInput.attr('placeholder',placeholder);
         if(value){
@@ -939,7 +946,7 @@ Util = (function(){
             });
             var locRow =$(document.createElement('div'));
             locRow.addClass("row col-md-10 col-sm-offset-1");
-            var locInput = inputGroup("Location: ", 'location', null, loc,null,false);
+            var locInput = inputGroup("Location: ", 'location', null, loc,4,false);
             locRow.append(locInput);    
             contentRow.append(locRow);
         }
