@@ -138,7 +138,7 @@ pageContext.setAttribute("entryDateCreated",
 for(int i = 0; i < photos.size(); i++) {
     Entity photo = null;
     try {
-      photo = datastore.get(KeyFactory.stringToKey(photos.get(0)));
+      photo = datastore.get(KeyFactory.stringToKey(photos.get(i)));
     } catch (EntityNotFoundException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -150,6 +150,7 @@ for(int i = 0; i < photos.size(); i++) {
     pageContext.setAttribute("blobKey", blobKey);
     pageContext.setAttribute("title", title);
     pageContext.setAttribute("description", description);
+     pageContext.setAttribute("photoKey", photos.get(i));
 %>
 <script>
 console.log("title: ${fn:escapeXml(title)} blobKey is: ${fn:escapeXml(blobKey)}");
@@ -158,6 +159,7 @@ var photo = {
   name: "${fn:escapeXml(title)}",
   description: "${fn:escapeXml(description)}",
   url: "/getImageFromBlobKey?blobKey=${fn:escapeXml(blobKey)}",
+  key: "${fn:escapeXml(photoKey)}
 };
 
 photos.push(photo);
