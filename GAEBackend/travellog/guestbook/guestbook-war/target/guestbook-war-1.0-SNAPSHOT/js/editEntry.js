@@ -191,6 +191,7 @@ $(".MultiFile").change(function(){
 
 
 /*removes all photos and adds the updated ones back on the front end*/
+/*COMMENTED OUT FROM HERE
 var title = "";
 var description = "";
 function addPhotoPreview() {
@@ -204,22 +205,14 @@ function addPhotoPreview() {
 		console.log("file Elem is:"+ fileElem);
 		console.log("fileElem[0] is"+ fileElem);
 		for(var j = 0; j < fileElem.length - 1; j++ ) {
-			/*if(("#thumbnail" + j).length > 0) { //index exists - skip
-				console.log("thumbnail exists");
-			}*/
-			//console.log("fileElem value is" + fileElem.value());
-			//if(fileElem.value() != "" && fileElem.value() != null){
 				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j, title, description);
 				title = "";
 				description = "";
-			//}
 		}
-	}
+	} TO HERE */
 
-	/*uploadbtn.click(function(){
-		console.log("upload button click");
-		updatePhotoPreviews();
-	});*/
+//COMMENTED OUT FROM HERE
+/*
 var first = 0;
 $(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
 	console.log("upload bind insert/remove");
@@ -233,7 +226,7 @@ $(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
        // alert('Content removed! Current content:' + '\n\n' + this.innerHTML);
        console.log("content removed");
    }
-});
+});*/ //TOHERE
 
 
 
@@ -268,6 +261,7 @@ photoRow.css({
 	'margin-right':'0px',
 });
 var photoDiv = $(document.createElement('div'));
+photoDiv.attr('id', 'photoDiv');
 photoDiv.addClass("col-sm-offset-1 col-md-10");
 photoRow.append(photoDiv);
 photoDiv.css({
@@ -453,6 +447,16 @@ btnsDiv.append(savebtn);
 
 })();
 
+
+function loadPhoto(photo, i) {
+			title = photo.name; //title
+			description = photo.description;
+			console.log("load photos title:" + title);
+			console.log("load photos link:" + photo.url);
+			var photoDiv = $(document.getElementById('photoDiv'));
+			photoDiv.append(Util.photoPreview(photo, title, description, i, "url"));
+	}
+
 function loadFields(entry, photos) {
 	console.log("IS THIS EVEN UPDATING");
 	$("input, textarea").each(function() {
@@ -475,19 +479,22 @@ function loadFields(entry, photos) {
 			$(this).attr("value", entry.tags);
 		}
 	});
-	loadPhotos(photos);
+
+	//loadPhotos(photos);
 }
 
 //TODO: load title, description, and photo url into the modals somehow...hmm
-function loadPhotos(photos) {
+/*function loadPhotos(photos) {
+	console.log("photos.length:" + photos.length);
 	for(var i = 0; i < photos.length; i++) {
 			var photo = $(photos[i]);
 			var id = "fileElem";
 			if(i != 0) id = "fileElem_F" + i;
-			var file = { link: photo.url };
-			//$('#'+id).fileupload("option", "url", file.link);
-			//$('#'+id).submit();
-			title = photo.title;
+			title = photo.name; //title
 			description = photo.description;
+			console.log("load photos title:" + title);
+			console.log("load photos link:" + photo.url);
+			var photoDiv = $(document.getElementById('photoDiv'));
+			 photoDiv.append(Util.photoPreview(photo, title, description, i, "url"));
 		}
-	}
+	}*/

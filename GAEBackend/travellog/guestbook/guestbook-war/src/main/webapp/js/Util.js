@@ -728,7 +728,7 @@ Util = (function(){
     path: path to img src
     file: file to img.(for file picker preview)
     */
-    function photoPreview(file,cap,desc, i){
+    function photoPreview(file,cap,desc,i,filetype){
         var colDiv = $(document.createElement('div'));
         var descript=desc;
         // var path;
@@ -738,8 +738,6 @@ Util = (function(){
             description: desc,
             index: i,
         };
-        console.log("photo Preview info is:" + file + " " + cap + " " + desc);
-        console.log("photo preview index is:" + spec.index + " or maybe it's" + i);
         var modal = editBtn(null,spec);
         colDiv.addClass('col-sm-6 col-md-4');
         var thumbDiv = $(document.createElement('div'));
@@ -763,7 +761,8 @@ Util = (function(){
         //     'width':'260px',
         // })
         //get the thumbnail from the upload file. Sync the thumbnail in corresponding modal as well
-        if(file){
+        if(file && (filetype != "url")){
+            console.log("filetype is: "+filetype);
             //probably need to crop them/resize them later if the photos are not in standard size
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -774,6 +773,13 @@ Util = (function(){
             
             reader.readAsDataURL(file);
         }
+
+        if(filetype == "url") {
+                 var p = file.url;
+                 $(document.getElementById(file.name+"modalthumb")).attr('src',p);
+                imgDiv.css('background-image','url(' + p + ')');
+        }
+
         // thumbnail.attr("alt","Oops, there is an error with the image")
         // imgDiv.append(thumbnail);
         var captionDiv = $(document.createElement('div'));

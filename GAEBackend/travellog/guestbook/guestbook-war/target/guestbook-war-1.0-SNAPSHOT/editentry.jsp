@@ -45,43 +45,14 @@ pageContext.setAttribute("entryDateCreated",
   entry.getProperty("dateCreated"));
   List<String> photos = (List<String>) entry.getProperty("photos");
   pageContext.setAttribute("photolength", photos.size());
+  System.out.println("photos.size" + photos.size());
   %>
 
 <script>
-  var photos = new Array(${fn:escapeXml(photolength)});
+  var photos = new Array();
+  console.log("photos length is"+ photos.length);
+   console.log("photos is"+ photos);
 </script>
-
-<%
-for(int i = 0; i < photos.size(); i++) {
-    Entity photo = null;
-    try {
-      photo = datastore.get(KeyFactory.stringToKey(photos.get(0)));
-    } catch (EntityNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    String blobKey = ((BlobKey) photo.getProperty("blobKey")).getKeyString();
-    String title = (String) photo.getProperty("title");
-    String description = (String) photo.getProperty("description");
-
-    pageContext.setAttribute("blobKey", blobKey);
-    pageContext.setAttribute("title", title);
-    pageContext.setAttribute("description", description);
-%>
-<script>
-console.log("title: ${fn:escapeXml(title)} blobKey is: ${fn:escapeXml(blobKey)}");
-var photo = {
-  title: "${fn:escapeXml(title)}",
-  description: "${fn:escapeXml(description)}",
-  url: "/getImageFromBlobKey?blobKey=${fn:escapeXml(blobKey)}",
-};
-
-photos.push(photo);
-</script>
-<%
-}
-%>
-
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -163,6 +134,40 @@ photos.push(photo);
       <script type="../js/jQueryUI/js/jquery-1.8.16.custom.min.js"></script>
       <script src="../js/Util.js"></script>
       <script src="../js/editEntry.js"></script>
+      <%
+for(int i = 0; i < photos.size(); i++) {
+    Entity photo = null;
+    try {
+      photo = datastore.get(KeyFactory.stringToKey(photos.get(0)));
+    } catch (EntityNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    String blobKey = ((BlobKey) photo.getProperty("blobKey")).getKeyString();
+    String title = (String) photo.getProperty("title");
+    String description = (String) photo.getProperty("description");
+
+    pageContext.setAttribute("blobKey", blobKey);
+    pageContext.setAttribute("title", title);
+    pageContext.setAttribute("description", description);
+%>
+<script>
+console.log("title: ${fn:escapeXml(title)} blobKey is: ${fn:escapeXml(blobKey)}");
+
+var photo = {
+  name: "${fn:escapeXml(title)}",
+  description: "${fn:escapeXml(description)}",
+  url: "/getImageFromBlobKey?blobKey=${fn:escapeXml(blobKey)}",
+};
+
+photos.push(photo);
+loadPhoto(photo, 0);
+
+</script>
+<%
+}
+%>
+
       <script>
       console.log("making entry");
 
