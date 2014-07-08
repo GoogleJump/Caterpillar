@@ -79,6 +79,9 @@ li{
     background-color: #528B8B;
     margin-top: 20px
 }*/
+.pac-container{
+	z-index:100000000;
+}
 #footer {
   position: fixed;
   bottom: 0;

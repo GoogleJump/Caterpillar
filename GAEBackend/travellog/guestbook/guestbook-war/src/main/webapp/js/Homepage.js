@@ -145,12 +145,7 @@ Homepage = (function(){
             'required':true,
         });
 
-        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Enter a location',null,4,false);
-        addTripform.append(locationWrapper);
-        locationWrapper.children('input').eq(0).attr({
-            'name': 'location',
-            // 'required':true,
-        });
+
 
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
@@ -170,6 +165,13 @@ Homepage = (function(){
         });
         end.on("dp.change",function (e) {
             start.data("DateTimePicker").setMaxDate(e.date);
+        });
+        var locationWrapper = Util.inputGroup('Where: ', 'location', 'Enter a location',null,4,false);
+        addTripform.append(locationWrapper);
+        locationWrapper.addClass('col-md-12');
+        locationWrapper.children('input').eq(0).attr({
+            'name': 'location',
+            // 'required':true,
         });
         var description = $(document.createElement('textarea'));
         description.attr('placeholder','Description');

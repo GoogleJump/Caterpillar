@@ -868,7 +868,7 @@ Util = (function(){
         var modal,modalId;
         var contentForm = $(document.createElement('form'));
         if(type==="Trip"){
-            modalId = spec.tripKey;
+            modalId = spec.title+spec.location;
             modal=makeModal(modalId, "Edit Trip", false, -1);  
              //submission functionality:
              $(document.getElementById(modalId + "savebtn")).click(function(){
