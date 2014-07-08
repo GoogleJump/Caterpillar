@@ -48,7 +48,9 @@ public class DeletePhotoServlet extends HttpServlet {
 			e1.printStackTrace();
 		}
 		List<String> photoKeys = (List<String>) entry.getProperty("photos");
+		System.out.println("photo keys before" + photoKeys.size());
 		photoKeys.remove(photoKey);
+		System.out.println("photo keys after" + photoKeys.size());
 		
 		//delete Photo from datastore
 		Entity photo = null;
