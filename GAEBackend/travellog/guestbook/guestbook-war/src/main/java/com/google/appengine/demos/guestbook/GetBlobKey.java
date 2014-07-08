@@ -84,7 +84,7 @@ public class GetBlobKey extends HttpServlet {
 //      }
 
         PrintWriter out = resp.getWriter();
-        out.print(blobKey.getKeyString() + " working " + servingUrl);
+        out.print(blobKey.getKeyString() + "xxxdelimiterxxx" + servingUrl);
         out.flush();
         out.close();
        
