@@ -787,6 +787,7 @@ Util = (function(){
                  var p = file.url;
                  $(document.getElementById(file.name+"modalthumb")).attr('src',p);
                 imgDiv.css('background-image','url(' + p + ')');
+                thumbDiv.addClass("uploaded");
         }
 
         // thumbnail.attr("alt","Oops, there is an error with the image")
@@ -909,6 +910,7 @@ Util = (function(){
         thumbRow.append(thumbDiv);
         var thumbnail=$(document.createElement('img'));
         thumbnail.addClass("photoThumbnails");
+        if(type=="editEntry") thumbnail.addClass("uploaded");
         if(type==="Trip"){
             thumbnail.attr('id',title+"modal");
         }

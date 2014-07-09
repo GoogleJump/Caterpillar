@@ -100,12 +100,10 @@ public class EditEntryServlet extends HttpServlet {
 
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
 		// make photos from blobs
-		List<String> photos = new ArrayList<String>(); // list of photo
-														// entities' key strings
+		List<String> photos = (List<String>) entry.getProperty("photos");
 
 		if (blobs != null) {
 			List<BlobKey> blobKeys = blobs.get("fileUpload");
-			System.out.println("number blobs uploaded is:"+blobKeys.size());
 			if (blobKeys != null) {
 				createPhotos(photos, blobKeys, photoTitles, photoDescriptions);
 				deletePhotos(entry);
@@ -145,22 +143,20 @@ public class EditEntryServlet extends HttpServlet {
 	 */
 	public void createPhotos(List<String> photos, List<BlobKey> blobKeys,
 		String[] photoTitles, String[] photoDescriptions) {
-		int alreadyUploaded = photoTitles.length - blobKeys.size();
-		System.out.println("already uploaded:" + alreadyUploaded);
 		for (int i = 0; i < blobKeys.size(); i++) {
 			System.out.println("photo create");
 			Entity photo = new Entity("Photo");
 			photo.setProperty("blobKey", blobKeys.get(i));
-			if (photoTitles[i+alreadyUploaded] == null)
-				photoTitles[i+alreadyUploaded] = "";
+			if (photoTitles[i] == null)
+				photoTitles[i] = "";
 			if (i < photoTitles.length)
-				photo.setProperty("title", photoTitles[i+alreadyUploaded]);
+				photo.setProperty("title", photoTitles[i]);
 			else
 				photo.setProperty("title", "");
-			if (photoDescriptions[i+alreadyUploaded] == null)
-				photoDescriptions[i+alreadyUploaded] = "";
+			if (photoDescriptions[i] == null)
+				photoDescriptions[i] = "";
 			if (i < photoDescriptions.length)
-				photo.setProperty("description", photoDescriptions[i+alreadyUploaded]);
+				photo.setProperty("description", photoDescriptions[i]);
 			else
 				photo.setProperty("description", "");
 			datastore.put(photo);

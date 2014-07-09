@@ -102,14 +102,12 @@ function addPhotoPreview() {
 	console.log("number of fileElems is before" + fileElem.length);
 		//$(photoDiv).empty(); //empty all photo thumbnails TODO-only empty the ones that were uploaded
 		//$(".modal").remove(); //empty all modals
-		var num_photos = photoDiv.children().length; //current amount - index of new one will be this length
+		var num_photos = photoDiv.children().length;
 		console.log("number of photos (children of photo div is:" + num_photos);
 		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
 		console.log("number of fileElems is after" + fileElem.length);
-		for(var j = 0; j < fileElem.length-1; j++ ) {
-				console.log("upload photo" + j);
-				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j+num_photos, "", "");
-		}
+		//console.log("upload photo" + j+num_photos);
+		filenames = Util.uploadPhotos(fileElem[num_photos-1], photoDiv, num_photos, "", "");
 	}
 
 var first = 0;
@@ -282,6 +280,32 @@ function getFromLocalStorage(key) {
 
 	//make sure this button submits the form (because there are two buttons it might not work):
 	savebtn.click(function(){
+		var thumbs = $(document.getElementsByClassName("photoThumbnails"));
+		console.log("thumbnail amount is:" + thumbs.length);
+		for(var i = 0; i < thumbs.length; ++i) {
+			var thumb = $(thumbs[i]);
+			if(thumbs.hasClass("uploaded")) continue; //skip photos that are already uploaded
+
+			var curid = thumb.attr("id");
+			var curtitle= curid.slice(0,curid.length-10);//the id is filedefaultname+modalthumb. we only need filedefaultname
+			var titleInput = $(document.createElement('input'));
+			titleInput.attr('name', 'photoTitle');
+			titleInput.attr('value', $(document.getElementById("photoTitle"+curtitle)).text());
+			titleInput.css("display", "none");
+			contentForm.append(titleInput);
+
+			var descInput = $(document.createElement('input'));
+			descInput.attr('name', 'photoDescription');
+			descInput.attr('value', $(document.getElementById("photoDescription"+curtitle)).text());
+			descInput.css("display", "none");
+			contentForm.append(descInput);
+
+			var fileInput = $(document.createElement('input'));
+			fileInput.attr('name', 'photoFile');
+			fileInput.attr('value', filenames[i]);
+			fileInput.css('display', 'none');
+			contentForm.append(fileInput);
+		}
 		savebtn.submit();
 		submit_input.click(); //why should we even need this?
 	});
@@ -324,50 +348,4 @@ function loadFields(entry, photos) {
 	});
 }
 
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
-/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
-why won't this track my changes omgomgomgomgomg*/
 
