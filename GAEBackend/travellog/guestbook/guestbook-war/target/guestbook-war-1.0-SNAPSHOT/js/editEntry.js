@@ -1,8 +1,6 @@
 editEntry = (function(){
 
 
-
-
 	"use strict";
 	var body = $(document.getElementById("body"));
 	var main = $(document.getElementById("main"));
@@ -41,36 +39,6 @@ editEntry = (function(){
 	var tripbutton = $(document.getElementById("trips_button"));
 	tripbutton.attr("href", "/homepage.jsp?userKey=" + userKey);
 
-//no start/end date for entries
-	/*var duration = $(document.createElement('div'));
-	duration.addClass('col-md-6 col-sm-offset-1');
-	duration.css('padding-left','0px');
-	duration.css('padding-right','0px');
-	contentDiv.append(duration);
-	var start = Util.inputGroup('Start: ',"Choose a start date",null,1);
-	start.addClass('col-md-12');
-	duration.append(start);
-	var end = Util.inputGroup('End: ',"Choose an end date",null,1);
-	end.addClass('col-md-12');
-	duration.append(end); 
-	//make sure the start date is always in front of the end date
-	start.on("dp.change",function (e) {
-        end.data("DateTimePicker").setMinDate(e.date);
-    });
-    end.on("dp.change",function (e) {
-        start.data("DateTimePicker").setMaxDate(e.date);
-    });*/
-
-
-	//invisible entry key input - get from url parameters and set
-	/*var entryKeyInput = $(document.createElement('input'));
-	entryKeyInput.css("display", "none");
-	var entryKey = getQueryVariable("entryKey");
-	entryKeyInput.attr("name", "entryKey");
-	entryKeyInput.attr("value", entryKey);
-	contentDiv.append(entryKeyInput);
-	console.log("entry key is:" + entryKey);*/
-
 	//invisible user key input - get from local storage and set
 	var userKeyInput = $(document.createElement('input'));
 	userKeyInput.css("display", "none");
@@ -79,15 +47,6 @@ editEntry = (function(){
 	userKeyInput.attr("value", userKey);
 	userKeyInput.attr("name","userKey")
 	contentDiv.append(userKeyInput);
-
-	//invisible trip key input - get from url param and set
-	/*var tripKeyInput = $(document.createElement('input'));
-	tripKeyInput.css("display", "none");
-	var tripKey = getQueryVariable("tripKey");
-	console.log("trip key is:" + tripKey);
-	tripKeyInput.attr("value", tripKey);
-	tripKeyInput.attr("name","tripKey")
-	contentDiv.append(tripKeyInput);*/
 
     //TODO: get PC's current location
     var where = Util.inputGroup('Where: ',"location","Current Location",null,4,false);
@@ -112,6 +71,7 @@ editEntry = (function(){
 	var fileElem = (document.getElementsByClassName('multi'));
 
 for(var i = 0; i < fileElem.length; i++) {
+	console.log("file elem number" + fileElem.length);
 	uploadbtn.append(fileElem[i]);
 	uploadbtn.css({
 		'position': 'relative',
@@ -131,127 +91,38 @@ for(var i = 0; i < fileElem.length; i++) {
 		'opacity': '0',
 		'filter': 'alpha(opacity=0)',
 	});
-	/*fileElem.css({
-		'margin-top':'10px',
-		'background-color':Util.dark_purple,
-		//XM: Comment the following out if you wanna change uploadbtn to a real btn
-		'position':'relative',
-		'height':'30px',
-		'width':'100px',
-		'color':'white',
-	});
-
-	uploadbtn.click(function(e){//"click", function (e) {
-		console.log("before fileElem true");
-		// e.preventDefault(); // prevent navigation to "#" //commented out to make sure it's submitting the file - don't think we need it anymore
-	  	if (fileElem) {
-	  		console.log("fileElem true");
-	    	fileElem.click();
-	  	}
-	  	
-	  });*/
 
 } //end of fileElem loop
 var filenames;
-/*$(".multi").change(function(){
-	console.log("multi");
-		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
-		console.log("fileElem length is:" +fileElem.length);
-		console.log("file Elem is:"+ fileElem);
-		console.log("fileElem[0] is"+ fileElem);
-		for(var j = 0; j < fileElem.length; j++ ) {
-			filenames = Util.uploadPhotos(fileElem[j], photoDiv);
-
-		}
-	});
-
-$(".MultiFile-applied").change(function(){
-	console.log("multifile applieD");
-		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
-		console.log("fileElem length multifile-applied is:" +fileElem.length);
-		console.log("file Elem is:"+ fileElem);
-		console.log("fileElem[0] is"+ fileElem);
-		for(var j = 0; j < fileElem.length; j++ ) {
-			filenames = Util.uploadPhotos(fileElem[j], photoDiv);
-
-		}
-	});
-
-$(".MultiFile").change(function(){
-	console.log("multifile");
-		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
-		console.log("fileElem length multifile is:" +fileElem.length);
-		console.log("file Elem is:"+ fileElem);
-		console.log("fileElem[0] is"+ fileElem);
-		for(var j = 0; j < fileElem.length; j++ ) {
-			filenames = Util.uploadPhotos(fileElem[j], photoDiv);
-			
-		}
-	});*/
-
 
 /*removes all photos and adds the updated ones back on the front end*/
-/*COMMENTED OUT FROM HERE
-var title = "";
-var description = "";
 function addPhotoPreview() {
 	console.log("update");
 	$(".MultiFile-list").hide(); //hide the list that shows the files
-		$(photoDiv).empty(); //empty all photo thumbnails
-		$(".modal").remove(); //empty all modals
+	console.log("number of fileElems is before" + fileElem.length);
+		//$(photoDiv).empty(); //empty all photo thumbnails TODO-only empty the ones that were uploaded
+		//$(".modal").remove(); //empty all modals
 		var num_photos = photoDiv.children().length; //current amount - index of new one will be this length
+		console.log("number of photos (children of photo div is:" + num_photos);
 		fileElem = (document.getElementsByClassName('multi')); //redefine fileElem (more added)
-		console.log("fileElem length multifile is:" +fileElem.length);
-		console.log("file Elem is:"+ fileElem);
-		console.log("fileElem[0] is"+ fileElem);
-		for(var j = 0; j < fileElem.length - 1; j++ ) {
-				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j, title, description);
-				title = "";
-				description = "";
+		console.log("number of fileElems is after" + fileElem.length);
+		for(var j = 0; j < fileElem.length; j++ ) {
+				console.log("upload photo" + j);
+				filenames = Util.uploadPhotos(fileElem[j], photoDiv, j+num_photos, "", "");
 		}
-	} TO HERE */
+	}
 
-//COMMENTED OUT FROM HERE
-/*
 var first = 0;
 $(uploadbtn).bind('DOMNodeInserted DOMNodeRemoved', function(event) {
 	console.log("upload bind insert/remove");
-
-	
 	if (event.type == 'DOMNodeInserted') {
-        //alert('Content added! Current content:' + '\n\n' + this.innerHTML);
-        if(first != 0) addPhotoPreview(); //don't do this the first time
-        first = 1;
+        console.log("content added");
+        addPhotoPreview(); //don't do this the first time????
+       // first = 1;
     } else {
-       // alert('Content removed! Current content:' + '\n\n' + this.innerHTML);
        console.log("content removed");
    }
-});*/ //TOHERE
-
-
-
-
-	uploadbtn.text("Upload Photos");
-	uploadbtn.css({
-		'margin-top':'10px',
-		'background-color':Util.dark_purple,
-		//XM: Comment the following out if you wanna change uploadbtn to a real btn
-		'position':'relative',
-		'height':'30px',
-		'width':'100px',
-		'color':'white',
-	});
-
-	/*fileElem.text("Upload Photos");
-	fileElem.css({
-		'margin-top':'10px',
-		'background-color':Util.dark_purple,
-		//XM: Comment the following out if you wanna change uploadbtn to a real btn
-		'position':'relative',
-		'height':'30px',
-		'width':'100px',
-		'color':'white',
-	});*/
+});
 
 var photoRow = $(document.createElement('div'));
 contentDiv.append(photoRow);
@@ -411,34 +282,6 @@ function getFromLocalStorage(key) {
 
 	//make sure this button submits the form (because there are two buttons it might not work):
 	savebtn.click(function(){
-		// if(title.children("input").eq(0).val()===""){
-		// 	title.children("input").eq(0).setCustomValidity('Please type your title for the trip');
-		// 	return;
-		// }
-		//create inputs for each of the photo previews
-		/*var thumbs = $(document.getElementsByClassName("thumbnail"));
-		console.log("thumbnail amount is:" + thumbs.length);
-		for(var i = 0; i < thumbs.length; ++i) {
-			var titleInput = $(document.createElement('input'));
-			titleInput.attr('name', 'photoTitle');
-			titleInput.attr('value', $(document.getElementById("photoTitle"+i)).text());
-			titleInput.css("display", "none");
-			contentForm.append(titleInput);
-
-			var descInput = $(document.createElement('input'));
-			descInput.attr('name', 'photoDescription');
-			descInput.attr('value', $(document.getElementById("photoDescription"+i)).text());
-			descInput.css("display", "none");
-			contentForm.append(descInput);
-
-			var fileInput = $(document.createElement('input'));
-			fileInput.attr('name', 'photoFile');
-			fileInput.attr('value', filenames[i]);
-			fileInput.css('display', 'none');
-			contentForm.append(fileInput);
-
-		}*/
-
 		savebtn.submit();
 		submit_input.click(); //why should we even need this?
 	});
@@ -479,22 +322,52 @@ function loadFields(entry, photos) {
 			$(this).attr("value", entry.tags);
 		}
 	});
-
-	//loadPhotos(photos);
 }
 
-//TODO: load title, description, and photo url into the modals somehow...hmm
-/*function loadPhotos(photos) {
-	console.log("photos.length:" + photos.length);
-	for(var i = 0; i < photos.length; i++) {
-			var photo = $(photos[i]);
-			var id = "fileElem";
-			if(i != 0) id = "fileElem_F" + i;
-			title = photo.name; //title
-			description = photo.description;
-			console.log("load photos title:" + title);
-			console.log("load photos link:" + photo.url);
-			var photoDiv = $(document.getElementById('photoDiv'));
-			 photoDiv.append(Util.photoPreview(photo, title, description, i, "url"));
-		}
-	}*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+/*asdflkjasf;lkasdjfa;lskfjas;dlkfjasd;flkajsdf;lkajsdf;lakdjsfa;lksdfjasl;kfjas;dlkfjasdl;fajsf;lkasdjf;laksdfjasdf;aslkdfjas;dlkfj
+why won't this track my changes omgomgomgomgomg*/
+

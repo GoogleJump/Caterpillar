@@ -110,8 +110,9 @@ pageContext.setAttribute("entryDateCreated",
         </div>
       </div><!--/.nav-collapse -->
       <div id="main" class="container-fluid">
-        <form id="editEntry" action="/editEntry?entryKey=${fn:escapeXml(entryKey)}" method="post">
-        <input type="file" id="fileElem" class="multi" accept="gif|jpg" name="fileUpload" > <!--add multiple="" to have multiple at once, add accept="image/*" if this isn't working-->
+        <form id="editEntry" action="<%= blobstoreService.createUploadUrl("/editEntry") %>" method="post" enctype="multipart/form-data">
+          <input type="file" id="fileElem" class="multi" accept="gif|jpg" name="fileUpload" > <!--add multiple="" to have multiple at once, add accept="image/*" if this isn't working-->
+          <input name="entryKey" value="${fn:escapeXml(entryKey)}" style="display:none"></input>
         </form>
         <!-- hidden file selector for customized button -->
         <!-- <input type="file" id="fileElem" multiple accept="image/*" style="display:none" > testing something, not sure if should comment out or not-->

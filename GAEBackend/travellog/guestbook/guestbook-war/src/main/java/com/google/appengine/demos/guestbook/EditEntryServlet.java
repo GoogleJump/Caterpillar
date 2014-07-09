@@ -38,6 +38,7 @@ import java.util.ArrayList;
  * TODO: make edit/delete image more efficient
  */
 public class EditEntryServlet extends HttpServlet {
+	
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory
 			.getBlobstoreService();
@@ -104,6 +105,7 @@ public class EditEntryServlet extends HttpServlet {
 
 		if (blobs != null) {
 			List<BlobKey> blobKeys = blobs.get("fileUpload");
+			System.out.println("number blobs uploaded is:"+blobKeys.size());
 			if (blobKeys != null) {
 				createPhotos(photos, blobKeys, photoTitles, photoDescriptions);
 				deletePhotos(entry);
@@ -142,21 +144,23 @@ public class EditEntryServlet extends HttpServlet {
 	 * @param photoDescriptions
 	 */
 	public void createPhotos(List<String> photos, List<BlobKey> blobKeys,
-			String[] photoTitles, String[] photoDescriptions) {
+		String[] photoTitles, String[] photoDescriptions) {
+		int alreadyUploaded = photoTitles.length - blobKeys.size();
+		System.out.println("already uploaded:" + alreadyUploaded);
 		for (int i = 0; i < blobKeys.size(); i++) {
 			System.out.println("photo create");
 			Entity photo = new Entity("Photo");
 			photo.setProperty("blobKey", blobKeys.get(i));
-			if (photoTitles[i] == null)
-				photoTitles[i] = "";
+			if (photoTitles[i+alreadyUploaded] == null)
+				photoTitles[i+alreadyUploaded] = "";
 			if (i < photoTitles.length)
-				photo.setProperty("title", photoTitles[i]);
+				photo.setProperty("title", photoTitles[i+alreadyUploaded]);
 			else
 				photo.setProperty("title", "");
-			if (photoDescriptions[i] == null)
-				photoDescriptions[i] = "";
+			if (photoDescriptions[i+alreadyUploaded] == null)
+				photoDescriptions[i+alreadyUploaded] = "";
 			if (i < photoDescriptions.length)
-				photo.setProperty("description", photoDescriptions[i]);
+				photo.setProperty("description", photoDescriptions[i+alreadyUploaded]);
 			else
 				photo.setProperty("description", "");
 			datastore.put(photo);

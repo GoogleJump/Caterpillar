@@ -898,9 +898,6 @@ Util = (function(){
         var modalBody = $(document.getElementById(modalId+"modalBody"));
         modalBody.append(contentForm);
 
-      
-
-
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');
         contentForm.append(contentRow);
@@ -922,7 +919,7 @@ Util = (function(){
         thumbnail.attr('src',thumb);
         var titleRow =$(document.createElement('div'));
         titleRow.addClass("row col-md-10 col-sm-offset-1");
-        var titleInput = inputGroup("Title: ", 'title', null, title,null,true);
+        var titleInput = inputGroup("Title: ", 'title', null, title, null,true);
         titleRow.append(titleInput);    
         contentRow.append(titleRow);
         
@@ -1012,9 +1009,8 @@ Util = (function(){
             var submitEditPhoto = $(document.getElementById(modalId + "savebtn"));
             var closeEditPhoto = $(document.getElementById(modalId + "closebtn"));
 
-            submitEditPhoto.click(function(e){
+            submitEditPhoto.click(function(e) {
                 e.preventDefault(); //no submission
-                //TODO: update photo preview
                 console.log("clicked. index is: " + index + " or maybe " + spec.index);
                 console.log("title is:" + titleInputField.val() + "desc is " + text.val());
                 updatePhotoPreview(titleInputField.val(), text.val(), spec.picfile.name);
@@ -1023,8 +1019,10 @@ Util = (function(){
             });
         }
         else{
+            
             var submit = $(document.getElementById(modalId + "savebtn"));
             submit.click(function(e){
+                updatePhotoPreview(titleInputField.val(), text.val(), spec.picfile.name);
                 submit_input.click();
                 contentForm.submit();
             });

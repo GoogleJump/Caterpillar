@@ -203,7 +203,6 @@ function addPhotoPreview() {
 			titles[i].push($(document.getElementById("photoTitle"+curfilename)).text());
         	descriptions[i].push($(document.getElementById("photoDescription"+curfilename)).text());
 		}
-		
 	}
 	
 		$(photoDiv).empty(); //empty all photo thumbnails
