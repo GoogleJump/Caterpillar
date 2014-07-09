@@ -284,7 +284,7 @@ function getFromLocalStorage(key) {
 		console.log("thumbnail amount is:" + thumbs.length);
 		for(var i = 0; i < thumbs.length; ++i) {
 			var thumb = $(thumbs[i]);
-			if(thumbs.hasClass("uploaded")) continue; //skip photos that are already uploaded
+			if(thumb.hasClass("uploaded")) continue; //skip photos that are already uploaded
 
 			var curid = thumb.attr("id");
 			var curtitle= curid.slice(0,curid.length-10);//the id is filedefaultname+modalthumb. we only need filedefaultname

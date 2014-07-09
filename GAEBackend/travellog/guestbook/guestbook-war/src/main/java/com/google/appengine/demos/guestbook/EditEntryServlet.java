@@ -106,8 +106,8 @@ public class EditEntryServlet extends HttpServlet {
 			List<BlobKey> blobKeys = blobs.get("fileUpload");
 			if (blobKeys != null) {
 				createPhotos(photos, blobKeys, photoTitles, photoDescriptions);
-				deletePhotos(entry);
 				entry.setProperty("photos", photos);
+				datastore.put(entry);
 			}
 		}
 		
@@ -115,7 +115,7 @@ public class EditEntryServlet extends HttpServlet {
 
 	}
 	
-	//delete all photos from entity
+	/*//delete all photos from entity
 	public void deletePhotos(Entity entry) {
 		List<String> photos = (List<String>) entry.getProperty("photos");
 		for(String photo : photos) {
@@ -132,7 +132,7 @@ public class EditEntryServlet extends HttpServlet {
 			datastore.delete(photoEntity.getKey());
 		}
 	}
-
+*/
 	/**
 	 * adds photo keystrings to parameter photos
 	 * 
