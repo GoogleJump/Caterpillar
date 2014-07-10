@@ -764,6 +764,11 @@ Util = (function(){
         var closebtn = $(document.getElementById(modalId+'closebtn'));
         closebtn.click(function(){//make sure the input get reset when close
             $(ctform.querySelectorAll('[name=title]')).val(spec.title);
+            $(ctform.querySelectorAll('[name=depDate]')).val(spec.depDate);
+            $(ctform.querySelectorAll('[name=retDate]')).val(spec.retDate);
+            $(ctform.querySelectorAll('[name=location]')).val(spec.location);
+            $(ctform.querySelectorAll('[name=description]')).val(spec.description);
+
         });
         return modal;
     }

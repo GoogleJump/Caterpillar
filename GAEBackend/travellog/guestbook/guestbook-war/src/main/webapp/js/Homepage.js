@@ -1,5 +1,7 @@
 Homepage = (function(){
 
+    
+
     //if there is a user key stored, get it and set as parameter for link
     console.log("about to get user key");
   //  var userKey = Util.getQueryVariable("userKey");
@@ -55,8 +57,7 @@ Homepage = (function(){
     // addTrip.attr('data-target','#addTrip');
     addNewTrip();
 
-    //TODO: Should get thumbnails of each trip later from backend
-    var trips = $(".trip");
+   /* var trips = $(".trip");
     for(var i = 0; i < trips.length; ++i) {
         var tripinfo = trips.eq(i);
         var src = tripinfo.attr("id");
@@ -79,7 +80,41 @@ Homepage = (function(){
         //TODO: onclick sets parameter as this trip and leads to tripview **Test
         // tripGrid.append(oneTrip);
         tripGrid.append(trip);
-    }
+    }*/
+
+    //get all trips request
+    $.getJSON('getTrips?userKey='+userKey, function(data) {
+       var trips = [];
+       var i = 0;
+     for (var i =0; i < data.trips.length; i++) {
+        var link = "/tripview.jsp?tripKey=" + data.trips[i].tripKey;
+        var src = "/getTripImage?tripKey=" + data.trips[i].tripKey;
+        console.log("trip json title"+data.trips[i].title);
+        console.log("trip json key"+data.trips[i].key);
+
+        var trip_obj = {
+            title: data.trips[i].title,
+            description: data.trips[i].description,
+            location: data.trips[i].location,
+            tripkey: data.trips[i].key,
+            userkey: data.trips[i].userKey,
+            depDate: data.trips[i].departDate,
+            retDate: data.trips[i].returnDate,
+            tags: data.trips[i].tags,
+            index: i,
+            link: link,
+            img:src
+        };
+
+       trips.push(trip_obj);
+       tripGrid.append(tripPreview(trip_obj));
+   }
+    /*  for(var i = 0; i < trips.length; ++i) {
+        var trip = tripPreview(trips[i]);
+        tripGrid.append(trip);
+    }*/
+});
+
 
 
     /**

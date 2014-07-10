@@ -1,23 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<%-- //[START all]--%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.google.appengine.api.users.User" %>
-<%@ page import="com.google.appengine.api.users.UserService" %>
-<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%-- //[START imports]--%>
-<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.Entity" %>
-<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
-<%@ page import="com.google.appengine.api.datastore.Key" %>
-<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
-<%@ page import="com.google.appengine.api.datastore.Query" %>
-<%-- //[END imports]--%>
-<%@ page import="java.util.List" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -79,67 +62,12 @@
 
       if(typeof(Storage) !== "undefined") {
         console.log("there is session storage");
-} else {
-    console.log("browser does not support storage");
-}
+      } else {
+        console.log("browser does not support storage");
+      }
 
 
 </script>
-
- <%
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    String userKeyString = request.getParameter("userKey");
-    if(userKeyString == null) {
-      //userKeyString = localStorage.getItem("userKey"); 
-  }
-   // Key userKey = KeyFactory.stringToKey(request.getParameter("userKey"));
-    Query query = new Query("Trip").addFilter("owner",
-         Query.FilterOperator.EQUAL,
-         userKeyString).addSort("dateCreated", Query.SortDirection.DESCENDING);
-    List<Entity> trips = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
-    if (trips.isEmpty()) {
-%>
-  <p>No Trips to Display</p>
-  <script>console.log("no trips");</script>
-
-  <%
-} else { 
-%>
-
-<%
-    for (Entity trip : trips) {
-        pageContext.setAttribute("trip_title",
-                trip.getProperty("title"));
-                pageContext.setAttribute("tripKey",
-                KeyFactory.keyToString(trip.getKey()));
-        pageContext.setAttribute("trip_depart",
-        trip.getProperty("depDate"));
-        pageContext.setAttribute("trip_return",
-          trip.getProperty("retDate"));
-         pageContext.setAttribute("trip_description",
-          trip.getProperty("description"));
-          pageContext.setAttribute("trip_location",
-          trip.getProperty("location"));
-      
-%>
-<!--<p>Trip:</p> <p><b>${fn:escapeXml(trip_title)}</b></p>-->
-<!--kind of hacky for now:-->
-<div class="trip" id="/getTripImage?tripKey=${fn:escapeXml(tripKey)}" name="${fn:escapeXml(tripKey)}" style="display:none">
-<input class="title" value="${fn:escapeXml(trip_title)}"></input>
-<input class="description" value="${fn:escapeXml(trip_description)}"></input>
-<input class="depdate" value="${fn:escapeXml(trip_depart)}"></input>
-<input class="retdate" value="${fn:escapeXml(trip_return)}"></input>
-<input class="location" value="${fn:escapeXml(trip_location)}"></input>
-</div>
-
-<%
-    }
-%>
-<!-- <blockquote></blockquote> -->
-<%
-    }
-%>
-
 
     </div>
     <div id="footer" class="footer navbar-fixed-bottom"><p>Copyright (c) Caterpillar</p></div>
