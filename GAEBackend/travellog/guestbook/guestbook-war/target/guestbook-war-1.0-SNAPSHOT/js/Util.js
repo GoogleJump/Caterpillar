@@ -15,12 +15,12 @@ Util = (function(){
         dark_purple: dark_purple,
         makeModal: makeModal,
         inputGroup : inputGroup,
-        makePost: makePost,
+        // makePost: makePost,
         makeCarousel:makeCarousel,
-        tripPreview:tripPreview,
+        editBtn:editBtn,
+        //tripPreview:tripPreview,
         photoPreview: photoPreview,
         uploadPhotos:uploadPhotos,
-        userSignup: userSignup,
         getQueryVariable: getQueryVariable,
         getFromLocalStorage : getFromLocalStorage,
     };
@@ -57,12 +57,11 @@ Util = (function(){
      * @param modalId: assign a unique id to the modal so that the btn knows which to trigger
      @param title: the title of the modal.
      @param: islarge: if true, the modal is the large one, else, regular size
-     @param: index: index of photo, -1 if not for edit photo modal
-     TODO: submit function for the button?
+     @param: isForEntry: if the modal is for entry's photos, we don't need the save button
+     @return: the modal
      */
 
-     function makeModal(modalId,title, islarge, index, isForEntry) {
-        console.log("making modal:" + index);
+     function makeModal(modalId,title, islarge, isForEntry) {
         var modal = $(document.createElement('div'));
         modal.addClass('modal fade');
         modal.attr('data-backdrop','false');
@@ -103,7 +102,6 @@ Util = (function(){
         });
         content.append(headingDiv);
         var heading = $(document.createElement('h3'));
-        // heading.addClass('panel-title');
         heading.addClass('modal-title');
         heading.text(title);
         headingDiv.append(heading);
@@ -126,7 +124,6 @@ Util = (function(){
         closebtn.text("Close");
         footer.append(closebtn);
 
-        // console.log(modalId+'closebtn');
         if(isForEntry!==true){
             var savebtn = $(document.createElement('btn'));
             savebtn.attr('type','button submit');
@@ -142,14 +139,21 @@ Util = (function(){
         return modal;
     }
     this.makeModal = makeModal;
+    
     /**
     Customized function for input group
     including a divwrapper, title and input box..
-    @param: the tilte
+    @param: nametitle: title for this input
+    @param: inputname: name attribute for the inputfield.
+    @param: placeholder: placeholder for the input
+    @param: value: value for the input
+    @param: type
     type1: date
     type2: email
     type3: password
     type4: location
+    @param: isrequired: if the input is required. 
+    return: returns the wrapper div that contents everything
     **/
 
     function inputGroup(nametitle, inputname, placeholder,value,type, isrequired){
@@ -176,234 +180,54 @@ Util = (function(){
         if(isrequired===true){
             titleInput.attr('required',true);
         }
-        if(type===1){
-            //add the button to show the calendar
-            wrapper.addClass('date');
-            var btn = $(document.createElement('span'));
-            btn.addClass('input-group-addon');
-            var icon = $(document.createElement('span'));
-            icon.addClass('glyphicon glyphicon-calendar');
-            btn.append(icon);
-            wrapper.append(btn);
-            //titleInput.addClass('form-control');
-            wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
-                // pickTime: false,
-            });
-         /*   titleInput.attr({
-                //'type':'datetime',
-                'required':true,
-                'disabled':true,
-            });*/
-        }
-        if(type===2){
-            titleInput.attr({
-                'type':'email',
-                'required':true,
-            });
-        }
-        if(type===3){
-            titleInput.attr('name','password');
-            titleInput.attr('type','password');
-        }
-        if(type===4){
-            var autocomplete = new google.maps.places.Autocomplete(
-                  titleinput,
-                  { types: ['geocode'] });
-              google.maps.event.addListener(autocomplete, 'place_changed', function() {
-              });
+        switch(type){
+            case 1:
+                wrapper.addClass('date');
+                var btn = $(document.createElement('span'));
+                btn.addClass('input-group-addon');
+                var icon = $(document.createElement('span'));
+                icon.addClass('glyphicon glyphicon-calendar');
+                btn.append(icon);
+                wrapper.append(btn);
+                wrapper.datetimepicker({ //SA: commented out b/c was getting error ****
+                    // pickTime: false,
+                });
+                break;
+            case 2:
+                titleInput.attr({
+                    'type':'email',
+                });
+                break;
+            case 3:
+                titleInput.attr('type','password');
+                break;
+            case 4:
+                var autocomplete = new google.maps.places.Autocomplete(
+                      titleinput,
+                      { types: ['geocode'] });
+                  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                  });
+
         }
         titleInput.addClass('form-control');
         titleInput.attr('placeholder',placeholder);
         if(value){
             titleInput.attr('value',value);
         }
-
-    return wrapper;
+        return wrapper;
     }
-    /*
-
-    */
-    function userSignup(){
-        var id = "signup";
-        var modal = makeModal(id,'Sign Up',false, -1);
-        var body = $(document.getElementById("body"));
-        body.append(modal);
-        // var contentDiv= $(document.createElement('div'));
-        // console.log(id+"modalBody");
-        var modalBody = $(document.getElementById(id+"modalBody"));
-        var contentRow = $(document.createElement('div'));
-        contentRow.addClass('row');
-        contentRow.css({
-            'width':'80%',
-            'left':'10%',
-            'position':'relative'
-        });
-        modalBody.append(contentRow);
-        var registration = $(document.createElement('form'));
-        registration.addClass('form-horizontal');
-        contentRow.append(registration);
-        registration.attr('method','post');
-        registration.attr('action', '/insertUser');
-        registration.attr('id','registration');
-        // var username = $(document)
-        var username = inputGroup('Username','username', 'Pick a Username',null,null,true);
-        username.children('input').eq(0).attr({
-            'name':'username',
-            // 'required':'true',
-        });
-        registration.append(username);
 
 
-        var pwd = inputGroup('Password','password', "Please enter your password", null, 3);
-        pwd.children('input').eq(0).attr('name', 'password');
-        registration.append(pwd);
-
-        var emailinput = inputGroup('Email', 'email', 'Please enter your email address', null, 2);
-        emailinput.children('input').eq(0).attr({
-            'name': 'email',
-            // 'type':'email',
-            // 'required':true,
-        });
-        registration.append(emailinput);
-        // emailinput.attr('required');
-        // password.attr('type','password');
-
-        var firstname = inputGroup('First Name', 'firstname', null, null, null,true);
-        firstname.children('input').eq(0).attr({
-            'name':'firstname',
-            //'required':'true',
-        });
-        registration.append(firstname);
-
-        var lastname = inputGroup('Last Name', 'lastname', null, null, null,true);
-        lastname.children('input').eq(0).attr({
-            'name':'lastname',
-            //'required':'true',
-        });
-        registration.append(lastname);
-
-        var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
-        submit_input.attr('type', 'submit');
-        submit_input.css({
-            /*'height':'100px',
-            'width': '100px',
-            'position':'absolute',
-            'z-index': '1000'*/
-            'display' : 'none'
-        });
-
-        registration.append(submit_input);
-
-
-
-        var submitbtn = $(document.getElementById(id+'savebtn')); //triggers the button that will actually call servlet
-        submitbtn.click(function() {
-            //which one of these will work??
-            submit_input.submit();
-            submit_input.click();
-            //submit_input.toggle();
-        });
-
-
-        var closebtn = $(document.getElementById(id+'closebtn'));
-        console.log(id+'closebtn');
-        closebtn.click(function(){
-        console.log("clicked");
-        registration.find('input:text, input:password, input:file, select, textarea').val('');
-                // registration.validate().resetForm();
-                // $(this).closest('form').find("input[type=text], textarea").val("");
-        });
-    return modal;
-    }
-    /**
-    function to make a post in trip view, it can be with img only, or text only, or both.
-    probably, later add videos too. toEntry is the link to the post's main page.
-    */
-    function makePost(hasText, hasImg, entrytitle, entrydesp, imgs,toEntry, content, entryKey){
-        console.log("entry key is:" + entryKey);
-        var postDiv = $(document.createElement('div'));
-        postDiv.addClass('blog-post');
-        var title = $(document.createElement('h2'));
-        
-        title.hover(function() {
-            $(this).css({
-                'cursor':'pointer',
-                'text-decoration':'underline',                
-            });
-        }, function() {
-            $(this).css({
-                'cursor':'auto',
-                'text-decoration':'none',
-            });
-        });
-        title.text(entrytitle);
-        title.css({
-            'font-family':'Arial Black", Gadget, sans-serif',
-        });
-
-        var entryPageLink = $(document.createElement('a'));
-        entryPageLink.attr('href', '/entryPage.jsp?entryKey='+entryKey);
-        entryPageLink.append(title);
-        var date = $(document.createElement('p'));
-        date.addClass('blog-post-meta');
-        //date.text("1min before the end of the world");
-        date.css({
-            'font-family':'"Comic Sans MS", cursive, sans-serif'
-        });
-        
-        postDiv.append(entryPageLink);
-        postDiv.append(date);
-        var content = $(document.createElement('div'));
-        content.addClass("row");
-        content.css({
-            'height':'auto',
-            'width':'100%%'
-        });        
-        if(hasImg===true){
-            var carouselDiv = $(document.createElement('div'));
-            carouselDiv.addClass("col-xs-6 col-md-4");
-            content.append(carouselDiv);
-            carouselDiv.css({
-                'padding-bottom':'5px',
-            })
-            var carousel = makeCarousel("myCarousel",imgs.length, imgs);
-            carouselDiv.append(carousel);
-        }
-        if(hasText===true){
-            var textDiv = $(document.createElement("div"));
-            content.append(textDiv);
-            textDiv.addClass("col-xs-12 col-sm-6 col-md-8");
-            var block = $(document.createElement("blockquote"));
-            block.css({
-                'color':'black',
-            });
-            textDiv.append(block);
-
-            textDiv.css({
-                'max-height':'300px',
-                'padding-bottom':'5px',
-                'text-overflow':'ellipsis',
-                'overflow':'hidden',
-                'word-wrap': 'break-word'
-            });
-            var text=$(document.createElement('p'));
-            text.text(entrydesp)
-            block.append(text);            
-        }
-        postDiv.append(content);
-        
-        return postDiv;
-    }
 
     /**
     function to create carousel, given a unique id for it, and number of pictures. 
     and data(including info for pics.)
     if it is for entry, we don't want items to have captions and descriptions for now in the carousel
+    make sure the imgs passed in are <img> and all have attribute title and description
     */
 
-    function makeCarousel(id, picNum,imgs,isForEntry){        
+    function makeCarousel(id, imgs,isForEntry){        
         var carousel = $(document.createElement('div'));
-        // carouselDiv.
         carousel.attr({
             'id':id,
             'data-ride':'carousel',
@@ -417,28 +241,27 @@ Util = (function(){
         var indicators = $(document.createElement('ol'));
         indicators.addClass('carousel-indicators');
         carousel.append(indicators);
+
+        var picNum = imgs.length;
+        var inner = $(document.createElement('div'));
+        inner.addClass('carousel-inner');
+        carousel.append(inner);
         for(var i=0; i<picNum;i++){
             var li = $(document.createElement('li'));
+            var item;
             li.attr({
                 'data-target':"#"+id,
                 'data-slide-to':i.toString(),
             });
             if(i==0){
                 li.addClass('active');
-            };
+                item = carouselItem(true, imgs[i],isForEntry);
+            }else{
+                item = carouselItem(false,imgs[i],isForEntry);
+            }
             indicators.append(li);
-        }
-        var inner = $(document.createElement('div'));
-        inner.addClass('carousel-inner');
-        carousel.append(inner);
-        for(var j=0; j<picNum; j++){
-            if(j===0){
-                var item = carouselItem(true, imgs[j],"Untitled","description",isForEntry);
-            }
-            else{
-                var item = carouselItem(false,imgs[j], "Untitled","description",isForEntry);
-            }
             inner.append(item);            
+
         }
 
         var left = $(document.createElement('a'));
@@ -466,23 +289,22 @@ Util = (function(){
         return carousel;
     }
     /**function to create a single slide in carousel., given thumbnail, 
-    boolean for checking active(first slide)
-    picture's caption and description
+    @param: isActive: boolean for checking active(first slide)
+            img: a <img> element. all the data about the image, including title and description, are store as attr
+            isEntryPage:if the carouselItem is not for Entrypage, we can don't need description
+    @return: the item div
     */
-    function carouselItem(isActive,img,picCaption,description, isEntryPage){
+    function carouselItem(isActive,img, isEntryPage){
         var item = $(document.createElement('div'));
         item.addClass('item');
         var thumb = $(img);
-        item.attr('title',thumb.attr('value'));
-
+        item.attr('title',thumb.attr('title'));
         thumb.css({
             'width':'100%',
             'height':'auto',
-            // 'position':'absolute',
             'display':'block',
-            // 'margin':'auto'
         })
-        // thumb.attr('src','../images/3.jpg');
+
         item.append(thumb);
         var container = $(document.createElement('div'));
         container.addClass('container');
@@ -499,152 +321,56 @@ Util = (function(){
                 'z-index':10,
             });
             container.append(captionDiv);
+            //we don't need caption for any carousel we are using so far
             // var caption = $(document.createElement('h1'));
             // caption.text(picCaption);
             // captionDiv.append(caption);
             var descri= $(document.createElement('p'));
-            descri.text($(img).attr("description"));
+            descri.text(thumb.attr("description"));
             captionDiv.append(descri);    
         }
         
-
         return item;
     }
     this.carouselItem = carouselItem;
 
 
-    function tripPreview(src,spec,cap,desc,link){
-        var colDiv = $(document.createElement('div'));
-        colDiv.addClass("col-md-5");
-        colDiv.css({
-            'background-color':Util.yellow,
-            'height':'400px',
-            // 'padding-left':'20px',
-            'margin-right':'40px',
-            'margin-bottom':'40px',
-
-        });
-        var thumbDiv = $(document.createElement('div'));
-        thumbDiv.css({
-            'top':'3%',
-            'left':'10%',
-            'height':'60%',
-            'width':'80%',
-            'position':'absolute',
-            'background':'url(' + src + ')',
-            'background-size':'contain',
-            'background-repeat': 'no-repeat',
-            'background-position':'center',
-        });
-        colDiv.append(thumbDiv);
-
-        var captionDiv = $(document.createElement('div'));
-        captionDiv.addClass("caption");
-        captionDiv.css({
-            'top':'64%',
-            'position':'absolute',
-            'width':'90%',
-        });
-        colDiv.append(captionDiv);
-        var caption = $(document.createElement('label'));
-        captionDiv.append(caption);
-        // captionDiv.css('width','100%');
-        caption.css({
-            'width':'100%',
-            'overflow':'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
-        });
-        caption.text(spec.title);
-        var descDiv = $(document.createElement('div'));
-        descDiv.css({
-            'height':'45px',
-            'overflow':'hidden',
-            'word-wrap': 'break-word',
-            'text-overflow': 'ellipsis',
-        });
-        // var descript=$(document.createElement('p'));
-        // descript.css({
-        //     'text-overflow': 'ellipsis',
-        // });
-        if(spec.description===null){
-            descDiv.text("Click Edit to add description");
-        }else{
-            descDiv.text(spec.description);
-        }
-        // descDiv.append(descript);
-        captionDiv.append(descDiv);
-        var btngroup = $(document.createElement('div'));
-        btngroup.addClass('row');
-        captionDiv.append(btngroup);
-        
-
-        var modal = editBtn("Trip",spec);
-        var editbtn = $(document.createElement('button'));
-        // descDiv.text(desc);
-        editbtn.text("Edit");
-        editbtn.addClass("btn btn-default col-sm-offset-2");
-        editbtn.click(function(){
-            modal.modal({show:true});
-            //open a modal to edit info about the photo
-        });
-
-        var viewbtna = $(document.createElement('a'));
-        var viewbtn = $(document.createElement('button'));
-        viewbtn.text("View");
-        viewbtn.addClass('btn btn-default col-sm-offset-2');
-        //TODO: lead to the trip's page when clicked
-        viewbtna.attr("href",spec.link);
-        viewbtn.click(function(){});
-        viewbtna.append(viewbtn);
-        var deleteDiv=$(document.createElement("div"));
-        deleteDiv.addClass("col-sm-2 col-sm-offset-1");
-        var deleteForm = $(document.createElement('form'));
-        deleteDiv.append(deleteForm);
-        deleteForm.attr('method', 'post');
-        deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
-        var deletebtn = $(document.createElement('button'));
-        deletebtn.text("Delete");
-        deletebtn.addClass("btn btn-default delete");
-        deletebtn.click(function(){
-            colDiv.remove(); 
-            modal.remove();
-
-        });
-        deleteForm.append(deletebtn);
-        btngroup.append(editbtn);
-        btngroup.append(deleteDiv);
-
-        btngroup.append(viewbtna);
-        return colDiv;
-    }
     // function tripPreview(src,spec,cap,desc,link){
     //     var colDiv = $(document.createElement('div'));
-    //     // var thumba=$(document.createElement('a'));
-    //     // thumba.attr('href',link);
-    //     // colDiv.append(thumba);        
-    //     // var descript=desc;
-    //     // var spec={
-    //     //         img: src,
-    //     //         title: cap,
-    //     //         description: desc,
-    //     // };
-    //     var modal = editBtn("Trip",spec);
-    //     colDiv.addClass('col-md-5');
-    //     var thumbDiv = $(document.createElement('div'));
-    //     //thumbDiv.addClass('thumbnail');
-    //     colDiv.append(thumbDiv);
-    //     var thumbnail=$(document.createElement('img'));
-    //     thumbnail.attr("src",src);
+    //     colDiv.addClass("col-md-5");
+    //     colDiv.css({
+    //         'background-color':Util.yellow,
+    //         'height':'400px',
+    //         // 'padding-left':'20px',
+    //         'margin-right':'40px',
+    //         'margin-bottom':'40px',
 
-    //     thumbnail.attr("alt","No image for the trip available")
-    //     thumbDiv.append(thumbnail);
+    //     });
+    //     var thumbDiv = $(document.createElement('div'));
+    //     thumbDiv.css({
+    //         'top':'3%',
+    //         'left':'10%',
+    //         'height':'60%',
+    //         'width':'80%',
+    //         'position':'absolute',
+    //         'background':'url(' + src + ')',
+    //         'background-size':'contain',
+    //         'background-repeat': 'no-repeat',
+    //         'background-position':'center',
+    //     });
+    //     colDiv.append(thumbDiv);
+
     //     var captionDiv = $(document.createElement('div'));
     //     captionDiv.addClass("caption");
-    //     thumbDiv.append(captionDiv);
+    //     captionDiv.css({
+    //         'top':'64%',
+    //         'position':'absolute',
+    //         'width':'90%',
+    //     });
+    //     colDiv.append(captionDiv);
     //     var caption = $(document.createElement('label'));
     //     captionDiv.append(caption);
-    //     captionDiv.css('width','100%');
+    //     // captionDiv.css('width','100%');
     //     caption.css({
     //         'width':'100%',
     //         'overflow':'hidden',
@@ -654,49 +380,54 @@ Util = (function(){
     //     caption.text(spec.title);
     //     var descDiv = $(document.createElement('div'));
     //     descDiv.css({
-    //         'height':'60px',
+    //         'height':'45px',
     //         'overflow':'hidden',
-    //         // 'white-space': 'nowrap',
+    //         'word-wrap': 'break-word',
     //         'text-overflow': 'ellipsis',
     //     });
-    //     // var descript=$(document.createElement('p'))
+    //     // var descript=$(document.createElement('p'));
+    //     // descript.css({
+    //     //     'text-overflow': 'ellipsis',
+    //     // });
     //     if(spec.description===null){
     //         descDiv.text("Click Edit to add description");
     //     }else{
     //         descDiv.text(spec.description);
     //     }
+    //     // descDiv.append(descript);
     //     captionDiv.append(descDiv);
     //     var btngroup = $(document.createElement('div'));
     //     btngroup.addClass('row');
     //     captionDiv.append(btngroup);
+        
 
+    //     var modal = editBtn("Trip",spec);
     //     var editbtn = $(document.createElement('button'));
     //     // descDiv.text(desc);
     //     editbtn.text("Edit");
-    //     editbtn.addClass("btn btn-default col-sm-offset-1");
+    //     editbtn.addClass("btn btn-default col-sm-offset-2");
     //     editbtn.click(function(){
     //         modal.modal({show:true});
     //         //open a modal to edit info about the photo
-
     //     });
 
     //     var viewbtna = $(document.createElement('a'));
     //     var viewbtn = $(document.createElement('button'));
     //     viewbtn.text("View");
-    //     viewbtn.addClass('btn btn-default col-sm-offset-1');
+    //     viewbtn.addClass('btn btn-default col-sm-offset-2');
     //     //TODO: lead to the trip's page when clicked
     //     viewbtna.attr("href",spec.link);
     //     viewbtn.click(function(){});
     //     viewbtna.append(viewbtn);
     //     var deleteDiv=$(document.createElement("div"));
-    //     deleteDiv.addClass("col-sm-3");
+    //     deleteDiv.addClass("col-sm-2 col-sm-offset-1");
     //     var deleteForm = $(document.createElement('form'));
     //     deleteDiv.append(deleteForm);
     //     deleteForm.attr('method', 'post');
     //     deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
     //     var deletebtn = $(document.createElement('button'));
     //     deletebtn.text("Delete");
-    //     deletebtn.addClass("btn btn-default delete col-sm-offset-1");
+    //     deletebtn.addClass("btn btn-default delete");
     //     deletebtn.click(function(){
     //         colDiv.remove(); 
     //         modal.remove();
@@ -881,17 +612,18 @@ Util = (function(){
          console.log("edit btn index is: " + index + " or maybe " + spec.index);
 
         var modal,modalId;
-        var contentForm = $(document.createElement('form'));
+        var ctform=document.createElement('form');
+        var contentForm = $(ctform);
         if(type==="Trip"){
             modalId = spec.title+spec.location;
-            modal=makeModal(modalId, "Edit Trip", false, -1);  
+            modal=makeModal(modalId, "Edit Trip", false);  
              //submission functionality:
              $(document.getElementById(modalId + "savebtn")).click(function(){
                 contentForm.submit();
             });
          } else {
             modalId="image"+spec.picfile.name;
-            modal=makeModal(modalId, "Edit Photo", false, index);
+            modal=makeModal(modalId, "Edit Photo", false);
         }
 
         var body = $(document.getElementById("body"));
@@ -943,14 +675,10 @@ Util = (function(){
             startDiv.addClass("row col-md-10 col-sm-offset-1");
             var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1,true);
             startDiv.append(start);
-            // start.addClass('row col-md-10 col-sm-offset-1');
-            start.children('input').eq(0).attr('name', 'departDate');
             var endDiv = $(document.createElement('div'));
             endDiv.addClass("row col-md-10 col-sm-offset-1");
             var end = Util.inputGroup('End: ', 'retDate',"Choose an end date",null,1,true);
             endDiv.append(end);
-            end.children('input').eq(0).attr('name', 'retDate');
-            // end.addClass('row col-md-10 col-sm-offset-1');
 
             contentRow.append(startDiv); 
             contentRow.append(endDiv);
@@ -1005,9 +733,8 @@ Util = (function(){
         text.val(description)
         text.attr("name", "description");
         textWrapper.append(text);
-
+        var titleInputField =   titleInput.children('input').eq(0);
         if(type ==="addEntry") {
-            var titleInputField =   titleInput.children('input').eq(0);
             var submitEditPhoto = $(document.getElementById(modalId + "savebtn"));
             var closeEditPhoto = $(document.getElementById(modalId + "closebtn"));
 
@@ -1024,7 +751,6 @@ Util = (function(){
             
             var submit = $(document.getElementById(modalId + "savebtn"));
             submit.click(function(e){
-                updatePhotoPreview(titleInputField.val(), text.val(), spec.picfile.name);
                 submit_input.click();
                 contentForm.submit();
             });
@@ -1035,7 +761,10 @@ Util = (function(){
             contentForm.attr('method', 'post')
 
         }
-
+        var closebtn = $(document.getElementById(modalId+'closebtn'));
+        closebtn.click(function(){//make sure the input get reset when close
+            $(ctform.querySelectorAll('[name=title]')).val(spec.title);
+        });
         return modal;
     }
     this.editbtn = editbtn;

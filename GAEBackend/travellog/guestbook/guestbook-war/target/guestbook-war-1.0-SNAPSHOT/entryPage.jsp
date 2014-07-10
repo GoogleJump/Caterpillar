@@ -135,7 +135,7 @@
 
         %>
 
-        <img class="entryPhoto" src="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" value="${fn:escapeXml(entryPhotoTitle)}" description = "${fn:escapeXml(entryPhotoDescription)}" style="display: none">
+        <img class="entryPhoto" src="/getImageFromBlobKey?blobKey=${fn:escapeXml(entryPhotoKey)}" title="${fn:escapeXml(entryPhotoTitle)}" description = "${fn:escapeXml(entryPhotoDescription)}" style="display: none">
 
 <%
   }

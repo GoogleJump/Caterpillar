@@ -114,23 +114,9 @@ Tripview = (function(){
 			var imgs = entry.children(".Entryimages");
 			var entryKey = entry.children(".EntryKey").val();
 			console.log("entry key is:" + entryKey);
-			var hasImage=true,
-				hasText=true;
-			if(entryDescripion===""){
-				hasText=false;
-			}
-			if(imgs.length===0){
-				hasImage=false;
-			}
-
-			allEntries.append(Util.makePost(hasText, hasImage,entrytitle,entryDescripion,imgs, null, null, entryKey)); //TODO null null??
+			allEntries.append(makePost(entrytitle,entryDescripion,imgs, entryKey)); //TODO null null??
 		}
 	}
-
-	// allEntries.append(Util.makePost(true, false));
-	// allEntries.append(Util.makePost(true, true));
-	// allEntries.append(Util.makePost(false, true));
-
 
 	var pager = $(document.createElement('ul'));
 	pager.addClass('pager');
@@ -160,78 +146,88 @@ Tripview = (function(){
 	nexta.css({
 		'color':Util.teal,
 	});
+
+	/**
+    function to make a post in trip view, it can be with img only, or text only, or both.
+    probably, later add videos too. toEntry is the link to the post's main page.
+	@params: entrytitle: title of this entry
+			entrydesp: blog for this entry
+			entryKey:key to this entry's page
+	@return: the post div
+    */
+    function makePost(entrytitle, entrydesp, imgs, entryKey){
+        // console.log("entry key is:" + entryKey);
+        var postDiv = $(document.createElement('div'));
+        postDiv.addClass('blog-post');
+        var title = $(document.createElement('h2'));
+        
+        title.hover(function() {
+            $(this).css({
+                'cursor':'pointer',
+                'text-decoration':'underline',                
+            });
+        }, function() {
+            $(this).css({
+                'cursor':'auto',
+                'text-decoration':'none',
+            });
+        });
+        title.text(entrytitle);
+        title.css({
+            'font-family':'Arial Black", Gadget, sans-serif',
+        });
+
+        var entryPageLink = $(document.createElement('a'));
+        entryPageLink.attr('href', '/entryPage.jsp?entryKey='+entryKey);
+        entryPageLink.append(title);
+        var date = $(document.createElement('p'));
+        date.addClass('blog-post-meta');
+        date.css({
+            'font-family':'"Comic Sans MS", cursive, sans-serif'
+        });
+        
+        postDiv.append(entryPageLink);
+        postDiv.append(date);
+        var content = $(document.createElement('div'));
+        content.addClass("row");
+        content.css({
+            'height':'auto',
+            'width':'100%%'
+        });        
+        if(imgs.length!==0){
+            var carouselDiv = $(document.createElement('div'));
+            carouselDiv.addClass("col-xs-6 col-md-4");
+            content.append(carouselDiv);
+            carouselDiv.css({
+                'padding-bottom':'5px',
+            })
+            var carousel = Util.makeCarousel("myCarousel", imgs);
+            carouselDiv.append(carousel);
+        }
+        if(entrydesp!==""){
+            var textDiv = $(document.createElement("div"));
+            content.append(textDiv);
+            textDiv.addClass("col-xs-12 col-sm-6 col-md-8");
+            var block = $(document.createElement("blockquote"));
+            block.css({
+                'color':'black',
+            });
+            textDiv.append(block);
+
+            textDiv.css({
+                'max-height':'300px',
+                'padding-bottom':'5px',
+                'text-overflow':'ellipsis',
+                'overflow':'hidden',
+                'word-wrap': 'break-word'
+            });
+            var text=$(document.createElement('p'));
+            text.text(entrydesp)
+            block.append(text);            
+        }
+        postDiv.append(content);
+        
+        return postDiv;
+    }
+    this.makePost = makePost;
 })();
-// addEntry();
-/*****create the modal for adding entry*****/
-// function addEntry(){
-//     modal = Util.makeModal('addEntryDiv', "Add Entry",true);
-//     body.append(modal);
-// 	rowwrapper = $(document.createElement('div'));
-//     $("#modalBody").append(rowwrapper);
-// 	rowwrapper.addClass('row');
-// 	rowwrapper.css({
-// 		'padding-top':'9px',
-// 		'top':'5%',
-//     	'left':'10%',
-//     	'position':'relative',
-//     	'width':'80%'
-//     });
-
-//     titleWrapper = Util.inputGroup('Title: ', 'Untitled');
-//     rowwrapper.append(titleWrapper);
-    
-//     locationWrapper = Util.inputGroup('Where: ','Current Location');
-//     rowwrapper.append(locationWrapper);
-
-//     timeWrapper = Util.inputGroup('When: ','Today');
-//     rowwrapper.append(timeWrapper);
-//     header = $(document.createElement('h3'));
-//     desLabel = $(document.createElement('span'));
-//     desLabel.addClass('label label-default');
-//     desLabel.text("Diary");
-//     desLabel.css({
-//     	"background-color":Util.dark_purple,
-//     });
-//     header.append(desLabel);
-//     rowwrapper.append(header);
-
-//     diary = $(document.createElement('textarea'));
-//     diary.attr('id','editor');
-//     diary.css({
-//     	'height':'auto',
-//     	'position':'absolute',
-//     	'width':'100%',	
-//  //    	'max-height': '250px'
-// 	// height: 250px;
-// 	// background-color: white;
-// 	// border-collapse: separate; 
-// 	// border: 1px solid rgb(204, 204, 204); 
-// 	// padding: 4px; 
-// 	// box-sizing: content-box; 
-// 	// -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; 
-// 	// box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-// 	// border-top-right-radius: 3px; border-bottom-right-radius: 3px;
-// 	// border-bottom-left-radius: 3px; border-top-left-radius: 3px;
-// 	// overflow: scroll;
-// 	// outline: none;'
-//     })
-// 	// diary.wysiwyg();
-// 	// $('#editor')
-//     rowwrapper.append(diary);
-//     addTags = $(document.createElement('input'));
-//     addTags.attr('type','text');
-//     addTags.addClass('tags');
-//     addTags.css({
-//         'padding-bottom':'5px',
-
-//     });
-//     rowwrapper.append(addTags);
-//     addTags.tagsInput({
-//         'width': 'auto',
-//         'height':'5px',
-//         // 'padding-bottom':'5px',
-//         //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
-//         // autocomplete_url:'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
-//     });
-// }
-// this.addEntry= addEntry;

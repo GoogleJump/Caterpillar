@@ -17,11 +17,9 @@ editEntry = (function(){
 	var header = $(document.createElement('h1'));
 	header.text("Add a Post");
 	pageheader.append(header);
-	var msg = "Please type in your title for trip";
-	var title = Util.inputGroup('Title: ', "Untitled","Untitled",null,null,true,msg);
+	var title = Util.inputGroup('Title: ', "title","Untitled",null,null,true);
 	title.addClass('col-md-6 col-sm-offset-1');
 	title.children('input').eq(0).attr({
-		"name": "title",
 		"id":"entryTitle",
 	});
 
@@ -52,7 +50,6 @@ editEntry = (function(){
     var where = Util.inputGroup('Where: ',"location","Current Location",null,4,false);
     contentDiv.append(where);
     where.addClass('col-md-6 col-sm-offset-1');
-    where.children('input').eq(0).attr('name','location');
 
     var btnDiv = $(document.createElement('div'));
     contentDiv.append(btnDiv);

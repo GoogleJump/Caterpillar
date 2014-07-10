@@ -75,7 +75,7 @@ Homepage = (function(){
             userkey: userKey,
             index: i,
         };
-        var trip = Util.tripPreview(src, spec,"Untitled",null,link);
+        var trip = tripPreview(spec);
         //TODO: onclick sets parameter as this trip and leads to tripview **Test
         // tripGrid.append(oneTrip);
         tripGrid.append(trip);
@@ -106,7 +106,112 @@ Homepage = (function(){
     }
     this.createThumbnail=createThumbnail;
 
+    function tripPreview(spec){
+        var colDiv = $(document.createElement('div'));
+        colDiv.addClass("col-md-5");
+        colDiv.css({
+            'background-color':Util.yellow,
+            'height':'400px',
+            // 'padding-left':'20px',
+            'margin-right':'40px',
+            'margin-bottom':'40px',
 
+        });
+        var thumbDiv = $(document.createElement('div'));
+        thumbDiv.css({
+            'top':'3%',
+            'left':'10%',
+            'height':'60%',
+            'width':'80%',
+            'position':'absolute',
+            'background':'url(' + spec.img + ')',
+            'background-size':'contain',
+            'background-repeat': 'no-repeat',
+            'background-position':'center',
+        });
+        colDiv.append(thumbDiv);
+
+        var captionDiv = $(document.createElement('div'));
+        captionDiv.addClass("caption");
+        captionDiv.css({
+            'top':'64%',
+            'position':'absolute',
+            'width':'90%',
+        });
+        colDiv.append(captionDiv);
+        var caption = $(document.createElement('label'));
+        captionDiv.append(caption);
+        // captionDiv.css('width','100%');
+        caption.css({
+            'width':'100%',
+            'overflow':'hidden',
+            'white-space': 'nowrap',
+            'text-overflow': 'ellipsis',
+        });
+        if(spec.title===""){
+            caption.text("Untitled");
+        }else{
+            caption.text(spec.title);
+        }
+        var descDiv = $(document.createElement('div'));
+        descDiv.css({
+            'height':'45px',
+            'overflow':'hidden',
+            'word-wrap': 'break-word',
+            'text-overflow': 'ellipsis',
+        });
+
+        if(spec.description===""){
+            descDiv.text("Click Edit to add description");
+        }else{
+            descDiv.text(spec.description);
+        }
+        captionDiv.append(descDiv);
+        var btngroup = $(document.createElement('div'));
+        btngroup.addClass('row');
+        captionDiv.append(btngroup);
+        
+
+        var modal = Util.editBtn("Trip",spec);
+        var editbtn = $(document.createElement('button'));
+        // descDiv.text(desc);
+        editbtn.text("Edit");
+        editbtn.addClass("btn btn-default col-sm-offset-2");
+        editbtn.click(function(){
+            modal.modal({show:true});
+            //open a modal to edit info about the photo
+        });
+
+        var viewbtna = $(document.createElement('a'));
+        var viewbtn = $(document.createElement('button'));
+        viewbtn.text("View");
+        viewbtn.addClass('btn btn-default col-sm-offset-2');
+        //TODO: lead to the trip's page when clicked
+        viewbtna.attr("href",spec.link);
+        viewbtn.click(function(){});
+        viewbtna.append(viewbtn);
+        var deleteDiv=$(document.createElement("div"));
+        deleteDiv.addClass("col-sm-2 col-sm-offset-1");
+        var deleteForm = $(document.createElement('form'));
+        deleteDiv.append(deleteForm);
+        deleteForm.attr('method', 'post');
+        deleteForm.attr('action', '/deleteTrip?tripKey=' + spec.tripkey + "&userKey=" + spec.userkey);
+        var deletebtn = $(document.createElement('button'));
+        deletebtn.text("Delete");
+        deletebtn.addClass("btn btn-default delete");
+        deletebtn.click(function(){
+            colDiv.remove(); 
+            modal.remove();
+
+        });
+        deleteForm.append(deletebtn);
+        btngroup.append(editbtn);
+        btngroup.append(deleteDiv);
+
+        btngroup.append(viewbtna);
+        return colDiv;
+    }
+    this.tripPreview=tripPreview;
     /***
     add a trip modal. 
     **/
@@ -140,21 +245,13 @@ Homepage = (function(){
         });
         var titleWrapper = Util.inputGroup('Title: ', 'title', 'Untitled',null,null,true);
         addTripform.append(titleWrapper);
-        titleWrapper.children('input').eq(0).attr({
-            'name': 'title',
-            'required':true,
-        });
-
-
 
         // var timeWrapper = $(document.createElement('div'));
         // timeWrapper.addClass()
         // rowwrapper.append(timeWrapper);
         var start = Util.inputGroup('Start: ', 'departDate', "Choose a start date",null,1,false);
         start.addClass('col-md-12');
-        start.children('input').eq(0).attr('name', 'departDate');
         var end = Util.inputGroup('End: ', 'retDate', "Choose an end date",null,1,false);
-        end.children('input').eq(0).attr('name', 'retDate');
         end.addClass('col-md-12');
         addTripform.append(start); 
         addTripform.append(end);
@@ -169,10 +266,7 @@ Homepage = (function(){
         var locationWrapper = Util.inputGroup('Where: ', 'location', 'Enter a location',null,4,false);
         addTripform.append(locationWrapper);
         locationWrapper.addClass('col-md-12');
-        locationWrapper.children('input').eq(0).attr({
-            'name': 'location',
-            // 'required':true,
-        });
+        
         var description = $(document.createElement('textarea'));
         description.attr('placeholder','Description');
         description.css({

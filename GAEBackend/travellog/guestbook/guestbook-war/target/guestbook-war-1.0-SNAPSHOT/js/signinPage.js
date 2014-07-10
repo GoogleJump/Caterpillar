@@ -144,11 +144,73 @@ signinPage=(function(){
 	
 	signinDiv.append(signinbtn);
 	signupDiv.append(signupbtn); 
-	var signupModal = Util.userSignup();
+	var signupModal = userSignup();
 	signupbtn.click(function(){
 		// console.log(signupModal);
 		signupModal.modal({show:true});
 	});
+	/*
+	function that makes the sign up modal.
+	returns the modal div
+	*/
+	function userSignup(){
+        var id = "signup";
+        var modal = Util.makeModal(id,'Sign Up',false);
+        //var body = $(document.getElementById("body"));
+        overlay.append(modal);
+        var modalBody = $(document.getElementById(id+"modalBody"));
+        var contentRow = $(document.createElement('div'));
+        contentRow.addClass('row');
+        contentRow.css({
+            'width':'80%',
+            'left':'10%',
+            'position':'relative'
+        });
+        modalBody.append(contentRow);
+        var registration = $(document.createElement('form'));
+        registration.addClass('form-horizontal');
+        contentRow.append(registration);
+        registration.attr('method','post');
+        registration.attr('action', '/insertUser');
+        registration.attr('id','registration');
+        var username = Util.inputGroup('Username','username', 'Pick a Username',null,null,true);
+        registration.append(username);
+
+        var pwd = Util.inputGroup('Password','password', "Please enter your password", null, 3,false);
+        registration.append(pwd);
+
+        var emailinput = Util.inputGroup('Email', 'email', 'Please enter your email address', null, 2,false);
+        registration.append(emailinput);
+
+        var firstname = Util.inputGroup('First Name', 'firstname', null, null, null,true);
+        registration.append(firstname);
+
+        var lastname = Util.inputGroup('Last Name', 'lastname', null, null, null,true);
+        registration.append(lastname);
+
+        var submit_input = $(document.createElement('input')); //actually calls servlet, but invisible
+        submit_input.attr('type', 'submit');
+        submit_input.css({
+            'display' : 'none'
+        });
+
+        registration.append(submit_input);
+
+        var submitbtn = $(document.getElementById(id+'savebtn')); //triggers the button that will actually call servlet
+        submitbtn.click(function() {
+            //which one of these will work??
+            submit_input.submit();
+            submit_input.click();
+            //submit_input.toggle();
+        });
+
+        var closebtn = $(document.getElementById(id+'closebtn'));
+        closebtn.click(function(){//clean up the modal inputs when closed
+        	registration.find('input:text, input:password, input:file, select, textarea').val('');
+        });
+    	return modal;
+    }
+    this.userSignup=userSignup;
 
 	var description= $(document.createElement('div'));
 	description.addClass('container');
@@ -191,6 +253,7 @@ signinPage=(function(){
 	if(email != null) {
 		alert("Someone has already registered with that email.");
 	}
+
 
 })();
 

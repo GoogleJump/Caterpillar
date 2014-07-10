@@ -19,21 +19,16 @@ addEntry = (function(){
 	var header = $(document.createElement('h1'));
 	header.text("Add a Post");
 	pageheader.append(header);
-	var msg = "Please type in your title for trip";
-	var title = Util.inputGroup('Title: ', "Untitled","Untitled",null,null,true,msg);
+	var title = Util.inputGroup('Title: ', "title","Untitled",null,null,true);
 	title.addClass('col-md-6 col-sm-offset-1');
 	title.children('input').eq(0).attr({
-		"name": "title",
 		"id":"entryTitle",
 	});
-
 	contentDiv.append(title);
-	//document.getElementById("entryTitle").setCustomValidity("Please give your entry a lovely title");
 
 
 
 	//if there is a user key stored, get it and set as parameter for link
-        console.log("about to get user key");
     var userKey = Util.getQueryVariable("userKey");
     if(userKey != null) {
         console.log("user key was not null, setting param")
@@ -93,7 +88,6 @@ addEntry = (function(){
 	var where = Util.inputGroup('Where: ',"location","Enter a location",null,4,false);
 	contentDiv.append(where);
 	where.addClass('col-md-6 col-sm-offset-1');
-	where.children('input').eq(0).attr('name','location');
 
 	var btnDiv = $(document.createElement('div'));
 	contentDiv.append(btnDiv);
@@ -203,6 +197,7 @@ function addPhotoPreview() {
 			titles[i].push($(document.getElementById("photoTitle"+curfilename)).text());
         	descriptions[i].push($(document.getElementById("photoDescription"+curfilename)).text());
 		}
+		
 	}
 	
 		$(photoDiv).empty(); //empty all photo thumbnails
