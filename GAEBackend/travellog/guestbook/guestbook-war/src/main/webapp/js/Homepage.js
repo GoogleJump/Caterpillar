@@ -87,8 +87,8 @@ Homepage = (function(){
        var trips = [];
        var i = 0;
      for (var i =0; i < data.trips.length; i++) {
-        var link = "/tripview.jsp?tripKey=" + data.trips[i].tripKey;
-        var src = "/getTripImage?tripKey=" + data.trips[i].tripKey;
+        var link = "/tripview.jsp?tripKey=" + data.trips[i].key;
+        var src = "/getTripImage?tripKey=" + data.trips[i].key;
         console.log("trip json title"+data.trips[i].title);
         console.log("trip json key"+data.trips[i].key);
 
