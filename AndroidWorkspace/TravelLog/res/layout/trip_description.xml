@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/aqua"
+    android:padding="20dp" >
+
+    <TextView
+        android:id="@+id/trip_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Trip Title Here"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="24sp" />
+    
+     <TextView
+           android:id="@+id/trip_info_dates"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text=""
+           android:textSize="11sp"
+           android:textColor="@color/teal" />
+    
+       <TextView
+           android:id="@+id/trip_info_description"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="Trip Description Here"
+           android:textSize="18sp" />
+       
+        <TextView
+        android:id="@+id/trip_info_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:gravity="center"
+        android:textColor="@color/teal" />
+
+</LinearLayout>

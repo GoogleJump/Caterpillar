@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pale_yellow">#FFFCD4</color>
+    <color name="dark_brown">#453F3A</color>
+     <color name="dark_purple">#504552</color>
+    <color name="aqua">#B1F2EF</color>
+    <color name="teal">#5A9491</color>
+    <color name="lighter_aqua">#cff8f6</color>
+    
+</resources>

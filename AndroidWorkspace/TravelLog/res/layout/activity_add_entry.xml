@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_add_entry"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp" >
+
+   <!--  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_purple" >
+    </LinearLayout> -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+         >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="50dp" >
+
+            <ImageView
+                android:id="@+id/entry_photo"
+                android:layout_width="125dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:paddingBottom="20dp"
+                android:scaleType="centerCrop"
+                android:onClick="onUploadPhotoClick"
+                />
+
+            <ImageView
+                android:id="@+id/entry_polaroid"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignRight="@+id/entry_photo"
+                android:layout_alignTop="@+id/entry_photo"
+                android:paddingBottom="0dp"
+                android:src="@drawable/polaroid_blank"
+                 />
+
+            <ImageView
+                android:id="@+id/add_photo_label"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@+id/entry_photo"
+                android:layout_alignLeft="@+id/entry_photo"
+                android:layout_alignRight="@+id/entry_photo"
+                android:layout_alignTop="@+id/entry_photo"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="20dp"
+                android:src="@drawable/add_photos_img" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/t"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.49"
+            android:text="Title" />
+
+        <EditText
+            android:id="@+id/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/location_label"
+            android:layout_width="63dp"
+            android:layout_height="76dp"
+            android:text="Location" />
+
+        <EditText
+            android:id="@+id/edit_text_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+        </EditText>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/entry_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Thoughts:" />
+
+    <EditText
+        android:id="@+id/edit_text_entry_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tags_label"
+            android:layout_width="113dp"
+            android:layout_height="48dp"
+            android:text="Tags (separate with spaces)" />
+
+        <EditText
+            android:id="@+id/edit_text_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:paddingBottom="10dp" >
+
+        <Button
+            android:id="@+id/add_entry_to_trip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Add Entry"
+            android:onClick="onAddEntryClick"
+            style="@style/ButtonTheme" />
+    </LinearLayout>
+
+</LinearLayout>
