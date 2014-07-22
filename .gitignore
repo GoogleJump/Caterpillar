@@ -42,6 +42,8 @@ __MACOSX
 Icon?
 ehthumbs.db
 Thumbs.db
+.*
+.project
 
 # Package Files #
 *.jar
