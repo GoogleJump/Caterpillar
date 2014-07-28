@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/Cu0Z215yFnUBuVC0Q_OVU2Dsl6Q\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/Cu0Z215yFnUBuVC0Q_OVU2Dsl6Q\"",
  "discoveryVersion": "v1",
  "id": "userendpoint:v1",
  "name": "userendpoint",
