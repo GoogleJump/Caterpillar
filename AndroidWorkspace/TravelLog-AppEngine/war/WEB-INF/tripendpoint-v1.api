@@ -26,6 +26,43 @@
   "ownerDomain" : "travellog.com",
   "ownerName" : "travellog.com",
   "methods" : {
+    "tripendpoint.removeTrip" : {
+      "path" : "trip/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.travellog.TripEndpoint.removeTrip",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "tripendpoint.insertTrip" : {
+      "path" : "trip",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.travellog.TripEndpoint.insertTrip",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "tripendpoint.listTrip" : {
       "path" : "listTrip",
       "httpMethod" : "GET",
@@ -50,22 +87,6 @@
           }
         },
         "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "tripendpoint.insertTrip" : {
-      "path" : "trip",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.TripEndpoint.insertTrip",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -107,46 +128,10 @@
       "response" : {
         "body" : "autoTemplate(backendResponse)"
       }
-    },
-    "tripendpoint.removeTrip" : {
-      "path" : "trip/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.TripEndpoint.removeTrip",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "int64",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
-      }
     }
   },
   "descriptor" : {
     "schemas" : {
-      "CollectionResponse_Trip" : {
-        "id" : "CollectionResponse_Trip",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Trip"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
       "Trip" : {
         "id" : "Trip",
         "type" : "object",
@@ -225,13 +210,25 @@
             "type" : "string"
           }
         }
+      },
+      "CollectionResponse_Trip" : {
+        "id" : "CollectionResponse_Trip",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Trip"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
-      "com.travellog.TripEndpoint.listTrip" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Trip"
-        }
+      "com.travellog.TripEndpoint.removeTrip" : {
       },
       "com.travellog.TripEndpoint.insertTrip" : {
         "request" : {
@@ -239,6 +236,11 @@
         },
         "response" : {
           "$ref" : "Trip"
+        }
+      },
+      "com.travellog.TripEndpoint.listTrip" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Trip"
         }
       },
       "com.travellog.TripEndpoint.updateTrip" : {
@@ -253,8 +255,6 @@
         "response" : {
           "$ref" : "Trip"
         }
-      },
-      "com.travellog.TripEndpoint.removeTrip" : {
       }
     }
   }
