@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_take_photo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/btnIntendPhoto"
+            style="@style/ButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Retake Photo" />
+
+        <!--
+  Take Video button:
+  	<Button
+        android:id="@+id/btnIntendV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Take Video"
+        android:textColor="@color/aqua" />
+        -->
+
+    </LinearLayout>
+
+    <!--
+  <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:paddingLeft="50dp"
+         android:paddingRight="50dp" >
+
+  <ImageView
+      android:id="@+id/imageView1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="visible" />
+    -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="50dp" >
+
+        <ImageView
+            android:id="@+id/photo_preview"
+            android:layout_width="125dp"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/camera_stamp_icon" />
+
+        <ImageView
+            android:id="@+id/entry_polaroid"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignRight="@+id/photo_preview"
+            android:layout_alignTop="@+id/photo_preview"
+            android:paddingBottom="0dp"
+            android:src="@drawable/polaroid_blank" />
+    </RelativeLayout>
+
+    <VideoView
+        android:id="@+id/videoView1"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:visibility="invisible" />
+
+    <!-- </LinearLayout> -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/label_photo_caption"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.49"
+            android:text="Caption" />
+
+        <EditText
+            android:id="@+id/edit_photo_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/label_photo_tags"
+            android:layout_width="54dp"
+            android:layout_height="42dp"
+            android:layout_weight="0.90"
+            android:text="Tags (separate with commas)" />
+
+        <EditText
+            android:id="@+id/edit_photo_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp" >
+
+       <!--  <Button
+            android:id="@+id/button1"
+            style="@style/ButtonTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="Add To Existing Entry" /> -->
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/ButtonTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:onClick="onAddPhotoToEntryClick"
+            android:text="Add To New Entry" />
+    </LinearLayout>
+
+</LinearLayout>

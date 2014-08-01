@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trip_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:padding="20dp" >
+
+    <ImageView
+        android:id="@+id/trip_photo"
+        android:layout_width="125dp"
+        android:layout_height="150dp"
+        android:paddingBottom="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/eiffel_tower_sample_pic" />
+
+    <ImageView
+        android:id="@+id/trip_polaroid"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignRight="@+id/trip_photo"
+        android:layout_alignTop="@+id/trip_photo"
+        android:paddingBottom="0dp"
+        android:onClick="onTripViewClick"
+        android:src="@drawable/polaroid_blank" />
+
+    <TextView
+        android:id="@+id/trip_title"
+        android:layout_width="125dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/trip_photo"
+        android:layout_alignRight="@+id/trip_photo"
+        android:paddingLeft="10dp"
+        android:text="Trip Title" >
+    </TextView>
+
+    <Button
+        android:id="@+id/button_edit_trip"
+        style="@style/ButtonTheme"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_alignRight="@+id/trip_photo"
+        android:layout_alignTop="@+id/trip_photo"
+        android:padding="0dp"
+        android:text="edit"
+        android:onClick="onEditTripClick"
+        android:textSize="12sp" />
+
+</RelativeLayout>
