@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+
 import com.travellog.DrawerActivity.MenuFragment;
 import com.travellog.ViewPhotosActivity.ImageAdapter;
 
@@ -132,13 +134,15 @@ public class ViewTripsActivity extends DrawerActivity implements
 		getLayoutContent(); //replace activity main content with content for this activity
 
 		allTripViews = new ArrayList<TripView>();
+		userKey = getUserKey();
+		applicationContext = this.applicationContext;
 
 		//setTableLayoutParams(); //fixing some formatting issues with table layout 
 
 		/* view photo activity specific stuff */
 		GridView gridview = (GridView) findViewById(R.id.gridview_trips);
 		gridview.getLayoutParams().height = MainActivity.SCREEN_HEIGHT;
-		gridview.setColumnWidth(MainActivity.SCREEN_HEIGHT/(2*TRIPS_PER_ROW)); //pictures per row
+		//gridview.setColumnWidth(MainActivity.SCREEN_HEIGHT/(2*TRIPS_PER_ROW)); //pictures per row
 		myTripViewAdapter = new TripViewAdapter(this);
 		gridview.setAdapter(myTripViewAdapter);
 		ImageAdapter myTripAdapter;
@@ -220,10 +224,10 @@ public class ViewTripsActivity extends DrawerActivity implements
 			}
 		};
 	
-	public String getUserKey(){
+	public String getUserKey() {
 		 SharedPreferences settings = getSharedPreferences(SignUpActivity.USERINFO, 0);
 	     SharedPreferences.Editor editor = settings.edit();
-	     return settings.getString("userKey", null);
+	     return settings.getString("userKey", "fakeuserkey");
 	}
 
 	private void setTableLayoutParams() {
@@ -297,9 +301,9 @@ public class ViewTripsActivity extends DrawerActivity implements
 	//clears the layout - keeps table, but removes its children
 	public void removeAllFromLayout() {
 		LinearLayout layout = (LinearLayout) content
-				.findViewById(R.id.view_entries_content);
+				.findViewById(R.id.view_trips_layout);
 		layout.removeAllViews();
-		tableOfTrips.removeAllViews();
+		//tableOfTrips.removeAllViews();
 	}
 
 	// part of viewing entries. if text is too long, clicking this button will
@@ -381,6 +385,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 				.replace(R.id.view_trips_layout, fragment).commit();
 		
 		addTrip();
+		this.myTaskAdapter.getTripsFromBackend(this);
 
 		/*// update trip
 		Trip editedTrip = selectedTrip.getTrip();
@@ -407,17 +412,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 		return true;
 	}
 	
-	public void getTripsFromBackend() {
-		//somehow get the trips from the backend.  idk how to return stuff from async task
-	/*	List<Trip> trips = (List<Trip>) new GetTripByOwnerKeyTask().execute(applicationContext, userKey);
 	
-		for(Trip trip : trips) {
-			TripView t = new TripView(this);
-			t.setTrip(trip);
-			allTripViews.add(t);
-		}*/
-		
-	}
 	
 	public String getEditTripTitle(){
 		return ((EditText) findViewById(R.id.edit_trip_title))
@@ -530,6 +525,8 @@ public class ViewTripsActivity extends DrawerActivity implements
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.view_trips_layout, fragment).commit();
+		System.out.println("selected trip title:" + selectedTrip.getTrip().getTitle());
+		System.out.println("selected trip tags:" + selectedTrip.getTrip().getTags());
 		return true;
 	}
 
@@ -627,9 +624,9 @@ public class ViewTripsActivity extends DrawerActivity implements
 					.setText(selectedTrip.getTitle());
 			((EditText) view.findViewById(R.id.edit_trip_description))
 					.setText(selectedTrip.getDescription());
-			((EditText) view.findViewById(R.id.edit_trip_tags))
+			/*((EditText) view.findViewById(R.id.edit_trip_tags))
 					.setText(selectedTrip.getTags().toString().replace("[", "")
-							.replace("]", ""));
+							.replace("]", ""));*/ //TODO trip tags
 			((EditText) view.findViewById(R.id.edit_trip_location))
 					.setText(selectedTrip.getLocation());
 			depart.setText((CharSequence) selectedTrip.getDepartDateAsString());
@@ -699,11 +696,34 @@ public class ViewTripsActivity extends DrawerActivity implements
 				allTripViews.add(new TripView(c));
 
 			}*/
-			getTripsFromBackend();
+			getTripsFromBackend(c);
 		}
 
 		void add(TripView trip) {
 			allTripViews.add(trip);
+		}
+		
+		public void getTripsFromBackend(Context c) {
+			//somehow get the trips from the backend.  idk how to return stuff from async task
+			AsyncTask<Object, List<Trip>, List<Trip>> getTrips = new GetTripByOwnerKeyTask();
+			getTrips.execute(applicationContext, userKey);
+			List<Trip> trips = new ArrayList<Trip>();
+			try {
+				trips = getTrips.get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			for(Trip trip : trips) {
+				TripView t = new TripView(c);
+				t.setTrip(trip);
+				allTripViews.add(t);
+			}
+			
 		}
 
 		void clear() {

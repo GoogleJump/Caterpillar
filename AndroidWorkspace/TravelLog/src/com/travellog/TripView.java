@@ -27,7 +27,7 @@ public class TripView extends LinearLayout {
 	View tripLayout;
 	TextView tripTitle;
 	ImageView tripPhoto;
-	boolean add_trip_view; //clicking this view adds a new trip rather than opening entrie
+//	boolean add_trip_view; //clicking this view adds a new trip rather than opening entrie
 	Trip trip;
 	
 	
@@ -53,13 +53,12 @@ public class TripView extends LinearLayout {
 	}
 
 	private void setSampleValues(Trip t) {
-		t.setTitle("Trip Title");
+		t.setTitle("Untitled");
 		ArrayList<String> tags = new ArrayList<String>();
-		tags.add("tag1");
-		tags.add("heres another tag");
+		tags.add("travellog");
 		t.setTags(tags);
-		t.setDescription("This trip was so great.  Bla bla bla let's talk about this trip some more over here");
-		t.setLocation("best place on earth");
+		t.setDescription("");
+		t.setLocation("");
 	}
 	
 	public void init() {
@@ -71,7 +70,7 @@ public class TripView extends LinearLayout {
 		tripPhoto = (ImageView) tripLayout.findViewById(R.id.trip_photo);
 		tripTitle = (TextView) findViewById(R.id.trip_title);
 		tripTitle.setText(trip.getTitle());
-		add_trip_view = false;
+		//add_trip_view = false;
 		
 		}
 	
@@ -88,15 +87,15 @@ public class TripView extends LinearLayout {
 	}
 	
 	//first trip in the list of trips should be a button that lets you add a new trip
-	public void setAsAddTripView() {
-		add_trip_view = true;
+	/*public void setAsAddTripView() {
+		//add_trip_view = true;
 		this.setImgResource(R.drawable.plus_sign);
 		this.setTitle("Add Trip");
 		this.setAlpha((float).5); //faded out a bit
 		//remove "edit" button
 		View v = this.findViewById(R.id.trip_view).findViewById(R.id.button_edit_trip);
 		((ViewGroup) this.findViewById(R.id.trip_view)).removeView(v);
-	}
+	}*/
 	
 
 	public Trip getTrip() {
@@ -108,7 +107,7 @@ public class TripView extends LinearLayout {
 		this.trip = trip;
 	}
 	
-	public boolean isAddTripView() {
+	/*public boolean isAddTripView() {
 		return add_trip_view;
-	}
+	}*/
 }

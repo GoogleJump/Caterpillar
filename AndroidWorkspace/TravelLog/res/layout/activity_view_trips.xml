@@ -16,7 +16,7 @@
         style="@style/ButtonTheme"/>
     
     <GridView
-        android:id="@+id/gridview_trips"
+        android:id="@+id/gridview"
         android:layout_width="match_parent" 
         android:layout_height="match_parent"
         android:columnWidth="125dp"

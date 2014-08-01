@@ -27,7 +27,7 @@ public class Trip {
 	// Blob imagePreview;
 
 	public Trip() {
-		tripTitle = "";
+		tripTitle = "Untitled";
 		tripLocation = "";
 		tripDescription = "";
 		tripTags = new ArrayList<String>();
