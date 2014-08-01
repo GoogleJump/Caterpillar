@@ -353,29 +353,6 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	}
 
-	/*//opens new fragment for adding an entry
-	public boolean onAddEntryClick(View v) {
-		Fragment fragment = new Fragment();
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.view_entries_content, fragment).commit();
-
-		// update entry
-		selectedEntry.setTitle(((EditText) findViewById(R.id.edit_text_title))
-				.getText().toString());
-		selectedEntry
-				.setDescription(((EditText) findViewById(R.id.edit_text_entry_description))
-						.getText().toString());
-		selectedEntry
-				.setLocation(((EditText) findViewById(R.id.edit_text_location))
-						.getText().toString());
-
-		// update the view of entries
-		loadEntriesFromTrip(selectedTrip.getTrip());
-		// TODO update in DB
-
-		return false;
-	}*/
 
 	//editing a new trip - replaces fragment with entries for that trip
 	public boolean onSubmitTripClick(View v) {
@@ -385,29 +362,9 @@ public class ViewTripsActivity extends DrawerActivity implements
 				.replace(R.id.view_trips_layout, fragment).commit();
 		
 		addTrip();
-		this.myTaskAdapter.getTripsFromBackend(this);
-
-		/*// update trip
-		Trip editedTrip = selectedTrip.getTrip();
-		editedTrip
-				.setDescription(((EditText) findViewById(R.id.edit_trip_description))
-						.getText().toString());
-		editedTrip.setTitle(((EditText) findViewById(R.id.edit_trip_title))
-				.getText().toString());
-		editedTrip
-				.setLocation(((EditText) findViewById(R.id.edit_trip_location))
-						.getText().toString());
-		// editedTrip.setTags(((EditText)findViewById(R.id.edit_trip_tags)).getText().toString()));
-		// TODO
-		// editedTrip.setReturnDate(year, monthOfYear, dayOfMonth); TODO and
-		// depart date
-		// update trip view
-		selectedTrip.setTrip(editedTrip);
-
-		// show trips again -- replace this example with the actual trips
-		this.loadTripsExample();
-		// update DB*/
-		//addTrip();
+		Intent i = new Intent(this, ViewEntriesActivity.class);
+		//TODO: send trip id to entries activity so it can load up the right entries
+		startActivity(i);
 
 		return true;
 	}
@@ -464,7 +421,6 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	//button at the top that will open the fragment for adding a new trip
 	public boolean onAddTripClick(View v) {
-		//this.removeAllFromLayout();
 		selectedTrip = new TripView(this);
 		this.allTripViews.add(selectedTrip);
 		// open edit trip fragment
@@ -472,42 +428,21 @@ public class ViewTripsActivity extends DrawerActivity implements
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.view_trips_layout, fragment).commit();
-		// open the empty entries page for the created trip
-		// this.loadEntriesExample();
-		//loadEntriesFromTrip(selectedTrip.getTrip());
+		this.removeAllFromLayout();
 		return true;
 	}
-	//clicking a trip view will load the entries from that trip
-	//unless it is the very first trip view - the "addTripView"
-	//this will open an editTripFragment to add a new trip
 	public boolean onTripViewClick(View v) {
 		Trip trip = ((TripView) v.getParent().getParent()).getTrip();
 		this.removeAllFromLayout();
 
-		/*if (((TripView) v.getParent().getParent()).isAddTripView()) {
-			// create new trip, add it to list of trips to display
-			selectedTrip = new TripView(this);
-			this.allTripViews.add(selectedTrip);
-			// open edit trip fragment
-			Fragment fragment = new EditTripFragment();
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.view_entries_content, fragment).commit();
-			// open the empty entries page for the created trip
-			// this.loadEntriesExample();
-			loadEntriesFromTrip(selectedTrip.getTrip());
-
-			// TODO add trip to database
-		}
-
-		// get trip, get entries, load entries
-		else {*/
 			selectedTrip = (TripView) v.getParent().getParent();
-			// this.loadEntriesExample();
-			//loadEntriesFromTrip(trip);
+			Intent i = new Intent(this, ViewEntriesActivity.class);
+			//TODO: send trip id to entries activity so it can load up the right entries
+			startActivity(i);
 		//}
 		return true;
 	}
+
 
 	public boolean onPhotoViewClick(View v) {
 		// TODO: which entry was clicked? - send over the id of the entry to the next activity

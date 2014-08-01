@@ -16,6 +16,7 @@ import android.content.Context;
  */
 public class Trip {
 	private String tripTitle;
+	private String tripKey;
 	private String tripLocation;
 	private String tripDescription;
 	private List<String> tripTags;
@@ -34,6 +35,10 @@ public class Trip {
 		departDate = Calendar.getInstance();
 		returnDate = Calendar.getInstance();
 		entries = new ArrayList<EntryView>();
+	}
+	
+	public String getTripKey() {
+		return tripKey;
 	}
 
 	public String getTitle() {
@@ -113,6 +118,10 @@ public class Trip {
 		Calendar c = Calendar.getInstance();
 		c.set(year, monthOfYear, dayOfMonth);
 		departDate = c;
+	}
+	
+	public void setTripKey(String tripKey) {
+		this.tripKey = tripKey;
 	}
 
 }
