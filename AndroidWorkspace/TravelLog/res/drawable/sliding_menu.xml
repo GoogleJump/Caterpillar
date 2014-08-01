@@ -1,5 +1,0 @@
-<!-- Drawable for the color for the active color: aqua -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">  
-   <item android:state_activated="true" android:drawable="@color/aqua" />
-   <item android:drawable="@android:color/transparent" />  
-</selector>
