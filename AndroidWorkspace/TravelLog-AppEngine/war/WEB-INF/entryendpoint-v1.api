@@ -63,6 +63,22 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "entryendpoint.updateEntry" : {
+      "path" : "entry",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.travellog.EntryEndpoint.updateEntry",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "entryendpoint.listEntry" : {
       "path" : "listEntry",
       "httpMethod" : "GET",
@@ -87,22 +103,6 @@
           }
         },
         "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "entryendpoint.updateEntry" : {
-      "path" : "entry",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.travellog.EntryEndpoint.updateEntry",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -230,17 +230,17 @@
           "$ref" : "Entry"
         }
       },
-      "com.travellog.EntryEndpoint.listEntry" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Entry"
-        }
-      },
       "com.travellog.EntryEndpoint.updateEntry" : {
         "request" : {
           "$ref" : "Entry"
         },
         "response" : {
           "$ref" : "Entry"
+        }
+      },
+      "com.travellog.EntryEndpoint.listEntry" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Entry"
         }
       },
       "com.travellog.EntryEndpoint.removeEntry" : {

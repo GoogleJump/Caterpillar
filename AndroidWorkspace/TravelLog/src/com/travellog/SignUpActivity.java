@@ -21,6 +21,7 @@ import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class SignUpActivity extends DrawerActivity {
 
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
+	static String USERINFO = "userInfo";
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -67,7 +69,7 @@ public class SignUpActivity extends DrawerActivity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mPlanetTitles;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -197,7 +199,14 @@ public class SignUpActivity extends DrawerActivity {
 		startActivity(i);
 		return true;
 	}
-
+	
+	//stores userkey in shared preferences -- call this after sign in and sign up
+	public void storeUserKey(String userKey) {
+		 SharedPreferences settings = getSharedPreferences(USERINFO, 0);
+	      SharedPreferences.Editor editor = settings.edit();
+	      editor.putString("userKey", userKey);
+	}
+	
 	
 	public class SampleEndpointsTask extends AsyncTask<Context, Integer, Long> {
         protected Long doInBackground(Context... contexts) {

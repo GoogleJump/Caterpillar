@@ -11,16 +11,18 @@ body {
 	height:150;
 }
 .navbar-default[id="navbarTop"]{
-	background-color:#5A9491;
+	background-color: #504552;
 }
 #navbarTop{
 	height:100px;
+	margin: -10px -10px -10px -10px; /*to hide edges*/
 }
 #ownerContainer{
 	height:100%;
 	width:100px;
 	left:10px;
 	position:absolute;
+	display: none; /*no owner title for now, but maybe replace with username or logo later*/
 }
 #owner{
 	display:block;
@@ -34,9 +36,11 @@ body {
 }
 #stampLogo{
 	display:block;
-	top:0px;
+	position: absolute;
+	top:50px;
+	right: -300px;
 	z-index: 100000;
-	height:200px;
+	height:150px;
 }
 #whiteLogoDiv{
 	height:100%;
@@ -49,29 +53,40 @@ body {
 	height:100%;
 }
 .navbar[id="stripnavbar"]{
-	background-color: #B1F2EF;
-	top:99px;
+	background-color: #cff8f6;
+	top:88px;
 	position:absolute;
 	width:100%;
-	min-height:40px;
+	min-height:60px;
 	left:0px;
 	z-index:-10000;
+	-webkit-box-shadow: 2px 2px 2px 0px rgba(50, 50, 50, 0.43);
+	-moz-box-shadow:    2px 2px 2px 0px rgba(50, 50, 50, 0.43);
+	box-shadow:         2px 2px 2px 0px rgba(50, 50, 50, 0.43);
+
 }
 .nav-pills > li.active > a {
-    background-color:#458B74;
+    background-color:#5A9491;
+	min-height: 60px;
+	padding: 20px;
+	color: white;
 }
 .nav-pills > li.active > a:hover {
-    background-color: #458B74;
+    background-color: #504552;
+	min-height: 60px;
+	padding: 20px;
 }
-.nav-pills >li >a { 
-	color: #00868B; 
+.nav-pills >li >a {  
+	min-height: 60px;
+	padding: 20px;
+	color: #504552;
 } 
-li{
+li {
 	border-radius: 4px;
 }
 #main{
 	position:absolute;
-	top:100px;
+	top:130px;
 	padding-bottom:200px;
 	margin-bottom: 100px;
 }

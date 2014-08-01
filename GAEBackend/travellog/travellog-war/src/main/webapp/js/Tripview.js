@@ -48,12 +48,14 @@ Tripview = (function(){
 		'top':'100px',
 		'paddingLeft':'35px'
 	});
+    main.attr("id", "content");
 	
 
 	//instead, make it so it gets the classes of the dynamically created entries and formats them
 	var contentDiv = $(document.createElement('div'));
 	main.append(contentDiv);
 	contentDiv.addClass("row");
+
 
 	var titleDiv = $(document.createElement('div'));
 	titleDiv.addClass('page-header col-md-12');
@@ -103,7 +105,8 @@ Tripview = (function(){
         //open a modal to edit info about the photo
         modal.modal({show:true});
     });
-    contentDiv.append(editbtn);
+   // contentDiv.append(editbtn);
+   titleDiv.append(editbtn);
 
 	var addbtn = $(document.createElement('button'));
 	addbtn.addClass('btn btn-primary');
@@ -123,7 +126,8 @@ Tripview = (function(){
 	var addEntryForm = $(document.getElementById("addEntryForm"));
 	addEntryForm.append(addbtn);
 	// console.log("action of form is: " + addEntryForm.attr("action"));
-	contentDiv.append(addEntryForm);
+	//contentDiv.append(addEntryForm);
+    titleDiv.append(addEntryForm);
 	// contentDiv.append(buttondiv);
 	//Here goes all the posts
 	var postsWrapper = $(document.createElement('div'));

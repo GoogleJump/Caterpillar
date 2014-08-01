@@ -56,11 +56,11 @@ public class MainActivity extends DrawerActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTitle("");
-
+ 
 		// Intent i = new Intent(this, RegisterActivity.class);
 		// startActivity(i);
 		
-//		new AddNewUserTask().execute(getApplicationContext(), "Ben2", "Affleck", "Benny", "IamBatman", "bf@Test.com");
+		new AddNewUserTask().execute(getApplicationContext(), "Winnie", "the Pooh", "Pooh", "ilovehoney", "poohbear@hundredacre.org");
 //		new GetUserKeyByEmailTask().execute(getApplicationContext(), "bf@Test.com");
 
 //		new AddNewTripTask().execute(getApplicationContext(), "agtnanRyYXZlbGxvZ3IRCxIEVXNlchiAgICAgICgCQw", "Test Trip 1", "Test desc 1", "Test location 1");

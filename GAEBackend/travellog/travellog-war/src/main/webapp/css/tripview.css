@@ -35,3 +35,32 @@ box-shadow:         4px 4px 4px 0px rgba(50, 50, 50, 0.63);
 #myCarousel {
 
 }
+
+.page-header {
+	padding: 30px;
+	background-color: white;
+	text-align: center;
+	min-width: 110%;
+	margin: auto;
+	margin-left: -5%;
+	padding-top: 50px !important;
+}
+#content {
+	width: 110%;
+}
+
+#tripTitle {
+	color: #504552;
+	font-size: 70px !important;
+}
+#tripLocation {
+	font-size: 14px;
+	color: #5A9491;
+}
+#tripDescription {
+padding: 30px;	
+}
+.page-header button {
+	display: block;
+	margin-left: 50px;
+}

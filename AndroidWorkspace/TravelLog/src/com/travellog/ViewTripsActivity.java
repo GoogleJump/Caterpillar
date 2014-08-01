@@ -3,8 +3,10 @@ package com.travellog;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import com.travellog.DrawerActivity.MenuFragment;
+import com.travellog.ViewPhotosActivity.ImageAdapter;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -17,7 +19,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -25,6 +29,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,10 +43,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -91,9 +99,10 @@ public class ViewTripsActivity extends DrawerActivity implements
 	/* fields specific to viewing entries and trips */
 	TableLayout tableOfTrips; //table layout of all trips
 	static TripView selectedTrip; //currently selected trip as a trip view - in order to open the correct entries
-	ArrayList<TripView> allTripViews; //list of user's trips as trip views
+	List<TripView> allTripViews; //list of user's trips as trip views
 	private static EntryView selectedEntry;
-
+	private static Context applicationContext;
+	private static String userKey;
 	/*
 	 * these are to keep track of which date picker dialog the user is currently
 	 * editing:
@@ -107,6 +116,11 @@ public class ViewTripsActivity extends DrawerActivity implements
 	/*for uploading images to an entry*/
 	private static final int SELECT_PICTURE = 1; 
 	private String selectedImagePath;
+	private static int TRIPS_PER_ROW = 2;
+	private TripViewAdapter myTaskAdapter; // image adapter that uses allTripViews to
+	// load the gridview with tripviews
+	TripViewAdapter myTripViewAdapter;
+	private AsyncTaskLoadFiles myAsyncTaskLoadFiles;
 
 	// static boolean edit; // determines whether edit mode or new trip mode
 
@@ -119,7 +133,23 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 		allTripViews = new ArrayList<TripView>();
 
-		setTableLayoutParams(); //fixing some formatting issues with table layout 
+		//setTableLayoutParams(); //fixing some formatting issues with table layout 
+
+		/* view photo activity specific stuff */
+		GridView gridview = (GridView) findViewById(R.id.gridview_trips);
+		gridview.getLayoutParams().height = MainActivity.SCREEN_HEIGHT;
+		gridview.setColumnWidth(MainActivity.SCREEN_HEIGHT/(2*TRIPS_PER_ROW)); //pictures per row
+		myTripViewAdapter = new TripViewAdapter(this);
+		gridview.setAdapter(myTripViewAdapter);
+		ImageAdapter myTripAdapter;
+
+		myAsyncTaskLoadFiles = new AsyncTaskLoadFiles(myTripViewAdapter);
+		myAsyncTaskLoadFiles.execute();
+		
+
+		// when the user clicks one of the images in the gridview, open the view
+		// photo fragment
+		gridview.setOnItemClickListener(onTripViewClickListener);
 
 		/*for tabs (trip/map tabs at the top)*/
 		// Initilization
@@ -180,6 +210,22 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	}
 
+	// listener for clicking on any image in the gridview
+		OnItemClickListener onTripViewClickListener = new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+
+
+			}
+		};
+	
+	public String getUserKey(){
+		 SharedPreferences settings = getSharedPreferences(SignUpActivity.USERINFO, 0);
+	     SharedPreferences.Editor editor = settings.edit();
+	     return settings.getString("userKey", null);
+	}
+
 	private void setTableLayoutParams() {
 		//fix table layout parameters 
 				TableLayout.LayoutParams params = new TableLayout.LayoutParams(
@@ -201,7 +247,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 	public void getLayoutContent() {
 		content = (RelativeLayout) findViewById(R.id.content_homepage);
 		content.removeAllViews();
-		getLayoutInflater().inflate(R.layout.activity_view_entries, content);
+		getLayoutInflater().inflate(R.layout.activity_view_trips, content);
 	}
 
 	@Override
@@ -246,46 +292,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 		}
 	}
 	
-	/*a few hard coded entries to test the layout - adds them directly to layout*/
-	public void loadEntriesExample() {
-		// TODO: load entries into the layout
-		LinearLayout layout = (LinearLayout) content
-				.findViewById(R.id.view_entries_content);
-		// as a test load a few sample entries:
-		for (int i = 0; i < 3; i++) {
-			layout.addView(new EntryView(this));
-
-		}
-		EntryView entry = new EntryView(this);
-		((ImageView) entry.findViewById(R.id.entry_photo))
-				.setImageResource(R.drawable.hiking_sample_photo);
-		System.out.println("child count is: " + content.getChildCount());
-		layout.addView(entry);
-	}
-
-	/*a few hard coded trips to test layout - adds directly to layout*/
-	public void loadTripsExample() {
-		LinearLayout layout = (LinearLayout) content
-				.findViewById(R.id.view_entries_content);
-		layout.removeAllViews();
-		layout.addView(tableOfTrips);
-
-		TableRow tr1 = new TableRow(this);
-		TripView trip2 = new TripView(this);
-		trip2.setAsAddTripView(); //first trip in list of trips is for adding a new trip
-		tr1.addView(trip2);
-
-		TripView trip = new TripView(this);
-		ArrayList<EntryView> entry = new ArrayList<EntryView>();
-		entry.add(new EntryView(this));
-		entry.add(new EntryView(this));
-		EntryView long_text_ex = new EntryView(this);
-		long_text_ex.setDescription(getString(R.string.lorem_ipsum_long));
-		entry.add(long_text_ex);
-		trip.getTrip().setEntries(entry);
-		tr1.addView(trip);
-		tableOfTrips.addView(tr1);
-	}
+	
 
 	//clears the layout - keeps table, but removes its children
 	public void removeAllFromLayout() {
@@ -320,7 +327,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		//trips tab - loads trips example for now
 		if (tab.getPosition() == 0) {
-			loadTripsExample();
+			//loadTripsExample();
 			// removeAllFromLayout();
 		}
 
@@ -342,7 +349,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 	}
 
-	//opens new fragment for adding an entry
+	/*//opens new fragment for adding an entry
 	public boolean onAddEntryClick(View v) {
 		Fragment fragment = new Fragment();
 		FragmentManager fragmentManager = getFragmentManager();
@@ -364,16 +371,18 @@ public class ViewTripsActivity extends DrawerActivity implements
 		// TODO update in DB
 
 		return false;
-	}
+	}*/
 
 	//editing a new trip - replaces fragment with entries for that trip
 	public boolean onSubmitTripClick(View v) {
 		Fragment fragment = new Fragment();
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
-				.replace(R.id.view_entries_content, fragment).commit();
+				.replace(R.id.view_trips_layout, fragment).commit();
+		
+		addTrip();
 
-		// update trip
+		/*// update trip
 		Trip editedTrip = selectedTrip.getTrip();
 		editedTrip
 				.setDescription(((EditText) findViewById(R.id.edit_trip_description))
@@ -392,21 +401,87 @@ public class ViewTripsActivity extends DrawerActivity implements
 
 		// show trips again -- replace this example with the actual trips
 		this.loadTripsExample();
-		// update DB
+		// update DB*/
+		//addTrip();
 
 		return true;
 	}
 	
+	public void getTripsFromBackend() {
+		//somehow get the trips from the backend.  idk how to return stuff from async task
+	/*	List<Trip> trips = (List<Trip>) new GetTripByOwnerKeyTask().execute(applicationContext, userKey);
 	
-	public void loadEntriesFromTrip(Trip trip) {
+		for(Trip trip : trips) {
+			TripView t = new TripView(this);
+			t.setTrip(trip);
+			allTripViews.add(t);
+		}*/
+		
+	}
+	
+	public String getEditTripTitle(){
+		return ((EditText) findViewById(R.id.edit_trip_title))
+		.getText().toString();
+	}
+	public String getEditTripTags() {
+		return ((EditText) findViewById(R.id.edit_trip_tags))
+				.getText().toString();
+	}
+	public String getEditTripDescription(){
+		return ((EditText) findViewById(R.id.edit_trip_description))
+				.getText().toString();
+	}
+	public String getEditTripLocation(){
+		return ((EditText) findViewById(R.id.edit_trip_location))
+				.getText().toString();
+	}
+	//TODO: depart and return date are always return in the same date
+	public String getEditTripDepart(){
+		//return depart.getText().toString();
+		//return ((Button) findViewById(R.id.button_date_depart)).getText().toString();
+		return selectedTrip.getTrip().getDepartDateAsString();
+		
+	}
+	public String getEditTripReturn(){
+		//return ret.getText().toString();
+	//	return ((Button) findViewById(R.id.button_date_return)).getText().toString();
+		return selectedTrip.getTrip().getReturnDateAsString();
+	}
+	
+	//String[] trip = {null, owner, title, description, location, depart, return }
+			//get's the fields in this fragment and calls the task that inserts trip
+	public void addTrip() {
+	System.out.println("new task");
+	new AddNewTripTask().execute(applicationContext, userKey, getEditTripTitle(), getEditTripDescription(), getEditTripLocation(),
+			getEditTripDepart(), getEditTripReturn());
+	System.out.println("after task");
+}
+	
+
+	/*public void loadEntriesFromTrip(Trip trip) {
 		LinearLayout layout = (LinearLayout) content
 				.findViewById(R.id.view_entries_content);
 		// as a test load a few sample entries:
 		for (EntryView entry : trip.getEntries()) {
 			layout.addView(entry);
 		}
-	}
+	}*/
 
+	//button at the top that will open the fragment for adding a new trip
+	public boolean onAddTripClick(View v) {
+		//this.removeAllFromLayout();
+		selectedTrip = new TripView(this);
+		this.allTripViews.add(selectedTrip);
+		// open edit trip fragment
+		Fragment fragment = new EditTripFragment();
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.view_trips_layout, fragment).commit();
+		// open the empty entries page for the created trip
+		// this.loadEntriesExample();
+		//loadEntriesFromTrip(selectedTrip.getTrip());
+		return true;
+	}
 	//clicking a trip view will load the entries from that trip
 	//unless it is the very first trip view - the "addTripView"
 	//this will open an editTripFragment to add a new trip
@@ -414,7 +489,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 		Trip trip = ((TripView) v.getParent().getParent()).getTrip();
 		this.removeAllFromLayout();
 
-		if (((TripView) v.getParent().getParent()).isAddTripView()) {
+		/*if (((TripView) v.getParent().getParent()).isAddTripView()) {
 			// create new trip, add it to list of trips to display
 			selectedTrip = new TripView(this);
 			this.allTripViews.add(selectedTrip);
@@ -431,11 +506,11 @@ public class ViewTripsActivity extends DrawerActivity implements
 		}
 
 		// get trip, get entries, load entries
-		else {
+		else {*/
 			selectedTrip = (TripView) v.getParent().getParent();
 			// this.loadEntriesExample();
-			loadEntriesFromTrip(trip);
-		}
+			//loadEntriesFromTrip(trip);
+		//}
 		return true;
 	}
 
@@ -454,21 +529,20 @@ public class ViewTripsActivity extends DrawerActivity implements
 		Fragment fragment = new EditTripFragment();
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
-				.replace(R.id.view_entries_content, fragment).commit();
+				.replace(R.id.view_trips_layout, fragment).commit();
 		return true;
 	}
 
-	public boolean onEditEntryClick(View v) {
+/*	public boolean onEditEntryClick(View v) {
 		removeAllFromLayout();
 		EntryView entry = (EntryView) v.getParent().getParent().getParent();
-		;
 		selectedEntry = entry;
 		Fragment fragment = new EditEntryFragment();
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.view_entries_content, fragment).commit();
 		return true;
-	}
+	}*/
 
 	public Trip getSelectedTrip() {
 		return selectedTrip.getTrip();
@@ -562,9 +636,121 @@ public class ViewTripsActivity extends DrawerActivity implements
 			ret.setText((CharSequence) selectedTrip.getReturnDateAsString());
 
 		}
+		
+
+	}
+	
+	public class AsyncTaskLoadFiles extends AsyncTask<Void, String, Void> {
+
+		public AsyncTaskLoadFiles(TripViewAdapter myTripViewAdapter) {
+			myTaskAdapter = myTripViewAdapter;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			/*
+			 * String ExternalStorageDirectoryPath = Environment
+			 * .getExternalStorageDirectory().getAbsolutePath() + "/DCIM/";
+			 * 
+			 * String targetPath = ExternalStorageDirectoryPath; targetDirector
+			 * = new File(targetPath); myTaskAdapter.clear();
+			 */
+
+			super.onPreExecute();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+
+			/*
+			 * File[] files = targetDirector.listFiles(); for (File file :
+			 * files) { publishProgress(file.getAbsolutePath()); if
+			 * (isCancelled()) break; }
+			 */
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			// myTaskAdapter.add(values[0]);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			myTaskAdapter.notifyDataSetChanged();
+			super.onPostExecute(result);
+		}
 
 	}
 
+	
+	public class TripViewAdapter extends BaseAdapter {
+
+		private Context mContext;
+
+		public TripViewAdapter(Context c) {
+			mContext = c;
+			// test images:
+			allTripViews = new ArrayList<TripView>();
+
+			//add sample trips to list
+			/*for (int i = 0; i < 10; i++) {
+				allTripViews.add(new TripView(c));
+
+			}*/
+			getTripsFromBackend();
+		}
+
+		void add(TripView trip) {
+			allTripViews.add(trip);
+		}
+
+		void clear() {
+			// itemList.clear();
+			allTripViews.clear();
+		}
+
+		/*
+		 * void remove(int index){ photoList.remove(index); }
+		 */
+
+		@Override
+		public int getCount() {
+			return allTripViews.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return allTripViews.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			TripView trip = allTripViews.get(position);
+			if (convertView == null) { // if it's not recycled, initialize some
+				// attributes
+				trip.setLayoutParams(new GridView.LayoutParams(250, 300));
+				//trip.setScaleType(TripView.ScaleType.CENTER_CROP);
+				trip.setPadding(0, 0, 0, 0);
+			} else {
+
+			}
+
+			/*img = img.createScaledBitmap(img, 220, 220, true);
+
+			// imageView.setImageBitmap(bm);
+			imageView.setImageBitmap(img);*/
+			return trip;
+		}
+	}
+	
 	public static class DatePickerFragment extends DialogFragment implements
 			DatePickerDialog.OnDateSetListener {
 

@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
@@ -17,7 +18,7 @@ public class Trip {
 	private String tripTitle;
 	private String tripLocation;
 	private String tripDescription;
-	private ArrayList<String> tripTags;
+	private List<String> tripTags;
 	private Calendar departDate;
 	private Calendar returnDate;
 	private ArrayList<EntryView> entries; // TODO create actual entry class?
@@ -47,7 +48,7 @@ public class Trip {
 		return tripDescription;
 	}
 
-	public ArrayList<String> getTags() {
+	public List<String> getTags() {
 		return tripTags;
 	}
 
@@ -74,7 +75,7 @@ public class Trip {
 		tripTitle = title;
 	}
 
-	public void setTags(ArrayList<String> tags) {
+	public void setTags(List<String> tags) {
 		tripTags = tags;
 	}
 

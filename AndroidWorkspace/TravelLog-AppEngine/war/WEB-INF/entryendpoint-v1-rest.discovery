@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/HwxqZzrGH-mrmzB6r1NzhuN_Uo0\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/HwxqZzrGH-mrmzB6r1NzhuN_Uo0\"",
  "discoveryVersion": "v1",
  "id": "entryendpoint:v1",
  "name": "entryendpoint",

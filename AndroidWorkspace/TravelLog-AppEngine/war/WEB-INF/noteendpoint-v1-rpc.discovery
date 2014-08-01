@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/1fj-G1UnNAxtxFVxAXPu2gylRbw\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/1fj-G1UnNAxtxFVxAXPu2gylRbw\"",
  "discoveryVersion": "v1",
  "id": "noteendpoint:v1",
  "name": "noteendpoint",
