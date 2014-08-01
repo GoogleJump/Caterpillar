@@ -142,7 +142,7 @@ public class ViewTripsActivity extends DrawerActivity implements
 		/* view photo activity specific stuff */
 		GridView gridview = (GridView) findViewById(R.id.gridview_trips);
 		gridview.getLayoutParams().height = MainActivity.SCREEN_HEIGHT;
-		//gridview.setColumnWidth(MainActivity.SCREEN_HEIGHT/(2*TRIPS_PER_ROW)); //pictures per row
+		gridview.setColumnWidth(MainActivity.SCREEN_HEIGHT/(2*TRIPS_PER_ROW)); //pictures per row
 		myTripViewAdapter = new TripViewAdapter(this);
 		gridview.setAdapter(myTripViewAdapter);
 		ImageAdapter myTripAdapter;

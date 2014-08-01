@@ -5,6 +5,7 @@
     android:layout_height="match_parent" 
     android:orientation="vertical"
     android:clickable="true"
+
     android:id="@+id/view_trips_layout">
     
     <Button
@@ -16,7 +17,7 @@
         style="@style/ButtonTheme"/>
     
     <GridView
-        android:id="@+id/gridview"
+        android:id="@+id/gridview_trips"
         android:layout_width="match_parent" 
         android:layout_height="match_parent"
         android:columnWidth="125dp"

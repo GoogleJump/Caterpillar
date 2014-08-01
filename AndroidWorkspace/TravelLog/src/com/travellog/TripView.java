@@ -107,7 +107,60 @@ public class TripView extends LinearLayout {
 		this.trip = trip;
 	}
 	
-	/*public boolean isAddTripView() {
+	public TripInfoView getTripInfoView(Context c) {
+		return new TripInfoView(c);
+	}
+
+/*	public boolean isAddTripView() {
 		return add_trip_view;
 	}*/
+
+	//View that displays the trip's info - description, title, etc.
+	public class TripInfoView extends LinearLayout {
+		Context c;
+		View tripInfoLayout;
+
+		public TripInfoView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			this.c = context;
+			init();
+		}
+
+		public TripInfoView(Context context, AttributeSet attrs) {
+			super(context, attrs);
+			this.c = context;
+			init();
+		}
+
+		public TripInfoView(Context context) {
+			super(context);
+			this.c = context;
+			init();
+		}
+
+		public void init() {
+			//inflate the layout
+			LayoutInflater vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			tripInfoLayout = vi.inflate(R.layout.trip_description, null);
+			this.addView(tripInfoLayout);
+
+			setTextViews();
+
+		}
+
+		public void setTextViews() {
+			//fill in/update the information of the trip 
+			((TextView) tripInfoLayout.findViewById(R.id.trip_info_title)).setText(trip.getTitle());
+			((TextView) tripInfoLayout.findViewById(R.id.trip_info_description)).setText(trip.getDescription());
+			((TextView) tripInfoLayout.findViewById(R.id.trip_info_location)).setText(trip.getLocation());
+			String date = trip.getDepartDateAsString(); //set as depart date or empty string
+			String return_date = trip.getReturnDateAsString();
+			if(!return_date.equals("")) {
+				date = date + " to " + trip.getReturnDateAsString(); //depart date - return date
+			}
+			((TextView) tripInfoLayout.findViewById(R.id.trip_info_dates)).setText(date);
+
+		}
+
+	}
 }
