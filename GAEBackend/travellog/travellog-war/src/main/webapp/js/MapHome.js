@@ -37,7 +37,7 @@ MapHome = (function(){
   //addbtn.attr("id", "addTrip");
   addbtn.addClass("addTrip");
 	addbtn.css({
-		'background-color':'#00868B',
+		'background-color':Util.blue,
 	});
    Util.addNewTrip(body);//initial add new trip modal
   // window.onload = function() {
@@ -216,6 +216,10 @@ function that initialize the map in the page
       searchbtn.addClass("btn btn-default");
       searchbtn.attr('type','submit');
       searchbtn.text("Show search results on the Map");
+      searchbtn.css({
+        'background-color':Util.blue,
+        'color':"white",
+      });
       searchdiv.append(searchInput);
       searchForm.append(searchdiv).append(searchbtn);
       contentDiv.append(searchForm);
@@ -303,7 +307,7 @@ function addTripSearchResults(tripResults) {
     heading.attr("class", "list-group-item-heading");
     var purple = "#504552";
     heading.css({
-      "background-color" : purple,
+      "background-color" : Util.mid_blue,
       "padding" : "10px",
       "height" : "100%",
       "color" : "white",
@@ -314,7 +318,7 @@ function addTripSearchResults(tripResults) {
     text.attr("class", "list-group-item-text");
     text.css({
       "padding" : "10px",
-      "color" : purple,
+      "color" : Util.mid_blue,
     });
 
     //Why are none of these working???:
@@ -502,7 +506,7 @@ var buttonid = "addTrip" + id;
   '<h1 id="firstHeading" class="firstHeading" style="font:1em">'+spec.title+'</h1>'+
   '<p><button class="btn btn-primary" id="'+ buttonid + '"'+
   '>Add Trip</button></p>'+ 
-  '<style>.btn-primary, .btn-primary:hover, .btn-primary:active { background-color: #00868B; border: #00868B; }</style>'+
+  '<style>.btn-primary, .btn-primary:hover, .btn-primary:active { background-color: #3E546A; border: #3E546A; }</style>'+
   '</div>';
 
       var infowindow = new google.maps.InfoWindow({
@@ -547,16 +551,16 @@ function setInfoWindow(map, marker, spec, link) {
       '<div class="view">'+
           '<div class="view-back">'+
              '<a href='+spec.link+'>'+
-     			'<button class="btn btn-primary" style="margin-left: 90px; margin-top: 20px">View</button>'+
+     			'<button class="btn btn-primary" style="margin-top: 20px">View</button>'+
      			'</a>' +
-             '<a><button class="btn btn-primary" id="'+ editid + '" style="margin-left: 90px; margin-top: 30px">Edit</button></a>'+
-             '<form id="'+ deleteformid +' " method="post" action="/deleteTrip?frommap=True&tripKey='+spec.tripkey+'&userKey='+spec.userkey+'"><a><button class="btn btn-primary" id="'+ deleteid +' "style="margin-left: 90px; margin-top: 40px">Delete</button></a></form>'+
+             '<a><button class="btn btn-primary" id="'+ editid + '" style=" margin-top: 30px">Edit</button></a>'+
+             '<form id="'+ deleteformid +' " method="post" action="/deleteTrip?frommap=True&tripKey='+spec.tripkey+'&userKey='+spec.userkey+'"><a><button class="btn btn-primary" id="'+ deleteid +' " margin-top: 40px">Delete</button></a></form>'+
           '</div>'+
    	 '<img src='+ spec.img + ' style="width: 338"/>'+
       '</div>'+
       '</div>'+ //end of grid
                  '<p>' + spec.description + '</p>'+
-                 '<style>.btn-primary, .btn-primary:hover, .btn-primary:active { background-color: #00868B; border: #00868B; }</style>';
+                 '<style>.btn-primary, .btn-primary:hover, .btn-primary:active { background-color: rgb(110, 130,170); border: rgb(110, 130,170); margin-left:95px}</style>';
 
 console.log("set content string");
       var infowindow = new google.maps.InfoWindow({

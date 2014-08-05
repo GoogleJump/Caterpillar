@@ -2,17 +2,24 @@ Util = (function(){
     "use strict";
 
     var yellow = '#FFFCD4',
-    dark_purple='#504552',
+    dark_purple='#3E546A',
     aqua= '#B1F2EF',
     teal='#5A9491',
+    blue='#3E546A',
+    light_blue="rgb(200, 210, 230)",
+    mid_blue = "rgb(110, 130,170)",
     lgter_aqua='#cff8f6';
+
 
     return {
         yellow: yellow,
         aqua: aqua,
         teal: teal,
+        mid_blue:mid_blue,
+        light_blue:light_blue,
         lgter_aqua:lgter_aqua,
         dark_purple: dark_purple,
+        blue:blue,
         addNewTrip:addNewTrip,
         makeModal: makeModal,
         inputGroup : inputGroup,
@@ -241,14 +248,14 @@ Util = (function(){
             'min-height':'300px',
             'min-width':'250px',
             'border-radius':'15px',
-            'background-color':'#B1F2EF'
+            'background-color':'#eee'
         });
         var headingDiv=$(document.createElement('div'));
         headingDiv.addClass('modal-header');
         headingDiv.css({
-            'background-color':'#2F4F4F',
+            'background-color':'#3E546A',
             'font-family':'Serif',
-            'color':'#FFFCD4',
+            'color':'white',
             'height':'60px',
         });
         content.append(headingDiv);
@@ -267,6 +274,7 @@ Util = (function(){
         var footer=$(document.createElement('div'));
         content.append(footer);
         footer.addClass('modal-footer');
+        //footer.css({'background-color':'#3E546A'});
         var closebtn = $(document.createElement('btn'));
         closebtn.attr('type','button');
         closebtn.addClass('btn btn-default');
@@ -283,7 +291,7 @@ Util = (function(){
             savebtn.text("Submit");
             savebtn.attr('id',modalId+'savebtn');
             savebtn.css({
-                'background-color':'#504552'
+                'background-color':'#3E546A'
             });
             footer.append(savebtn);
         }
@@ -318,7 +326,7 @@ Util = (function(){
         title.text(nametitle);
         title.css({
             'height':'15px',
-            'background-color':'#504552',
+            'background-color':"#3E546A",
             'color':'white',
             'font-weight':'bold'
         });
@@ -382,7 +390,7 @@ Util = (function(){
         return wrapper;
     }
 
-    function getTrip(tripKey, useKey) {
+    function getTrip(tripKey, useKey, spec) {
         var trip;
          $.getJSON('getTrip?tripKey='+tripKey, function(data) {
             var src = "/getTripImage?tripKey=" + tripKey
@@ -404,15 +412,19 @@ Util = (function(){
             };
             trip = trip_obj;
             console.log("trip in getTrip function is "+trip_obj.title );
+            if(spec.title){
+                spec.title.text(trip_obj.title);
+            }                
+            if(spec.date) {
+                spec.date.text(trip_obj.depDate + " - " + trip_obj.retDate);
+                if(trip_obj.depDate == null || trip_obj.retDate == null || trip_obj.depDate == "" || trip_obj.retDate == "") {
+                    spec.date.text("");
+                }
+            }
+            spec.location.text(trip_obj.location);
+            spec.description.text(trip_obj.description);
         //}
         });
-        var interval = setInterval(function(){
-       if (trip != undefined){
-        console.log("trip in getTrip function after json interval is " + trip.title);
-         clearInterval(interval);
-         return trip;
-       }
-    }, 200);
     }
 
     function getEntry(entryKey, tripKey) {
@@ -604,13 +616,18 @@ Util = (function(){
             photoKey: file.photoKey, //will be null for addEntry
             entryKey: file.entryKey, //will be null for addEntry
         };
-
+        colDiv.css({
+            'padding-top':'10px',
+        })
         
         colDiv.addClass('col-sm-6 col-md-4');
+
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.addClass('thumbnail');
         thumbDiv.attr('id', 'thumbnail'+ spec.picfile.name); //give thumbnail a unique id based on index of file
-
+        thumbDiv.css({
+            'background-color':'#eee',
+        })
         colDiv.append(thumbDiv);
         var imgDiv = $(document.createElement('div'));
         imgDiv.css({
@@ -654,13 +671,14 @@ Util = (function(){
         thumbDiv.append(captionDiv);
         var caption = $(document.createElement('label')); //title label w/class photoTitle 
         captionDiv.append(caption);
-        captionDiv.css('width','100%');
+        captionDiv.css({'width':'100%'});
         caption.attr('id', 'photoTitle' + file.name);
         caption.css({
             'width':'100%',
             'overflow':'hidden',
             'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
+
         });
         caption.text(cap);
         var descDiv = $(document.createElement('div')); //description div w/id photoDescription holds description of photo
@@ -691,7 +709,7 @@ Util = (function(){
         btngroup.append(editbtn);
         var deletebtn = $(document.createElement('button'));
         deletebtn.text("Delete");
-        deletebtn.addClass("btn btn-default delete col-sm-offset-4");
+        deletebtn.addClass("btn btn-default delete col-sm-offset-5");
 
         deletebtn.click(function(e) {
             e.preventDefault();
@@ -757,25 +775,27 @@ Util = (function(){
         var contentRow = $(document.createElement('div'));
         contentRow.addClass('row');
         contentForm.append(contentRow);
-        var thumbRow = $(document.createElement('div'));
-        thumbRow.addClass('row');
-        contentRow.append(thumbRow);
-        var thumbDiv = $(document.createElement('div'));
-        thumbDiv.addClass('thumbnail col-md-6 col-sm-offset-3');
-        thumbRow.append(thumbDiv);
-        var thumbnail=$(document.createElement('img'));
-        thumbnail.addClass("photoThumbnails");
-        if(type=="editEntry") thumbnail.addClass("uploaded");
-        if(type==="Trip"){
-            thumbnail.attr('id',title+"modal");
+        if(type!=="Trip"){
+            var thumbRow = $(document.createElement('div'));
+            thumbRow.addClass('row');
+            contentRow.append(thumbRow);
+            var thumbDiv = $(document.createElement('div'));
+            thumbDiv.addClass('thumbnail col-md-6 col-sm-offset-3');
+            thumbRow.append(thumbDiv);
+            var thumbnail=$(document.createElement('img'));
+            thumbnail.addClass("photoThumbnails");
+            if(type=="editEntry") thumbnail.addClass("uploaded");
+            // if(type==="Trip"){
+            //     thumbnail.attr('id',title+"modal");
+            // }
+            // else if(type!=="Trip"){
+                // if(type!=="NewTrip") {
+                thumbnail.attr('id',spec.picfile.name+"modalthumb");   
+                // } 
+            // }
+            thumbDiv.append(thumbnail);
+            thumbnail.attr('src',thumb);
         }
-        else if(type!=="Trip"){
-            if(type!=="NewTrip") {
-            thumbnail.attr('id',spec.picfile.name+"modalthumb");   
-            } 
-        }
-        thumbDiv.append(thumbnail);
-        thumbnail.attr('src',thumb);
         var titleRow =$(document.createElement('div'));
         titleRow.addClass("row col-md-10 col-sm-offset-1");
         var titleInput = inputGroup("Title: ", 'title', null, title, null,true);
@@ -856,7 +876,7 @@ Util = (function(){
         });
 
         if(description=="" && type!=="NewTrip"){
-            text.val("Click Edit to add description for the photo")
+            text.val("");
         }else
             text.val(description);
 

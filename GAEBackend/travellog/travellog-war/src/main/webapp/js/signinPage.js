@@ -15,7 +15,7 @@ signinPage=(function(){
 	$navbar.addClass("navbar navbar-default navbar-fixed-top");
 	overlay.append(navbar);
 	$(document.getElementsByClassName('navbar-default')).css({
-		'background-color':'#5A9491'
+		'background-color':Util.blue
 	});
 	$(document.getElementsByClassName('navbar-fixed-top')).css({
 		'height':'100px'
@@ -23,7 +23,7 @@ signinPage=(function(){
 
 	var strip = $(document.createElement('div'));
 	strip.css({
-		'background-color':'#B1F2EF',
+		'background-color':Util.light_blue,
 		'top':'100px',
 		'position':'absolute',
 		'width':'100%',
@@ -90,7 +90,7 @@ signinPage=(function(){
 	signinDiv.append(username);
 	username.css({
 		'bottom':'25px',
-		'background-color':'#FFFCD4',
+		'background-color':'#white',
 		'text-color':'black',
 		'position':'absolute'
 	});
@@ -104,7 +104,7 @@ signinPage=(function(){
 	signinDiv.append(password);
 	password.css({
 		'bottom':'25px',
-		'background-color':'#FFFCD4',
+		'background-color':'#white',
 		'position':'absolute',
 		'left':'180px'
 	});
@@ -115,7 +115,7 @@ signinPage=(function(){
 	signinbtn.css({
 		'left':'350px',
 		'bottom':'20px',
-		'background-color':'#B1F2EF',
+		'background-color':Util.light_blue,
 		'position':'absolute',
 		'width':'65px',
 	});
@@ -137,7 +137,7 @@ signinPage=(function(){
 	signupbtn.text('Sign Up');
 	signupbtn.css({
 		'left':'430px',
-		'background-color':'#B1F2EF',
+		'background-color':Util.light_blue,
 		'bottom':'20px',
 		'position':'absolute',
 		'width':'65px',
@@ -219,7 +219,7 @@ signinPage=(function(){
 		'left':'10%',
 		'height':'60%',
 		'width':'30%',
-		'background-color':'#FFFCD4',
+		'background-color':Util.light_blue,
 		'border':'solid 2px gray',
 		'border-radius':'5px'
 

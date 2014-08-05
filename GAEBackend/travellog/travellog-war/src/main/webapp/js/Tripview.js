@@ -46,7 +46,8 @@ Tripview = (function(){
 	main.css({
 		'position':'absolute',
 		'top':'100px',
-		'paddingLeft':'35px'
+		'paddingLeft':'35px',
+        'background-color':"#eee",
 	});
     main.attr("id", "content");
 	
@@ -55,7 +56,9 @@ Tripview = (function(){
 	var contentDiv = $(document.createElement('div'));
 	main.append(contentDiv);
 	contentDiv.addClass("row");
-
+    contentDiv.css({
+        'background-color':'#eee',
+    })
 
 	var titleDiv = $(document.createElement('div'));
 	titleDiv.addClass('page-header col-md-12');
@@ -97,7 +100,7 @@ Tripview = (function(){
     var editbtn = $(document.createElement('button'));
     editbtn.text("Edit Trip");
     editbtn.css({
-    	'background-color':'#00868B',
+    	'background-color':Util.blue,
 		'margin-bottom':'10px'
     });
     editbtn.addClass("btn btn-primary");
@@ -106,7 +109,7 @@ Tripview = (function(){
         modal.modal({show:true});
     });
    // contentDiv.append(editbtn);
-   titleDiv.append(editbtn);
+    titleDiv.append(editbtn);
 
 	var addbtn = $(document.createElement('button'));
 	addbtn.addClass('btn btn-primary');
@@ -118,7 +121,7 @@ Tripview = (function(){
 	});
 	addbtn.text("Add Entry");
 	addbtn.css({
-		'background-color':'#00868B',
+		'background-color':Util.blue,
 	});
 
 
@@ -216,7 +219,7 @@ Tripview = (function(){
 	prev.append(preva)
 	preva.text("Previous");
 	preva.css({
-		'color':Util.teal,
+		'color':Util.blue,
 	});
 	var next = $(document.createElement('li'));
 	pager.append(next);
@@ -226,7 +229,7 @@ Tripview = (function(){
 	nexta.attr('href','#');
 	nexta.text("Next");
 	nexta.css({
-		'color':Util.teal,
+		'color':Util.blue,
 	});
 
 	/**

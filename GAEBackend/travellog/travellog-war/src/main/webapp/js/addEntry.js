@@ -163,7 +163,7 @@ addEntry = (function(){
 	photoRow.append(photoDiv);
 	photoDiv.css({
 		'margin-top':'10px',
-		'background-color':'#f5f5f5',//Util.yellow,
+		'background-color':'white',//Util.yellow,
 		'border':'gray 3px solid',
 		'border-radius':'3px',
 		'overflow-y':'auto',
@@ -278,8 +278,9 @@ addEntry = (function(){
 	// cancelbtn.attr('data-dismiss','modal');
 	cancelbtn.text("Cancel");
 	cancelbtn.css({
-	    // 'background-color':'#504552',
+	    'background-color':Util.blue,
 	    'right':'16%',
+	    'color':"white",
 	    'position':'absolute',
 	});
 	var savebtn = $(document.createElement('btn'));
@@ -288,7 +289,8 @@ addEntry = (function(){
 	// savebtn.attr('data-dismiss','modal');
 	savebtn.text("Submit");
 	savebtn.css({
-	    // 'background-color':'#504552',
+	    'background-color':Util.blue,
+	    'color':"white",
 	    'right':'9%',
 	    'position':'absolute',
 	});

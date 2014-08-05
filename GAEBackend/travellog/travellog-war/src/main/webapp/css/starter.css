@@ -11,8 +11,9 @@ body {
 	height:150;
 }
 .navbar-default[id="navbarTop"]{
-	background-color: #504552;
+	background-color: #3E546A;
 }
+
 #navbarTop{
 	height:100px;
 	margin: -10px -10px -10px -10px; /*to hide edges*/
@@ -31,7 +32,7 @@ body {
 }
 #logoDiv{
 	height:100%;
-	left:960px;
+	left:900px;
 	position:absolute;
 }
 #stampLogo{
@@ -53,11 +54,12 @@ body {
 	height:100%;
 }
 .navbar[id="stripnavbar"]{
-	background-color: #cff8f6;
+	background-color: rgb(200, 210, 230);
 	top:88px;
 	position:absolute;
 	width:100%;
-	min-height:60px;
+	min-height:40px;
+	height:40px;
 	left:0px;
 	z-index:-10000;
 	-webkit-box-shadow: 2px 2px 2px 0px rgba(50, 50, 50, 0.43);
@@ -65,22 +67,37 @@ body {
 	box-shadow:         2px 2px 2px 0px rgba(50, 50, 50, 0.43);
 
 }
+.navbar-default{
+	border-color:#3E546A;
+}
 .nav-pills > li.active > a {
+    background-color:#3E546A;
+}
+.nav-pills > li.active > a:hover {
+    background-color: #3E546A;
+}
+.nav-pills >li >a { 
+	color: #3E546A; 
+} 
+li{
+	border-radius: 4px;
+}
+/*.nav-pills > li.active > a {
     background-color:#5A9491;
-	min-height: 60px;
+	min-height: 30px;
 	padding: 20px;
 	color: white;
 }
 .nav-pills > li.active > a:hover {
     background-color: #504552;
-	min-height: 60px;
+	min-height: 30px;
 	padding: 20px;
 }
 .nav-pills >li >a {  
-	min-height: 60px;
+	min-height: 30px;
 	padding: 20px;
 	color: #504552;
-} 
+} */
 li {
 	border-radius: 4px;
 }

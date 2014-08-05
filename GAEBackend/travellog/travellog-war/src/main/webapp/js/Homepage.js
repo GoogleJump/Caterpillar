@@ -42,7 +42,7 @@ Homepage = (function(){
         'data-toggle':"modal",
     });
     addbtn.css({
-        'background-color':'#00868B',
+        'background-color':Util.blue,
     });
     Util.addNewTrip(body); //initial add new trip modal
 
@@ -91,11 +91,11 @@ Homepage = (function(){
         var colDiv = $(document.createElement('div'));
         colDiv.addClass("col-md-5");
         colDiv.css({
-            'background-color':Util.yellow,
+            'background-color':Util.light_blue,
             'height':'400px',
             'margin-right':'40px',
             'margin-bottom':'40px',
-
+            'border-radius':'5px'
         });
         var thumbDiv = $(document.createElement('div'));
         thumbDiv.css({
@@ -163,7 +163,7 @@ Homepage = (function(){
         var viewbtna = $(document.createElement('a'));
         var viewbtn = $(document.createElement('button'));
         viewbtn.text("View");
-        viewbtn.addClass('btn btn-default col-sm-offset-2');
+        viewbtn.addClass('btn btn-default col-sm-offset-5');
         //lead to the trip's page when clicked
         viewbtna.attr("href",spec.link);
         viewbtn.click(function(){});

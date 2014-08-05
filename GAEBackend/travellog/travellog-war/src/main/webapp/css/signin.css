@@ -3,7 +3,9 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
-
+.navbar-default{
+  border-color:#3E546A;
+}
 /*.form-signin {
   max-width: 330px;
   /*padding: 15px;*/

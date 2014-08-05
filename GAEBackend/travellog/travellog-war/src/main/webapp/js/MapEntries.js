@@ -19,7 +19,7 @@ MapHome = (function(){
 
   var contentDiv = $(document.getElementById("contentDiv"));
   contentDiv.css({
-    'padding-top':'50px',
+    'padding-top':'10px',
     'padding-bottom':'100px'
   });
   var titleDiv = $(document.createElement('div'));
@@ -28,36 +28,19 @@ MapHome = (function(){
   contentDiv.append(titleDiv);
 
   var title = $(document.createElement('h1'));
-  //title.text("Temp trip title")
-   //title.text(trip.title);
-  //TODO: uncomment this when we can get the title
-  // var title = $(document.getElementById('tripTitle'));
   title.addClass('font-effect-fragile');
   title.css({
     'padding-top':'5px',
     'font-family':"Rancho', serif",
     'font-size':'100px',
     "display" : "block"
-  })
+  });
+
 
   titleDiv.append(title);
-  //TODO: uncomment this when we can get the date
-  // var date=$(document.getElementById('tripDate'));
   var date=$(document.createElement('h2'));
-  //date.text("this is testing");
-     var trip = Util.getTrip(tripKey, userKey);
-   var interval = setInterval(function(){
-       if (trip != undefined){
-        console.log("trip in getTrip function after json interval in mapentry is" + trip.title);
-        clearInterval(interval);
-        title.text(trip.title);
-       date.text(trip.depDate + " - " + trip.retDate);
-       if(trip.depDate == null || trip.retDate == null || trip.depDate == "" || trip.retDate == "") {
-      date.text("");
-  }
-       }
-    }, 200);
-  title.append(date);
+
+  titleDiv.append(date);
 
   var location=$(document.createElement('small'));
   //TODO: uncomment this when we can get the location
@@ -71,7 +54,7 @@ MapHome = (function(){
   //TODO: uncomment this when we can get the description
   // var description = $(document.getElementById('tripDescription'));
   var description=$(document.createElement('small'));
-  location.css({
+  description.css({
     "font-family": "serif",
     "font-size":"12",
     "display" : "block"
@@ -80,7 +63,13 @@ MapHome = (function(){
   titleDiv.css({
     'padding-top':'10px'
   });
-
+  var tripspec={
+    title:title,
+    location:location,
+    description:description,
+    date:date,
+  }
+  Util.getTrip(tripKey, userKey, tripspec);
 
   var buttonDiv = $(document.createElement('div'));
   buttonDiv.addClass('col-md-4');
@@ -100,7 +89,7 @@ MapHome = (function(){
   });
   addbtn.text("Add Entry");
   addbtn.css({
-    'background-color':'#00868B',
+    'background-color':Util.blue,
   });
 
 
@@ -190,7 +179,7 @@ function that initialize the map in the page
       entries.push(entry_obj);
     }
     setMarkers(map, entries, "entry");
-    createSearchBar();
+    createSearchBar(entries);
     addEntriesSearchResults(entries);
   });
 
@@ -201,7 +190,7 @@ function that initialize the map in the page
       }
     }, 200);
 
-    function createSearchBar(){
+    function createSearchBar(entries){
       /**HERE IS THE SEARCH BAR~~**/
       var searchForm = $(document.createElement('form'));
       searchForm.attr('role','search');
@@ -222,6 +211,10 @@ function that initialize the map in the page
       searchbtn.addClass("btn btn-default");
       searchbtn.attr('type','submit');
       searchbtn.text("Show search results on the Map");
+      searchbtn.css({
+        'background-color':Util.blue,
+        'color':'white'
+      });
       searchdiv.append(searchInput);
       searchForm.append(searchdiv).append(searchbtn);
       contentDiv.append(searchForm);
@@ -285,7 +278,7 @@ function that initialize the map in the page
     heading.attr("class", "list-group-item-heading");
     var purple = "#504552";
     heading.css({
-      "background-color" : purple,
+      "background-color" : Util.mid_blue,
       "padding" : "10px",
       "height" : "100%",
       "color" : "white",
@@ -432,16 +425,16 @@ function that initialize the map in the page
         '<div class="view">'+
             '<div class="view-back">'+
                '<a href='+spec.link+'>'+
-            '<button class="btn btn-primary" style="margin-left: 90px; margin-top: 20px">View</button>'+
+            '<button class="btn btn-primary" style="margin-left: 93px; margin-top: 20px;background-color:rgb(110, 130,170)">View</button>'+
             '</a>' +
                // '<a><button class="btn btn-primary" id=editBtn'+spec.img+' style="margin-left: 90px; margin-top: 30px" onclick="openModal()">Edit</button></a>'+
                // '<a><button class="btn btn-primary" id=deleteBtn'+spec.img+' style="margin-left: 90px; margin-top: 40px" onclick="openModal()">Delete</button></a>'+
             '</div>'+
        '<img src='+ spec.img + ' style="width: 338"/>'+
         '</div>'+
-        '</div>'+ //end of grid
-                   '<p>' + description_snippet + '</p>'
-
+        //'<p>' + description_snippet + '</p></div>'//+
+        '</div>' //end of grid
+                
         var infowindow = new google.maps.InfoWindow({
          content: contentString
        });

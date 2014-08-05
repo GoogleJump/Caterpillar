@@ -92,8 +92,8 @@
       </div>
       <div id="stripnavbar" class="navbar-default navbar">
         <ul class="nav nav-pills">
-          <li class="active"><a href="/homepage.jsp?userKey=${fn:escapeXml(entryPoster)}">Home</a></li>
-          <li><a href="/MapEntries.html?tripKey=${fn:escapeXml(entryTripPoster)}">Locations</a></li>
+          <li><a href="/homepage.jsp?userKey=${fn:escapeXml(entryPoster)}">Home</a></li>
+          <li><a href="/tripview.jsp?tripKey=${fn:escapeXml(entryTripPoster)}">Back to Trip</a></li>
         </ul>
       </div>
     </div><!--/.nav-collapse -->
@@ -101,9 +101,9 @@
       <div class="row" id="contentDiv" style="padding-top: 50px">
 
         <div id="backDiv" class="col-md-12" style="padding-bottom: 10px;">
-          <a href="/tripview.jsp?tripKey=${fn:escapeXml(entryTripPoster)}">
-            <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Back to Trip</button></a>
-           <a href="/editentry.jsp?entryKey=${fn:escapeXml(entryKey)}"> <button class="btn btn-primary" left="0px" position="relative" style="background-color: rgb(0,134, 139);">Edit Entry</button></a>
+          <!-- <a href="/tripview.jsp?tripKey=${fn:escapeXml(entryTripPoster)}">
+            <button class="btn btn-primary" left="0px" position="relative" style="background-color:#3E546A;">Back to Trip</button></a> -->
+           <a href="/editentry.jsp?entryKey=${fn:escapeXml(entryKey)}"> <button class="btn btn-primary" left="0px" position="relative" style="background-color:#3E546A;">Edit Entry</button></a>
           </a>
         </div>
       <div class="row col-md-10 col-md-offset-1"><h1>${fn:escapeXml(entryTitle)}</h1></div>

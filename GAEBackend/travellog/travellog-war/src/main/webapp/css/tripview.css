@@ -17,12 +17,12 @@
 
 .blog-post a h2 {
 	padding: 20px;
-	background-color: #504552 !important;
+	background-color: rgb(110, 130, 170) !important;
 	border-radius: 20px 0px;
 	color: white;
 	-webkit-box-shadow: 4px 4px 4px 0px rgba(50, 50, 50, 0.63);
--moz-box-shadow:    4px 4px 4px 0px rgba(50, 50, 50, 0.63);
-box-shadow:         4px 4px 4px 0px rgba(50, 50, 50, 0.63);
+	-moz-box-shadow:    4px 4px 4px 0px rgba(50, 50, 50, 0.63);
+	box-shadow:         4px 4px 4px 0px rgba(50, 50, 50, 0.63);
 }
 .blog-post a:hover, .vlogpost a h2:hover {
 	text-decoration: none;
@@ -38,15 +38,16 @@ box-shadow:         4px 4px 4px 0px rgba(50, 50, 50, 0.63);
 
 .page-header {
 	padding: 30px;
-	background-color: white;
+	background-color: #eee;
 	text-align: center;
-	min-width: 110%;
+	min-width: 100%;
 	margin: auto;
-	margin-left: -5%;
+	margin-left:0%;
 	padding-top: 50px !important;
 }
 #content {
-	width: 110%;
+	width: 100%;
+	background-color:#eee;
 }
 
 #tripTitle {
@@ -55,10 +56,11 @@ box-shadow:         4px 4px 4px 0px rgba(50, 50, 50, 0.63);
 }
 #tripLocation {
 	font-size: 14px;
-	color: #5A9491;
-}
+	color: #3E546A;
+};
+
 #tripDescription {
-padding: 30px;	
+	padding: 30px;	
 }
 .page-header button {
 	display: block;

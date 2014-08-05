@@ -33,7 +33,7 @@
 
       <!-- top bar for title and icon -->
         <div id='ownerContainer'>
-          <label id='owner'>Caterpillar's</label>
+          <label id='owner' style="color:white">Caterpillar's</label>
         </div>
         <div id='logoDiv'>
           <img id='stampLogo'  src='../images/stamp.png'></img>
