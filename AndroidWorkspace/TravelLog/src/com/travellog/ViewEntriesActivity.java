@@ -7,8 +7,13 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import com.google.api.client.util.DateTime;
 import com.travellog.DrawerActivity.MenuFragment;
+import com.travellog.entryendpoint.model.EntryendpointEntry;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -254,7 +259,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		fragmentManager.beginTransaction()
 				.replace(R.id.view_entries_content, fragment).commit();
 
-		// update entry
+		// update entry on front end:
 		selectedEntry.setTitle(((EditText) findViewById(R.id.edit_text_title))
 				.getText().toString());
 		selectedEntry
@@ -263,10 +268,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 		selectedEntry
 				.setLocation(((EditText) findViewById(R.id.edit_text_location))
 						.getText().toString());
-
-		// update the view of entries
-		loadEntriesFromTrip(selectedTrip.getTrip());
-		// TODO update in DB
+		
 
 		return false;
 	}
@@ -280,6 +282,23 @@ public class ViewEntriesActivity extends DrawerActivity  {
 			layout.addView(entry);
 		}
 	}
+	
+	public String getEditEntryTitle() {
+		return ((EditText) findViewById(R.id.edit_text_title)).getText().toString();
+	}
+	
+	public String getEditEntryDescription() {
+		return ((EditText)findViewById(R.id.edit_text_entry_description)).getText().toString();
+	}
+	
+	public String getEditEntryLocation() {
+		return ((EditText) findViewById(R.id.edit_text_location)).getText().toString();
+	}
+
+	public void addEntry() {
+		//TODO, call addNewEntryTask
+		
+	}
 
 	public boolean onPhotoViewClick(View v) {
 		// TODO: which entry was clicked? - send over the id of the entry to the next activity
@@ -291,7 +310,6 @@ public class ViewEntriesActivity extends DrawerActivity  {
 	public boolean onEditEntryClick(View v) {
 		removeAllFromLayout();
 		EntryView entry = (EntryView) v.getParent().getParent().getParent();
-		;
 		selectedEntry = entry;
 		Fragment fragment = new EditEntryFragment();
 		FragmentManager fragmentManager = getFragmentManager();
@@ -342,7 +360,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 			((EditText) view.findViewById(R.id.edit_text_location))
 					.setText(entry.getLocation());
 			// TODO: tags ((EditText)
-			// view.findViewById(R.id.edit_trip_location)).setText(selectedTrip.getLocation());
+			//TODO depart/return date
 
 		}
 
@@ -408,6 +426,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 
 		}
 	}
+	
 
 	// retrieve the photo:
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

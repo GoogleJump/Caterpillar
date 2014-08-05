@@ -60,7 +60,7 @@ public class MainActivity extends DrawerActivity {
 		// Intent i = new Intent(this, RegisterActivity.class);
 		// startActivity(i);
 		
-		new AddNewUserTask().execute(getApplicationContext(), "Winnie", "the Pooh", "Pooh", "ilovehoney", "poohbear@hundredacre.org");
+	//	new AddNewUserTask().execute(getApplicationContext(), "Winnie", "the Pooh", "Pooh", "ilovehoney", "poohbear@hundredacre.org");
 //		new GetUserKeyByEmailTask().execute(getApplicationContext(), "bf@Test.com");
 
 //		new AddNewTripTask().execute(getApplicationContext(), "agtnanRyYXZlbGxvZ3IRCxIEVXNlchiAgICAgICgCQw", "Test Trip 1", "Test desc 1", "Test location 1");
@@ -224,7 +224,7 @@ public class MainActivity extends DrawerActivity {
 	 * 
 	 * public boolean onAddEntryIconClick(View v) { Intent i = new Intent(this,
 	 * AddEntryActivity.class); startActivity(i); return true; }
-	 */
+	 */ 
 
 	public void setLayoutContent() {
 		// set the content for the layout
@@ -240,7 +240,8 @@ public class MainActivity extends DrawerActivity {
 
 	public boolean onSignInClick(View v) {
 		// TODO: check if sign in is successful
-		Intent i = new Intent(this, ViewTripsActivity.class);
+		//Intent i = new Intent(this, ViewTripsActivity.class);
+		Intent i = new Intent(this, ViewEntriesActivity.class);
 		startActivity(i);
 		return true;
 	}

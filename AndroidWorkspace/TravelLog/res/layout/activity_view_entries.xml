@@ -5,12 +5,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
-
+    <Button
+        android:id="@+id/add_entry_viewentries_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Entry"
+        android:onClick="onAddEntryClick"
+        style="@style/ButtonTheme"/>
+    
     <ScrollView
  
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_weight="1"
         android:layout_gravity="center" >
 
         <LinearLayout

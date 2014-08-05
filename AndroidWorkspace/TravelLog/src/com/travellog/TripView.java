@@ -143,6 +143,8 @@ public class TripView extends LinearLayout {
 			LayoutInflater vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			tripInfoLayout = vi.inflate(R.layout.trip_description, null);
 			this.addView(tripInfoLayout);
+			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			this.setLayoutParams(params);
 
 			setTextViews();
 
