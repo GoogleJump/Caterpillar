@@ -23,7 +23,7 @@ public class Entry {
 	private String location;
 	private String tripPoster;
 	private String poster;
-	private List<String> blobkeys;
+	private List<Long> photoIds;
 	private Date dateCreated;
 	
 	
@@ -69,11 +69,11 @@ public class Entry {
 	public void setPoster(String poster) {
 		this.poster = poster;
 	}
-	public List<String> getBlobkeys() {
-		return blobkeys;
+	public List<Long> photoIds() {
+		return photoIds;
 	}
-	public void setBlobkeys(List<String> blobkeys) {
-		this.blobkeys = blobkeys;
+	public void setPhotoIds(List<Long> blobkeys) {
+		this.photoIds = photoIds;
 	}
 	public Date getDateCreated() {
 		return dateCreated;

@@ -16,6 +16,7 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.travellog.tripendpoint.Tripendpoint;
 import com.travellog.tripendpoint.model.CollectionResponseTrip;
 
@@ -49,6 +50,7 @@ public class GetTripByOwnerKeyTask extends AsyncTask<Object, List<Trip>, List<Tr
 				Trip trip = new Trip();
 				String title = trips.get(i).getTitle();
 				trip.setTitle(title);
+				trip.setTripKey(trips.get(i).getKey().toString());
 				
 				String description = trips.get(i).getDescription();
 				trip.setDescription(description);

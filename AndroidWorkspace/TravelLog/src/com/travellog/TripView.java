@@ -137,7 +137,10 @@ public class TripView extends LinearLayout {
 			this.c = context;
 			init();
 		}
-
+		public String getKey() {
+			return "TODO";
+		}
+		
 		public void init() {
 			//inflate the layout
 			LayoutInflater vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

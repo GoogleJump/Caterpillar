@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Driver;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpRequest;
@@ -34,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -193,8 +195,53 @@ public class SignUpActivity extends DrawerActivity {
 		getLayoutInflater().inflate(R.layout.activity_signup, content);
 	}
 
+	public String getUsername(){
+		return ((EditText) findViewById(R.id.signup_username_edittext)).getText().toString();
+	}
+	public String getPassword(){
+		return ((EditText) findViewById(R.id.signup_password_edittext)).getText().toString();
+	}
+	public String getFirstname(){
+		return ((EditText) findViewById(R.id.signup_firstname_edittext)).getText().toString();
+	}
+	public String getLastname(){
+		return ((EditText) findViewById(R.id.signup_lastname_edittext)).getText().toString();
+	}
+	public String getEmail(){
+		return ((EditText) findViewById(R.id.signup_email_edittext)).getText().toString();
+	}
+	
 	public boolean onSignUpClick(View v) {
-		//TODO - create new user in database
+		String username = getUsername();
+		String firstname = getFirstname();
+		String lastname = getLastname();
+		String email = getEmail();
+		String password = getPassword();
+		if(username.equals("") || email.equals("") || password.equals("")) {
+			Toast t = new Toast(null);
+			t.setText("invalid username, email, or password!");
+			t.show();
+			return false;
+		}
+		
+		AsyncTask newUser = new AddNewUserTask().execute(this.getApplicationContext());
+		String userKey = null;
+		try {
+			userKey = (String) newUser.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(userKey == null) {
+			Toast wrong = new Toast(this);
+			wrong.setText("username or email already taken!");
+			wrong.show();
+			return false;
+		}
+		storeUserKey(userKey);
 		Intent i = new Intent(this, ViewTripsActivity.class);
 		startActivity(i);
 		return true;

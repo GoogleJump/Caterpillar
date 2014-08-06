@@ -8,8 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import com.google.api.client.util.DateTime;
 import com.travellog.DrawerActivity.MenuFragment;
@@ -27,6 +29,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -34,6 +37,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -110,7 +114,7 @@ public class ViewEntriesActivity extends DrawerActivity  {
 
 	/*for uploading images to an entry*/
 	private static final int SELECT_PICTURE = 1; 
-	private String selectedImagePath;
+	private String selectedImagePath = null;
 
 	// static boolean edit; // determines whether edit mode or new trip mode
 
@@ -254,24 +258,28 @@ public class ViewEntriesActivity extends DrawerActivity  {
 
 	//opens new fragment for adding an entry
 	public boolean onAddEntryClick(View v) {
-		Fragment fragment = new Fragment();
+		Fragment fragment = new EditEntryFragment();
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.view_entries_content, fragment).commit();
+		System.out.println("add entry");
 
+		if(selectedEntry == null) selectedEntry = new EntryView(this);
+		
 		// update entry on front end:
-		selectedEntry.setTitle(((EditText) findViewById(R.id.edit_text_title))
+		/*selectedEntry.setTitle(((EditText) findViewById(R.id.edit_text_title))
 				.getText().toString());
 		selectedEntry
 				.setDescription(((EditText) findViewById(R.id.edit_text_entry_description))
 						.getText().toString());
 		selectedEntry
 				.setLocation(((EditText) findViewById(R.id.edit_text_location))
-						.getText().toString());
+						.getText().toString());*/
 		
 
 		return false;
 	}
+	
 
 
 	public void loadEntriesFromTrip(Trip trip) {
@@ -294,16 +302,46 @@ public class ViewEntriesActivity extends DrawerActivity  {
 	public String getEditEntryLocation() {
 		return ((EditText) findViewById(R.id.edit_text_location)).getText().toString();
 	}
+	
+	public String getEditEntryPhotoTitle() {
+		//return ((EditText) findViewById(R.id.edit_text_phototitle)).getText().toString();
+		return "default title"; //TODO
+	}
+	
+public List<String> getEditEntryTags() {
+	String[] tagArray = ((EditText) findViewById(R.id.edit_text_tags)).getText().toString().split(",");
+	List<String> tagList = new ArrayList<String>();
+	for(int i = 0; i < tagArray.length; i++) {
+		tagList.add(tagArray[i]);
+	}
+	return tagList;
+	}
 
+public String getUserKey() {	
+	SharedPreferences settings = getSharedPreferences(SignUpActivity.USERINFO, 0);
+	SharedPreferences.Editor editor = settings.edit();
+	return settings.getString("userKey", "fakeuserkey");
+}
 	public void addEntry() {
 		//TODO, call addNewEntryTask
-		
+		//last is: map - path string -> list<tags>
+		//application context, title, description, list strings tags, location, tripPoster, userPoster, list imgtags "", map<string->string>
+		Map<String, String> imageMap = new HashMap<String, String>();
+		if(selectedImagePath != null) {
+			imageMap.put(selectedImagePath, getEditEntryPhotoTitle());
+		}
+		AsyncTask entryTask = new AddNewEntryTask().execute(this.getApplicationContext(), getEditEntryTitle(), getEditEntryDescription(), getEditEntryTags(), getEditEntryLocation(), getUserKey(), selectedTrip.getTrip().getTripKey(), imageMap);
 	}
 
 	public boolean onPhotoViewClick(View v) {
 		// TODO: which entry was clicked? - send over the id of the entry to the next activity
 		Intent i = new Intent(this, ViewPhotosActivity.class);
 		startActivity(i);
+		return true;
+	}
+	
+	public boolean onEntrySubmitClick(View v) {
+		addEntry();
 		return true;
 	}
 

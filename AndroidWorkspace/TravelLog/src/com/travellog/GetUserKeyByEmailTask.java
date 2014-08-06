@@ -13,6 +13,8 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PropertyProjection;
 import com.google.appengine.api.datastore.Query;
 import com.travellog.userendpoint.Userendpoint;
+import com.travellog.userendpoint.model.CollectionResponseUser;
+import com.travellog.userendpoint.model.User;
 
 import android.content.Entity;
 import android.os.AsyncTask;
@@ -43,6 +45,15 @@ public class GetUserKeyByEmailTask extends AsyncTask {
 		
 		try {
 			Log.w("user", endpoint.listUser((String) params[1]).setPrettyPrint(true).execute().toString());
+			CollectionResponseUser users = endpoint.listUser((String) params[1]).setPrettyPrint(true).execute();
+			if(users.size() > 0) {
+			User user = users.getItems().get(0);
+			if(user.getPassword().equals(params[2])) return true;
+			else return false;
+			}
+			else {
+				return false;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

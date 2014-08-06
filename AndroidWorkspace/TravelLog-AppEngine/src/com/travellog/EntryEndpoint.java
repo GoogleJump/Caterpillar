@@ -98,6 +98,9 @@ public class EntryEndpoint {
 	public Entry insertEntry(Entry entry) {
 		EntityManager mgr = getEntityManager();
 		try {
+			if (containsEntry(entry)) {
+				throw new EntityExistsException("Object already exists");
+			}
 			mgr.persist(entry);
 		} finally {
 			mgr.close();

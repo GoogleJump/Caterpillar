@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/HwxqZzrGH-mrmzB6r1NzhuN_Uo0\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/FrZnOu43CeNAoy4CHIWumakv6zM\"",
  "discoveryVersion": "v1",
  "id": "entryendpoint:v1",
  "name": "entryendpoint",
@@ -92,12 +92,6 @@
    "id": "Entry",
    "type": "object",
    "properties": {
-    "blobkeys": {
-     "type": "array",
-     "items": {
-      "type": "string"
-     }
-    },
     "dateCreated": {
      "type": "string",
      "format": "date-time"
@@ -116,6 +110,13 @@
     },
     "location": {
      "type": "string"
+    },
+    "photoIds": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
     },
     "poster": {
      "type": "string"

@@ -234,7 +234,7 @@ signinPage=(function(){
 		'left':'50%',
 		'height':'60%',
 		'width':'40%',
-		'background-image':'url(../images/travellogimage.jpg)',
+		'background-image':'url(../images/travellog_collage.png)',
 		'background-size': 'cover'
 	});
 	overlay.append(androidDiv);

@@ -1,6 +1,10 @@
 package com.travellog;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,7 +28,7 @@ public class AddEntryActivity extends DrawerActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-
+	private String imagePath = "";
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mMenuTitles;
@@ -41,12 +45,12 @@ public class AddEntryActivity extends DrawerActivity {
 		Bundle b = getIntent().getExtras();
 		if(b!= null && b.containsKey("photo_path")) {
 		String photo_path = (String) b.get("photo_path");
-		
-		if(photo_path != null) {
+		this.imagePath = photo_path;
+	if(photo_path != null) {
 		Bitmap myBitmap = BitmapFactory.decodeFile(photo_path);
 
          ImageView photoView = (ImageView) findViewById(R.id.entry_photo);
-    	 photoView.setImageBitmap(myBitmap);
+//    	 photoView.setImageBitmap(myBitmap); 
 		}
 		}
 		mTitle = mDrawerTitle = getTitle();
@@ -121,6 +125,17 @@ public class AddEntryActivity extends DrawerActivity {
 	}
 	
 	public boolean onAddEntryClick(View v) {
+		List<String> hashtags = new ArrayList<String>();
+        hashtags.add("#testhashtag");
+        Map<String, String> imgDescrptn = new HashMap<String, String>();
+        hashtags.add("#testhashtag2");
+//      String path = Environment.getExternalStorageDirectory().getPath();
+//      // String myJpgPath = path + "/Downloads/images";
+//      String myJpgPath = path + "/Pictures/IMG_20140805_185807";
+        imgDescrptn.put(this.imagePath, "Test Image Title"); 
+
+        new AddNewEntryTask().execute(getApplicationContext(), "test entry", "test description",
+                hashtags, "test location", "test trip poster", "test poster", imgDescrptn);
 		return true;
 		//TODO
 	}

@@ -354,7 +354,7 @@ public class TakePhotoActivity extends DrawerActivity {
 			btn.setClickable(false);
 		}
 	}
-	
+
 	public boolean onAddPhotoToEntryClick(View v) {
 		Intent i = new Intent(this, AddEntryActivity.class);
 		System.out.println("current path: "+mCurrentPhotoPath);

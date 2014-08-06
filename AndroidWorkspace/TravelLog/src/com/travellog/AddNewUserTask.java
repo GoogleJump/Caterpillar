@@ -3,6 +3,8 @@ package com.travellog;
 import android.os.AsyncTask;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -31,8 +33,9 @@ public class AddNewUserTask extends AsyncTask {
 				});
 		Userendpoint endpoint = CloudEndpointUtils.updateBuilder(
 				endpointBuilder).build();
-		
+		String userKey = null;
 		try {
+			System.out.println("");
 			User u = new User().setFirstName((String) arg0[1]);
 			u.setLastName((String) arg0[2]);
 			DateTime d = new DateTime(new Date());
@@ -40,11 +43,11 @@ public class AddNewUserTask extends AsyncTask {
 			u.setUsername((String) arg0[3]);
 			u.setPassword((String) arg0[4]);
 
-
 			Email e = new Email();
 			e.setEmail((String) arg0[5]);
-			u.setEmail(e);          
+			u.setEmail(e);
 			User result = endpoint.insertUser(u).execute();
+			userKey = result.getKey().toString();
 			Log.w("myApp", "trying to work");
 //			endpoint.insertUser(u).execute();
 			Log.w("myApp", "works");
@@ -52,9 +55,8 @@ public class AddNewUserTask extends AsyncTask {
 			e.printStackTrace();
 		}
 		
-//		Toast.makeText((Context) arg0[0], "this is my Toast message!!! =)",
-//				   Toast.LENGTH_LONG).show();
-		return arg0;
+		//return arg0;
+		return userKey;
 	}
-
+	
 }

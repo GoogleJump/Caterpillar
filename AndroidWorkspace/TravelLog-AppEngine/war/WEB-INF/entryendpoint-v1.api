@@ -160,10 +160,11 @@
           "poster" : {
             "type" : "string"
           },
-          "blobkeys" : {
+          "photoIds" : {
             "type" : "array",
             "items" : {
-              "type" : "string"
+              "type" : "string",
+              "format" : "int64"
             }
           },
           "dateCreated" : {
