@@ -25,7 +25,7 @@ Homepage = (function(){
     main.append(contentDiv);
     contentDiv.addClass("row");
     contentDiv.css('padding-top','50px');
-
+    
     //button for adding a new trip
     var addbtnDiv = $(document.createElement('div'));
     addbtnDiv.addClass("col-md-12");

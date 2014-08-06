@@ -222,8 +222,16 @@ signinPage=(function(){
 		'background-color':Util.light_blue,
 		'border':'solid 2px gray',
 		'border-radius':'5px'
-
 	});
+	var deslabel = $(document.createElement("label"));
+	deslabel.text("To start your adventure: \nSign up to create a new account. \nBegin adding trips and entries to your log. \nView your entries and trips as a map so you can see how much of the world you’ve explored!");
+	deslabel.css({
+		'font-size':'x-large',
+		'clear':'left',
+		'top':'40px',
+		'position':'relative'
+	});
+	description.append(deslabel);
 	overlay.append(description);
 
 	var androidDiv = $(document.createElement('div'));
