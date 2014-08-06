@@ -122,7 +122,7 @@
         //make sure the date is legit.  if not, don't include it at all
                 if(startDate != null  && startDate != "" && endDate != null && endDate != "${fn:escapeXml(trip_return)}") {
                 %>
-                <h2 id="tripDate" start="${fn:escapeXml(trip_depart)}" end="">${fn:escapeXml(trip_depart)} to ${fn:escapeXml(trip_return)}</h2>
+                <h2 id="tripDate" start="${fn:escapeXml(trip_depart)}" end="${fn:escapeXml(trip_return)}">${fn:escapeXml(trip_depart)} to ${fn:escapeXml(trip_return)}</h2>
                 <%
         } //end of if depart date and return date are null
         %>

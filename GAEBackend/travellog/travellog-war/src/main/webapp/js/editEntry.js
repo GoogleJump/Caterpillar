@@ -267,7 +267,8 @@ function getFromLocalStorage(key) {
 	// cancelbtn.attr('data-dismiss','modal');
 	cancelbtn.text("Cancel");
 	cancelbtn.css({
-	    // 'background-color':'#504552',
+	    'background-color':Util.blue,
+		'color':'white',
 	    'right':'16%',
 	    'position':'absolute',
 	});
@@ -277,7 +278,8 @@ function getFromLocalStorage(key) {
 	// savebtn.attr('data-dismiss','modal');
 	savebtn.text("Submit");
 	savebtn.css({
-	    // 'background-color':'#504552',
+		'color':'white',
+	    'background-color':Util.blue,
 	    'right':'9%',
 	    'position':'absolute',
 	});
