@@ -9,22 +9,24 @@ TravelLog is an app that allows the user to save and track travel logs, either o
 To start your adventure: Sign up to create a new account. Begin adding trips and entries to your log. View your entries and trips as a map so you can see how much of the world you've explored!
 
 TravelLog is a Web App and Android App with a Google App Engine backend
-Web:
-Javascript, HTML, CSS for web app frontend
-Java for backend servlets
-Android:
-Java for backend and frontend in Android 
+*Web:*
+- Javascript, HTML, CSS for web app frontend
+- Java for backend servlets
+*Android:*
+- Java for backend and frontend in Android 
 
 Unimplemented, but planned on features:
-	better sorting and searching through content
-	uploading videos
-	make it a social app where friends can comment and like your trip!
-	restaurant/hotels/places reviews
+	- better sorting and searching through content
+	- uploading videos
+	- make it a social app where friends can comment and like your trip!
+	- restaurant/hotels/places reviews
+	
+We feel about 80% complete with this project.
 
 
-AndroidWorkspace - the android project and all files related to the android app.
+**AndroidWorkspace** - the android project and all files related to the android app.
 
-GAEBackend - the files for the Google App Engine Backend (Java).
+**GAEBackend** - the files for the Google App Engine Backend (Java).
 
 Web App
 --------------
