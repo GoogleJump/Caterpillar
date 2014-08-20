@@ -11,10 +11,10 @@ Web App
 --------------
 To run locally:
 Download and install Apache Maven http://maven.apache.org/download.cgi
-  cd Caterpillar/GAEBackend/travellog
-  mvn clean install
-  cd travellog-ear
-  mvn appengine:devserver
+- cd Caterpillar/GAEBackend/travellog
+- mvn clean install
+- cd travellog-ear
+- mvn appengine:devserver
 
 Android App
 --------------
