@@ -1,20 +1,38 @@
-Caterpillar
+TravelLog by team Caterpillar gjtravellog.appspot.com 
 ===========
+
+About
+--------------
+TravelLog is an app that allows the user to save and track travel logs, either online or on their mobile device 
+
+To start your adventure: Sign up to create a new account. Begin adding trips and entries to your log. View your entries and trips as a map so you can see how much of the world you've explored!
+
+TravelLog is a Web App and Android App with a Google App Engine backend
+Web:
+Javascript, HTML, CSS for web app frontend
+Java for backend servlets
+Android:
+Java for backend and frontend in Android 
+
+Unimplemented, but planned on features:
+	better sorting and searching through content
+	uploading videos
+	make it a social app where friends can comment and like your trip!
+	restaurant/hotels/places reviews
+
 
 AndroidWorkspace - the android project and all files related to the android app.
 
 GAEBackend - the files for the Google App Engine Backend (Java).
 
-To start your adventure: Sign up to create a new account. Begin adding trips and entries to your log. View your entries and trips as a map so you can see how much of the world you've explored!
-
 Web App
 --------------
 To run locally:
 Download and install Apache Maven http://maven.apache.org/download.cgi
-``` cd Caterpillar/GAEBackend/travellog```
-```mvn clean install```
-```cd travellog-ear```
-```mvn appengine:devserver```
+``` cd Caterpillar/GAEBackend/travellog
+mvn clean install
+cd travellog-ear
+mvn appengine:devserver```
 The app should be running at ```localhost:8000```
 
 Android App
