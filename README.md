@@ -10,9 +10,11 @@ To start your adventure: Sign up to create a new account. Begin adding trips and
 
 TravelLog is a Web App and Android App with a Google App Engine backend
 *Web:*
+
 - Javascript, HTML, CSS for web app frontend
 - Java for backend servlets
 *Android:*
+
 - Java for backend and frontend in Android 
 
 Unimplemented, but planned on features:
@@ -32,10 +34,15 @@ Web App
 --------------
 To run locally:
 Download and install Apache Maven http://maven.apache.org/download.cgi
+
 ``` cd Caterpillar/GAEBackend/travellog
+
 mvn clean install
+
 cd travellog-ear
+
 mvn appengine:devserver```
+
 The app should be running at ```localhost:8000```
 
 Android App
