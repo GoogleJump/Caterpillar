@@ -5,9 +5,23 @@ AndroidWorkspace - the android project and all files related to the android app.
 
 GAEBackend - the files for the Google App Engine Backend (Java).
 
+To start your adventure: Sign up to create a new account. Begin adding trips and entries to your log. View your entries and trips as a map so you can see how much of the world you've explored!
 
-Data storage structure
-======================
+Web App
+--------------
+To run locally:
+Download and install Apache Maven http://maven.apache.org/download.cgi
+  cd Caterpillar/GAEBackend/travellog
+  mvn clean install
+  cd travellog-ear
+  mvn appengine:devserver
+
+Android App
+--------------
+
+
+Data storage structure (this is not up to date)
+--------------
 
 Entities in the datastore will be divided into 3 kinds:
 
