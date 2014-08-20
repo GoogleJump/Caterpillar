@@ -35,10 +35,10 @@ Web App
 To run locally:
 Download and install Apache Maven http://maven.apache.org/download.cgi
 
-```cd Caterpillar/GAEBackend/travellog<br>
-mvn clean install<br>
-cd travellog-ear<br>
-mvn appengine:devserver<br>```
+`cd Caterpillar/GAEBackend/travellog`
+`mvn clean install`
+`cd travellog-ear`
+`mvn appengine:devserver`
 The app should be running at `localhost:8000`
 
 Android App
